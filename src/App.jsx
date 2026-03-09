@@ -1,5 +1,6 @@
 import ProductShowcaseBoard from './pages/ProductShowcaseBoard.jsx';
 import CreateShoutoutScreen from './pages/CreateShoutoutScreen.jsx';
+import BentoWelcomeScreen from './pages/BentoWelcomeScreen.jsx';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
@@ -96,7 +97,8 @@ export default function App() {
 		<BrowserRouter>
 			<Routes>
 				{/* ═══ ENTRY ═══ */}
-				<Route path="/" element={<WelcomeScreen />} />
+				<Route path="/" element={<BentoWelcomeScreen />} />
+				<Route path="/classic" element={<WelcomeScreen />} />
 				
 				{/* ═══ AUTH — New Users ═══ */}
 				<Route path="/phone" element={<PhoneEntryScreen />} />
