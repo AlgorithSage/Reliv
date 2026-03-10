@@ -129,13 +129,13 @@
 }
 
 .bento-header__login-btn {
-  background: #E4E0DC;
-  border: none;
+  background: #FAFAF8;
+  border: 2px solid rgba(240, 105, 34, 0.25);
   border-radius: 16px;
   padding: 14px 28px;
   font-size: 14px;
-  font-weight: 600;
-  color: #555;
+  font-weight: 700;
+  color: #F06922;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow:
@@ -145,18 +145,20 @@
 }
 
 .bento-header__login-btn:hover {
-  color: #F06922;
+  background: #F06922;
+  color: #fff;
+  border-color: #F06922;
   box-shadow:
-    8px 8px 18px rgba(0, 0, 0, 0.1),
-    -8px -8px 18px rgba(255, 255, 255, 0.8);
-  transform: translateY(-1px);
+    8px 8px 18px rgba(240, 105, 34, 0.2),
+    -4px -4px 14px rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .bento-header__login-btn:active {
   box-shadow:
-    inset 4px 4px 10px rgba(0, 0, 0, 0.08),
-    inset -4px -4px 10px rgba(255, 255, 255, 0.6);
-  transform: translateY(0) scale(0.98);
+    inset 4px 4px 10px rgba(0, 0, 0, 0.15),
+    inset -4px -4px 10px rgba(255, 255, 255, 0.1);
+  transform: translateY(0) scale(0.97);
 }
 
 /* ═══ BENTO GRID — CLEAN 3-TILE LAYOUT ═══ */
