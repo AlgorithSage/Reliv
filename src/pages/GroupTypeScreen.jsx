@@ -18,7 +18,7 @@ export default function GroupTypeScreen() {
       period: "/ week",
       dailyPrice: "₹4.14/day",
       tag: null,
-      icon: "👤",
+      icon: (<svg width="28" height="28" viewBox="0 0 24 24" fill="#3B82F6" stroke="none"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>),
       color: "#3B82F6",
       features: ["Personal meal plans", "Daily reminders", "Progress tracking"],
       path: "/weekly-solo-pay",
@@ -32,7 +32,7 @@ export default function GroupTypeScreen() {
       dailyPrice: "₹3.86/day each",
       tag: "Most Popular",
       tagColor: "#22C55E",
-      icon: "💑",
+      icon: (<svg width="28" height="28" viewBox="0 0 24 24" fill="#EC4899" stroke="none"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3z"/></svg>),
       color: "#EC4899",
       features: ["Both partners covered", "Individual reminders", "Couple challenges"],
       path: "/couple-phone",
@@ -46,7 +46,7 @@ export default function GroupTypeScreen() {
       dailyPrice: "₹2.26/day each (5 friends)",
       tag: "Best Value",
       tagColor: "#8B5CF6",
-      icon: "👥",
+      icon: (<svg width="28" height="28" viewBox="0 0 24 24" fill="#8B5CF6" stroke="none"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>),
       color: "#8B5CF6",
       features: ["2-5 friends", "Group leaderboard", "Squad competitions"],
       path: "/friend-size",
@@ -60,7 +60,7 @@ export default function GroupTypeScreen() {
       dailyPrice: "One-time only",
       tag: "Try First",
       tagColor: "#F06922",
-      icon: "⚡",
+      icon: (<svg width="28" height="28" viewBox="0 0 24 24" fill="#F06922" stroke="none"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>),
       color: "#F06922",
       features: ["Pick your idol", "Full day plan", "Zero commitment"],
       path: "/fan-quiz-type",
@@ -240,7 +240,7 @@ export default function GroupTypeScreen() {
                   fontWeight: 600,
                   color: p.color,
                 }}>
-                  💰 {p.dailyPrice}
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill={p.color} stroke="none" style={{marginRight: 4}}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L10 14v1c0 1.1.9 2 2 2v3.93zM17.9 17.39c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg> {p.dailyPrice}
                 </span>
               </div>
 
@@ -319,9 +319,9 @@ export default function GroupTypeScreen() {
           padding: '20px',
         }}>
           {[
-            { icon: '🔒', text: 'Secure Payment' },
-            { icon: '🚫', text: 'No Auto-Renewal' },
-            { icon: '💬', text: 'WhatsApp Support' },
+            { icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>), text: 'Secure Payment' },
+            { icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>), text: 'No Auto-Renewal' },
+            { icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>), text: 'WhatsApp Support' },
           ].map((item, i) => (
             <div
               key={i}
