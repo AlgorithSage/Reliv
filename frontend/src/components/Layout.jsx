@@ -5,7 +5,7 @@ import AntigravityBackground from './AntigravityBackground';
 // ═══ ANTIGRAVITY BACKGROUND FLAG ═══
 // Set to true to show the floating dotted glassmorphic background
 // Set to false to hide it (just the gradient background)
-const ENABLE_ANTIGRAVITY = true;
+const ENABLE_ANTIGRAVITY = false;
 
 export default function Layout({ children, title, subtitle, showBack, onBack }) {
   const [scrolled, setScrolled] = useState(false);
