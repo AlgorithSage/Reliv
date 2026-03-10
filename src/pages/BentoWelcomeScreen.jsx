@@ -120,11 +120,6 @@ export default function BentoWelcomeScreen() {
         </button>
       </header>
 
-      {/* ── Floating Trial Tag ── */}
-      <div className="bento-floating-tag bento-floating-tag--trial">
-        Free Trial Available!
-      </div>
-
       {/* ═══ BENTO GRID — 3 TILES ═══ */}
       <div className="bento-grid">
 
