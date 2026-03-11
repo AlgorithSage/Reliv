@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FanQuizModeScreen() {
-    const navigate = useNavigate();
-    const [selected, setSelected] = useState(null);
-    const [hovered, setHovered] = useState(null);
-    const [showCards, setShowCards] = useState(false);
+ const navigate = useNavigate();
+ const [selected, setSelected] = useState(null);
+ const [hovered, setHovered] = useState(null);
+ const [showCards, setShowCards] = useState(false);
 
-    const modes = [
+ const modes = [
         {
             id: 'easy',
             title: 'Easy Mode',
             desc: 'Relaxed version with flexible timing',
-            icon: '😊',
+            icon: 'smile',
             color: '#22C55E',
             price: '₹7',
         },
@@ -21,7 +22,7 @@ export default function FanQuizModeScreen() {
             id: 'standard',
             title: 'Standard Mode',
             desc: 'Balanced celebrity-style routine',
-            icon: '💪',
+            icon: 'muscle',
             color: '#3B82F6',
             price: '₹12',
             popular: true,
@@ -30,23 +31,23 @@ export default function FanQuizModeScreen() {
             id: 'extreme',
             title: 'Extreme Mode',
             desc: 'Full celebrity workout + diet',
-            icon: '🔥',
+            icon: 'fire',
             color: '#EF4444',
             price: '₹15',
         },
-    ];
+ ];
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowCards(true), 100);
-    }, []);
+ }, []);
 
-    const handleContinue = () => {
+ const handleContinue = () => {
         if (!selected) return;
         localStorage.setItem('fanQuizMode', selected);
         navigate('/daily-pay');
-    };
+ };
 
-    return (
+ return (
         <Layout
             title="Choose Difficulty"
             subtitle="How intense do you want today?"
@@ -123,9 +124,7 @@ export default function FanQuizModeScreen() {
                                 justifyContent: 'center',
                                 fontSize: 32,
                                 flexShrink: 0,
-                            }}>
-                                {mode.icon}
-                            </div>
+                            }}><Icon name={mode.icon} size={20} /></div>
 
                             {/* Content */}
                             <div style={{ flex: 1 }}>
@@ -187,5 +186,5 @@ export default function FanQuizModeScreen() {
                 </button>
             </div>
         </Layout>
-    );
+ );
 }

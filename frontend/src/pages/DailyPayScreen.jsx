@@ -1,33 +1,34 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function DailyPayScreen() {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
 
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', price: 15, color: '#1E40AF' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', price: 12, color: '#DB2777' },
-        salman: { name: 'Salman Khan', emoji: '💪', price: 15, color: '#16A34A' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', price: 12, color: '#9333EA' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', price: 15, color: '#DC2626' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', price: 12, color: '#F59E0B' },
-    };
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 15, color: '#1E40AF' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', price: 12, color: '#DB2777' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', price: 15, color: '#16A34A' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', price: 12, color: '#9333EA' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', price: 15, color: '#DC2626' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', price: 12, color: '#F59E0B' },
+ };
 
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    const handlePay = () => {
+ const handlePay = () => {
         setLoading(true);
         setTimeout(() => {
             localStorage.setItem('paymentComplete', 'true');
             navigate('/activation');
         }, 1200);
-    };
+ };
 
-    return (
+ return (
         <Layout
             title="Daily Plan Payment"
             subtitle={`One day inspired by ${info.name}`}
@@ -37,10 +38,10 @@ export default function DailyPayScreen() {
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
                 {/* Main Card */}
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 28,
                     padding: '40px 36px',
-                    boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
+                    boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
                     border: `2px solid ${info.color}20`,
                     marginBottom: 28,
                 }}>
@@ -65,19 +66,17 @@ export default function DailyPayScreen() {
                         }}>
                             {info.emoji}
                         </div>
-                        <div style={{ flex: 1 }}>
-                            <h2 style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 4 }}>
+                        <div style={{ flex: 1 }}><h2 style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 4 }}>
                                 {info.name} Style
                             </h2>
                             <p style={{ fontSize: 14, color: '#666' }}>
-                                ⚡ 24-hour celebrity-inspired plan
+                                 24-hour celebrity-inspired plan
                             </p>
                         </div>
                     </div>
 
                     {/* Today's Schedule */}
-                    <div style={{ marginBottom: 28 }}>
-                        <h3 style={{
+                    <div style={{ marginBottom: 28 }}><h3 style={{
                             fontSize: 13,
                             fontWeight: 700,
                             color: '#9CA3AF',
@@ -85,13 +84,13 @@ export default function DailyPayScreen() {
                             letterSpacing: '1px',
                             marginBottom: 18,
                         }}>
-                            📋 Today's Schedule
+                             Today's Schedule
                         </h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                             {[
-                                { time: 'Morning', text: 'Celebrity-style breakfast recipe', icon: '🌅' },
-                                { time: 'Midday', text: 'Power lunch with their favorites', icon: '☀️' },
-                                { time: 'Evening', text: 'Light dinner + workout tips', icon: '🌙' },
+                                { time: 'Morning', text: 'Celebrity-style breakfast recipe', icon: 'sunrise' },
+                                { time: 'Midday', text: 'Power lunch with their favorites', icon: 'sun' },
+                                { time: 'Evening', text: 'Light dinner + workout tips', icon: 'moon' },
                             ].map((item, i) => (
                                 <div
                                     key={i}
@@ -104,7 +103,7 @@ export default function DailyPayScreen() {
                                         borderRadius: 14,
                                     }}
                                 >
-                                    <span style={{ fontSize: 22 }}>{item.icon}</span>
+                                    <Icon name={item.icon} size={22} />
                                     <div>
                                         <p style={{ fontSize: 12, color: '#9CA3AF', fontWeight: 600 }}>{item.time}</p>
                                         <p style={{ fontSize: 14, color: '#333', fontWeight: 500 }}>{item.text}</p>
@@ -160,11 +159,10 @@ export default function DailyPayScreen() {
                                     borderTopColor: '#FFFFFF',
                                     borderRadius: '50%',
                                     animation: 'spin 0.8s linear infinite',
-                                }} />
-                                Processing...
+                                }} />Processing...
                             </>
                         ) : (
-                            `💳 Pay ₹${info.price} & Start Today`
+                            `Pay ₹${info.price} & Start Today`
                         )}
                     </button>
                 </div>
@@ -179,7 +177,7 @@ export default function DailyPayScreen() {
                     justifyContent: 'center',
                     gap: 8,
                 }}>
-                    <span>🔒</span> Secure payment • Valid for 24 hours
+                    <span></span> Secure payment • Valid for 24 hours
                 </p>
             </div>
 
@@ -190,5 +188,5 @@ export default function DailyPayScreen() {
         }
       `}</style>
         </Layout>
-    );
+ );
 }

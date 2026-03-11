@@ -1,34 +1,35 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function WeeklyCouplePayScreen() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
 
-  const handlePay = () => {
-    setLoading(true);
-    setTimeout(() => {
+ const handlePay = () => {
+ setLoading(true);
+ setTimeout(() => {
       localStorage.setItem('paymentComplete', 'true');
       localStorage.setItem('planType', 'couple');
       navigate('/category');
-    }, 1200);
-  };
+ }, 1200);
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Couple Weekly Plan"
       subtitle="Transform together for 7 days"
       showBack
       onBack={() => navigate('/couple-questions')}
-    >
+ >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
         {/* Pricing Card */}
         <div style={{
           background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF0F7 100%)',
           borderRadius: 28,
           padding: '40px 36px',
-          boxShadow: '0 20px 60px rgba(236, 72, 153, 0.12)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
           border: '2px solid rgba(236, 72, 153, 0.15)',
           marginBottom: 28,
         }}>
@@ -50,9 +51,9 @@ export default function WeeklyCouplePayScreen() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: 36,
-              boxShadow: '0 10px 30px rgba(236, 72, 153, 0.3)',
+              boxShadow: '8px 8px 20px rgba(0,0,0,0.15), -6px -6px 16px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>
-              💑
+              
             </div>
             <div style={{ flex: 1 }}>
               <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111', marginBottom: 4 }}>
@@ -83,7 +84,7 @@ export default function WeeklyCouplePayScreen() {
             gridTemplateColumns: '1fr 1fr',
             gap: 16,
             marginBottom: 28,
-          }}>
+          }}><Icon name="user" size={18} />
             {['Partner 1', 'Partner 2'].map((p, i) => (
               <div
                 key={i}
@@ -95,7 +96,7 @@ export default function WeeklyCouplePayScreen() {
                   border: '1px solid rgba(236, 72, 153, 0.15)',
                 }}
               >
-                <span style={{ fontSize: 28 }}>{i === 0 ? '👤' : '👤'}</span>
+                <span style={{ fontSize: 28 }}>{i === 0 ? '' : ''}</span>
                 <p style={{ fontSize: 13, fontWeight: 600, color: '#333', marginTop: 8 }}>{p}</p>
                 <p style={{ fontSize: 12, color: '#EC4899' }}>Individual reminders</p>
               </div>
@@ -109,10 +110,10 @@ export default function WeeklyCouplePayScreen() {
             marginBottom: 28,
           }}>
             {[
-              { icon: '💕', text: 'Both partners get personalized plans' },
-              { icon: '📱', text: 'Individual WhatsApp reminders' },
-              { icon: '🏆', text: 'Couple challenges & competitions' },
-              { icon: '📊', text: 'Shared progress dashboard' },
+              { icon: 'two_hearts', text: 'Both partners get personalized plans' },
+              { icon: 'phone', text: 'Individual WhatsApp reminders' },
+              { icon: 'trophy', text: 'Couple challenges & competitions' },
+              { icon: 'bar_chart', text: 'Shared progress dashboard' },
             ].map((f, i) => (
               <div
                 key={i}
@@ -121,12 +122,12 @@ export default function WeeklyCouplePayScreen() {
                   alignItems: 'center',
                   gap: 14,
                   padding: '14px 18px',
-                  background: '#FFF',
+                  background: '#FAFAF8',
                   borderRadius: 12,
-                  border: '1px solid #E5E7EB',
+                  border: 'none',
                 }}
               >
-                <span style={{ fontSize: 20 }}>{f.icon}</span>
+                <Icon name={f.icon} size={20} />
                 <span style={{ fontSize: 14, color: '#333', fontWeight: 500 }}>{f.text}</span>
               </div>
             ))}
@@ -143,7 +144,7 @@ export default function WeeklyCouplePayScreen() {
             marginBottom: 28,
             border: '1px solid rgba(34, 197, 94, 0.2)',
           }}>
-            <span style={{ fontSize: 24 }}>💰</span>
+            <span style={{ fontSize: 24 }}></span>
             <div>
               <p style={{ fontSize: 14, fontWeight: 700, color: '#059669', margin: 0 }}>
                 Only ₹27 per person
@@ -168,7 +169,7 @@ export default function WeeklyCouplePayScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 40px rgba(236, 72, 153, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
@@ -185,12 +186,12 @@ export default function WeeklyCouplePayScreen() {
                   borderTopColor: '#FFFFFF',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
-                }} />
+                }} /><Icon name="lock" size={18} />
                 Processing...
               </>
             ) : (
               <>
-                💳 Pay ₹54 & Continue
+                 Pay ₹54 & Continue
               </>
             )}
           </button>
@@ -206,7 +207,7 @@ export default function WeeklyCouplePayScreen() {
           justifyContent: 'center',
           gap: 8,
         }}>
-          <span>🔒</span> Secure payment via Razorpay
+          <span></span> Secure payment via Razorpay
         </div>
       </div>
 
@@ -216,6 +217,6 @@ export default function WeeklyCouplePayScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

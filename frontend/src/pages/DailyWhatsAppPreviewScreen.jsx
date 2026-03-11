@@ -1,30 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function DailyWhatsAppPreviewScreen() {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const [messageIndex, setMessageIndex] = useState(0);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [messageIndex, setMessageIndex] = useState(0);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️' },
-        salman: { name: 'Salman Khan', emoji: '💪' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman' },
+        salman: { name: 'Salman Khan', emoji: 'muscle' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    const messages = [
+ const messages = [
         { type: 'incoming', text: `${info.emoji} **${info.name} Style Day!**\n\nToday you'll eat and train like your idol!`, time: '9:00 AM' },
-        { type: 'incoming', text: `🍳 **Breakfast - ${info.name} Style**\n\nPower omelette with spinach & avocado toast\n\n📊 Calories: 420\n💪 Protein: 28g`, time: '9:01 AM' },
-        { type: 'outgoing', text: 'Making it now! 🙌', time: '9:15 AM' },
-        { type: 'incoming', text: '💪 Great! Enjoy your celebrity breakfast!\n\nI\'ll check in at lunch time!', time: '9:16 AM' },
-    ];
+        { type: 'incoming', text: `**Breakfast - ${info.name} Style**\n\nPower omelette with spinach & avocado toast\n\n Calories: 420\n Protein: 28g`, time: '9:01 AM' },
+        { type: 'outgoing', text: 'Making it now!', time: '9:15 AM' },
+        { type: 'incoming', text: 'Great! Enjoy your celebrity breakfast!\n\nI\'ll check in at lunch time!', time: '9:16 AM' },
+ ];
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShow(true), 100);
         const interval = setInterval(() => {
             setMessageIndex(prev => {
@@ -34,9 +35,9 @@ export default function DailyWhatsAppPreviewScreen() {
             });
         }, 700);
         return () => clearInterval(interval);
-    }, []);
+ }, []);
 
-    return (
+ return (
         <div style={{
             minHeight: '100vh',
             background: '#0B141A',
@@ -179,7 +180,7 @@ export default function DailyWhatsAppPreviewScreen() {
                     boxShadow: '0 8px 30px rgba(37, 211, 102, 0.3)',
                 }}
             >
-                ✅ Continue to Activation
+                Continue to Activation
             </button>
 
             <style>{`
@@ -189,5 +190,5 @@ export default function DailyWhatsAppPreviewScreen() {
         }
       `}</style>
         </div>
-    );
+ );
 }

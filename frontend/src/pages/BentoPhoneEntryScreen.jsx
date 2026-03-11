@@ -4,35 +4,35 @@ import { C, api } from '../utils/constants';
 import './BentoGrid.css';
 
 export default function BentoPhoneEntryScreen() {
-  const navigate = useNavigate();
-  const [phone, setPhone] = useState('');
-  const [referral, setReferral] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [focused, setFocused] = useState(null);
+ const navigate = useNavigate();
+ const [phone, setPhone] = useState('');
+ const [referral, setReferral] = useState('');
+ const [loading, setLoading] = useState(false);
+ const [error, setError] = useState('');
+ const [focused, setFocused] = useState(null);
 
-  const handleSubmit = async () => {
-    if (phone.length !== 10) return setError('Enter valid 10-digit number');
-    setLoading(true);
-    setError('');
-    try {
+ const handleSubmit = async () => {
+ if (phone.length !== 10) return setError('Enter valid 10-digit number');
+ setLoading(true);
+ setError('');
+ try {
       const res = await api.call('/auth/send-otp', {
         method: 'POST',
         body: JSON.stringify({ phone: `+91${phone}`, referralCode: referral })
       });
       if (res.alreadyUsedTrial) navigate('/returning-pay', { state: { phone: `+91${phone}` } });
       else navigate('/otp', { state: { phone: `+91${phone}`, sessionId: res.sessionId } });
-    } catch (err) {
+ } catch (err) {
       navigate('/otp', { state: { phone: `+91${phone}`, sessionId: 'demo' } });
-    } finally {
+ } finally {
       setLoading(false);
-    }
-  };
+ }
+ };
 
-  const isValid = phone.length === 10;
+ const isValid = phone.length === 10;
 
-  return (
-    <div className="bento-kiosk" style={{ justifyContent: 'center', alignItems: 'center' }}>
+ return (
+ <div className="bento-kiosk" style={{ justifyContent: 'center', alignItems: 'center' }}>
 
       {/* Ambient Background */}
       <div className="bento-kiosk__ambient">
@@ -152,6 +152,6 @@ export default function BentoPhoneEntryScreen() {
         @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); } 20%, 40%, 60%, 80% { transform: translateX(4px); } }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

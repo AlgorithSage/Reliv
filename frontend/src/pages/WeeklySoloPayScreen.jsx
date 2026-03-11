@@ -2,43 +2,44 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function WeeklySoloPayScreen() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
 
-  const handlePay = () => {
-    setLoading(true);
-    setTimeout(() => {
+ const handlePay = () => {
+ setLoading(true);
+ setTimeout(() => {
       localStorage.setItem('paymentComplete', 'true');
       localStorage.setItem('planType', 'solo');
       navigate('/category');
-    }, 1200);
-  };
+ }, 1200);
+ };
 
-  const features = [
-    { icon: '🎯', text: 'Personalized AI meal plans' },
-    { icon: '💪', text: 'Custom workout routines' },
-    { icon: '📱', text: 'Daily WhatsApp reminders' },
-    { icon: '💧', text: 'Water intake tracking' },
-    { icon: '📊', text: 'Progress analytics' },
-    { icon: '🔄', text: 'Weekly plan updates' },
-  ];
+ const features = [
+ { icon: 'target', text: 'Personalized AI meal plans' },
+ { icon: 'muscle', text: 'Custom workout routines' },
+ { icon: 'phone', text: 'Daily WhatsApp reminders' },
+ { icon: 'water_drop', text: 'Water intake tracking' },
+ { icon: 'bar_chart', text: 'Progress analytics' },
+ { icon: 'refresh', text: 'Weekly plan updates' },
+ ];
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Solo Weekly Plan"
       subtitle="7 days of personalized health coaching"
       showBack
       onBack={() => navigate('/group-type')}
-    >
+ >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
         {/* Pricing Card */}
         <div style={{
           background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%)',
           borderRadius: 28,
           padding: '40px 36px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
           border: '2px solid rgba(240, 105, 34, 0.15)',
           marginBottom: 28,
         }}>
@@ -60,9 +61,9 @@ export default function WeeklySoloPayScreen() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: 36,
-              boxShadow: '0 10px 30px rgba(240, 105, 34, 0.3)',
+              boxShadow: '8px 8px 20px rgba(0,0,0,0.15), -6px -6px 16px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}>
-              👤
+              
             </div>
             <div style={{ flex: 1 }}>
               <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111', marginBottom: 4 }}>
@@ -112,12 +113,12 @@ export default function WeeklySoloPayScreen() {
                     alignItems: 'center',
                     gap: 12,
                     padding: '12px 16px',
-                    background: '#FFF',
+                    background: '#FAFAF8',
                     borderRadius: 12,
-                    border: '1px solid #E5E7EB',
+                    border: 'none',
                   }}
                 >
-                  <span style={{ fontSize: 20 }}>{f.icon}</span>
+                  <Icon name={f.icon} size={20} />
                   <span style={{ fontSize: 14, color: '#333', fontWeight: 500 }}>{f.text}</span>
                 </div>
               ))}
@@ -135,7 +136,7 @@ export default function WeeklySoloPayScreen() {
             marginBottom: 28,
             border: '1px solid rgba(34, 197, 94, 0.2)',
           }}>
-            <span style={{ fontSize: 24 }}>💰</span>
+            <span style={{ fontSize: 24 }}></span>
             <div>
               <p style={{ fontSize: 14, fontWeight: 700, color: '#059669', margin: 0 }}>
                 Only ₹4.14 per day
@@ -160,7 +161,7 @@ export default function WeeklySoloPayScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
@@ -182,7 +183,7 @@ export default function WeeklySoloPayScreen() {
               </>
             ) : (
               <>
-                💳 Pay ₹29 & Continue
+                 Pay ₹29 & Continue
               </>
             )}
           </button>
@@ -199,9 +200,9 @@ export default function WeeklySoloPayScreen() {
           borderRadius: 16,
         }}>
           {[
-            { icon: '🔒', text: 'Secure Payment' },
-            { icon: '🚫', text: 'No Auto-Renewal' },
-            { icon: '💬', text: '24/7 Support' },
+            { icon: 'lock', text: 'Secure Payment' },
+            { icon: 'prohibited', text: 'No Auto-Renewal' },
+            { icon: 'chat_bubble', text: '24/7 Support' },
           ].map((item, i) => (
             <div
               key={i}
@@ -214,7 +215,7 @@ export default function WeeklySoloPayScreen() {
                 fontWeight: 500,
               }}
             >
-              <span>{item.icon}</span>
+              <Icon name={item.icon} size={20} />
               {item.text}
             </div>
           ))}
@@ -227,6 +228,6 @@ export default function WeeklySoloPayScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

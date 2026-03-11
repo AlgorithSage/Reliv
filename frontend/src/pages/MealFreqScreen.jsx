@@ -2,19 +2,20 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function MealFreqScreen() {
-  const navigate = useNavigate();
-  const [selected, setSelected] = useState(null);
-  
-  const mealOptions = [
-    { id: 3, label: '3 Meals', desc: 'Standard meal plan', meals: ['🍳 Breakfast', '🍲 Lunch', '🍛 Dinner'] },
-    { id: 4, label: '4 Meals', desc: 'With afternoon snack', meals: ['🍳 Breakfast', '🥜 Snack', '🍲 Lunch', '🍛 Dinner'] },
-    { id: 5, label: '5 Meals', desc: 'For muscle building', meals: ['🍳 Breakfast', '🥤 Snack', '🍲 Lunch', '🍌 Snack', '🍛 Dinner'] }
-  ];
+ const navigate = useNavigate();
+ const [selected, setSelected] = useState(null);
+ 
+ const mealOptions = [
+ { id: 3, label: '3 Meals', desc: 'Standard meal plan', meals: ['Breakfast', 'Lunch', 'Dinner'] },
+ { id: 4, label: '4 Meals', desc: 'With afternoon snack', meals: ['Breakfast', 'Snack', 'Lunch', 'Dinner'] },
+ { id: 5, label: '5 Meals', desc: 'For muscle building', meals: ['Breakfast', 'Snack', 'Lunch', 'Snack', 'Dinner'] }
+ ];
 
-  return (
-    <Layout title="How many meals per day?" subtitle="We'll remind you for each meal at your preferred times" showBack onBack={() => navigate(-1)}>
+ return (
+ <Layout title="How many meals per day?" subtitle="We'll remind you for each meal at your preferred times" showBack onBack={() => navigate(-1)}>
       <div style={{ maxWidth: 500, margin: '0 auto' }}>
         <div style={{ display: 'grid', gap: 14, marginBottom: 28 }}>
           {mealOptions.map(m => (
@@ -81,7 +82,7 @@ export default function MealFreqScreen() {
           alignItems: 'center',
           gap: 12
         }}>
-          <span style={{ fontSize: 20 }}>💡</span>
+          <span style={{ fontSize: 20 }}></span>
           <p style={{ fontSize: 13, color: '#059669' }}>WhatsApp will remind you 15 min before each meal!</p>
         </div>
 
@@ -106,6 +107,6 @@ export default function MealFreqScreen() {
           Set Meal Times →
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

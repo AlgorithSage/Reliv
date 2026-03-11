@@ -1,22 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function ReturnDailyAgainScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
 
-  const lastCeleb = localStorage.getItem('celebrity') || 'virat';
-  const celebEmojis = {
-    virat: '🏏', alia: '🧘‍♀️', salman: '💪',
-    deepika: '✨', hrithik: '🔥', priyanka: '🌟'
-  };
+ const lastCeleb = localStorage.getItem('celebrity') || 'virat';
+ const celebEmojis = {
+ virat: '', alia: '', salman: '',
+ deepika: '', hrithik: '', priyanka: ''
+ };
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShow(true), 100);
+ }, []);
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 50%, #FFEEDD 100%)',
       fontFamily: "'Inter', 'Outfit', sans-serif",
@@ -24,15 +25,15 @@ export default function ReturnDailyAgainScreen() {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 40,
-    }}>
+ }}>
       <div style={{
         maxWidth: 560,
         width: '100%',
-        background: '#FFFFFF',
+        background: '#FAFAF8',
         borderRadius: 32,
         padding: '48px 44px',
-        boxShadow: '0 24px 80px rgba(240, 105, 34, 0.1)',
-        border: '1px solid rgba(240, 105, 34, 0.1)',
+        boxShadow: '14px 14px 32px rgba(0,0,0,0.12), -14px -14px 32px rgba(255,255,255,0.6)',
+        border: 'none',
         textAlign: 'center',
         opacity: show ? 1 : 0,
         transform: show ? 'scale(1)' : 'scale(0.95)',
@@ -51,7 +52,7 @@ export default function ReturnDailyAgainScreen() {
           fontSize: 50,
           boxShadow: '0 12px 40px rgba(245, 158, 11, 0.3)',
         }}>
-          ⚡
+          
         </div>
 
         <h1 style={{
@@ -95,11 +96,11 @@ export default function ReturnDailyAgainScreen() {
             fontWeight: 700,
             padding: '5px 12px',
             borderRadius: 20,
-          }}>✓ Completed</span>
+          }}><Icon name="simple_check" size={18} /> Completed</span>
         </div>
 
         {/* Options */}
-        <div style={{ display: 'grid', gap: 14 }}>
+        <div style={{ display: 'grid', gap: 14 }}><Icon name="calendar" size={18} /><Icon name="sparkle" size={18} />
           <button
             onClick={() => {
               localStorage.setItem('planType', 'daily');
@@ -122,7 +123,7 @@ export default function ReturnDailyAgainScreen() {
               gap: 10,
             }}
           >
-            🔄 Repeat Same Plan
+             Repeat Same Plan
           </button>
 
           <button
@@ -137,22 +138,22 @@ export default function ReturnDailyAgainScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: 'pointer',
-              boxShadow: '0 10px 40px rgba(139, 92, 246, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 10,
             }}
           >
-            ✨ Try New Celebrity
+             Try New Celebrity
           </button>
 
           <button
             onClick={() => navigate('/group-type')}
             style={{
               width: '100%',
-              background: '#FFFFFF',
-              border: '2px solid #E5E7EB',
+              background: '#FAFAF8',
+              border: 'none',
               borderRadius: 14,
               padding: '16px',
               fontSize: 15,
@@ -161,10 +162,10 @@ export default function ReturnDailyAgainScreen() {
               cursor: 'pointer',
             }}
           >
-            📅 Switch to Weekly Plan
+             Switch to Weekly Plan
           </button>
         </div>
       </div>
-    </div>
-  );
+ </div>
+ );
 }

@@ -1,58 +1,59 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function GoalScreen() {
-    const navigate = useNavigate();
-    const [goals, setGoals] = useState([]);
-    const [showOptions, setShowOptions] = useState(false);
+ const navigate = useNavigate();
+ const [goals, setGoals] = useState([]);
+ const [showOptions, setShowOptions] = useState(false);
 
-    const category = localStorage.getItem('category') || 'weight-loss';
+ const category = localStorage.getItem('category') || 'weight-loss';
 
-    const goalOptions = {
+ const goalOptions = {
         'weight-loss': [
-            { id: 'lose-5kg', title: 'Lose 5kg', desc: 'Achievable in 4-6 weeks', icon: '📉' },
-            { id: 'lose-10kg', title: 'Lose 10kg', desc: 'Steady 2-3 month journey', icon: '🔥' },
-            { id: 'lose-15kg', title: 'Lose 15kg+', desc: 'Long-term transformation', icon: '💪' },
+            { id: 'lose-5kg', title: 'Lose 5kg', desc: 'Achievable in 4-6 weeks', icon: 'chart_down' },
+            { id: 'lose-10kg', title: 'Lose 10kg', desc: 'Steady 2-3 month journey', icon: 'fire' },
+            { id: 'lose-15kg', title: 'Lose 15kg+', desc: 'Long-term transformation', icon: 'muscle' },
         ],
         'muscle-gain': [
-            { id: 'tone', title: 'Get Toned', desc: 'Build lean muscle', icon: '💪' },
-            { id: 'bulk', title: 'Bulk Up', desc: 'Serious mass gain', icon: '🏋️' },
-            { id: 'strength', title: 'Get Stronger', desc: 'Focus on power', icon: '⚡' },
+            { id: 'tone', title: 'Get Toned', desc: 'Build lean muscle', icon: 'muscle' },
+            { id: 'bulk', title: 'Bulk Up', desc: 'Serious mass gain', icon: 'weightlifting' },
+            { id: 'strength', title: 'Get Stronger', desc: 'Focus on power', icon: 'lightning' },
         ],
         'healthy-eating': [
-            { id: 'balanced', title: 'Balanced Diet', desc: 'All-round nutrition', icon: '🥗' },
-            { id: 'cleanse', title: '7-Day Cleanse', desc: 'Reset your body', icon: '🧹' },
-            { id: 'maintain', title: 'Maintain Weight', desc: 'Stay where you are', icon: '⚖️' },
+            { id: 'balanced', title: 'Balanced Diet', desc: 'All-round nutrition', icon: 'salad' },
+            { id: 'cleanse', title: '7-Day Cleanse', desc: 'Reset your body', icon: 'broom' },
+            { id: 'maintain', title: 'Maintain Weight', desc: 'Stay where you are', icon: 'balance_scale' },
         ],
         default: [
-            { id: 'general', title: 'General Wellness', desc: 'Feel better overall', icon: '✨' },
-            { id: 'energy', title: 'More Energy', desc: 'Stay active all day', icon: '⚡' },
-            { id: 'sleep', title: 'Better Sleep', desc: 'Rest & recover', icon: '😴' },
+            { id: 'general', title: 'General Wellness', desc: 'Feel better overall', icon: 'sparkle' },
+            { id: 'energy', title: 'More Energy', desc: 'Stay active all day', icon: 'lightning' },
+            { id: 'sleep', title: 'Better Sleep', desc: 'Rest & recover', icon: 'sleeping' },
         ],
-    };
+ };
 
-    const options = goalOptions[category] || goalOptions.default;
+ const options = goalOptions[category] || goalOptions.default;
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowOptions(true), 100);
-    }, []);
+ }, []);
 
-    const toggleGoal = (id) => {
+ const toggleGoal = (id) => {
         setGoals(prev =>
             prev.includes(id)
                 ? prev.filter(g => g !== id)
                 : [...prev, id]
         );
-    };
+ };
 
-    const handleContinue = () => {
+ const handleContinue = () => {
         if (goals.length === 0) return;
         localStorage.setItem('goals', JSON.stringify(goals));
         navigate('/meal-time');
-    };
+ };
 
-    return (
+ return (
         <Layout
             title="Set Your Target"
             subtitle="What do you want to achieve?"
@@ -69,9 +70,9 @@ export default function GoalScreen() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 14,
-                    border: '1px solid #FFD296',
+                    border: 'none',
                 }}>
-                    <span style={{ fontSize: 24 }}>💡</span>
+                    <span style={{ fontSize: 24 }}></span>
                     <p style={{ fontSize: 14, color: '#666', margin: 0, lineHeight: 1.5 }}>
                         Select one or more goals. We'll create a plan that addresses all of them.
                     </p>
@@ -137,22 +138,7 @@ export default function GoalScreen() {
                                 </div>
 
                                 {/* Icon */}
-                                <div style={{
-                                    width: 56,
-                                    height: 56,
-                                    background: isSelected
-                                        ? 'linear-gradient(135deg, #FFF5F0 0%, #FFEEDD 100%)'
-                                        : '#F5F5F5',
-                                    borderRadius: 16,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: 28,
-                                    transition: 'all 0.3s ease',
-                                    flexShrink: 0,
-                                }}>
-                                    {opt.icon}
-                                </div>
+                                <Icon name={opt.icon} size={28} />
 
                                 {/* Content */}
                                 <div style={{ flex: 1 }}>
@@ -195,5 +181,5 @@ export default function GoalScreen() {
                 </button>
             </div>
         </Layout>
-    );
+ );
 }

@@ -1,37 +1,38 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function BotPairingScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [activeStep, setActiveStep] = useState(-1);
-  const canvasRef = useRef(null);
-  const pairingCode = localStorage.getItem('botPairingCode') || 'A3X9K2';
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [activeStep, setActiveStep] = useState(-1);
+ const canvasRef = useRef(null);
+ const pairingCode = localStorage.getItem('botPairingCode') || 'A3X9K2';
 
-  useEffect(() => { setTimeout(() => setShow(true), 150); }, []);
+ useEffect(() => { setTimeout(() => setShow(true), 150); }, []);
 
-  // Stagger step reveals
-  useEffect(() => {
-    if (!show) return;
-    const timers = steps.map((_, i) => setTimeout(() => setActiveStep(i), 600 + i * 200));
-    return () => timers.forEach(clearTimeout);
-  }, [show]);
+ // Stagger step reveals
+ useEffect(() => {
+ if (!show) return;
+ const timers = steps.map((_, i) => setTimeout(() => setActiveStep(i), 600 + i * 200));
+ return () => timers.forEach(clearTimeout);
+ }, [show]);
 
-  // Particle canvas
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = canvas.offsetWidth, H = canvas.offsetHeight;
-    const particles = Array.from({ length: 30 }, () => ({
+ // Particle canvas
+ useEffect(() => {
+ const canvas = canvasRef.current; if (!canvas) return;
+ const ctx = canvas.getContext('2d');
+ canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2;
+ ctx.scale(2, 2);
+ const W = canvas.offsetWidth, H = canvas.offsetHeight;
+ const particles = Array.from({ length: 30 }, () => ({
       x: Math.random() * W, y: Math.random() * H, r: 1.5 + Math.random() * 2,
       dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
       opacity: 0.12 + Math.random() * 0.2,
       color: ['#F06922', '#22C55E', '#3B82F6', '#8B5CF6'][Math.floor(Math.random() * 4)],
-    }));
-    let id;
-    const draw = () => {
+ }));
+ let id;
+ const draw = () => {
       ctx.clearRect(0, 0, W, H);
       particles.forEach(p => {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -41,27 +42,26 @@ export default function BotPairingScreen() {
         if (p.y < 0 || p.y > H) p.dy *= -1;
       });
       ctx.globalAlpha = 1; id = requestAnimationFrame(draw);
-    };
-    draw(); return () => cancelAnimationFrame(id);
-  }, []);
+ };
+ draw(); return () => cancelAnimationFrame(id);
+ }, []);
 
-  const steps = [
-    { num: 1, icon: '📦', text: 'Take bot home (pick up at counter)', color: '#F06922' },
-    { num: 2, icon: '🔌', text: 'Power on with USB cable', color: '#3B82F6' },
-    { num: 3, icon: '📟', text: 'Wait for "READY!" on OLED screen', color: '#8B5CF6' },
-    { num: 4, icon: '💻', text: 'Open Serial Monitor (115200 baud)', color: '#EC4899' },
-    { num: 5, icon: '⌨️', text: `Type: PAIR ${pairingCode}`, color: '#22C55E' },
-    { num: 6, icon: '✨', text: 'Bot syncs in seconds — done!', color: '#F59E0B' },
-  ];
+ const steps = [
+ { num: 1, icon: 'package', text: 'Take bot home (pick up at counter)', color: '#F06922' },
+ { num: 2, icon: 'plug', text: 'Power on with USB cable', color: '#3B82F6' },
+ { num: 3, icon: 'pager', text: 'Wait for "READY!" on OLED screen', color: '#8B5CF6' },
+ { num: 4, icon: 'laptop', text: 'Open Serial Monitor (115200 baud)', color: '#EC4899' },
+ { num: 5, icon: '⌨', text: `Type: PAIR ${pairingCode}`, color: '#22C55E' },
+ { num: 6, icon: 'sparkle', text: 'Bot syncs in seconds — done!', color: '#F59E0B' },
+ ];
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #0F0F12 0%, #1A1A2E 40%, #16213E 100%)',
       fontFamily: "'Inter', 'Outfit', sans-serif",
       position: 'relative', overflow: 'hidden',
-    }}>
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
+ }}><canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
 
       {/* Gradient orbs */}
       <div style={{ position: 'absolute', top: -80, right: -80, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%)', animation: 'floatOrb1 8s ease-in-out infinite', pointerEvents: 'none' }} />
@@ -79,7 +79,7 @@ export default function BotPairingScreen() {
           background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
           borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
           fontSize: 14, fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start',
-          backdropFilter: 'blur(20px)',
+          backdropFilter: 'none',
         }}>← Back</button>
 
         {/* Success badge */}
@@ -89,9 +89,9 @@ export default function BotPairingScreen() {
             background: 'linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))',
             borderRadius: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 44, border: '2px solid rgba(34,197,94,0.3)',
-            boxShadow: '0 12px 40px rgba(34,197,94,0.2)',
+            boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
             animation: 'bounceIn 0.6s ease',
-          }}>🎉</div>
+          }}></div>
           <h1 style={{
             fontSize: 26, fontWeight: 800, marginBottom: 6,
             background: 'linear-gradient(135deg, #22C55E, #4ADE80)',
@@ -103,7 +103,7 @@ export default function BotPairingScreen() {
         {/* Pairing code card */}
         <div style={{
           background: 'rgba(255,255,255,0.04)',
-          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
+          backdropFilter: 'none', WebkitbackdropFilter: 'none',
           borderRadius: 24, padding: '32px 24px',
           border: '1px solid rgba(240,105,34,0.2)',
           boxShadow: '0 16px 60px rgba(240,105,34,0.15)',
@@ -124,7 +124,7 @@ export default function BotPairingScreen() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 28, fontWeight: 900, color: '#F06922',
                 border: '1px solid rgba(240,105,34,0.25)',
-                boxShadow: '0 4px 20px rgba(240,105,34,0.15)',
+                boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
                 fontFamily: "'Outfit', monospace",
                 animation: `popIn 0.35s ease ${i * 0.08}s both`,
               }}>
@@ -132,20 +132,18 @@ export default function BotPairingScreen() {
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 16, fontSize: 12, color: 'rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-            <span style={{ fontSize: 14 }}>📱</span> Code also sent to your WhatsApp
+          <div style={{ marginTop: 16, fontSize: 12, color: 'rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><span style={{ fontSize: 14 }}></span> Code also sent to your WhatsApp
           </div>
         </div>
 
         {/* Setup Steps */}
         <div style={{
           background: 'rgba(255,255,255,0.04)',
-          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
+          backdropFilter: 'none', WebkitbackdropFilter: 'none',
           borderRadius: 22, padding: '28px 24px',
           border: '1px solid rgba(255,255,255,0.06)',
-        }}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 20 }}>
-            📋 6-Step Setup Guide
+        }}><h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 20 }}>
+             6-Step Setup Guide
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {steps.map((s, i) => (
@@ -162,9 +160,7 @@ export default function BotPairingScreen() {
                   fontSize: 20, flexShrink: 0,
                   border: `1px solid ${s.color}30`,
                   boxShadow: `0 4px 16px ${s.color}15`,
-                }}>
-                  {s.icon}
-                </div>
+                }}><Icon name={s.icon} size={20} /></div>
                 <div>
                   <span style={{ fontSize: 11, fontWeight: 700, color: s.color, textTransform: 'uppercase', letterSpacing: 1 }}>Step {s.num}</span>
                   <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', fontWeight: 600 }}>{s.text}</div>
@@ -180,8 +176,7 @@ export default function BotPairingScreen() {
           border: '1px solid rgba(34,197,94,0.15)',
           borderRadius: 16, padding: '16px 20px',
           display: 'flex', gap: 12, alignItems: 'center',
-        }}>
-          <span style={{ fontSize: 22 }}>💡</span>
+        }}><span style={{ fontSize: 22 }}></span>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
             <strong style={{ color: 'rgba(255,255,255,0.8)' }}>Tip:</strong> Bot auto-connects to WiFi. If not, type{' '}
             <code style={{ background: 'rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 6, fontSize: 11, color: '#F06922' }}>WIFI yourSSID yourPassword</code> in Serial Monitor.
@@ -195,7 +190,7 @@ export default function BotPairingScreen() {
             width: '100%', border: 'none', borderRadius: 16, padding: '18px',
             fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
             background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
-            boxShadow: '0 12px 40px rgba(240,105,34,0.35)',
+            boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
             position: 'relative', overflow: 'hidden',
           }}
         >
@@ -215,6 +210,6 @@ export default function BotPairingScreen() {
         @keyframes popIn { 0% { transform: scale(0) rotate(-10deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
         @keyframes btnShimmer { 0% { left: -100%; } 100% { left: 200%; } }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

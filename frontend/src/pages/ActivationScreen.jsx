@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function ActivationScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [confetti, setConfetti] = useState([]);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [confetti, setConfetti] = useState([]);
 
-  const accessCode = localStorage.getItem('accessCode') || '6241';
+ const accessCode = localStorage.getItem('accessCode') || '6241';
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 100);
+ useEffect(() => {
+ setTimeout(() => setShow(true), 100);
 
-    // Generate confetti
-    const newConfetti = [];
-    for (let i = 0; i < 50; i++) {
+ // Generate confetti
+ const newConfetti = [];
+ for (let i = 0; i < 50; i++) {
       newConfetti.push({
         id: i,
         left: Math.random() * 100,
@@ -21,12 +22,12 @@ export default function ActivationScreen() {
         duration: 3 + Math.random() * 2,
         color: ['#F06922', '#22C55E', '#3B82F6', '#EC4899', '#FFD296'][Math.floor(Math.random() * 5)],
       });
-    }
-    setConfetti(newConfetti);
-  }, []);
+ }
+ setConfetti(newConfetti);
+ }, []);
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 50%, #FFEEDD 100%)',
       fontFamily: "'Inter', 'Outfit', sans-serif",
@@ -36,7 +37,7 @@ export default function ActivationScreen() {
       padding: 40,
       position: 'relative',
       overflow: 'hidden',
-    }}>
+ }}>
       {/* Confetti */}
       {confetti.map((c) => (
         <div
@@ -59,11 +60,11 @@ export default function ActivationScreen() {
       <div style={{
         maxWidth: 560,
         width: '100%',
-        background: '#FFFFFF',
+        background: '#FAFAF8',
         borderRadius: 32,
         padding: '56px 48px',
-        boxShadow: '0 24px 80px rgba(240, 105, 34, 0.15)',
-        border: '1px solid rgba(240, 105, 34, 0.1)',
+        boxShadow: '14px 14px 32px rgba(0,0,0,0.12), -14px -14px 32px rgba(255,255,255,0.6)',
+        border: 'none',
         textAlign: 'center',
         position: 'relative',
         zIndex: 1,
@@ -81,7 +82,7 @@ export default function ActivationScreen() {
           alignItems: 'center',
           justifyContent: 'center',
           margin: '0 auto 32px',
-          boxShadow: '0 16px 50px rgba(34, 197, 94, 0.35)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5)',
           animation: 'pulse 2s ease-in-out infinite',
         }}>
           <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -97,7 +98,7 @@ export default function ActivationScreen() {
           marginBottom: 12,
           letterSpacing: '-1px',
         }}>
-          🎉 You're All Set!
+          You're All Set!
         </h1>
 
         <p style={{
@@ -116,8 +117,7 @@ export default function ActivationScreen() {
           padding: '28px 32px',
           marginBottom: 32,
           border: '2px solid #FFD296',
-        }}>
-          <p style={{
+        }}><p style={{
             fontSize: 13,
             color: '#9CA3AF',
             textTransform: 'uppercase',
@@ -125,7 +125,7 @@ export default function ActivationScreen() {
             fontWeight: 600,
             marginBottom: 14,
           }}>
-            🔑 Your Access Code
+             Your Access Code
           </p>
           <div style={{
             display: 'flex',
@@ -138,7 +138,7 @@ export default function ActivationScreen() {
                 style={{
                   width: 56,
                   height: 68,
-                  background: '#FFFFFF',
+                  background: '#FAFAF8',
                   border: '2px solid #F06922',
                   borderRadius: 14,
                   display: 'flex',
@@ -170,8 +170,7 @@ export default function ActivationScreen() {
           padding: '24px',
           marginBottom: 32,
           textAlign: 'left',
-        }}>
-          <h3 style={{
+        }}><h3 style={{
             fontSize: 15,
             fontWeight: 700,
             color: '#111',
@@ -180,13 +179,13 @@ export default function ActivationScreen() {
             alignItems: 'center',
             gap: 8,
           }}>
-            <span>📋</span> What's Next?
+            <span></span> What's Next?
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
             {[
-              { step: '1', text: 'Open WhatsApp & check your messages', icon: '📱' },
-              { step: '2', text: 'Send "Hi" to start your first day', icon: '👋' },
-              { step: '3', text: 'Get your personalized meal plan!', icon: '🍽️' },
+              { step: '1', text: 'Open WhatsApp & check your messages', icon: 'phone' },
+              { step: '2', text: 'Send "Hi" to start your first day', icon: 'wave' },
+              { step: '3', text: 'Get your personalized meal plan!', icon: 'plate_cutlery' },
             ].map((item, i) => (
               <div
                 key={i}
@@ -219,8 +218,7 @@ export default function ActivationScreen() {
         </div>
 
         {/* Action Buttons */}
-        <div style={{ display: 'grid', gap: 14 }}>
-          <button
+        <div style={{ display: 'grid', gap: 14 }}><button
             onClick={() => navigate('/bot-offer')}
             style={{
               width: '100%',
@@ -232,14 +230,14 @@ export default function ActivationScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: 'pointer',
-              boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: 10,
             }}
           >
-            🤖 Get Your Pet Bot — ₹499
+             Get Your Pet Bot — ₹499
           </button>
 
           <button
@@ -271,8 +269,8 @@ export default function ActivationScreen() {
             onClick={() => navigate('/')}
             style={{
               width: '100%',
-              background: '#FFFFFF',
-              border: '2px solid #E5E7EB',
+              background: '#FAFAF8',
+              border: 'none',
               borderRadius: 14,
               padding: '16px',
               fontSize: 15,
@@ -281,7 +279,7 @@ export default function ActivationScreen() {
               cursor: 'pointer',
             }}
           >
-            🏠 Back to Home
+             Back to Home
           </button>
         </div>
       </div>
@@ -297,6 +295,6 @@ export default function ActivationScreen() {
           100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

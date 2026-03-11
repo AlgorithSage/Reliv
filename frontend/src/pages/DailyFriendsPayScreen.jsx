@@ -1,31 +1,32 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function DailyFriendsPayScreen() {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
 
-    const friendCount = parseInt(localStorage.getItem('friendCount') || '3');
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', basePrice: 15, color: '#1E40AF' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', basePrice: 12, color: '#DB2777' },
-        salman: { name: 'Salman Khan', emoji: '💪', basePrice: 15, color: '#16A34A' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', basePrice: 12, color: '#9333EA' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', basePrice: 15, color: '#DC2626' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', basePrice: 12, color: '#F59E0B' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
-    const totalPrice = info.basePrice * friendCount;
-    const perPerson = Math.round(totalPrice / friendCount);
+ const friendCount = parseInt(localStorage.getItem('friendCount') || '3');
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', basePrice: 15, color: '#1E40AF' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', basePrice: 12, color: '#DB2777' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', basePrice: 15, color: '#16A34A' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', basePrice: 12, color: '#9333EA' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', basePrice: 15, color: '#DC2626' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', basePrice: 12, color: '#F59E0B' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
+ const totalPrice = info.basePrice * friendCount;
+ const perPerson = Math.round(totalPrice / friendCount);
 
-    const handlePay = () => {
+ const handlePay = () => {
         setLoading(true);
         setTimeout(() => navigate('/activation'), 1200);
-    };
+ };
 
-    return (
+ return (
         <Layout
             title="Daily Squad Plan"
             subtitle={`${friendCount} friends, ${info.name} style`}
@@ -34,10 +35,10 @@ export default function DailyFriendsPayScreen() {
         >
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 28,
                     padding: '40px 36px',
-                    boxShadow: '0 20px 60px rgba(139, 92, 246, 0.1)',
+                    boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
                     border: '2px solid rgba(139, 92, 246, 0.15)',
                     marginBottom: 28,
                 }}>
@@ -91,15 +92,14 @@ export default function DailyFriendsPayScreen() {
                         borderRadius: 16,
                         padding: '20px',
                         marginBottom: 28,
-                    }}>
-                        {[
+                    }}>{[
                             'Celebrity-inspired meals for everyone',
                             'Individual WhatsApp reminders',
                             'Group accountability',
                             'Compete with friends!',
                         ].map((f, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0' }}>
-                                <span style={{ color: '#22C55E' }}>✓</span>
+                                <span style={{ color: '#22C55E' }}></span>
                                 <span style={{ fontSize: 14, color: '#333' }}>{f}</span>
                             </div>
                         ))}
@@ -129,7 +129,7 @@ export default function DailyFriendsPayScreen() {
                             fontWeight: 700,
                             color: '#FFFFFF',
                             cursor: loading ? 'not-allowed' : 'pointer',
-                            boxShadow: '0 10px 40px rgba(139, 92, 246, 0.35)',
+                            boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -149,13 +149,13 @@ export default function DailyFriendsPayScreen() {
                                 Processing...
                             </>
                         ) : (
-                            `💳 Pay ₹${totalPrice}`
+                            `Pay ₹${totalPrice}`
                         )}
                     </button>
                 </div>
 
                 <p style={{ textAlign: 'center', fontSize: 13, color: '#9CA3AF' }}>
-                    🔒 Secure payment • Valid for 24 hours
+                    Secure payment • Valid for 24 hours
                 </p>
             </div>
 
@@ -166,5 +166,5 @@ export default function DailyFriendsPayScreen() {
         }
       `}</style>
         </Layout>
-    );
+ );
 }

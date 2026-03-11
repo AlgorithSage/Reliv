@@ -1,49 +1,50 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 /**
  * S35 — Acne Photo Uploaded / ML Results
  * Displays the AI analysis results after photo upload.
  */
 export default function AcnePhotoUploadedScreen() {
-  const navigate = useNavigate();
-  const [analysis, setAnalysis] = useState(null);
-  const [showResults, setShowResults] = useState(false);
-  const [keepPhoto, setKeepPhoto] = useState(true);
+ const navigate = useNavigate();
+ const [analysis, setAnalysis] = useState(null);
+ const [showResults, setShowResults] = useState(false);
+ const [keepPhoto, setKeepPhoto] = useState(true);
 
-  useEffect(() => {
-    const data = localStorage.getItem('acneAnalysis');
-    if (data) {
+ useEffect(() => {
+ const data = localStorage.getItem('acneAnalysis');
+ if (data) {
       setAnalysis(JSON.parse(data));
       setTimeout(() => setShowResults(true), 300);
-    } else {
+ } else {
       navigate('/acne-manual');
-    }
-  }, [navigate]);
+ }
+ }, [navigate]);
 
-  if (!analysis) return null;
+ if (!analysis) return null;
 
-  const typeLabels = {
-    active_acne: { label: 'Active Acne', icon: '🔴', color: '#EF4444' },
-    blackheads:  { label: 'Blackheads',  icon: '⚫', color: '#374151' },
-    whiteheads:  { label: 'Whiteheads',  icon: '⚪', color: '#9CA3AF' },
-    acne_scars:  { label: 'Acne Scars',  icon: '🟤', color: '#92400E' },
-    mixed:       { label: 'Mixed Types',  icon: '🎨', color: '#8B5CF6' },
-  };
+ const typeLabels = {
+ active_acne: { label: 'Active Acne', icon: 'red_circle', color: '#EF4444' },
+ blackheads: { label: 'Blackheads', icon: 'black_circle', color: '#374151' },
+ whiteheads: { label: 'Whiteheads', icon: 'white_circle', color: '#9CA3AF' },
+ acne_scars: { label: 'Acne Scars', icon: 'brown_circle', color: '#92400E' },
+ mixed:       { label: 'Mixed Types', icon: 'palette', color: '#8B5CF6' },
+ };
 
-  const severityMap = {
-    mild:     { label: 'Mild',     color: '#22C55E', bar: 25 },
-    moderate: { label: 'Moderate', color: '#FFA500', bar: 55 },
-    severe:   { label: 'Severe',   color: '#EF4444', bar: 85 },
-  };
+ const severityMap = {
+ mild:     { label: 'Mild',     color: '#22C55E', bar: 25 },
+ moderate: { label: 'Moderate', color: '#FFA500', bar: 55 },
+ severe: { label: 'Severe', color: '#EF4444', bar: 85 },
+ };
 
-  const typeInfo = typeLabels[analysis.type] || typeLabels.active_acne;
-  const sevInfo = severityMap[analysis.severity] || severityMap.moderate;
-  const confidence = Math.round((analysis.confidence || 0.87) * 100);
+ const typeInfo = typeLabels[analysis.type] || typeLabels.active_acne;
+ const sevInfo = severityMap[analysis.severity] || severityMap.moderate;
+ const confidence = Math.round((analysis.confidence || 0.87) * 100);
 
-  return (
-    <Layout title="🔬 Analysis Results" subtitle="AI Skin Diagnosis" showBack onBack={() => navigate(-1)}>
+ return (
+ <Layout title="Analysis Results" subtitle="AI Skin Diagnosis" showBack onBack={() => navigate(-1)}>
       <div style={{
         maxWidth: 640,
         margin: '0 auto',
@@ -63,7 +64,7 @@ export default function AcnePhotoUploadedScreen() {
           boxShadow: `0 8px 30px ${typeInfo.color}15`,
           textAlign: 'center',
         }}>
-          <div style={{ fontSize: 52, marginBottom: 12 }}>{typeInfo.icon}</div>
+          <Icon name={typeInfo.icon} size={52} />
           <h2 style={{ fontSize: 24, fontWeight: 800, color: typeInfo.color, marginBottom: 6 }}>
             {typeInfo.label}
           </h2>
@@ -74,11 +75,11 @@ export default function AcnePhotoUploadedScreen() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
           {/* Severity */}
           <div style={{
-            background: '#FFF',
+            background: '#FAFAF8',
             borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
-            border: '1px solid #E5E7EB',
+            border: 'none',
           }}>
             <div style={{ fontSize: 12, color: '#9CA3AF', fontWeight: 600, marginBottom: 6 }}>SEVERITY</div>
             <div style={{ fontSize: 18, fontWeight: 800, color: sevInfo.color }}>{sevInfo.label}</div>
@@ -89,11 +90,11 @@ export default function AcnePhotoUploadedScreen() {
 
           {/* Location */}
           <div style={{
-            background: '#FFF',
+            background: '#FAFAF8',
             borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
-            border: '1px solid #E5E7EB',
+            border: 'none',
           }}>
             <div style={{ fontSize: 12, color: '#9CA3AF', fontWeight: 600, marginBottom: 6 }}>LOCATION</div>
             <div style={{ fontSize: 14, fontWeight: 700, color: '#2D3436' }}>
@@ -103,11 +104,11 @@ export default function AcnePhotoUploadedScreen() {
 
           {/* Lesion Count */}
           <div style={{
-            background: '#FFF',
+            background: '#FAFAF8',
             borderRadius: 14,
             padding: '16px',
             textAlign: 'center',
-            border: '1px solid #E5E7EB',
+            border: 'none',
           }}>
             <div style={{ fontSize: 12, color: '#9CA3AF', fontWeight: 600, marginBottom: 6 }}>LESIONS</div>
             <div style={{ fontSize: 24, fontWeight: 800, color: '#F06922' }}>
@@ -124,7 +125,7 @@ export default function AcnePhotoUploadedScreen() {
           padding: '24px',
         }}>
           <h3 style={{ fontSize: 16, fontWeight: 800, color: '#F06922', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-            💡 Recommendations
+             Recommendations
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {(analysis.recommendations || []).map((rec, i) => (
@@ -149,9 +150,9 @@ export default function AcnePhotoUploadedScreen() {
           border: '1px solid rgba(0,184,148,0.2)',
           borderRadius: 16,
           padding: '20px 24px',
-        }}>
+        }}><Icon name="card_dividers" size={18} />
           <h3 style={{ fontSize: 15, fontWeight: 700, color: '#00B894', marginBottom: 12 }}>
-            🔐 Photo Privacy
+             Photo Privacy
           </h3>
           <div style={{ display: 'flex', gap: 12 }}>
             <button
@@ -169,7 +170,7 @@ export default function AcnePhotoUploadedScreen() {
                 transition: 'all 0.2s',
               }}
             >
-              🗂️ Keep Photo
+               Keep Photo
               <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>For progress tracking</div>
             </button>
             <button
@@ -187,7 +188,7 @@ export default function AcnePhotoUploadedScreen() {
                 transition: 'all 0.2s',
               }}
             >
-              🗑️ Delete Photo
+              <Icon name="trash" size={18} /> Delete Photo
               <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>Remove after analysis</div>
             </button>
           </div>
@@ -218,6 +219,6 @@ export default function AcnePhotoUploadedScreen() {
           Get My Skincare Routine →
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

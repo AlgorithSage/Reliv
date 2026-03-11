@@ -1,28 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function DailyPartnerPayScreen() {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', price: 26, color: '#1E40AF' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', price: 22, color: '#DB2777' },
-        salman: { name: 'Salman Khan', emoji: '💪', price: 26, color: '#16A34A' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', price: 22, color: '#9333EA' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', price: 26, color: '#DC2626' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', price: 22, color: '#F59E0B' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 26, color: '#1E40AF' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', price: 22, color: '#DB2777' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', price: 26, color: '#16A34A' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', price: 22, color: '#9333EA' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', price: 26, color: '#DC2626' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', price: 22, color: '#F59E0B' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    const handlePay = () => {
+ const handlePay = () => {
         setLoading(true);
         setTimeout(() => navigate('/activation'), 1200);
-    };
+ };
 
-    return (
+ return (
         <Layout
             title="Daily Partner Plan"
             subtitle={`Both of you, ${info.name} style`}
@@ -31,10 +32,10 @@ export default function DailyPartnerPayScreen() {
         >
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 28,
                     padding: '40px 36px',
-                    boxShadow: '0 20px 60px rgba(236, 72, 153, 0.1)',
+                    boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
                     border: '2px solid rgba(236, 72, 153, 0.15)',
                     marginBottom: 28,
                 }}>
@@ -59,19 +60,7 @@ export default function DailyPartnerPayScreen() {
                             {info.emoji}
                         </div>
                         <span style={{ fontSize: 24, color: '#EC4899' }}>+</span>
-                        <div style={{
-                            width: 70,
-                            height: 70,
-                            background: 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)',
-                            borderRadius: 20,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 36,
-                        }}>
-                            💑
                         </div>
-                    </div>
 
                     <h2 style={{ textAlign: 'center', fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 8 }}>
                         {info.name} Style × 2
@@ -86,14 +75,13 @@ export default function DailyPartnerPayScreen() {
                         borderRadius: 16,
                         padding: '20px',
                         marginBottom: 28,
-                    }}>
-                        {[
+                    }}>{[
                             'Same celebrity-inspired meals',
                             'Separate WhatsApp reminders',
                             'Couple-friendly portions',
                         ].map((f, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0' }}>
-                                <span style={{ color: '#22C55E' }}>✓</span>
+                                <span style={{ color: '#22C55E' }}></span>
                                 <span style={{ fontSize: 14, color: '#333' }}>{f}</span>
                             </div>
                         ))}
@@ -123,7 +111,7 @@ export default function DailyPartnerPayScreen() {
                             fontWeight: 700,
                             color: '#FFFFFF',
                             cursor: loading ? 'not-allowed' : 'pointer',
-                            boxShadow: '0 10px 40px rgba(236, 72, 153, 0.35)',
+                            boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -143,13 +131,13 @@ export default function DailyPartnerPayScreen() {
                                 Processing...
                             </>
                         ) : (
-                            `💳 Pay ₹${info.price}`
+                            `Pay ₹${info.price}`
                         )}
                     </button>
                 </div>
 
                 <p style={{ textAlign: 'center', fontSize: 13, color: '#9CA3AF' }}>
-                    🔒 Secure payment • Valid for 24 hours
+                    Secure payment • Valid for 24 hours
                 </p>
             </div>
 
@@ -160,5 +148,5 @@ export default function DailyPartnerPayScreen() {
         }
       `}</style>
         </Layout>
-    );
+ );
 }

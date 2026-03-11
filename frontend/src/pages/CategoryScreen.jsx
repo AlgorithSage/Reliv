@@ -1,75 +1,76 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function CategoryScreen() {
-  const navigate = useNavigate();
-  const [selected, setSelected] = useState(null);
-  const [hovered, setHovered] = useState(null);
-  const [showCards, setShowCards] = useState(false);
+ const navigate = useNavigate();
+ const [selected, setSelected] = useState(null);
+ const [hovered, setHovered] = useState(null);
+ const [showCards, setShowCards] = useState(false);
 
-  // Check if hero training was selected
-  const heroTraining = localStorage.getItem('heroTraining') === 'true';
-  const celebrityName = localStorage.getItem('celebrityName') || '';
-  const selectedCelebrity = localStorage.getItem('selectedCelebrity') || '';
+ // Check if hero training was selected
+ const heroTraining = localStorage.getItem('heroTraining') === 'true';
+ const celebrityName = localStorage.getItem('celebrityName') || '';
+ const selectedCelebrity = localStorage.getItem('selectedCelebrity') || '';
 
-  // Get hero-specific data
-  const heroData = {
-    'ronaldo': { icon: '⚽', color: '#16A34A', desc: 'CR7 Performance Routine - Speed & Stamina' },
-    'messi': { icon: '🐐', color: '#3B82F6', desc: 'The Magician\'s Routine - Agility & Mind' },
-    'neymar': { icon: '🌟', color: '#8B5CF6', desc: 'Skill Master Routine - Flexibility' },
-    'dhoni': { icon: '🏏', color: '#1E40AF', desc: 'Captain Cool Routine - Leadership & Focus' },
-    'kohli': { icon: '💪', color: '#DC2626', desc: 'King Kohli Routine - Fitness & Intensity' },
-    'rohit': { icon: '🎯', color: '#0891B2', desc: 'Hitman Routine - Balance & Power' },
-    'srk': { icon: '👑', color: '#F59E0B', desc: 'King Khan Transformation - Discipline' },
-    'salman': { icon: '💪', color: '#EF4444', desc: 'Bhai Workout - Muscle Building' },
-    'akshay': { icon: '🥋', color: '#F97316', desc: 'Khiladi Routine - Martial Arts' },
-  };
+ // Get hero-specific data
+ const heroData = {
+ 'ronaldo': { icon: 'football', color: '#16A34A', desc: 'CR7 Performance Routine - Speed & Stamina' },
+ 'messi': { icon: 'goat_messi', color: '#3B82F6', desc: 'The Magician\'s Routine - Agility & Mind' },
+ 'neymar': { icon: 'star_glow', color: '#8B5CF6', desc: 'Skill Master Routine - Flexibility' },
+ 'dhoni': { icon: 'cricket_bat', color: '#1E40AF', desc: 'Captain Cool Routine - Leadership & Focus' },
+ 'kohli': { icon: 'muscle', color: '#DC2626', desc: 'King Kohli Routine - Fitness & Intensity' },
+ 'rohit': { icon: 'target', color: '#0891B2', desc: 'Hitman Routine - Balance & Power' },
+ 'srk': { icon: 'crown', color: '#F59E0B', desc: 'King Khan Transformation - Discipline' },
+ 'salman': { icon: 'muscle', color: '#EF4444', desc: 'Bhai Workout - Muscle Building' },
+ 'akshay': { icon: 'martial_arts', color: '#F97316', desc: 'Khiladi Routine - Martial Arts' },
+ };
 
-  const currentHero = heroData[selectedCelebrity] || null;
+ const currentHero = heroData[selectedCelebrity] || null;
 
-  // Base categories
-  const baseCategories = [
-    {
+ // Base categories
+ const baseCategories = [
+ {
       id: 'muscle',
       title: 'Build Muscle / Abs',
       desc: 'Get stronger and build your dream body',
-      icon: '💪',
+      icon: 'muscle',
       color: '#3B82F6',
-    },
-    {
+ },
+ {
       id: 'weight-loss',
       title: 'Lose Weight / Diet',
       desc: 'Burn fat and get lean',
-      icon: '🥗',
+      icon: 'salad',
       color: '#22C55E',
-    },
-    {
+ },
+ {
       id: 'acne',
       title: 'Clear Acne / Skin',
       desc: 'Get clear, glowing skin',
-      icon: '🧴',
+      icon: 'lotion',
       color: '#EC4899',
-    },
-    {
+ },
+ {
       id: 'first-aid',
       title: 'First Aid / Quick Help',
       desc: 'Burns, cuts, headaches - instant remedies',
-      icon: '🩹',
+      icon: 'bandaid',
       color: '#EF4444',
-    },
-    {
+ },
+ {
       id: 'general',
       title: 'General Health',
       desc: 'Overall wellness and daily health tips',
-      icon: '💊',
+      icon: 'pill',
       color: '#8B5CF6',
-    },
-  ];
+ },
+ ];
 
-  // Add hero category at top if hero training selected
-  const categories = heroTraining && currentHero ? [
-    {
+ // Add hero category at top if hero training selected
+ const categories = heroTraining && currentHero ? [
+ {
       id: 'hero-training',
       title: `Train with ${celebrityName}`,
       desc: currentHero.desc,
@@ -77,42 +78,41 @@ export default function CategoryScreen() {
       color: currentHero.color,
       hero: true,
       isHeroTraining: true,
-    },
-    ...baseCategories
-  ] : baseCategories;
+ },
+ ...baseCategories
+ ] : baseCategories;
 
-  useEffect(() => {
-    setTimeout(() => setShowCards(true), 100);
-    // Auto-select hero training if available
-    if (heroTraining && currentHero) {
+ useEffect(() => {
+ setTimeout(() => setShowCards(true), 100);
+ // Auto-select hero training if available
+ if (heroTraining && currentHero) {
       setSelected('hero-training');
-    }
-  }, []);
+ }
+ }, []);
 
-  const handleContinue = () => {
-    if (!selected) return;
-    localStorage.setItem('category', selected);
+ const handleContinue = () => {
+ if (!selected) return;
+ localStorage.setItem('category', selected);
 
-    // If hero training selected, go to hero routine screen
-    if (selected === 'hero-training') {
+ // If hero training selected, go to hero routine screen
+ if (selected === 'hero-training') {
       navigate('/hero-routine');
-    } else if (selected === 'acne') {
+ } else if (selected === 'acne') {
       // Acne/Skin flow → photo QR upload first
       navigate('/acne-photo-qr');
-    } else {
+ } else {
       navigate('/meal-freq');
-    }
-  };
+ }
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="What are you here for?"
       subtitle="Select your health goal"
       showBack
       onBack={() => navigate(-1)}
-    >
-      <div style={{ maxWidth: 700, margin: '0 auto' }}>
-        {/* Categories Grid */}
+ >
+      <div style={{ maxWidth: 700, margin: '0 auto' }}>{/* Categories Grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
@@ -178,7 +178,7 @@ export default function CategoryScreen() {
                   letterSpacing: '0.5px',
                   boxShadow: `0 4px 15px ${c.color}50`,
                 }}>
-                  🔥 Your Challenge
+                   Your Challenge
                 </div>
               )}
 
@@ -214,9 +214,7 @@ export default function CategoryScreen() {
                 justifyContent: 'center',
                 margin: '0 auto 16px',
                 fontSize: c.isHeroTraining ? 40 : 34,
-              }}>
-                {c.icon}
-              </div>
+              }}><Icon name={c.icon} size={20} /></div>
 
               {/* Title */}
               <h3 style={{
@@ -245,9 +243,8 @@ export default function CategoryScreen() {
                   background: '#FEF3C7',
                   borderRadius: 10,
                   border: '1px solid #FCD34D',
-                }}>
-                  <span style={{ fontSize: 12, color: '#92400E', fontWeight: 600 }}>
-                    ⚡ Full day schedule + diet + workout
+                }}><span style={{ fontSize: 12, color: '#92400E', fontWeight: 600 }}>
+                     Full day schedule + diet + workout
                   </span>
                 </div>
               )}
@@ -284,6 +281,6 @@ export default function CategoryScreen() {
           {selected === 'hero-training' ? `Start ${celebrityName} Challenge →` : 'Continue →'}
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

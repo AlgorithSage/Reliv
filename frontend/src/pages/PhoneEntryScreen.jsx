@@ -2,43 +2,43 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function PhoneEntryScreen() {
-  const navigate = useNavigate();
-  const [phone, setPhone] = useState('');
-  const [referral, setReferral] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [focused, setFocused] = useState(null);
+ const navigate = useNavigate();
+ const [phone, setPhone] = useState('');
+ const [referral, setReferral] = useState('');
+ const [loading, setLoading] = useState(false);
+ const [error, setError] = useState('');
+ const [focused, setFocused] = useState(null);
 
-  const handleSubmit = async () => {
-    if (phone.length !== 10) return setError('Enter valid 10-digit number');
-    setLoading(true);
-    setError('');
-    try {
+ const handleSubmit = async () => {
+ if (phone.length !== 10) return setError('Enter valid 10-digit number');
+ setLoading(true);
+ setError('');
+ try {
       const res = await api.call('/auth/send-otp', {
         method: 'POST',
         body: JSON.stringify({ phone: `+91${phone}`, referralCode: referral })
       });
       if (res.alreadyUsedTrial) navigate('/returning-pay', { state: { phone: `+91${phone}` } });
       else navigate('/otp', { state: { phone: `+91${phone}`, sessionId: res.sessionId } });
-    } catch (err) {
+ } catch (err) {
       navigate('/otp', { state: { phone: `+91${phone}`, sessionId: 'demo' } });
-    } finally {
+ } finally {
       setLoading(false);
-    }
-  };
+ }
+ };
 
-  return (
-    <Layout title="Let's Get Started" subtitle="Enter your phone number to begin your health transformation" showBack onBack={() => navigate('/')}>
-      <div style={{ maxWidth: 520, margin: '0 auto' }}>
-        {/* Main Card */}
+ return (
+ <Layout title="Let's Get Started" subtitle="Enter your phone number to begin your health transformation" showBack onBack={() => navigate('/')}>
+      <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '48px 44px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
-          border: '1px solid rgba(240, 105, 34, 0.08)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+          border: 'none',
         }}>
           {/* Icon Header */}
           <div style={{
@@ -53,12 +53,11 @@ export default function PhoneEntryScreen() {
             border: '1px solid rgba(240, 105, 34, 0.15)',
             fontSize: 40,
           }}>
-            📱
+            
           </div>
 
           {/* Phone Input Section */}
-          <div style={{ marginBottom: 28 }}>
-            <label style={{
+          <div style={{ marginBottom: 28 }}><label style={{
               display: 'block',
               fontSize: 14,
               color: '#666666',
@@ -86,7 +85,7 @@ export default function PhoneEntryScreen() {
                 color: '#F06922',
                 gap: 8,
               }}>
-                <span style={{ fontSize: 20 }}>🇮🇳</span>
+                <span style={{ fontSize: 20 }}></span>
                 +91
               </div>
 
@@ -118,8 +117,7 @@ export default function PhoneEntryScreen() {
           </div>
 
           {/* Referral Code Section */}
-          <div style={{ marginBottom: 32 }}>
-            <label style={{
+          <div style={{ marginBottom: 32 }}><label style={{
               display: 'flex',
               alignItems: 'center',
               gap: 8,
@@ -128,7 +126,7 @@ export default function PhoneEntryScreen() {
               marginBottom: 12,
               fontWeight: 600,
             }}>
-              <span style={{ fontSize: 16 }}>🎁</span>
+              <span style={{ fontSize: 16 }}></span>
               Referral Code
               <span style={{
                 background: '#E5E7EB',
@@ -173,7 +171,7 @@ export default function PhoneEntryScreen() {
               alignItems: 'center',
               gap: 6,
             }}>
-              <span>💡</span>
+              <span></span>
               Invite 3 friends → Get FREE fitness plan worth ₹49
             </p>
           </div>
@@ -190,8 +188,7 @@ export default function PhoneEntryScreen() {
               alignItems: 'center',
               gap: 12,
               animation: 'shake 0.5s ease',
-            }}>
-              <span style={{ fontSize: 20 }}>⚠️</span>
+            }}><span style={{ fontSize: 20 }}></span>
               <p style={{ fontSize: 14, color: '#DC2626', fontWeight: 600, margin: 0 }}>{error}</p>
             </div>
           )}
@@ -230,8 +227,7 @@ export default function PhoneEntryScreen() {
                   borderTopColor: '#FFFFFF',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
-                }} />
-                Sending OTP...
+                }} />Sending OTP...
               </>
             ) : (
               <>
@@ -255,7 +251,7 @@ export default function PhoneEntryScreen() {
           color: '#9CA3AF',
           fontSize: 13,
         }}>
-          <span style={{ fontSize: 16 }}>🔒</span>
+          <span style={{ fontSize: 16 }}></span>
           <span>Your data is encrypted and never shared</span>
         </div>
       </div>
@@ -272,6 +268,6 @@ export default function PhoneEntryScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

@@ -1,35 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function FanQuizResultScreen() {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const [confetti, setConfetti] = useState([]);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [confetti, setConfetti] = useState([]);
 
-    const score = parseInt(localStorage.getItem('quizScore') || '2');
-    const totalQuestions = 3;
-    const percentage = Math.round((score / totalQuestions) * 100);
+ const score = parseInt(localStorage.getItem('quizScore') || '2');
+ const totalQuestions = 3;
+ const percentage = Math.round((score / totalQuestions) * 100);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', color: '#1E40AF' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', color: '#DB2777' },
-        salman: { name: 'Salman Khan', emoji: '💪', color: '#16A34A' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', color: '#9333EA' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', color: '#DC2626' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', color: '#F59E0B' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', color: '#16A34A' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#9333EA' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#DC2626' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F59E0B' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    const resultMessages = {
-        high: { title: 'True Fan! 🌟', desc: `You really know ${info.name}!` },
-        medium: { title: 'Nice Try! 👍', desc: 'Pretty good knowledge!' },
-        low: { title: 'Keep Learning! 📚', desc: 'Time to follow them more closely!' },
-    };
+ const resultMessages = {
+        high: { title: 'True Fan!', desc: `You really know ${info.name}!` },
+        medium: { title: 'Nice Try!', desc: 'Pretty good knowledge!' },
+        low: { title: 'Keep Learning!', desc: 'Time to follow them more closely!' },
+ };
 
-    const result = percentage >= 80 ? resultMessages.high : percentage >= 50 ? resultMessages.medium : resultMessages.low;
+ const result = percentage >= 80 ? resultMessages.high : percentage >= 50 ? resultMessages.medium : resultMessages.low;
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShow(true), 100);
 
         if (percentage >= 50) {
@@ -45,9 +46,9 @@ export default function FanQuizResultScreen() {
             }
             setConfetti(newConfetti);
         }
-    }, []);
+ }, []);
 
-    return (
+ return (
         <div style={{
             minHeight: '100vh',
             background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 100%)',
@@ -80,7 +81,7 @@ export default function FanQuizResultScreen() {
             <div style={{
                 maxWidth: 520,
                 width: '100%',
-                background: '#FFFFFF',
+                background: '#FAFAF8',
                 borderRadius: 32,
                 padding: '48px 44px',
                 boxShadow: '0 24px 80px rgba(0,0,0,0.1)',
@@ -121,7 +122,7 @@ export default function FanQuizResultScreen() {
                     <div style={{
                         width: '100%',
                         height: '100%',
-                        background: '#FFFFFF',
+                        background: '#FAFAF8',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -144,8 +145,7 @@ export default function FanQuizResultScreen() {
                 </p>
 
                 {/* Actions */}
-                <div style={{ display: 'grid', gap: 14 }}>
-                    <button
+                <div style={{ display: 'grid', gap: 14 }}><button
                         onClick={() => navigate('/daily-pay')}
                         style={{
                             width: '100%',
@@ -160,15 +160,15 @@ export default function FanQuizResultScreen() {
                             boxShadow: `0 10px 40px ${info.color}40`,
                         }}
                     >
-                        🎯 Get {info.name} Plan
+                         Get {info.name} Plan
                     </button>
 
                     <button
                         onClick={() => navigate('/fan-quiz-type')}
                         style={{
                             width: '100%',
-                            background: '#FFFFFF',
-                            border: '2px solid #E5E7EB',
+                            background: '#FAFAF8',
+                            border: 'none',
                             borderRadius: 14,
                             padding: '16px',
                             fontSize: 15,
@@ -189,5 +189,5 @@ export default function FanQuizResultScreen() {
         }
       `}</style>
         </div>
-    );
+ );
 }

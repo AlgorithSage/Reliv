@@ -1,63 +1,64 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FanQuizTypeScreen() {
-  const navigate = useNavigate();
-  const [hovered, setHovered] = useState(null);
-  const [showCards, setShowCards] = useState(false);
+ const navigate = useNavigate();
+ const [hovered, setHovered] = useState(null);
+ const [showCards, setShowCards] = useState(false);
 
-  const categories = [
-    {
+ const categories = [
+ {
       id: 'cricket',
       title: 'Cricket',
-      emoji: '🏏',
+      emoji: 'cricket_bat',
       desc: 'Dhoni, Sachin, Kohli',
       color: '#1E40AF',
       route: '/fan-cricket',
-    },
-    {
+ },
+ {
       id: 'football',
       title: 'Football',
-      emoji: '⚽',
+      emoji: 'football',
       desc: 'Ronaldo, Messi, Neymar',
       color: '#16A34A',
       route: '/fan-football',
-    },
-    {
+ },
+ {
       id: 'singer',
       title: 'Singer',
-      emoji: '🎤',
+      emoji: 'microphone',
       desc: 'Arijit, Badshah, Honey Singh',
       color: '#9333EA',
       route: '/fan-singer',
-    },
-    {
+ },
+ {
       id: 'bollywood',
       title: 'Bollywood',
-      emoji: '🎬',
+      emoji: 'clapperboard',
       desc: 'SRK, Salman, Akshay',
       color: '#DC2626',
       route: '/fan-bollywood',
-    },
-  ];
+ },
+ ];
 
-  useEffect(() => {
-    setTimeout(() => setShowCards(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowCards(true), 100);
+ }, []);
 
-  const handleSelect = (category) => {
-    localStorage.setItem('fanCategory', category.id);
-    navigate(category.route);
-  };
+ const handleSelect = (category) => {
+ localStorage.setItem('fanCategory', category.id);
+ navigate(category.route);
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Who's Your Fav?"
       subtitle="Quick question!"
       showBack
       onBack={() => navigate('/group-type')}
-    >
+ >
       <div style={{ maxWidth: 560, margin: '0 auto' }}>
         {/* Category Grid - 2x2 */}
         <div style={{
@@ -73,7 +74,7 @@ export default function FanQuizTypeScreen() {
               onMouseEnter={() => setHovered(cat.id)}
               onMouseLeave={() => setHovered(null)}
               style={{
-                background: '#FFFFFF',
+                background: '#FAFAF8',
                 borderRadius: 24,
                 padding: '36px 24px',
                 textAlign: 'center',
@@ -132,13 +133,13 @@ export default function FanQuizTypeScreen() {
           padding: '20px',
           background: '#FFF9F5',
           borderRadius: 16,
-          border: '1px solid rgba(240, 105, 34, 0.1)',
+          border: 'none',
         }}>
           <p style={{ fontSize: 14, color: '#666' }}>
-            🎯 Pick your favorite category and follow their fitness routine for a day!
+             Pick your favorite category and follow their fitness routine for a day!
           </p>
         </div>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

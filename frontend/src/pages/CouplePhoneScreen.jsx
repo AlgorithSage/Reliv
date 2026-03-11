@@ -2,44 +2,44 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { api } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function CouplePhoneScreen() {
-  const navigate = useNavigate();
-  const [phone, setPhone] = useState('');
-  const [name, setName] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [focused, setFocused] = useState(null);
+ const navigate = useNavigate();
+ const [phone, setPhone] = useState('');
+ const [name, setName] = useState('');
+ const [loading, setLoading] = useState(false);
+ const [error, setError] = useState('');
+ const [focused, setFocused] = useState(null);
 
-  const handleSubmit = async () => {
-    if (phone.length !== 10) return setError('Enter valid 10-digit number');
-    if (!name.trim()) return setError('Please enter their name');
+ const handleSubmit = async () => {
+ if (phone.length !== 10) return setError('Enter valid 10-digit number');
+ if (!name.trim()) return setError('Please enter their name');
 
-    setLoading(true);
-    setError('');
+ setLoading(true);
+ setError('');
 
-    localStorage.setItem('partnerPhone', `+91${phone}`);
-    localStorage.setItem('partnerName', name);
+ localStorage.setItem('partnerPhone', `+91${phone}`);
+ localStorage.setItem('partnerName', name);
 
-    setTimeout(() => {
+ setTimeout(() => {
       navigate('/couple-questions');
-    }, 600);
-  };
+ }, 600);
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Add Your Partner"
       subtitle="Enter your partner's details"
       showBack
       onBack={() => navigate('/group-type')}
-    >
-      <div style={{ maxWidth: 520, margin: '0 auto' }}>
-        {/* Main Card */}
+ >
+      <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
         <div style={{
           background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF0F7 100%)',
           borderRadius: 28,
           padding: '44px 40px',
-          boxShadow: '0 20px 60px rgba(236, 72, 153, 0.12)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
           border: '1px solid rgba(236, 72, 153, 0.15)',
         }}>
           {/* Icon */}
@@ -55,7 +55,7 @@ export default function CouplePhoneScreen() {
             fontSize: 44,
             boxShadow: '0 12px 40px rgba(236, 72, 153, 0.3)',
           }}>
-            💑
+            
           </div>
 
           {/* Name Input */}
@@ -93,8 +93,7 @@ export default function CouplePhoneScreen() {
           </div>
 
           {/* Phone Input */}
-          <div style={{ marginBottom: 28 }}>
-            <label style={{
+          <div style={{ marginBottom: 28 }}><label style={{
               display: 'block',
               fontSize: 14,
               color: '#666666',
@@ -116,7 +115,7 @@ export default function CouplePhoneScreen() {
                 color: '#EC4899',
                 gap: 8,
               }}>
-                🇮🇳 +91
+                 +91
               </div>
               <input
                 type="tel"
@@ -155,8 +154,7 @@ export default function CouplePhoneScreen() {
               display: 'flex',
               alignItems: 'center',
               gap: 10,
-            }}>
-              <span>⚠️</span>
+            }}><span></span>
               <span style={{ fontSize: 14, color: '#DC2626', fontWeight: 600 }}>{error}</span>
             </div>
           )}
@@ -194,8 +192,7 @@ export default function CouplePhoneScreen() {
                   borderTopColor: '#FFFFFF',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
-                }} />
-                Adding Partner...
+                }} />Adding Partner...
               </>
             ) : (
               'Continue'
@@ -214,7 +211,7 @@ export default function CouplePhoneScreen() {
           justifyContent: 'center',
           gap: 6,
         }}>
-          <span>📱</span>
+          <span></span>
           They'll receive WhatsApp reminders too
         </p>
       </div>
@@ -225,6 +222,6 @@ export default function CouplePhoneScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

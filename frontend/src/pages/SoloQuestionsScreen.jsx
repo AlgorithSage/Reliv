@@ -1,50 +1,51 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function SoloQuestionsScreen() {
-    const navigate = useNavigate();
-    const [answers, setAnswers] = useState({});
-    const [currentQ, setCurrentQ] = useState(0);
-    const [showQ, setShowQ] = useState(false);
+ const navigate = useNavigate();
+ const [answers, setAnswers] = useState({});
+ const [currentQ, setCurrentQ] = useState(0);
+ const [showQ, setShowQ] = useState(false);
 
-    const questions = [
+ const questions = [
         {
             id: 'diet_type',
             question: 'What\'s your preferred diet type?',
             options: [
-                { value: 'veg', label: 'Vegetarian', emoji: '🥗' },
-                { value: 'nonveg', label: 'Non-Vegetarian', emoji: '🍗' },
-                { value: 'eggetarian', label: 'Eggetarian', emoji: '🥚' },
-                { value: 'vegan', label: 'Vegan', emoji: '🌱' },
+                { value: 'veg', label: 'Vegetarian', emoji: 'salad' },
+                { value: 'nonveg', label: 'Non-Vegetarian', emoji: 'chicken' },
+                { value: 'eggetarian', label: 'Eggetarian', emoji: 'egg' },
+                { value: 'vegan', label: 'Vegan', emoji: 'plant' },
             ],
         },
         {
             id: 'activity',
             question: 'How active are you?',
             options: [
-                { value: 'sedentary', label: 'Desk Job / Low Activity', emoji: '💻' },
-                { value: 'moderate', label: 'Moderate Activity', emoji: '🚶' },
-                { value: 'active', label: 'Very Active', emoji: '🏃' },
-                { value: 'athlete', label: 'Athlete Level', emoji: '🏋️' },
+                { value: 'sedentary', label: 'Desk Job / Low Activity', emoji: 'laptop' },
+                { value: 'moderate', label: 'Moderate Activity', emoji: 'walking' },
+                { value: 'active', label: 'Very Active', emoji: 'running' },
+                { value: 'athlete', label: 'Athlete Level', emoji: 'weightlifting' },
             ],
         },
         {
             id: 'cooking',
             question: 'How much time can you spend cooking?',
             options: [
-                { value: 'minimal', label: 'Under 15 mins', emoji: '⚡' },
+                { value: 'minimal', label: 'Under 15 mins', emoji: 'lightning' },
                 { value: 'moderate', label: '15-30 mins', emoji: '⏱️' },
-                { value: 'plenty', label: '30+ mins', emoji: '👨‍🍳' },
+                { value: 'plenty', label: '30+ mins', emoji: 'chef' },
             ],
         },
-    ];
+ ];
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowQ(true), 100);
-    }, []);
+ }, []);
 
-    const handleAnswer = (qId, value) => {
+ const handleAnswer = (qId, value) => {
         setAnswers(prev => ({ ...prev, [qId]: value }));
 
         if (currentQ < questions.length - 1) {
@@ -54,18 +55,18 @@ export default function SoloQuestionsScreen() {
                 setShowQ(true);
             }, 300);
         }
-    };
+ };
 
-    const handleContinue = () => {
+ const handleContinue = () => {
         localStorage.setItem('soloAnswers', JSON.stringify(answers));
         navigate('/category');
-    };
+ };
 
-    const q = questions[currentQ];
-    const progress = ((currentQ + 1) / questions.length) * 100;
-    const allAnswered = Object.keys(answers).length === questions.length;
+ const q = questions[currentQ];
+ const progress = ((currentQ + 1) / questions.length) * 100;
+ const allAnswered = Object.keys(answers).length === questions.length;
 
-    return (
+ return (
         <Layout
             title="Quick Questions"
             subtitle="Help us personalize your plan"
@@ -103,11 +104,11 @@ export default function SoloQuestionsScreen() {
 
                 {/* Question Card */}
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 24,
                     padding: '40px 36px',
                     boxShadow: '0 16px 50px rgba(240, 105, 34, 0.1)',
-                    border: '1px solid rgba(240, 105, 34, 0.1)',
+                    border: 'none',
                     opacity: showQ ? 1 : 0,
                     transform: showQ ? 'translateX(0)' : 'translateX(20px)',
                     transition: 'all 0.3s ease',
@@ -179,7 +180,7 @@ export default function SoloQuestionsScreen() {
                             fontWeight: 700,
                             color: '#FFFFFF',
                             cursor: 'pointer',
-                            boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+                            boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
                             animation: 'fadeIn 0.3s ease',
                         }}
                     >
@@ -195,5 +196,5 @@ export default function SoloQuestionsScreen() {
         }
       `}</style>
         </Layout>
-    );
+ );
 }

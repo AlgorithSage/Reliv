@@ -2,33 +2,34 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function WAMealFlowScreen() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('yes');
-  
-  const yesFlow = [
-    { type: 'bot', text: "🍲 Lunch time! Had your rice + dal + sabzi?" },
-    { type: 'user', text: "YES" },
-    { type: 'bot', text: "✅ Logged! Great job staying on track 💪" },
-    { type: 'bot', text: "🍛 Dinner reminder at 8PM — chicken + roti + salad" },
-  ];
-  
-  const noFlow = [
-    { type: 'bot', text: "🍲 Lunch time! Had your rice + dal + sabzi?" },
-    { type: 'user', text: "NO" },
-    { type: 'bot', text: "🍲 No worries! Haven't had lunch yet." },
-    { type: 'bot', text: "🔔 Reminder coming in 30 min..." },
-    { type: 'divider', text: "30 minutes later" },
-    { type: 'bot', text: "🍲 Rice bowl time! 🍛 Ready for lunch?" },
-    { type: 'user', text: "YES" },
-    { type: 'bot', text: "✅ Better late than never! Logged ✓" },
-  ];
-  
-  const currentFlow = activeTab === 'yes' ? yesFlow : noFlow;
+ const navigate = useNavigate();
+ const [activeTab, setActiveTab] = useState('yes');
+ 
+ const yesFlow = [
+ { type: 'bot', text: "Lunch time! Had your rice + dal + sabzi?" },
+ { type: 'user', text: "YES" },
+ { type: 'bot', text: "Logged! Great job staying on track" },
+ { type: 'bot', text: "Dinner reminder at 8PM — chicken + roti + salad" },
+ ];
+ 
+ const noFlow = [
+ { type: 'bot', text: "Lunch time! Had your rice + dal + sabzi?" },
+ { type: 'user', text: "NO" },
+ { type: 'bot', text: "No worries! Haven't had lunch yet." },
+ { type: 'bot', text: "Reminder coming in 30 min..." },
+ { type: 'divider', text: "30 minutes later" },
+ { type: 'bot', text: "Rice bowl time! Ready for lunch?" },
+ { type: 'user', text: "YES" },
+ { type: 'bot', text: "Better late than never! Logged" },
+ ];
+ 
+ const currentFlow = activeTab === 'yes' ? yesFlow : noFlow;
 
-  return (
-    <Layout title="WhatsApp — Meals" showBack onBack={() => navigate('/wa-preview')}>
+ return (
+ <Layout title="WhatsApp — Meals" showBack onBack={() => navigate('/wa-preview')}>
       <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
         
         {/* Info Card */}
@@ -52,7 +53,7 @@ export default function WAMealFlowScreen() {
             justifyContent: 'center',
             fontSize: 22
           }}>
-            🍽️
+            
           </div>
           <div>
             <p style={{ fontSize: 14, fontWeight: 600, color: C.text }}>Meal Tracking Flow</p>
@@ -67,8 +68,7 @@ export default function WAMealFlowScreen() {
           borderRadius: 12,
           padding: 4,
           marginBottom: 20
-        }}>
-          <button
+        }}><button
             onClick={() => setActiveTab('yes')}
             style={{
               flex: 1,
@@ -83,7 +83,7 @@ export default function WAMealFlowScreen() {
               boxShadow: activeTab === 'yes' ? C.shadow : 'none'
             }}
           >
-            ✓ If YES
+             If YES
           </button>
           <button
             onClick={() => setActiveTab('no')}
@@ -100,7 +100,7 @@ export default function WAMealFlowScreen() {
               boxShadow: activeTab === 'no' ? C.shadow : 'none'
             }}
           >
-            ✗ If NO
+             If NO
           </button>
         </div>
         
@@ -110,8 +110,7 @@ export default function WAMealFlowScreen() {
           borderRadius: 20,
           overflow: 'hidden',
           marginBottom: 24
-        }}>
-          {/* WhatsApp Header */}
+        }}>{/* WhatsApp Header */}
           <div style={{
             background: '#1f2c34',
             padding: '12px 16px',
@@ -128,7 +127,7 @@ export default function WAMealFlowScreen() {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <span style={{ fontSize: 18 }}>🥗</span>
+              <span style={{ fontSize: 18 }}></span>
             </div>
             <div>
               <p style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>Reliv AI</p>
@@ -180,22 +179,21 @@ export default function WAMealFlowScreen() {
         </div>
         
         {/* Navigation */}
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button
+        <div style={{ display: 'flex', gap: 12 }}><button
             onClick={() => navigate('/wa-workout-flow')}
             style={{
               flex: 1,
               padding: '14px',
               border: `2px solid ${C.border}`,
               borderRadius: 12,
-              background: '#fff',
+              background: '#FAFAF8',
               color: C.text,
               fontWeight: 600,
               fontSize: 14,
               cursor: 'pointer'
             }}
           >
-            💪 Workout Flow
+             Workout Flow
           </button>
           <button
             onClick={() => navigate('/wa-day-flow')}
@@ -211,11 +209,11 @@ export default function WAMealFlowScreen() {
               cursor: 'pointer'
             }}
           >
-            📅 Full Day →
+             Full Day →
           </button>
         </div>
         
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

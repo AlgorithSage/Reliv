@@ -1,77 +1,78 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function CoupleQuestionsScreen() {
-  const navigate = useNavigate();
-  const [answers, setAnswers] = useState({});
-  const [currentQ, setCurrentQ] = useState(0);
-  const [showQ, setShowQ] = useState(false);
+ const navigate = useNavigate();
+ const [answers, setAnswers] = useState({});
+ const [currentQ, setCurrentQ] = useState(0);
+ const [showQ, setShowQ] = useState(false);
 
-  const partnerName = localStorage.getItem('partnerName') || 'Partner';
+ const partnerName = localStorage.getItem('partnerName') || 'Partner';
 
-  const questions = [
-    {
+ const questions = [
+ {
       id: 'cook_together',
       question: 'Do you cook meals together?',
       options: [
-        { value: 'yes', label: 'Yes, often!', emoji: '👨‍🍳' },
-        { value: 'sometimes', label: 'Sometimes', emoji: '🍳' },
-        { value: 'no', label: 'Rarely', emoji: '🍕' },
+        { value: 'yes', label: 'Yes, often!', emoji: 'chef' },
+        { value: 'sometimes', label: 'Sometimes', emoji: 'breakfast_egg' },
+        { value: 'no', label: 'Rarely', emoji: 'pizza' },
       ],
-    },
-    {
+ },
+ {
       id: 'workout_together',
       question: 'Do you workout together?',
       options: [
-        { value: 'yes', label: 'Yes, we do!', emoji: '💪' },
-        { value: 'sometimes', label: 'Occasionally', emoji: '🚶' },
-        { value: 'no', label: 'Separately', emoji: '👤' },
+        { value: 'yes', label: 'Yes, we do!', emoji: 'muscle' },
+        { value: 'sometimes', label: 'Occasionally', emoji: 'walking' },
+        { value: 'no', label: 'Separately', emoji: 'user' },
       ],
-    },
-    {
+ },
+ {
       id: 'diet_similar',
       question: 'Are your dietary preferences similar?',
       options: [
-        { value: 'same', label: 'Very similar', emoji: '🥗' },
-        { value: 'different', label: 'Quite different', emoji: '🍔' },
-        { value: 'mixed', label: 'Some overlap', emoji: '🍽️' },
+        { value: 'same', label: 'Very similar', emoji: 'salad' },
+        { value: 'different', label: 'Quite different', emoji: 'burger' },
+        { value: 'mixed', label: 'Some overlap', emoji: 'plate_cutlery' },
       ],
-    },
-  ];
+ },
+ ];
 
-  useEffect(() => {
-    setTimeout(() => setShowQ(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowQ(true), 100);
+ }, []);
 
-  const handleAnswer = (qId, value) => {
-    setAnswers(prev => ({ ...prev, [qId]: value }));
+ const handleAnswer = (qId, value) => {
+ setAnswers(prev => ({ ...prev, [qId]: value }));
 
-    if (currentQ < questions.length - 1) {
+ if (currentQ < questions.length - 1) {
       setShowQ(false);
       setTimeout(() => {
         setCurrentQ(prev => prev + 1);
         setShowQ(true);
       }, 300);
-    }
-  };
+ }
+ };
 
-  const handleContinue = () => {
-    localStorage.setItem('coupleAnswers', JSON.stringify(answers));
-    navigate('/weekly-couple-pay');
-  };
+ const handleContinue = () => {
+ localStorage.setItem('coupleAnswers', JSON.stringify(answers));
+ navigate('/weekly-couple-pay');
+ };
 
-  const q = questions[currentQ];
-  const progress = ((currentQ + 1) / questions.length) * 100;
-  const allAnswered = Object.keys(answers).length === questions.length;
+ const q = questions[currentQ];
+ const progress = ((currentQ + 1) / questions.length) * 100;
+ const allAnswered = Object.keys(answers).length === questions.length;
 
-  return (
-    <Layout
+ return (
+ <Layout
       title={`About You & ${partnerName}`}
       subtitle="Quick questions to personalize your plan"
       showBack
       onBack={() => navigate('/couple-phone')}
-    >
+ >
       <div style={{ maxWidth: 540, margin: '0 auto' }}>
         {/* Progress */}
         <div style={{ marginBottom: 32 }}>
@@ -103,7 +104,7 @@ export default function CoupleQuestionsScreen() {
 
         {/* Question Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 24,
           padding: '40px 36px',
           boxShadow: '0 16px 50px rgba(236, 72, 153, 0.1)',
@@ -179,7 +180,7 @@ export default function CoupleQuestionsScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: 'pointer',
-              boxShadow: '0 10px 40px rgba(236, 72, 153, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               animation: 'fadeIn 0.3s ease',
             }}
           >
@@ -194,6 +195,6 @@ export default function CoupleQuestionsScreen() {
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

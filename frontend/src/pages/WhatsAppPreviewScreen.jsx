@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function WhatsAppPreviewScreen() {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const [messageIndex, setMessageIndex] = useState(0);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [messageIndex, setMessageIndex] = useState(0);
 
-    const messages = [
-        { type: 'incoming', text: '👋 Welcome to Reliv AI! Your health journey starts now.', time: '10:00 AM' },
-        { type: 'incoming', text: '🍳 **Breakfast Time!**\n\nToday\'s recipe: Protein Oats Bowl\n\n• 50g oats\n• 1 banana\n• 1 scoop protein\n• Milk\n\nReply "done" when finished!', time: '10:01 AM' },
-        { type: 'outgoing', text: 'done ✅', time: '10:30 AM' },
-        { type: 'incoming', text: '🎉 Great job! You\'ve completed your first meal.\n\n🔥 Streak: 1 day!', time: '10:31 AM' },
-    ];
+ const messages = [
+        { type: 'incoming', text: 'Welcome to Reliv AI! Your health journey starts now.', time: '10:00 AM' },
+        { type: 'incoming', text: '**Breakfast Time!**\n\nToday\'s recipe: Protein Oats Bowl\n\n• 50g oats\n• 1 banana\n• 1 scoop protein\n• Milk\n\nReply "done" when finished!', time: '10:01 AM' },
+        { type: 'outgoing', text: 'done', time: '10:30 AM' },
+        { type: 'incoming', text: 'Great job! You\'ve completed your first meal.\n\n Streak: 1 day!', time: '10:31 AM' },
+ ];
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShow(true), 100);
 
         // Animate messages appearing
@@ -26,9 +27,9 @@ export default function WhatsAppPreviewScreen() {
         }, 800);
 
         return () => clearInterval(interval);
-    }, []);
+ }, []);
 
-    return (
+ return (
         <div style={{
             minHeight: '100vh',
             background: '#0B141A',
@@ -47,7 +48,7 @@ export default function WhatsAppPreviewScreen() {
                 transition: 'all 0.5s ease',
             }}>
                 <h1 style={{ fontSize: 28, fontWeight: 800, color: '#FFFFFF', marginBottom: 8 }}>
-                    📱 WhatsApp Preview
+                     WhatsApp Preview
                 </h1>
                 <p style={{ fontSize: 14, color: '#8696A0' }}>
                     Here's what your daily messages will look like
@@ -60,7 +61,7 @@ export default function WhatsAppPreviewScreen() {
                 background: '#111B21',
                 borderRadius: 28,
                 overflow: 'hidden',
-                boxShadow: '0 30px 80px rgba(0, 0, 0, 0.4)',
+                boxShadow: '14px 14px 32px rgba(0,0,0,0.15), -14px -14px 32px rgba(255,255,255,0.6)',
                 opacity: show ? 1 : 0,
                 transform: show ? 'scale(1)' : 'scale(0.95)',
                 transition: 'all 0.5s ease 0.2s',
@@ -83,15 +84,15 @@ export default function WhatsAppPreviewScreen() {
                         justifyContent: 'center',
                         fontSize: 20,
                     }}>
-                        🤖
+                        
                     </div>
                     <div style={{ flex: 1 }}>
                         <p style={{ fontSize: 16, fontWeight: 600, color: '#E9EDEF', margin: 0 }}>Reliv AI Coach</p>
                         <p style={{ fontSize: 12, color: '#8696A0', margin: 0 }}>Online</p>
                     </div>
-                    <div style={{ display: 'flex', gap: 16, color: '#8696A0' }}>
-                        <span>📹</span>
-                        <span>📞</span>
+                    <div style={{ display: 'flex', gap: 16, color: '#8696A0' }}><Icon name="phone_call" size={18} />
+                        <span></span>
+                        <span></span>
                         <span>⋮</span>
                     </div>
                 </div>
@@ -104,8 +105,7 @@ export default function WhatsAppPreviewScreen() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 8,
-                }}>
-                    {messages.slice(0, messageIndex).map((msg, i) => (
+                }}>{messages.slice(0, messageIndex).map((msg, i) => (
                         <div
                             key={i}
                             style={{
@@ -132,7 +132,7 @@ export default function WhatsAppPreviewScreen() {
                                 margin: '6px 0 0',
                                 textAlign: 'right',
                             }}>
-                                {msg.time} {msg.type === 'outgoing' && '✓✓'}
+                                {msg.time} {msg.type === 'outgoing' && ''}
                             </p>
                         </div>
                     ))}
@@ -170,8 +170,7 @@ export default function WhatsAppPreviewScreen() {
                     display: 'flex',
                     gap: 12,
                     alignItems: 'center',
-                }}>
-                    <span style={{ fontSize: 20, color: '#8696A0' }}>😊</span>
+                }}><span style={{ fontSize: 20, color: '#8696A0' }}></span>
                     <div style={{
                         flex: 1,
                         background: '#2A3942',
@@ -182,8 +181,7 @@ export default function WhatsAppPreviewScreen() {
                     }}>
                         Type a message
                     </div>
-                    <span style={{ fontSize: 20, color: '#8696A0' }}>🎤</span>
-                </div>
+                    </div>
             </div>
 
             {/* Action Button */}
@@ -199,7 +197,7 @@ export default function WhatsAppPreviewScreen() {
                     fontWeight: 700,
                     color: '#FFFFFF',
                     cursor: 'pointer',
-                    boxShadow: '0 10px 40px rgba(37, 211, 102, 0.3)',
+                    boxShadow: '8px 8px 22px rgba(0,0,0,0.15), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: 10,
@@ -208,7 +206,7 @@ export default function WhatsAppPreviewScreen() {
                     transition: 'all 0.5s ease 0.4s',
                 }}
             >
-                ✅ Got It! Back to Home
+                Got It! Back to Home
             </button>
 
             <style>{`
@@ -222,5 +220,5 @@ export default function WhatsAppPreviewScreen() {
         }
       `}</style>
         </div>
-    );
+ );
 }

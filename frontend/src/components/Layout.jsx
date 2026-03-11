@@ -1,50 +1,38 @@
 import { useState, useEffect } from 'react';
 import { C } from '../utils/constants';
-import AntigravityBackground from './AntigravityBackground';
-
-// ═══ ANTIGRAVITY BACKGROUND FLAG ═══
-// Set to true to show the floating dotted glassmorphic background
-// Set to false to hide it (just the gradient background)
-const ENABLE_ANTIGRAVITY = true;
+import Icon from '../utils/Icon';
 
 export default function Layout({ children, title, subtitle, showBack, onBack }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [pageLoaded, setPageLoaded] = useState(false);
+ const [scrolled, setScrolled] = useState(false);
+ const [pageLoaded, setPageLoaded] = useState(false);
 
-  useEffect(() => {
-    setPageLoaded(true);
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+ useEffect(() => {
+ setPageLoaded(true);
+ const handleScroll = () => setScrolled(window.scrollY > 20);
+ window.addEventListener('scroll', handleScroll);
+ return () => window.removeEventListener('scroll', handleScroll);
+ }, []);
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 50%, #FFEEDD 100%)',
-      backgroundAttachment: 'fixed',
+      background: '#E4E0DC',
       fontFamily: "'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif",
       position: 'relative',
-    }}>
-      {/* Antigravity Dotted Background (toggle via ENABLE_ANTIGRAVITY flag) */}
-      <AntigravityBackground enabled={ENABLE_ANTIGRAVITY} />
-      {/* Premium Desktop Header */}
+ }}>
+      {/* ═══ NEOMORPHIC HEADER ═══ */}
       <header
         style={{
           position: 'sticky',
           top: 0,
           zIndex: 1000,
-          background: scrolled
-            ? 'rgba(255, 255, 255, 0.95)'
-            : 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-          padding: scrolled ? '12px 40px' : '16px 40px',
+          background: '#FAFAF8',
+          padding: scrolled ? '10px 40px' : '14px 40px',
           boxShadow: scrolled
-            ? '0 4px 30px rgba(240, 105, 34, 0.1)'
-            : '0 4px 30px rgba(240, 105, 34, 0.25)',
+            ? '6px 6px 16px rgba(0, 0, 0, 0.1), -6px -6px 16px rgba(255, 255, 255, 0.5)'
+            : '4px 4px 12px rgba(0, 0, 0, 0.08), -4px -4px 12px rgba(255, 255, 255, 0.6)',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          borderBottom: scrolled ? '1px solid rgba(240, 105, 34, 0.1)' : 'none',
+          borderRadius: scrolled ? 0 : '0 0 24px 24px',
         }}
       >
         <div style={{
@@ -54,7 +42,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
           alignItems: 'center',
           gap: 20,
         }}>
-          {/* Back Button */}
+          {/* Back Button — Neomorphic */}
           {showBack && (
             <button
               onClick={onBack}
@@ -62,24 +50,33 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
-                background: scrolled ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)' : 'rgba(255, 255, 255, 0.2)',
+                background: '#EFECE9',
                 border: 'none',
-                borderRadius: 12,
+                borderRadius: 14,
                 padding: '12px 20px',
                 fontSize: 14,
                 fontWeight: 600,
-                color: scrolled ? '#FFFFFF' : '#FFFFFF',
+                color: '#F06922',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: scrolled ? '0 4px 15px rgba(240, 105, 34, 0.3)' : 'none',
+                boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)',
+                fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateX(-4px)';
-                e.target.style.boxShadow = '0 6px 20px rgba(240, 105, 34, 0.4)';
+                e.currentTarget.style.transform = 'translateX(-4px)';
+                e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.12), -6px -6px 14px rgba(255, 255, 255, 0.7)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateX(0)';
-                e.target.style.boxShadow = scrolled ? '0 4px 15px rgba(240, 105, 34, 0.3)' : 'none';
+                e.currentTarget.style.transform = 'translateX(0)';
+                e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
+                e.currentTarget.style.transform = 'translateX(0) scale(0.97)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
+                e.currentTarget.style.transform = 'translateX(0)';
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -103,31 +100,21 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
               alignItems: 'center',
               gap: 14,
             }}>
-              {/* Logo with glow */}
-              <div style={{
-                position: 'relative',
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  inset: -4,
-                  background: scrolled ? 'transparent' : 'rgba(255, 255, 255, 0.3)',
-                  borderRadius: 16,
-                  filter: 'blur(8px)',
-                  transition: 'all 0.3s ease',
-                }} />
+              {/* Logo — Neomorphic */}
+              <div style={{ position: 'relative' }}>
                 <img
                   src="/relivlogo.jpeg"
                   alt="Reliv AI"
                   style={{
-                    width: scrolled ? 44 : 50,
-                    height: scrolled ? 44 : 50,
+                    width: scrolled ? 42 : 48,
+                    height: scrolled ? 42 : 48,
                     borderRadius: 14,
-                    border: scrolled ? '2px solid rgba(240, 105, 34, 0.2)' : '3px solid rgba(255, 255, 255, 0.4)',
+                    border: 'none',
                     objectFit: 'cover',
                     position: 'relative',
                     zIndex: 1,
                     transition: 'all 0.3s ease',
-                    boxShadow: scrolled ? '0 4px 20px rgba(240, 105, 34, 0.15)' : '0 4px 20px rgba(0, 0, 0, 0.15)',
+                    boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)',
                   }}
                 />
               </div>
@@ -137,7 +124,10 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
                 <h1 style={{
                   fontSize: scrolled ? 22 : 26,
                   fontWeight: 800,
-                  color: scrolled ? '#F06922' : '#FFFFFF',
+                  background: 'linear-gradient(135deg, #1a1a1a 0%, #F06922 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                   letterSpacing: '-0.5px',
                   margin: 0,
                   transition: 'all 0.3s ease',
@@ -149,19 +139,22 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
                   <span style={{
                     fontSize: 10,
                     fontWeight: 700,
-                    background: scrolled ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)' : 'rgba(255, 255, 255, 0.25)',
+                    background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
+                    WebkitBackgroundClip: 'initial',
+                    WebkitTextFillColor: 'initial',
                     color: '#FFFFFF',
                     padding: '4px 10px',
                     borderRadius: 20,
                     textTransform: 'uppercase',
                     letterSpacing: '0.5px',
+                    boxShadow: '2px 2px 6px rgba(240, 105, 34, 0.3), -2px -2px 6px rgba(255, 255, 255, 0.3)',
                   }}>
                     Beta
                   </span>
                 </h1>
                 <p style={{
                   fontSize: 12,
-                  color: scrolled ? '#666666' : 'rgba(255, 255, 255, 0.85)',
+                  color: '#888',
                   margin: '2px 0 0',
                   fontWeight: 500,
                   transition: 'all 0.3s ease',
@@ -172,7 +165,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
             </div>
           </div>
 
-          {/* Desktop Nav Actions */}
+          {/* Desktop Nav — Help Button Neomorphic */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -183,30 +176,34 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
-                background: scrolled ? '#FFF5F0' : 'rgba(255, 255, 255, 0.15)',
-                border: scrolled ? '1px solid #FFD296' : '1px solid rgba(255, 255, 255, 0.3)',
-                borderRadius: 10,
+                background: '#EFECE9',
+                border: 'none',
+                borderRadius: 12,
                 padding: '10px 16px',
                 fontSize: 13,
                 fontWeight: 600,
-                color: scrolled ? '#F06922' : '#FFFFFF',
+                color: '#666',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
+                boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)',
+                fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = scrolled ? '#FFEEDD' : 'rgba(255, 255, 255, 0.25)';
+                e.currentTarget.style.color = '#F06922';
+                e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.1), -6px -6px 14px rgba(255, 255, 255, 0.7)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = scrolled ? '#FFF5F0' : 'rgba(255, 255, 255, 0.15)';
+                e.currentTarget.style.color = '#666';
+                e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)';
               }}
             >
-              <span>💬</span> Help
+              <span></span> Help
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content Area */}
+      {/* ═══ MAIN CONTENT ═══ */}
       <main style={{
         maxWidth: 900,
         margin: '0 auto',
@@ -260,12 +257,12 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
         </div>
       </main>
 
-      {/* Footer */}
+      {/* ═══ NEOMORPHIC FOOTER ═══ */}
       <footer style={{
-        borderTop: '1px solid rgba(240, 105, 34, 0.1)',
-        background: 'rgba(255, 255, 255, 0.5)',
+        background: '#EFECE9',
         padding: '24px 40px',
         textAlign: 'center',
+        boxShadow: 'inset 2px 2px 6px rgba(0, 0, 0, 0.05), inset -2px -2px 6px rgba(255, 255, 255, 0.5)',
       }}>
         <div style={{
           display: 'flex',
@@ -274,17 +271,17 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
           gap: 24,
           fontSize: 13,
           color: '#9CA3AF',
-        }}>
+        }}><Icon name="credit_card" size={18} /><Icon name="check_circle" size={18} />
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span>🔒</span> Bank-Grade Security
+            <span></span> Bank-Grade Security
           </span>
           <span>•</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span>✅</span> 50,000+ Happy Users
+            <span></span> 50,000+ Happy Users
           </span>
           <span>•</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span>💳</span> Secure Payments
+            <span></span> Secure Payments
           </span>
         </div>
         <p style={{
@@ -292,9 +289,9 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
           color: '#D1D5DB',
           marginTop: 16,
         }}>
-          © 2024 Reliv AI. All rights reserved.
+          © 2025 Reliv AI. All rights reserved.
         </p>
       </footer>
-    </div>
-  );
+ </div>
+ );
 }

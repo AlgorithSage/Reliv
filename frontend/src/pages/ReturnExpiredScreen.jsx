@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function ReturnExpiredScreen() {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShow(true), 100);
-    }, []);
+ }, []);
 
-    return (
+ return (
         <div style={{
             minHeight: '100vh',
             background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 50%, #FFEEDD 100%)',
@@ -22,11 +23,11 @@ export default function ReturnExpiredScreen() {
             <div style={{
                 maxWidth: 560,
                 width: '100%',
-                background: '#FFFFFF',
+                background: '#FAFAF8',
                 borderRadius: 32,
                 padding: '48px 44px',
-                boxShadow: '0 24px 80px rgba(240, 105, 34, 0.1)',
-                border: '1px solid rgba(240, 105, 34, 0.1)',
+                boxShadow: '14px 14px 32px rgba(0,0,0,0.12), -14px -14px 32px rgba(255,255,255,0.6)',
+                border: 'none',
                 textAlign: 'center',
                 opacity: show ? 1 : 0,
                 transform: show ? 'scale(1)' : 'scale(0.95)',
@@ -75,7 +76,7 @@ export default function ReturnExpiredScreen() {
                     textAlign: 'left',
                 }}>
                     <h3 style={{ fontSize: 14, fontWeight: 700, color: '#111', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span>📊</span> Your Progress So Far
+                        <span></span> Your Progress So Far
                     </h3>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
                         {[
@@ -100,7 +101,7 @@ export default function ReturnExpiredScreen() {
                     border: '2px solid #FFD296',
                 }}>
                     <p style={{ fontSize: 13, color: '#F06922', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 8 }}>
-                        🎁 Welcome Back Offer
+                         Welcome Back Offer
                     </p>
                     <p style={{ fontSize: 13, color: '#666', lineHeight: 1.5 }}>
                         Renew today and get <strong style={{ color: '#F06922' }}>1 extra day FREE</strong>!
@@ -108,7 +109,7 @@ export default function ReturnExpiredScreen() {
                 </div>
 
                 {/* Action Buttons */}
-                <div style={{ display: 'grid', gap: 14 }}>
+                <div style={{ display: 'grid', gap: 14 }}><Icon name="shuffle" size={18} />
                     <button
                         onClick={() => navigate('/renew-plan')}
                         style={{
@@ -121,22 +122,22 @@ export default function ReturnExpiredScreen() {
                             fontWeight: 700,
                             color: '#FFFFFF',
                             cursor: 'pointer',
-                            boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+                            boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: 10,
                         }}
                     >
-                        🔄 Renew for ₹29/week
+                         Renew for ₹29/week
                     </button>
 
                     <button
                         onClick={() => navigate('/change-plan')}
                         style={{
                             width: '100%',
-                            background: '#FFFFFF',
-                            border: '2px solid #E5E7EB',
+                            background: '#FAFAF8',
+                            border: 'none',
                             borderRadius: 14,
                             padding: '16px',
                             fontSize: 15,
@@ -145,10 +146,10 @@ export default function ReturnExpiredScreen() {
                             cursor: 'pointer',
                         }}
                     >
-                        🔀 Try a Different Plan
+                         Try a Different Plan
                     </button>
                 </div>
             </div>
         </div>
-    );
+ );
 }

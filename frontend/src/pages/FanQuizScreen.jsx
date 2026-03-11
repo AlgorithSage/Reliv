@@ -1,26 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function FanQuizScreen() {
-    const navigate = useNavigate();
-    const [currentQ, setCurrentQ] = useState(0);
-    const [score, setScore] = useState(0);
-    const [selected, setSelected] = useState(null);
-    const [showResult, setShowResult] = useState(false);
-    const [showQ, setShowQ] = useState(false);
+ const navigate = useNavigate();
+ const [currentQ, setCurrentQ] = useState(0);
+ const [score, setScore] = useState(0);
+ const [selected, setSelected] = useState(null);
+ const [showResult, setShowResult] = useState(false);
+ const [showQ, setShowQ] = useState(false);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', color: '#1E40AF' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', color: '#DB2777' },
-        salman: { name: 'Salman Khan', emoji: '💪', color: '#16A34A' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', color: '#9333EA' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', color: '#DC2626' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', color: '#F59E0B' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', color: '#16A34A' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#9333EA' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#DC2626' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F59E0B' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    const questions = [
+ const questions = [
         {
             question: `What time does ${info.name} typically wake up?`,
             options: ['5:00 AM', '6:00 AM', '7:00 AM', '8:00 AM'],
@@ -36,13 +37,13 @@ export default function FanQuizScreen() {
             options: ['1-2 hours', '2-3 hours', '3-4 hours', '4+ hours'],
             correct: 1,
         },
-    ];
+ ];
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowQ(true), 100);
-    }, []);
+ }, []);
 
-    const handleAnswer = (index) => {
+ const handleAnswer = (index) => {
         if (selected !== null) return;
         setSelected(index);
 
@@ -63,11 +64,11 @@ export default function FanQuizScreen() {
                 navigate('/fan-quiz-result');
             }
         }, 1000);
-    };
+ };
 
-    const q = questions[currentQ];
+ const q = questions[currentQ];
 
-    return (
+ return (
         <div style={{
             minHeight: '100vh',
             background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 100%)',
@@ -108,14 +109,14 @@ export default function FanQuizScreen() {
 
                 {/* Question Card */}
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 24,
                     padding: '40px 36px',
-                    boxShadow: '0 16px 50px rgba(0,0,0,0.08)',
+                    boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
                     opacity: showQ ? 1 : 0,
                     transform: showQ ? 'translateX(0)' : 'translateX(30px)',
                     transition: 'all 0.3s ease',
-                }}>
+                }}><Icon name="cross" size={18} />
                     <h2 style={{
                         fontSize: 20,
                         fontWeight: 700,
@@ -165,8 +166,8 @@ export default function FanQuizScreen() {
                                     }}
                                 >
                                     {opt}
-                                    {showCorrect && <span>✅</span>}
-                                    {isWrong && <span>❌</span>}
+                                    {showCorrect && <span></span>}
+                                    {isWrong && <span></span>}
                                 </button>
                             );
                         })}
@@ -184,5 +185,5 @@ export default function FanQuizScreen() {
                 </div>
             </div>
         </div>
-    );
+ );
 }

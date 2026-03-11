@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function OTPFailScreen() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
 
-  return (
-    <Layout showBack onBack={() => navigate('/phone')}>
+ return (
+ <Layout showBack onBack={() => navigate('/phone')}>
       <div style={{ maxWidth: 520, margin: '0 auto', textAlign: 'center' }}>
         {/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '56px 48px',
           boxShadow: '0 20px 60px rgba(239, 68, 68, 0.1)',
@@ -28,7 +29,7 @@ export default function OTPFailScreen() {
             border: '2px solid rgba(239, 68, 68, 0.2)',
             animation: 'pulse 2s ease-in-out infinite',
           }}>
-            <span style={{ fontSize: 50 }}>😔</span>
+            <span style={{ fontSize: 50 }}></span>
           </div>
 
           {/* Title */}
@@ -60,7 +61,7 @@ export default function OTPFailScreen() {
             borderRadius: 16,
             padding: '20px 28px',
             marginBottom: 32,
-            border: '1px solid #FFD296',
+            border: 'none',
             display: 'inline-flex',
             alignItems: 'center',
             gap: 14,
@@ -73,7 +74,7 @@ export default function OTPFailScreen() {
           </div>
 
           {/* Action Buttons */}
-          <div style={{ display: 'grid', gap: 14 }}>
+          <div style={{ display: 'grid', gap: 14 }}><Icon name="home" size={18} />
             <button
               onClick={() => navigate('/phone')}
               style={{
@@ -94,15 +95,15 @@ export default function OTPFailScreen() {
                 gap: 10,
               }}
             >
-              📱 Try Different Number
+               Try Different Number
             </button>
 
             <button
               onClick={() => navigate('/')}
               style={{
                 width: '100%',
-                background: '#FFFFFF',
-                border: '2px solid #E5E7EB',
+                background: '#FAFAF8',
+                border: 'none',
                 borderRadius: 14,
                 padding: '16px',
                 fontSize: 15,
@@ -112,7 +113,7 @@ export default function OTPFailScreen() {
                 transition: 'all 0.3s ease',
               }}
             >
-              🏠 Back to Home
+               Back to Home
             </button>
           </div>
         </div>
@@ -127,7 +128,7 @@ export default function OTPFailScreen() {
           justifyContent: 'center',
           gap: 8,
         }}>
-          <span>💬</span>
+          
           Need help? Contact our support team
         </p>
       </div>
@@ -139,6 +140,6 @@ export default function OTPFailScreen() {
           50% { transform: scale(1.05); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

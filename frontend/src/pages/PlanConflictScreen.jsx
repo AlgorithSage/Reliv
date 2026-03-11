@@ -1,18 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 /**
  * Plan Conflict Screen — User already in a group/plan, can't join another.
  */
 export default function PlanConflictScreen() {
-  const navigate = useNavigate();
-  const existingPlan = localStorage.getItem('planType') || 'weekly';
-  const groupType = localStorage.getItem('groupType') || 'solo';
+ const navigate = useNavigate();
+ const existingPlan = localStorage.getItem('planType') || 'weekly';
+ const groupType = localStorage.getItem('groupType') || 'solo';
 
-  return (
-    <Layout title="⚠️ Plan Conflict" subtitle="You already have an active plan" showBack onBack={() => navigate(-1)}>
+ return (
+ <Layout title="Plan Conflict" subtitle="You already have an active plan" showBack onBack={() => navigate(-1)}>
       <div style={{ maxWidth: 520, margin: '0 auto', padding: '40px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 24 }}>
-        <div style={{ fontSize: 72, marginBottom: 8 }}>⚠️</div>
+        <div style={{ fontSize: 72, marginBottom: 8 }}></div>
 
         <h2 style={{ fontSize: 24, fontWeight: 800, color: '#2D3436' }}>
           You Already Have an Active Plan
@@ -25,7 +26,7 @@ export default function PlanConflictScreen() {
 
         {/* Current plan card */}
         <div style={{
-          background: '#FFF',
+          background: '#FAFAF8',
           borderRadius: 16,
           padding: '20px 24px',
           border: '2px solid rgba(240,105,34,0.2)',
@@ -42,7 +43,7 @@ export default function PlanConflictScreen() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}><Icon name="home" size={18} />
           <button
             onClick={() => navigate('/return-active')}
             style={{
@@ -58,7 +59,7 @@ export default function PlanConflictScreen() {
               boxShadow: '0 8px 30px rgba(240,105,34,0.3)',
             }}
           >
-            📋 View My Current Plan
+             View My Current Plan
           </button>
 
           <button
@@ -66,7 +67,7 @@ export default function PlanConflictScreen() {
             style={{
               width: '100%',
               background: 'transparent',
-              border: '2px solid #E5E7EB',
+              border: 'none',
               borderRadius: 16,
               padding: '16px',
               fontSize: 15,
@@ -75,10 +76,10 @@ export default function PlanConflictScreen() {
               cursor: 'pointer',
             }}
           >
-            🏠 Go Home
+             Go Home
           </button>
         </div>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

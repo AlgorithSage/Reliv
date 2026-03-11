@@ -2,43 +2,44 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function FriendAddScreen() {
-  const navigate = useNavigate();
-  const [friendSize, setFriendSize] = useState(3);
-  const [phones, setPhones] = useState(['']);
-  const [focused, setFocused] = useState(null);
-  
-  useEffect(() => {
-    const size = parseInt(localStorage.getItem('friendSize') || '3');
-    setFriendSize(size);
-    // Create phone slots for friends (excluding self)
-    setPhones(Array(size - 1).fill(''));
-  }, []);
-  
-  const pricePerPerson = friendSize === 2 ? 25 : 28;
-  const totalPrice = friendSize === 2 ? 49 : friendSize * 28;
-  
-  const updatePhone = (index, value) => {
-    const newPhones = [...phones];
-    newPhones[index] = value.replace(/\D/g, '').slice(0, 10);
-    setPhones(newPhones);
-  };
-  
-  const allValid = phones.every(p => p.length === 10);
-  
-  const handleContinue = () => {
-    localStorage.setItem('friendPhones', JSON.stringify(phones));
-    navigate('/friend-questions');
-  };
+ const navigate = useNavigate();
+ const [friendSize, setFriendSize] = useState(3);
+ const [phones, setPhones] = useState(['']);
+ const [focused, setFocused] = useState(null);
+ 
+ useEffect(() => {
+ const size = parseInt(localStorage.getItem('friendSize') || '3');
+ setFriendSize(size);
+ // Create phone slots for friends (excluding self)
+ setPhones(Array(size - 1).fill(''));
+ }, []);
+ 
+ const pricePerPerson = friendSize === 2 ? 25 : 28;
+ const totalPrice = friendSize === 2 ? 49 : friendSize * 28;
+ 
+ const updatePhone = (index, value) => {
+ const newPhones = [...phones];
+ newPhones[index] = value.replace(/\D/g, '').slice(0, 10);
+ setPhones(newPhones);
+ };
+ 
+ const allValid = phones.every(p => p.length === 10);
+ 
+ const handleContinue = () => {
+ localStorage.setItem('friendPhones', JSON.stringify(phones));
+ navigate('/friend-questions');
+ };
 
-  return (
-    <Layout title="Add Your Squad" showBack onBack={() => navigate('/friend-size')}>
+ return (
+ <Layout title="Add Your Squad" showBack onBack={() => navigate('/friend-size')}>
       <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
         
         {/* Header */}
         <div style={{
-          background: '#fff',
+          background: '#FAFAF8',
           borderRadius: 16,
           padding: 20,
           border: `1px solid ${C.border}`,
@@ -56,7 +57,7 @@ export default function FriendAddScreen() {
               justifyContent: 'center',
               fontSize: 24
             }}>
-              ✓
+              
             </div>
             <div>
               <p style={{ fontSize: 12, color: C.textMid }}>Member 1 (You)</p>
@@ -120,20 +121,7 @@ export default function FriendAddScreen() {
                     transition: 'border-color 0.2s'
                   }} 
                 />
-                {phone.length === 10 && (
-                  <div style={{
-                    width: 52,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: `${C.success}15`,
-                    borderRadius: 12,
-                    color: C.success,
-                    fontSize: 20
-                  }}>
-                    ✓
-                  </div>
-                )}
+                
               </div>
             </div>
           ))}
@@ -180,10 +168,10 @@ export default function FriendAddScreen() {
         </button>
         
         <p style={{ fontSize: 12, color: C.textMid, textAlign: 'center', marginTop: 16 }}>
-          📱 Each friend will receive OTP to verify
+          <Icon name="phone" size={18} /> Each friend will receive OTP to verify
         </p>
         
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

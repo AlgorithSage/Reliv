@@ -1,98 +1,99 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FanCricketScreen() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [selected, setSelected] = useState(null);
-  const [hovered, setHovered] = useState(null);
-  const [showCards, setShowCards] = useState(false);
-  const [showChallenge, setShowChallenge] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+ const navigate = useNavigate();
+ const location = useLocation();
+ const [selected, setSelected] = useState(null);
+ const [hovered, setHovered] = useState(null);
+ const [showCards, setShowCards] = useState(false);
+ const [showChallenge, setShowChallenge] = useState(false);
+ const [selectedPlayer, setSelectedPlayer] = useState(null);
 
-  // Determine which category based on route
-  const path = location.pathname;
+ // Determine which category based on route
+ const path = location.pathname;
 
-  const categoryData = {
-    '/fan-cricket': {
+ const categoryData = {
+ '/fan-cricket': {
       title: 'Pick Your Cricketer',
       color: '#1E40AF',
       players: [
-        { id: 'dhoni', name: 'MS Dhoni', subtitle: 'Captain Cool', price: 10, emoji: '🏏', strength: 'Sharp Mind & Leadership' },
-        { id: 'kohli', name: 'Virat Kohli', subtitle: 'King Kohli', price: 12, emoji: '💪', strength: 'Speed & Stamina' },
-        { id: 'rohit', name: 'Rohit Sharma', subtitle: 'Hitman', price: 9, emoji: '🎯', strength: 'Lean Muscle & Balance' },
+        { id: 'dhoni', name: 'MS Dhoni', subtitle: 'Captain Cool', price: 10, emoji: 'cricket_bat', strength: 'Sharp Mind & Leadership' },
+        { id: 'kohli', name: 'Virat Kohli', subtitle: 'King Kohli', price: 12, emoji: 'muscle', strength: 'Speed & Stamina' },
+        { id: 'rohit', name: 'Rohit Sharma', subtitle: 'Hitman', price: 9, emoji: 'target', strength: 'Lean Muscle & Balance' },
       ],
-    },
-    '/fan-football': {
+ },
+ '/fan-football': {
       title: 'Pick Your Footballer',
       color: '#16A34A',
       players: [
-        { id: 'ronaldo', name: 'Cristiano Ronaldo', subtitle: 'CR7', price: 15, emoji: '⚽', strength: 'Speed & Stamina' },
-        { id: 'messi', name: 'Lionel Messi', subtitle: 'The GOAT', price: 15, emoji: '🐐', strength: 'Sharp Mind & Agility' },
-        { id: 'neymar', name: 'Neymar Jr', subtitle: 'Skill Master', price: 12, emoji: '🌟', strength: 'Flexibility & Skills' },
+        { id: 'ronaldo', name: 'Cristiano Ronaldo', subtitle: 'CR7', price: 15, emoji: 'football', strength: 'Speed & Stamina' },
+        { id: 'messi', name: 'Lionel Messi', subtitle: 'The GOAT', price: 15, emoji: 'goat_messi', strength: 'Sharp Mind & Agility' },
+        { id: 'neymar', name: 'Neymar Jr', subtitle: 'Skill Master', price: 12, emoji: 'star_glow', strength: 'Flexibility & Skills' },
       ],
-    },
-    '/fan-singer': {
+ },
+ '/fan-singer': {
       title: 'Pick Your Singer',
       color: '#9333EA',
       players: [
-        { id: 'arijit', name: 'Arijit Singh', subtitle: 'Voice of Hearts', price: 8, emoji: '🎤', strength: 'Calm & Focus' },
-        { id: 'badshah', name: 'Badshah', subtitle: 'Rap King', price: 11, emoji: '🎵', strength: 'Energy & Stamina' },
-        { id: 'honeysingh', name: 'Yo Yo Honey Singh', subtitle: 'Party Anthem', price: 10, emoji: '🔥', strength: 'Fitness Transformation' },
+        { id: 'arijit', name: 'Arijit Singh', subtitle: 'Voice of Hearts', price: 8, emoji: 'microphone', strength: 'Calm & Focus' },
+        { id: 'badshah', name: 'Badshah', subtitle: 'Rap King', price: 11, emoji: 'music_note', strength: 'Energy & Stamina' },
+        { id: 'honeysingh', name: 'Yo Yo Honey Singh', subtitle: 'Party Anthem', price: 10, emoji: 'fire', strength: 'Fitness Transformation' },
       ],
-    },
-    '/fan-bollywood': {
+ },
+ '/fan-bollywood': {
       title: 'Pick Your Star',
       color: '#DC2626',
       players: [
-        { id: 'srk', name: 'Shah Rukh Khan', subtitle: 'King Khan', price: 14, emoji: '👑', strength: 'Discipline & Transformation' },
-        { id: 'salman', name: 'Salman Khan', subtitle: 'Bhai', price: 12, emoji: '💪', strength: 'Muscle Building' },
-        { id: 'akshay', name: 'Akshay Kumar', subtitle: 'Khiladi', price: 10, emoji: '🎬', strength: 'Martial Arts & Discipline' },
+        { id: 'srk', name: 'Shah Rukh Khan', subtitle: 'King Khan', price: 14, emoji: 'crown', strength: 'Discipline & Transformation' },
+        { id: 'salman', name: 'Salman Khan', subtitle: 'Bhai', price: 12, emoji: 'muscle', strength: 'Muscle Building' },
+        { id: 'akshay', name: 'Akshay Kumar', subtitle: 'Khiladi', price: 10, emoji: 'clapperboard', strength: 'Martial Arts & Discipline' },
       ],
-    },
-  };
+ },
+ };
 
-  const currentCategory = categoryData[path] || categoryData['/fan-cricket'];
+ const currentCategory = categoryData[path] || categoryData['/fan-cricket'];
 
-  useEffect(() => {
-    setTimeout(() => setShowCards(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowCards(true), 100);
+ }, []);
 
-  const handleSelect = (player) => {
-    setSelected(player.id);
-    setSelectedPlayer(player);
-    // Show challenge modal
-    setTimeout(() => {
+ const handleSelect = (player) => {
+ setSelected(player.id);
+ setSelectedPlayer(player);
+ // Show challenge modal
+ setTimeout(() => {
       setShowChallenge(true);
-    }, 300);
-  };
+ }, 300);
+ };
 
-  const handleAcceptChallenge = () => {
-    localStorage.setItem('selectedCelebrity', selectedPlayer.id);
-    localStorage.setItem('celebrityName', selectedPlayer.name);
-    localStorage.setItem('dailyPrice', selectedPlayer.price);
-    localStorage.setItem('heroTraining', 'true');
-    setShowChallenge(false);
-    navigate('/category');
-  };
+ const handleAcceptChallenge = () => {
+ localStorage.setItem('selectedCelebrity', selectedPlayer.id);
+ localStorage.setItem('celebrityName', selectedPlayer.name);
+ localStorage.setItem('dailyPrice', selectedPlayer.price);
+ localStorage.setItem('heroTraining', 'true');
+ setShowChallenge(false);
+ navigate('/category');
+ };
 
-  const handleDeclineChallenge = () => {
-    // Clear hero training and go to regular category
-    localStorage.removeItem('selectedCelebrity');
-    localStorage.removeItem('celebrityName');
-    localStorage.removeItem('heroTraining');
-    setShowChallenge(false);
-    navigate('/category');
-  };
+ const handleDeclineChallenge = () => {
+ // Clear hero training and go to regular category
+ localStorage.removeItem('selectedCelebrity');
+ localStorage.removeItem('celebrityName');
+ localStorage.removeItem('heroTraining');
+ setShowChallenge(false);
+ navigate('/category');
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title={currentCategory.title}
       subtitle="Pick your favorite!"
       showBack
       onBack={() => navigate('/fan-quiz-type')}
-    >
+ >
       <div style={{ maxWidth: 520, margin: '0 auto' }}>
         {/* Player Cards */}
         <div style={{
@@ -147,8 +148,7 @@ export default function FanCricketScreen() {
               </div>
 
               {/* Info */}
-              <div style={{ flex: 1 }}>
-                <h3 style={{
+              <div style={{ flex: 1 }}><h3 style={{
                   fontSize: 20,
                   fontWeight: 700,
                   color: '#111',
@@ -171,7 +171,7 @@ export default function FanCricketScreen() {
                   padding: '4px 10px',
                   borderRadius: 6,
                 }}>
-                  🎯 {player.strength}
+                   {player.strength}
                 </span>
               </div>
 
@@ -204,9 +204,8 @@ export default function FanCricketScreen() {
           background: `${currentCategory.color}08`,
           borderRadius: 16,
           border: `1px solid ${currentCategory.color}15`,
-        }}>
-          <p style={{ fontSize: 14, color: '#666' }}>
-            🔥 Train like your hero for 1 full day — diet, workout, schedule!
+        }}><p style={{ fontSize: 14, color: '#666' }}>
+             Train like your hero for 1 full day — diet, workout, schedule!
           </p>
         </div>
       </div>
@@ -227,14 +226,14 @@ export default function FanCricketScreen() {
           animation: 'fadeIn 0.3s ease',
         }}>
           <div style={{
-            background: '#FFFFFF',
+            background: '#FAFAF8',
             borderRadius: 28,
             padding: '40px',
             maxWidth: 480,
             width: '90%',
             textAlign: 'center',
             animation: 'scaleIn 0.4s ease',
-            boxShadow: '0 30px 80px rgba(0,0,0,0.3)',
+            boxShadow: '14px 14px 32px rgba(0,0,0,0.15), -14px -14px 32px rgba(255,255,255,0.6)',
           }}>
             {/* Hero Icon */}
             <div style={{
@@ -278,13 +277,12 @@ export default function FanCricketScreen() {
               padding: '20px',
               marginBottom: 28,
               border: '1px solid #FCD34D',
-            }}>
-              <p style={{
+            }}><p style={{
                 fontSize: 15,
                 color: '#92400E',
                 lineHeight: 1.6,
               }}>
-                ⚠️ <strong>Training like {selectedPlayer.name}</strong> will be <strong>very difficult!</strong>
+                 <strong>Training like {selectedPlayer.name}</strong> will be <strong>very difficult!</strong>
               </p>
               <p style={{
                 fontSize: 14,
@@ -314,7 +312,7 @@ export default function FanCricketScreen() {
                 transition: 'all 0.3s ease',
               }}
             >
-              💪 Yes! I'm Ready for the Challenge
+              Yes! I'm Ready for the Challenge
             </button>
 
             {/* Decline Button */}
@@ -362,6 +360,6 @@ export default function FanCricketScreen() {
           to { opacity: 1; }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

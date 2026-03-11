@@ -1,72 +1,73 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { C, api } from "../utils/constants";
+import Icon from '../utils/Icon';
 
 const relivAvatar = "/avatar-removebg-preview.png";
 
 export default function WelcomeScreen() {
-  const navigate = useNavigate();
-  const [stats, setStats] = useState({
-    topUsers: [],
-    todayUsers: 47,
-    successStories: 12847,
-  });
-  const [show, setShow] = useState(false);
-  const [avatarHover, setAvatarHover] = useState(false);
-  // Inactivity attract screen state
-  const [inactive, setInactive] = useState(false);
-  const [shoutouts, setShoutouts] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const timerRef = useRef();
-  const cycleRef = useRef();
+ const navigate = useNavigate();
+ const [stats, setStats] = useState({
+ topUsers: [],
+ todayUsers: 47,
+ successStories: 12847,
+ });
+ const [show, setShow] = useState(false);
+ const [avatarHover, setAvatarHover] = useState(false);
+ // Inactivity attract screen state
+ const [inactive, setInactive] = useState(false);
+ const [shoutouts, setShoutouts] = useState([]);
+ const [currentIdx, setCurrentIdx] = useState(0);
+ const timerRef = useRef();
+ const cycleRef = useRef();
 
-  // Load shoutouts from localStorage
-  useEffect(() => {
-    try {
+ // Load shoutouts from localStorage
+ useEffect(() => {
+ try {
       const saved = JSON.parse(localStorage.getItem("userShoutouts") || "[]");
       const defaultShoutouts = [
-        { name: "Priya Sharma", message: "My birthday shoutout was amazing! 🎂", image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=200&h=200&q=80", type: "Birthday" },
-        { name: "Raj Mehta", message: "Got 50+ new followers from my IG card! 📸", image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=200&h=200&q=80", type: "Instagram" },
-        { name: "Sara Khan", message: "Promoted my new café here — best decision! ☕", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=200&h=200&q=80", type: "Product" },
+        { name: "Priya Sharma", message: "My birthday shoutout was amazing!", image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=200&h=200&q=80", type: "Birthday" },
+        { name: "Raj Mehta", message: "Got 50+ new followers from my IG card!", image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=200&h=200&q=80", type: "Instagram" },
+        { name: "Sara Khan", message: "Promoted my new café here — best decision!", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=200&h=200&q=80", type: "Product" },
       ];
       setShoutouts(saved.length > 0 ? [...saved, ...defaultShoutouts] : defaultShoutouts);
-    } catch (e) {
+ } catch (e) {
       console.error("Error loading shoutouts:", e);
-    }
-  }, []);
+ }
+ }, []);
 
-  // Cycle through shoutouts every 4 seconds when inactive
-  useEffect(() => {
-    if (inactive && shoutouts.length > 1) {
+ // Cycle through shoutouts every 4 seconds when inactive
+ useEffect(() => {
+ if (inactive && shoutouts.length > 1) {
       cycleRef.current = setInterval(() => {
         setCurrentIdx(prev => (prev + 1) % shoutouts.length);
       }, 4000);
-    }
-    return () => { if (cycleRef.current) clearInterval(cycleRef.current); };
-  }, [inactive, shoutouts.length]);
+ }
+ return () => { if (cycleRef.current) clearInterval(cycleRef.current); };
+ }, [inactive, shoutouts.length]);
 
-  // Reset inactivity timer on any interaction
-  const resetInactivity = () => {
-    setInactive(false);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setInactive(true), 16000);
-  };
+ // Reset inactivity timer on any interaction
+ const resetInactivity = () => {
+ setInactive(false);
+ if (timerRef.current) clearTimeout(timerRef.current);
+ timerRef.current = setTimeout(() => setInactive(true), 16000);
+ };
 
-  useEffect(() => {
-    api.call("/stats/today").then(setStats).catch(() => { });
-    setTimeout(() => setShow(true), 100);
-    resetInactivity();
-    const events = ["mousemove", "mousedown", "keydown", "touchstart"];
-    const handler = resetInactivity;
-    events.forEach(e => window.addEventListener(e, handler));
-    return () => {
+ useEffect(() => {
+ api.call("/stats/today").then(setStats).catch(() => { });
+ setTimeout(() => setShow(true), 100);
+ resetInactivity();
+ const events = ["mousemove", "mousedown", "keydown", "touchstart"];
+ const handler = resetInactivity;
+ events.forEach(e => window.addEventListener(e, handler));
+ return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       events.forEach(e => window.removeEventListener(e, handler));
-    };
-  }, []);
+ };
+ }, []);
 
-  return (
-    <div
+ return (
+ <div
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(180deg, #FFFDFB 0%, #FFF8F3 25%, #FFF0E8 50%, #FFE8DB 100%)',
@@ -78,7 +79,7 @@ export default function WelcomeScreen() {
       onKeyDown={resetInactivity}
       onClick={resetInactivity}
       onTouchStart={resetInactivity}
-    >
+ ><Icon name="coffee" size={18} /><Icon name="camera" size={18} />
       {/* Attract/advertisement overlay after inactivity */}
       {inactive && shoutouts.length > 0 && (
         <div
@@ -93,7 +94,7 @@ export default function WelcomeScreen() {
           <div style={{
             background: 'linear-gradient(135deg,#F4610A,#FB923C)',
             borderRadius: 32,
-            boxShadow: '0 24px 80px rgba(244,97,10,0.18)',
+            boxShadow: '14px 14px 32px rgba(0,0,0,0.12), -14px -14px 32px rgba(255,255,255,0.6)',
             padding: 48,
             display: 'flex', flexDirection: 'column', alignItems: 'center',
             maxWidth: 420,
@@ -105,19 +106,19 @@ export default function WelcomeScreen() {
                 alt="Shoutout" 
                 style={{ 
                   width: 120, height: 120, borderRadius: '50%', marginBottom: 16, 
-                  border: '4px solid #fff', boxShadow: '0 4px 24px #F97316',
+                  border: '4px solid #fff', boxShadow: '6px 6px 16px rgba(0,0,0,0.15), -4px -4px 12px rgba(255,255,255,0.4)',
                   objectFit: 'cover', transition: 'opacity 0.3s',
                 }} 
               />
               <span style={{
                 position: 'absolute', bottom: 12, right: -8,
-                background: '#fff', color: '#F4610A', fontWeight: 700,
+                background: '#FAFAF8', color: '#F4610A', fontWeight: 700,
                 fontSize: 11, padding: '4px 10px', borderRadius: 12,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               }}>
-                {shoutouts[currentIdx]?.type === "Birthday" && "🎂"}
-                {shoutouts[currentIdx]?.type === "Instagram" && "📸"}
-                {shoutouts[currentIdx]?.type === "Product" && "☕"}
+                {shoutouts[currentIdx]?.type === "Birthday" && ""}
+                {shoutouts[currentIdx]?.type === "Instagram" && ""}
+                {shoutouts[currentIdx]?.type === "Product" && ""}
                 {shoutouts[currentIdx]?.type === "Star" && "⭐"}
                 {shoutouts[currentIdx]?.type || "Shoutout"}
               </span>
@@ -143,10 +144,10 @@ export default function WelcomeScreen() {
                 background: 'linear-gradient(135deg,#F97316,#F4610A)',
                 color: '#fff', fontWeight: 700, fontSize: 18,
                 padding: '18px 44px', borderRadius: 18, border: 'none',
-                boxShadow: '0 8px 32px rgba(244,97,10,.18)', cursor: 'pointer', marginTop: 10,
+                boxShadow: '8px 8px 20px rgba(0,0,0,0.12), -8px -8px 20px rgba(255,255,255,0.5)', cursor: 'pointer', marginTop: 10,
               }}
             >
-              🚀 See Public Board
+              <Icon name="launch" size={18} /> See Public Board
             </button>
             <p style={{ color: '#fff', fontSize: 13, marginTop: 10, opacity: 0.8 }}>Tap anywhere to return</p>
           </div>
@@ -281,7 +282,7 @@ export default function WelcomeScreen() {
                   height: 58,
                   borderRadius: 16,
                   border: '2px solid rgba(255, 255, 255, 0.8)',
-                  boxShadow: '0 8px 32px rgba(240, 105, 34, 0.2)',
+                  boxShadow: '8px 8px 20px rgba(0,0,0,0.12), -8px -8px 20px rgba(255,255,255,0.5)',
                   position: 'relative',
                   zIndex: 1,
                 }}
@@ -318,8 +319,8 @@ export default function WelcomeScreen() {
             onClick={() => navigate('/code')}
             style={{
               background: 'rgba(255, 255, 255, 0.7)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
+              backdropFilter: 'none',
+              WebkitbackdropFilter: 'none',
               border: '1px solid rgba(240, 105, 34, 0.15)',
               borderRadius: 14,
               padding: '14px 28px',
@@ -328,7 +329,7 @@ export default function WelcomeScreen() {
               color: '#333',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              boxShadow: '0 4px 24px rgba(240, 105, 34, 0.08)',
+              boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
               opacity: show ? 1 : 0,
               transform: show ? 'translateY(0)' : 'translateY(-20px)',
             }}
@@ -345,7 +346,7 @@ export default function WelcomeScreen() {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            🔑 Login with Code
+            Login with Code
           </button>
         </div>
       </header>
@@ -368,15 +369,14 @@ export default function WelcomeScreen() {
           opacity: show ? 1 : 0,
           transform: show ? 'translateY(0)' : 'translateY(40px)',
           transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)',
-        }}>
-          {/* Premium Badge */}
+        }}>{/* Premium Badge */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 12,
             background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            backdropFilter: 'none',
+            WebkitbackdropFilter: 'none',
             padding: '14px 26px',
             borderRadius: 50,
             marginBottom: 36,
@@ -395,7 +395,7 @@ export default function WelcomeScreen() {
               background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent)',
               animation: 'shimmerSweep 3s ease-in-out infinite',
             }} />
-            <span style={{ fontSize: 20 }}>🏥</span>
+            <span style={{ fontSize: 20 }}></span>
             <span style={{ fontSize: 14, fontWeight: 700, color: '#333' }}>
               AI-Powered Personal Health
             </span>
@@ -406,7 +406,7 @@ export default function WelcomeScreen() {
               fontWeight: 700,
               padding: '6px 14px',
               borderRadius: 20,
-              boxShadow: '0 4px 16px rgba(34, 197, 94, 0.3)',
+              boxShadow: '4px 4px 10px rgba(0,0,0,0.1), -4px -4px 10px rgba(255,255,255,0.5)',
             }}>
               NEW
             </span>
@@ -445,9 +445,8 @@ export default function WelcomeScreen() {
                 height: 6,
                 background: 'linear-gradient(90deg, #F06922, #FF8C4B, #F06922)',
                 borderRadius: 3,
-                boxShadow: '0 4px 20px rgba(240, 105, 34, 0.4)',
-              }} />
-            </span>
+                boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
+              }} /></span>
           </h1>
 
           {/* Subtitle */}
@@ -497,7 +496,7 @@ export default function WelcomeScreen() {
                 fontWeight: 700,
                 color: '#FFFFFF',
                 cursor: 'pointer',
-                boxShadow: '0 16px 48px rgba(240, 105, 34, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1) inset',
+                boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                 overflow: 'hidden',
               }}
@@ -534,8 +533,8 @@ export default function WelcomeScreen() {
                 alignItems: 'center',
                 gap: 12,
                 background: 'rgba(255, 255, 255, 0.8)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                backdropFilter: 'none',
+                WebkitbackdropFilter: 'none',
                 border: '2px solid rgba(240, 105, 34, 0.15)',
                 borderRadius: 20,
                 padding: '22px 40px',
@@ -544,7 +543,7 @@ export default function WelcomeScreen() {
                 color: '#444',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.04)',
+                boxShadow: '8px 8px 20px rgba(0,0,0,0.1), -8px -8px 20px rgba(255,255,255,0.6)',
               }}
               onMouseEnter={(e) => {
                 e.target.style.background = '#FFFFFF';
@@ -559,7 +558,7 @@ export default function WelcomeScreen() {
                 e.target.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.04)';
               }}
             >
-              🔄 Returning User
+               Returning User
             </button>
 
             {/* Public Board CTA */}
@@ -578,7 +577,7 @@ export default function WelcomeScreen() {
                 color: '#F4610A',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 6px 24px rgba(244,97,10,0.10)',
+                boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
               }}
               onMouseEnter={(e) => {
                 e.target.style.background = 'linear-gradient(135deg, #F4610A, #FB923C)';
@@ -591,7 +590,7 @@ export default function WelcomeScreen() {
                 e.target.style.boxShadow = '0 6px 24px rgba(244,97,10,0.10)';
               }}
             >
-              🎉 Public Shoutout Board
+               Public Shoutout Board
             </button>
           </div>
 
@@ -603,8 +602,8 @@ export default function WelcomeScreen() {
             borderTop: '1px solid rgba(240, 105, 34, 0.1)',
           }}>
             {[
-              { icon: '🔒', text: 'Bank-Grade Security' },
-              { icon: '✅', text: '50,000+ Users' },
+              { icon: 'lock', text: 'Bank-Grade Security' },
+              { icon: 'check_circle', text: '50,000+ Users' },
               { icon: '⭐', text: '4.9/5 Rating' },
             ].map((badge, i) => (
               <div key={i} style={{
@@ -615,7 +614,7 @@ export default function WelcomeScreen() {
                 transform: show ? 'translateY(0)' : 'translateY(10px)',
                 transition: `all 0.6s ease ${0.5 + i * 0.15}s`,
               }}>
-                <span style={{ fontSize: 22 }}>{badge.icon}</span>
+                <Icon name={badge.icon} size={22} />
                 <span style={{ fontSize: 14, color: '#666', fontWeight: 500 }}>{badge.text}</span>
               </div>
             ))}
@@ -633,8 +632,8 @@ export default function WelcomeScreen() {
           <div style={{
             position: 'relative',
             background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%)',
-            backdropFilter: 'blur(40px)',
-            WebkitBackdropFilter: 'blur(40px)',
+            backdropFilter: 'none',
+            WebkitbackdropFilter: 'none',
             borderRadius: 40,
             padding: 48,
             border: '1px solid rgba(255, 255, 255, 0.9)',
@@ -705,7 +704,7 @@ export default function WelcomeScreen() {
                   <div style={{
                     width: '100%',
                     height: '100%',
-                    background: '#FFF',
+                    background: '#FAFAF8',
                     borderRadius: '50%',
                   }} />
                 </div>
@@ -718,7 +717,7 @@ export default function WelcomeScreen() {
                     borderRadius: '50%',
                     objectFit: 'cover',
                     border: '4px solid #FFFFFF',
-                    boxShadow: '0 20px 50px rgba(240, 105, 34, 0.25)',
+                    boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5)',
                     transform: avatarHover ? 'scale(1.06)' : 'scale(1)',
                     transition: 'transform 0.4s ease',
                     position: 'relative',
@@ -726,7 +725,7 @@ export default function WelcomeScreen() {
                   }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #F06922 0%, #FF8C4B 100%); display: flex; align-items: center; justify-content: center; font-size: 52px; box-shadow: 0 20px 50px rgba(240, 105, 34, 0.25);">🧑‍⚕️</div>';
+                    e.target.parentElement.innerHTML = '';
                   }}
                 />
               </div>
@@ -740,10 +739,9 @@ export default function WelcomeScreen() {
                 alignItems: 'center',
                 gap: 12,
                 marginTop: 24,
-                border: '1px solid rgba(240, 105, 34, 0.1)',
-                boxShadow: '0 8px 32px rgba(240, 105, 34, 0.08)',
-              }}>
-                <span style={{ fontSize: 24, animation: 'wave 2.5s ease-in-out infinite', display: 'inline-block' }}>👋</span>
+                border: 'none',
+                boxShadow: '8px 8px 20px rgba(0,0,0,0.12), -8px -8px 20px rgba(255,255,255,0.5)',
+              }}><span style={{ fontSize: 24, animation: 'wave 2.5s ease-in-out infinite', display: 'inline-block' }}></span>
                 <span style={{ fontSize: 15, fontWeight: 600, color: '#333' }}>
                   Hi! I'm your AI Health Coach
                 </span>
@@ -751,8 +749,7 @@ export default function WelcomeScreen() {
             </div>
 
             {/* Champions Leaderboard */}
-            <div style={{ marginBottom: 32, position: 'relative', zIndex: 1 }}>
-              <h3 style={{
+            <div style={{ marginBottom: 32, position: 'relative', zIndex: 1 }}><h3 style={{
                 fontSize: 12,
                 fontWeight: 700,
                 color: '#F06922',
@@ -764,7 +761,7 @@ export default function WelcomeScreen() {
                 justifyContent: 'center',
                 gap: 10,
               }}>
-                <span>🏆</span> Today's Champions
+                <span></span> Today's Champions
               </h3>
               <div style={{
                 display: 'grid',
@@ -772,9 +769,9 @@ export default function WelcomeScreen() {
                 gap: 14,
               }}>
                 {[
-                  { name: 'Rahul', streak: '23 days', medal: '🥇', bg: 'linear-gradient(135deg, #FFFBF0 0%, #FFF4DC 100%)', border: '#FFE4A8', glow: 'rgba(255, 200, 100, 0.4)' },
-                  { name: 'Priya', streak: '19 days', medal: '🥈', bg: 'linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%)', border: '#E8E8E8', glow: 'rgba(200, 200, 200, 0.3)' },
-                  { name: 'Amit', streak: '15 days', medal: '🥉', bg: 'linear-gradient(135deg, #FFF8F4 0%, #FFEDE4 100%)', border: '#FFDCC8', glow: 'rgba(255, 180, 140, 0.3)' },
+                  { name: 'Rahul', streak: '23 days', medal: '', bg: 'linear-gradient(135deg, #FFFBF0 0%, #FFF4DC 100%)', border: '#FFE4A8', glow: 'rgba(255, 200, 100, 0.4)' },
+                  { name: 'Priya', streak: '19 days', medal: '', bg: 'linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%)', border: '#E8E8E8', glow: 'rgba(200, 200, 200, 0.3)' },
+                  { name: 'Amit', streak: '15 days', medal: '', bg: 'linear-gradient(135deg, #FFF8F4 0%, #FFEDE4 100%)', border: '#FFDCC8', glow: 'rgba(255, 180, 140, 0.3)' },
                 ].map((user, i) => (
                   <div
                     key={i}
@@ -790,15 +787,14 @@ export default function WelcomeScreen() {
                       boxShadow: i === 0 ? `0 8px 32px ${user.glow}` : '0 4px 16px rgba(0, 0, 0, 0.04)',
                     }}
                   >
-                    <div style={{ fontSize: 34, marginBottom: 8 }}>{user.medal}</div>
+                    <Icon name={user.medal} size={34} />
                     <div style={{ fontSize: 14, fontWeight: 700, color: '#1a1a1a' }}>{user.name}</div>
                     <div style={{
                       fontSize: 12,
                       color: i === 0 ? '#F06922' : '#666',
                       fontWeight: 600,
                       marginTop: 4,
-                    }}>
-                      {user.streak} 🔥
+                    }}>{user.streak} 
                     </div>
                   </div>
                 ))}
@@ -852,12 +848,11 @@ export default function WelcomeScreen() {
             borderRadius: 18,
             fontSize: 14,
             fontWeight: 700,
-            boxShadow: '0 12px 40px rgba(34, 197, 94, 0.35)',
+            boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
             transform: show ? 'rotate(6deg) scale(1)' : 'rotate(6deg) scale(0)',
             transition: 'transform 0.6s ease 0.7s',
             zIndex: 3,
-          }}>
-            ✨ Free Trial Available!
+          }}>Free Trial Available!
           </div>
 
           <div style={{
@@ -865,55 +860,27 @@ export default function WelcomeScreen() {
             bottom: 50,
             left: -45,
             background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            backdropFilter: 'none',
+            WebkitbackdropFilter: 'none',
             border: '1px solid rgba(255, 255, 255, 0.9)',
             padding: '16px 24px',
             borderRadius: 18,
             fontSize: 14,
             fontWeight: 600,
             color: '#333',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
+            boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
             display: 'flex',
             alignItems: 'center',
             gap: 12,
             transform: show ? 'rotate(-4deg) scale(1)' : 'rotate(-4deg) scale(0)',
             transition: 'transform 0.6s ease 0.8s',
             zIndex: 3,
-          }}>
-            <span style={{ fontSize: 22 }}>💪</span>
+          }}><span style={{ fontSize: 22 }}></span>
             Lost 5kg in 2 weeks!
           </div>
 
           {/* Decorative Elements */}
-          <div style={{
-            position: 'absolute',
-            top: '25%',
-            right: -50,
-            fontSize: 28,
-            animation: 'float 3s ease-in-out infinite',
-            opacity: show ? 0.8 : 0,
-            transition: 'opacity 0.5s ease 1s',
-          }}>✨</div>
-          <div style={{
-            position: 'absolute',
-            bottom: '30%',
-            left: -35,
-            fontSize: 24,
-            animation: 'float 4s ease-in-out infinite 1s',
-            opacity: show ? 0.6 : 0,
-            transition: 'opacity 0.5s ease 1.2s',
-          }}>💫</div>
-          <div style={{
-            position: 'absolute',
-            top: '60%',
-            right: -40,
-            fontSize: 20,
-            animation: 'float 3.5s ease-in-out infinite 0.5s',
-            opacity: show ? 0.5 : 0,
-            transition: 'opacity 0.5s ease 1.4s',
-          }}>🌟</div>
-        </div>
+          </div>
       </main>
 
       {/* Animation Keyframes */}
@@ -980,6 +947,6 @@ export default function WelcomeScreen() {
           }
         }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

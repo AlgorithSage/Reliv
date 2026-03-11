@@ -2,60 +2,61 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function CodeEntryScreen() {
-  const navigate = useNavigate();
-  const [code, setCode] = useState(['', '', '', '']);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const inputRefs = useRef([]);
+ const navigate = useNavigate();
+ const [code, setCode] = useState(['', '', '', '']);
+ const [loading, setLoading] = useState(false);
+ const [error, setError] = useState('');
+ const inputRefs = useRef([]);
 
-  useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
+ useEffect(() => {
+ inputRefs.current[0]?.focus();
+ }, []);
 
-  const handleChange = (i, val) => {
-    if (val.length > 1) val = val[0];
-    const newCode = [...code];
-    newCode[i] = val;
-    setCode(newCode);
-    setError('');
+ const handleChange = (i, val) => {
+ if (val.length > 1) val = val[0];
+ const newCode = [...code];
+ newCode[i] = val;
+ setCode(newCode);
+ setError('');
 
-    if (val && i < 3) {
+ if (val && i < 3) {
       inputRefs.current[i + 1]?.focus();
-    }
-  };
+ }
+ };
 
-  const handleKeyDown = (i, e) => {
-    if (e.key === 'Backspace' && !code[i] && i > 0) {
+ const handleKeyDown = (i, e) => {
+ if (e.key === 'Backspace' && !code[i] && i > 0) {
       inputRefs.current[i - 1]?.focus();
-    }
-  };
+ }
+ };
 
-  const handlePaste = (e) => {
-    e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
-    const newCode = [...code];
-    for (let i = 0; i < pasted.length; i++) {
+ const handlePaste = (e) => {
+ e.preventDefault();
+ const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
+ const newCode = [...code];
+ for (let i = 0; i < pasted.length; i++) {
       newCode[i] = pasted[i];
-    }
-    setCode(newCode);
-    if (pasted.length === 4) {
+ }
+ setCode(newCode);
+ if (pasted.length === 4) {
       inputRefs.current[3]?.focus();
-    }
-  };
+ }
+ };
 
-  const handleSubmit = async () => {
-    const accessCode = code.join('');
-    if (accessCode.length !== 4) return;
+ const handleSubmit = async () => {
+ const accessCode = code.join('');
+ if (accessCode.length !== 4) return;
 
-    setLoading(true);
-    setError('');
+ setLoading(true);
+ setError('');
 
-    // Demo codes for testing
-    const demoCodes = ['9876', '6241', '1234'];
+ // Demo codes for testing
+ const demoCodes = ['9876', '6241', '1234'];
 
-    setTimeout(() => {
+ setTimeout(() => {
       if (demoCodes.includes(accessCode)) {
         localStorage.setItem('accessCode', accessCode);
         localStorage.setItem('userType', 'returning');
@@ -66,26 +67,26 @@ export default function CodeEntryScreen() {
         setError('Code not found');
         setLoading(false);
       }
-    }, 800);
-  };
+ }, 800);
+ };
 
-  const isComplete = code.every(d => d);
+ const isComplete = code.every(d => d);
 
-  return (
-    <Layout
-      title="Welcome Back! 👋"
+ return (
+ <Layout
+      title="Welcome Back!"
       subtitle="Enter your 4-digit access code to continue"
       showBack
       onBack={() => navigate('/')}
-    >
+ >
       <div style={{ maxWidth: 520, margin: '0 auto' }}>
         {/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '48px 44px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
-          border: '1px solid rgba(240, 105, 34, 0.08)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+          border: 'none',
           textAlign: 'center',
         }}>
           {/* Icon */}
@@ -101,7 +102,7 @@ export default function CodeEntryScreen() {
             border: '1px solid rgba(240, 105, 34, 0.15)',
             fontSize: 44,
           }}>
-            🔑
+            
           </div>
 
           {/* Code Input Boxes */}
@@ -162,7 +163,6 @@ export default function CodeEntryScreen() {
             justifyContent: 'center',
             gap: 6,
           }}>
-            <span>💡</span>
             Demo codes: <strong style={{ color: '#F06922' }}>9876</strong> or <strong style={{ color: '#F06922' }}>6241</strong>
           </p>
 
@@ -179,8 +179,7 @@ export default function CodeEntryScreen() {
               justifyContent: 'center',
               gap: 10,
               animation: 'shake 0.5s ease',
-            }}>
-              <span style={{ fontSize: 18 }}>⚠️</span>
+            }}><span style={{ fontSize: 18 }}></span>
               <div>
                 <p style={{ fontSize: 14, color: '#DC2626', fontWeight: 600, margin: 0 }}>{error}</p>
                 <p style={{ fontSize: 12, color: '#9CA3AF', margin: '4px 0 0' }}>
@@ -250,8 +249,8 @@ export default function CodeEntryScreen() {
             onClick={() => navigate('/phone')}
             style={{
               width: '100%',
-              background: '#FFFFFF',
-              border: '2px solid #E5E7EB',
+              background: '#FAFAF8',
+              border: 'none',
               borderRadius: 14,
               padding: '16px',
               fontSize: 15,
@@ -265,7 +264,7 @@ export default function CodeEntryScreen() {
               gap: 10,
             }}
           >
-            📱 Start Fresh with Phone Number
+            Start Fresh with Phone Number
           </button>
         </div>
 
@@ -280,7 +279,6 @@ export default function CodeEntryScreen() {
           justifyContent: 'center',
           gap: 6,
         }}>
-          <span>🔒</span>
           Your code is linked to your phone number
         </p>
       </div>
@@ -297,6 +295,6 @@ export default function CodeEntryScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

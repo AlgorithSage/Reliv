@@ -2,71 +2,72 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function OTPScreen() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { phone, sessionId } = location.state || {};
-  const [otp, setOtp] = useState(['', '', '', '']);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [attempts, setAttempts] = useState(0);
-  const [resendTimer, setResendTimer] = useState(30);
-  const [success, setSuccess] = useState(false);
-  const inputRefs = useRef([]);
+ const navigate = useNavigate();
+ const location = useLocation();
+ const { phone, sessionId } = location.state || {};
+ const [otp, setOtp] = useState(['', '', '', '']);
+ const [loading, setLoading] = useState(false);
+ const [error, setError] = useState('');
+ const [attempts, setAttempts] = useState(0);
+ const [resendTimer, setResendTimer] = useState(30);
+ const [success, setSuccess] = useState(false);
+ const inputRefs = useRef([]);
 
-  useEffect(() => {
-    if (!phone && !sessionId) navigate('/phone');
-  }, [phone, sessionId]);
+ useEffect(() => {
+ if (!phone && !sessionId) navigate('/phone');
+ }, [phone, sessionId]);
 
-  useEffect(() => {
-    if (resendTimer > 0) {
+ useEffect(() => {
+ if (resendTimer > 0) {
       const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
       return () => clearTimeout(timer);
-    }
-  }, [resendTimer]);
+ }
+ }, [resendTimer]);
 
-  useEffect(() => {
-    inputRefs.current[0]?.focus();
-  }, []);
+ useEffect(() => {
+ inputRefs.current[0]?.focus();
+ }, []);
 
-  const handleChange = (i, val) => {
-    if (val.length > 1) val = val[0];
-    const newOtp = [...otp];
-    newOtp[i] = val;
-    setOtp(newOtp);
-    setError('');
+ const handleChange = (i, val) => {
+ if (val.length > 1) val = val[0];
+ const newOtp = [...otp];
+ newOtp[i] = val;
+ setOtp(newOtp);
+ setError('');
 
-    if (val && i < 3) {
+ if (val && i < 3) {
       inputRefs.current[i + 1]?.focus();
-    }
-  };
+ }
+ };
 
-  const handleKeyDown = (i, e) => {
-    if (e.key === 'Backspace' && !otp[i] && i > 0) {
+ const handleKeyDown = (i, e) => {
+ if (e.key === 'Backspace' && !otp[i] && i > 0) {
       inputRefs.current[i - 1]?.focus();
-    }
-  };
+ }
+ };
 
-  const handlePaste = (e) => {
-    e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
-    const newOtp = [...otp];
-    for (let i = 0; i < pasted.length; i++) {
+ const handlePaste = (e) => {
+ e.preventDefault();
+ const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
+ const newOtp = [...otp];
+ for (let i = 0; i < pasted.length; i++) {
       newOtp[i] = pasted[i];
-    }
-    setOtp(newOtp);
-    if (pasted.length === 4) {
+ }
+ setOtp(newOtp);
+ if (pasted.length === 4) {
       inputRefs.current[3]?.focus();
-    }
-  };
+ }
+ };
 
-  const handleSubmit = async () => {
-    const code = otp.join('');
-    if (code.length !== 4) return;
-    setLoading(true);
-    setError('');
-    try {
+ const handleSubmit = async () => {
+ const code = otp.join('');
+ if (code.length !== 4) return;
+ setLoading(true);
+ setError('');
+ try {
       const res = await api.call('/auth/verify-otp', {
         method: 'POST',
         body: JSON.stringify({ sessionId, otp: code })
@@ -76,7 +77,7 @@ export default function OTPScreen() {
       localStorage.setItem('userId', res.userId);
       setSuccess(true);
       setTimeout(() => navigate('/code-generated'), 800);
-    } catch (err) {
+ } catch (err) {
       if (code === '1111') {
         localStorage.setItem('accessCode', 'DEMO1234');
         setSuccess(true);
@@ -90,28 +91,27 @@ export default function OTPScreen() {
         setOtp(['', '', '', '']);
         inputRefs.current[0]?.focus();
       }
-    } finally {
+ } finally {
       setLoading(false);
-    }
-  };
+ }
+ };
 
-  const isComplete = otp.every(d => d);
+ const isComplete = otp.every(d => d);
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Verify Your Number"
       subtitle={`We've sent a 4-digit code to ${phone || 'your phone'}`}
       showBack
       onBack={() => navigate('/phone')}
-    >
-      <div style={{ maxWidth: 520, margin: '0 auto' }}>
-        {/* Main Card */}
+ >
+      <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '48px 44px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
-          border: '1px solid rgba(240, 105, 34, 0.08)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+          border: 'none',
           textAlign: 'center',
         }}>
           {/* Icon */}
@@ -132,7 +132,7 @@ export default function OTPScreen() {
             transform: success ? 'scale(1.1)' : 'scale(1)',
             boxShadow: success ? '0 12px 40px rgba(34, 197, 94, 0.3)' : 'none',
           }}>
-            {success ? '✓' : '🔐'}
+            {success ? '' : ''}
           </div>
 
           {/* Instruction */}
@@ -150,8 +150,7 @@ export default function OTPScreen() {
               alignItems: 'center',
               gap: 6,
               marginTop: 8,
-            }}>
-              💡 Use <strong style={{ color: '#F06922', fontWeight: 700 }}>1111</strong> for testing
+            }}>Use <strong style={{ color: '#F06922', fontWeight: 700 }}>1111</strong> for testing
             </span>
           </p>
 
@@ -216,8 +215,7 @@ export default function OTPScreen() {
               justifyContent: 'center',
               gap: 10,
               animation: 'shake 0.5s ease',
-            }}>
-              <span style={{ fontSize: 18 }}>⚠️</span>
+            }}><span style={{ fontSize: 18 }}></span>
               <div>
                 <p style={{ fontSize: 14, color: '#DC2626', fontWeight: 600, margin: 0 }}>{error}</p>
                 <p style={{ fontSize: 12, color: '#9CA3AF', margin: '4px 0 0' }}>
@@ -343,6 +341,6 @@ export default function OTPScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

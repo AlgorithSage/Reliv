@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Icon from '../utils/Icon';
 import { useNavigate } from "react-router-dom";
 import { C, api } from "../utils/constants";
 import "./BentoGrid.css";
@@ -6,18 +7,18 @@ import "./BentoGrid.css";
 const relivAvatar = "/avatar-removebg-preview.png";
 
 export default function BentoWelcomeScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
 
-  // Inactivity attract screen
-  const [inactive, setInactive] = useState(false);
-  const [shoutouts, setShoutouts] = useState([]);
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const timerRef = useRef();
-  const cycleRef = useRef();
+ // Inactivity attract screen
+ const [inactive, setInactive] = useState(false);
+ const [shoutouts, setShoutouts] = useState([]);
+ const [currentIdx, setCurrentIdx] = useState(0);
+ const timerRef = useRef();
+ const cycleRef = useRef();
 
-  useEffect(() => {
-    try {
+ useEffect(() => {
+ try {
       const saved = JSON.parse(localStorage.getItem("userShoutouts") || "[]");
       const defaults = [
         { name: "Priya Sharma", message: "My birthday shoutout was amazing!", image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=200&h=200&q=80", type: "Birthday" },
@@ -25,51 +26,51 @@ export default function BentoWelcomeScreen() {
         { name: "Sara Khan", message: "Promoted my new café here — best decision!", image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=200&h=200&q=80", type: "Product" },
       ];
       setShoutouts(saved.length > 0 ? [...saved, ...defaults] : defaults);
-    } catch (e) {
+ } catch (e) {
       console.error("Error loading shoutouts:", e);
-    }
-  }, []);
+ }
+ }, []);
 
-  useEffect(() => {
-    if (inactive && shoutouts.length > 1) {
+ useEffect(() => {
+ if (inactive && shoutouts.length > 1) {
       cycleRef.current = setInterval(() => {
         setCurrentIdx(prev => (prev + 1) % shoutouts.length);
       }, 4000);
-    }
-    return () => { if (cycleRef.current) clearInterval(cycleRef.current); };
-  }, [inactive, shoutouts.length]);
+ }
+ return () => { if (cycleRef.current) clearInterval(cycleRef.current); };
+ }, [inactive, shoutouts.length]);
 
-  const resetInactivity = () => {
-    setInactive(false);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setInactive(true), 16000);
-  };
+ const resetInactivity = () => {
+ setInactive(false);
+ if (timerRef.current) clearTimeout(timerRef.current);
+ timerRef.current = setTimeout(() => setInactive(true), 16000);
+ };
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 60);
-    resetInactivity();
-    const events = ["mousemove", "mousedown", "keydown", "touchstart"];
-    events.forEach(e => window.addEventListener(e, resetInactivity));
-    return () => {
+ useEffect(() => {
+ setTimeout(() => setShow(true), 60);
+ resetInactivity();
+ const events = ["mousemove", "mousedown", "keydown", "touchstart"];
+ events.forEach(e => window.addEventListener(e, resetInactivity));
+ return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       events.forEach(e => window.removeEventListener(e, resetInactivity));
-    };
-  }, []);
+ };
+ }, []);
 
-  const getTypeLabel = (t) => t || "Shoutout";
+ const getTypeLabel = (t) => t || "Shoutout";
 
 
 
-  if (!show) return null;
+ if (!show) return null;
 
-  return (
-    <div
+ return (
+ <div
       className="bento-kiosk"
       onMouseMove={resetInactivity}
       onKeyDown={resetInactivity}
       onClick={resetInactivity}
       onTouchStart={resetInactivity}
-    >
+ >
       {/* ── Inactivity Attract Overlay ── */}
       {inactive && shoutouts.length > 0 && (
         <div className="bento-attract" onClick={resetInactivity}>
@@ -160,7 +161,7 @@ export default function BentoWelcomeScreen() {
               { icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>, text: "4.9/5 Rating" },
             ].map((b, i) => (
               <div key={i} className="bento-hero__trust-item">
-                <span className="bento-hero__trust-icon">{b.icon}</span>
+                <span className="bento-hero__trust-icon"><Icon name={b.icon} size={20} /></span>
                 <span>{b.text}</span>
               </div>
             ))}
@@ -206,6 +207,6 @@ export default function BentoWelcomeScreen() {
 
 
       </div>
-    </div>
-  );
+ </div>
+ );
 }

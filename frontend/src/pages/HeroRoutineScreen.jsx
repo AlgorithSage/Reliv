@@ -1,287 +1,288 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function HeroRoutineScreen() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('schedule');
-  const [showContent, setShowContent] = useState(false);
+ const navigate = useNavigate();
+ const [activeTab, setActiveTab] = useState('schedule');
+ const [showContent, setShowContent] = useState(false);
 
-  const celebrityName = localStorage.getItem('celebrityName') || 'Your Hero';
-  const selectedCelebrity = localStorage.getItem('selectedCelebrity') || 'kohli';
+ const celebrityName = localStorage.getItem('celebrityName') || 'Your Hero';
+ const selectedCelebrity = localStorage.getItem('selectedCelebrity') || 'kohli';
 
-  // All athlete data
-  const athleteData = {
-    ronaldo: {
+ // All athlete data
+ const athleteData = {
+ ronaldo: {
       name: 'Cristiano Ronaldo',
       subtitle: 'CR7 Performance Routine',
-      emoji: '⚽',
+      emoji: 'football',
       color: '#16A34A',
       strength: 'Speed & Stamina',
       schedule: [
-        { time: '05:45', activity: 'Wake', desc: 'Hydration (water + electrolytes), Light stretching', icon: '🌅' },
-        { time: '06:15', activity: 'Mobility Activation', desc: 'Foam rolling, Hip/ankle mobility, Core activation', icon: '🧘', duration: '30 min' },
-        { time: '07:00', activity: 'Breakfast', desc: 'Egg whites, Wholegrain toast, Fruit, Green tea', icon: '🍳' },
-        { time: '08:00', activity: 'Strength Training', desc: 'Squats, lunges, Plyometrics, Resistance training', icon: '💪', duration: '75 min' },
-        { time: '09:30', activity: 'Recovery', desc: 'Ice bath / cryotherapy, Compression boots', icon: '❄️' },
-        { time: '10:30', activity: 'Snack', desc: 'Greek yogurt, Nuts', icon: '🥜' },
-        { time: '12:30', activity: 'Lunch', desc: 'Grilled fish/chicken, Quinoa/brown rice, Vegetables', icon: '🍲' },
-        { time: '14:00', activity: 'Nap', desc: 'Power nap for recovery', icon: '😴', duration: '45 min' },
-        { time: '15:00', activity: 'Light Conditioning', desc: 'Swimming / cycling, Balance drills', icon: '🏊', duration: '45 min' },
-        { time: '16:30', activity: 'Protein Snack', desc: 'Protein shake + banana', icon: '🍌' },
-        { time: '18:30', activity: 'Dinner', desc: 'Chicken breast, Sweet potato, Salad', icon: '🍛' },
-        { time: '20:00', activity: 'Stretching', desc: 'Full body stretch routine', icon: '🧘', duration: '20 min' },
-        { time: '22:00', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: '🌙' },
+        { time: '05:45', activity: 'Wake', desc: 'Hydration (water + electrolytes), Light stretching', icon: 'sunrise' },
+        { time: '06:15', activity: 'Mobility Activation', desc: 'Foam rolling, Hip/ankle mobility, Core activation', icon: 'yoga', duration: '30 min' },
+        { time: '07:00', activity: 'Breakfast', desc: 'Egg whites, Wholegrain toast, Fruit, Green tea', icon: 'breakfast_egg' },
+        { time: '08:00', activity: 'Strength Training', desc: 'Squats, lunges, Plyometrics, Resistance training', icon: 'muscle', duration: '75 min' },
+        { time: '09:30', activity: 'Recovery', desc: 'Ice bath / cryotherapy, Compression boots', icon: 'snowflake' },
+        { time: '10:30', activity: 'Snack', desc: 'Greek yogurt, Nuts', icon: 'nuts' },
+        { time: '12:30', activity: 'Lunch', desc: 'Grilled fish/chicken, Quinoa/brown rice, Vegetables', icon: 'lunch_bowl' },
+        { time: '14:00', activity: 'Nap', desc: 'Power nap for recovery', icon: 'sleeping', duration: '45 min' },
+        { time: '15:00', activity: 'Light Conditioning', desc: 'Swimming / cycling, Balance drills', icon: 'swimming', duration: '45 min' },
+        { time: '16:30', activity: 'Protein Snack', desc: 'Protein shake + banana', icon: 'banana' },
+        { time: '18:30', activity: 'Dinner', desc: 'Chicken breast, Sweet potato, Salad', icon: 'dinner_plate' },
+        { time: '20:00', activity: 'Stretching', desc: 'Full body stretch routine', icon: 'yoga', duration: '20 min' },
+        { time: '22:00', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Sprint Training', desc: '6 × 40m sprint, Rest 60 sec - Builds fast-twitch fibers', icon: '🏃' },
-        { title: 'HIIT Cardio', desc: '30 sec sprint, 90 sec walk × 8 rounds', icon: '⚡' },
-        { title: 'Plyometrics', desc: 'Box jumps, Skipping, Jump squats - Makes muscles explosive', icon: '📦' },
-        { title: 'Core Training', desc: 'Plank, Leg raises, Russian twists - Daily 10 min', icon: '🎯' },
+        { title: 'Sprint Training', desc: '6 × 40m sprint, Rest 60 sec - Builds fast-twitch fibers', icon: 'running' },
+        { title: 'HIIT Cardio', desc: '30 sec sprint, 90 sec walk × 8 rounds', icon: 'lightning' },
+        { title: 'Plyometrics', desc: 'Box jumps, Skipping, Jump squats - Makes muscles explosive', icon: 'package' },
+        { title: 'Core Training', desc: 'Plank, Leg raises, Russian twists - Daily 10 min', icon: 'target' },
       ],
       diet: ['Egg whites', 'Chicken breast', 'Fish', 'Greek yogurt', 'Quinoa', 'Sweet potato', 'Green vegetables', 'Nuts', 'Fruits'],
-    },
-    messi: {
+ },
+ messi: {
       name: 'Lionel Messi',
       subtitle: 'The Magician\'s Routine',
-      emoji: '🐐',
+      emoji: 'goat_messi',
       color: '#3B82F6',
       strength: 'Sharp Mind & Agility',
       schedule: [
-        { time: '07:00', activity: 'Wake', desc: 'Start the day calm and focused', icon: '🌅' },
-        { time: '07:30', activity: 'Breakfast', desc: 'Oats, Yogurt, Fruit', icon: '🍳' },
-        { time: '08:30', activity: 'Mobility & Stability', desc: 'Ankle/knee strengthening, Balance drills', icon: '🧘', duration: '40 min' },
-        { time: '09:30', activity: 'Strength Training', desc: 'Bodyweight, Core, Light weights', icon: '💪', duration: '60 min' },
-        { time: '11:00', activity: 'Recovery', desc: 'Massage, Stretching', icon: '💆' },
-        { time: '12:30', activity: 'Lunch', desc: 'Fish/chicken, Rice, Olive oil salad', icon: '🍲' },
-        { time: '14:00', activity: 'Nap', desc: 'Mental recovery', icon: '😴', duration: '30 min' },
-        { time: '15:00', activity: 'Speed & Agility', desc: 'Ladder drills, Short sprints', icon: '⚡', duration: '45 min' },
-        { time: '16:30', activity: 'Snack', desc: 'Fruit + protein', icon: '🍎' },
-        { time: '19:00', activity: 'Dinner', desc: 'Chicken + vegetables', icon: '🍛' },
-        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: '🌙' },
+        { time: '07:00', activity: 'Wake', desc: 'Start the day calm and focused', icon: 'sunrise' },
+        { time: '07:30', activity: 'Breakfast', desc: 'Oats, Yogurt, Fruit', icon: 'breakfast_egg' },
+        { time: '08:30', activity: 'Mobility & Stability', desc: 'Ankle/knee strengthening, Balance drills', icon: 'yoga', duration: '40 min' },
+        { time: '09:30', activity: 'Strength Training', desc: 'Bodyweight, Core, Light weights', icon: 'muscle', duration: '60 min' },
+        { time: '11:00', activity: 'Recovery', desc: 'Massage, Stretching', icon: 'massage' },
+        { time: '12:30', activity: 'Lunch', desc: 'Fish/chicken, Rice, Olive oil salad', icon: 'lunch_bowl' },
+        { time: '14:00', activity: 'Nap', desc: 'Mental recovery', icon: 'sleeping', duration: '30 min' },
+        { time: '15:00', activity: 'Speed & Agility', desc: 'Ladder drills, Short sprints', icon: 'lightning', duration: '45 min' },
+        { time: '16:30', activity: 'Snack', desc: 'Fruit + protein', icon: 'apple' },
+        { time: '19:00', activity: 'Dinner', desc: 'Chicken + vegetables', icon: 'dinner_plate' },
+        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Daily Meditation', desc: '10-15 min - Reduces cortisol, improves focus', icon: '🧘' },
-        { title: 'Decision Training', desc: 'Chess, Strategy games, Puzzles - Improves brain speed', icon: '♟️' },
-        { title: 'Visualization', desc: '5 min/day before sleep - Brain trains itself', icon: '🎯' },
-        { title: 'Digital Control', desc: 'Limit reels, shorts, scrolling - Protects focus', icon: '📵' },
+        { title: 'Daily Meditation', desc: '10-15 min - Reduces cortisol, improves focus', icon: 'yoga' },
+        { title: 'Decision Training', desc: 'Chess, Strategy games, Puzzles - Improves brain speed', icon: 'chess' },
+        { title: 'Visualization', desc: '5 min/day before sleep - Brain trains itself', icon: 'target' },
+        { title: 'Digital Control', desc: 'Limit reels, shorts, scrolling - Protects focus', icon: 'no_phone' },
       ],
       diet: ['Oats', 'Fish', 'Chicken', 'Rice', 'Olive oil', 'Fresh fruits', 'Vegetables', 'Yogurt'],
-    },
-    dhoni: {
+ },
+ dhoni: {
       name: 'MS Dhoni',
       subtitle: 'Captain Cool Routine',
-      emoji: '🏏',
+      emoji: 'cricket_bat',
       color: '#1E40AF',
       strength: 'Sharp Mind & Leadership',
       schedule: [
-        { time: '06:30', activity: 'Wake', desc: 'Start the day focused', icon: '🌅' },
-        { time: '07:00', activity: 'Breakfast', desc: 'Eggs / poha, Fruit, Milk', icon: '🍳' },
-        { time: '08:00', activity: 'Conditioning', desc: 'Jogging, Agility drills, Balance work', icon: '🏃', duration: '60 min' },
-        { time: '09:30', activity: 'Strength Training', desc: 'Core, Back, Shoulders', icon: '💪' },
-        { time: '11:00', activity: 'Recovery', desc: 'Stretching, Massage', icon: '💆' },
-        { time: '13:00', activity: 'Lunch', desc: 'Chicken/mutton curry, Rice/roti, Salad', icon: '🍲' },
-        { time: '14:30', activity: 'Rest', desc: 'Mental recovery and relaxation', icon: '😴', duration: '45 min' },
-        { time: '16:00', activity: 'Functional Training', desc: 'Medicine ball, Grip training', icon: '🏋️' },
-        { time: '17:30', activity: 'Snack', desc: 'Nuts + fruit', icon: '🥜' },
-        { time: '19:30', activity: 'Dinner', desc: 'Light chicken dish, Vegetables', icon: '🍛' },
-        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: '🌙' },
+        { time: '06:30', activity: 'Wake', desc: 'Start the day focused', icon: 'sunrise' },
+        { time: '07:00', activity: 'Breakfast', desc: 'Eggs / poha, Fruit, Milk', icon: 'breakfast_egg' },
+        { time: '08:00', activity: 'Conditioning', desc: 'Jogging, Agility drills, Balance work', icon: 'running', duration: '60 min' },
+        { time: '09:30', activity: 'Strength Training', desc: 'Core, Back, Shoulders', icon: 'muscle' },
+        { time: '11:00', activity: 'Recovery', desc: 'Stretching, Massage', icon: 'massage' },
+        { time: '13:00', activity: 'Lunch', desc: 'Chicken/mutton curry, Rice/roti, Salad', icon: 'lunch_bowl' },
+        { time: '14:30', activity: 'Rest', desc: 'Mental recovery and relaxation', icon: 'sleeping', duration: '45 min' },
+        { time: '16:00', activity: 'Functional Training', desc: 'Medicine ball, Grip training', icon: 'weightlifting' },
+        { time: '17:30', activity: 'Snack', desc: 'Nuts + fruit', icon: 'nuts' },
+        { time: '19:30', activity: 'Dinner', desc: 'Light chicken dish, Vegetables', icon: 'dinner_plate' },
+        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Emotional Control', desc: 'Don\'t panic - brain stays logical under pressure', icon: '🧠' },
-        { title: 'Pattern Recognition', desc: 'Read situations like chess - anticipate moves', icon: '♟️' },
-        { title: 'Low Cortisol', desc: 'Manage stress for better decisions', icon: '😌' },
-        { title: 'High Focus Span', desc: 'Concentrate for hours without distraction', icon: '🎯' },
+        { title: 'Emotional Control', desc: 'Don\'t panic - brain stays logical under pressure', icon: 'brain' },
+        { title: 'Pattern Recognition', desc: 'Read situations like chess - anticipate moves', icon: 'chess' },
+        { title: 'Low Cortisol', desc: 'Manage stress for better decisions', icon: 'relieved' },
+        { title: 'High Focus Span', desc: 'Concentrate for hours without distraction', icon: 'target' },
       ],
       diet: ['Eggs', 'Chicken', 'Mutton', 'Rice', 'Roti', 'Milk', 'Fruits', 'Nuts', 'Vegetables'],
-    },
-    kohli: {
+ },
+ kohli: {
       name: 'Virat Kohli',
       subtitle: 'King Kohli Routine',
-      emoji: '💪',
+      emoji: 'muscle',
       color: '#DC2626',
       strength: 'Speed & Stamina',
       schedule: [
-        { time: '06:00', activity: 'Wake', desc: 'Early start for maximum productivity', icon: '🌅' },
-        { time: '06:15', activity: 'Hydration + Mobility', desc: 'Water and light stretching', icon: '💧' },
-        { time: '06:45', activity: 'Breakfast', desc: 'Smoothie, Oats, Seeds', icon: '🍳' },
-        { time: '07:45', activity: 'HIIT + Cardio', desc: 'Interval runs, Sprint drills', icon: '🏃', duration: '60 min' },
-        { time: '09:30', activity: 'Strength Training', desc: 'Deadlifts, Pull-ups, Core', icon: '💪' },
-        { time: '11:00', activity: 'Recovery', desc: 'Ice bath, Stretching', icon: '❄️' },
-        { time: '13:00', activity: 'Lunch', desc: 'Grilled chicken, Brown rice, Greens', icon: '🍲' },
-        { time: '14:30', activity: 'Nap', desc: 'Recovery sleep', icon: '😴', duration: '40 min' },
-        { time: '16:00', activity: 'Flexibility & Yoga', desc: 'Deep stretching and balance', icon: '🧘' },
-        { time: '18:00', activity: 'Protein Snack', desc: 'Post-workout nutrition', icon: '🥤' },
-        { time: '20:00', activity: 'Dinner', desc: 'Fish/chicken, Vegetables', icon: '🍛' },
-        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: '🌙' },
+        { time: '06:00', activity: 'Wake', desc: 'Early start for maximum productivity', icon: 'sunrise' },
+        { time: '06:15', activity: 'Hydration + Mobility', desc: 'Water and light stretching', icon: 'water_drop' },
+        { time: '06:45', activity: 'Breakfast', desc: 'Smoothie, Oats, Seeds', icon: 'breakfast_egg' },
+        { time: '07:45', activity: 'HIIT + Cardio', desc: 'Interval runs, Sprint drills', icon: 'running', duration: '60 min' },
+        { time: '09:30', activity: 'Strength Training', desc: 'Deadlifts, Pull-ups, Core', icon: 'muscle' },
+        { time: '11:00', activity: 'Recovery', desc: 'Ice bath, Stretching', icon: 'snowflake' },
+        { time: '13:00', activity: 'Lunch', desc: 'Grilled chicken, Brown rice, Greens', icon: 'lunch_bowl' },
+        { time: '14:30', activity: 'Nap', desc: 'Recovery sleep', icon: 'sleeping', duration: '40 min' },
+        { time: '16:00', activity: 'Flexibility & Yoga', desc: 'Deep stretching and balance', icon: 'yoga' },
+        { time: '18:00', activity: 'Protein Snack', desc: 'Post-workout nutrition', icon: 'drink' },
+        { time: '20:00', activity: 'Dinner', desc: 'Fish/chicken, Vegetables', icon: 'dinner_plate' },
+        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'HIIT Cardio', desc: '30 sec sprint, 90 sec walk × 8 rounds - Improves oxygen system', icon: '⚡' },
-        { title: 'Sprint Training', desc: '6 × 40m sprint - Builds explosive power', icon: '🏃' },
-        { title: 'Never Miss Training', desc: 'Discipline is everything - train even when you don\'t feel like it', icon: '💪' },
-        { title: 'Clean Diet', desc: 'No junk, no alcohol - fuel your body right', icon: '🥗' },
+        { title: 'HIIT Cardio', desc: '30 sec sprint, 90 sec walk × 8 rounds - Improves oxygen system', icon: 'lightning' },
+        { title: 'Sprint Training', desc: '6 × 40m sprint - Builds explosive power', icon: 'running' },
+        { title: 'Never Miss Training', desc: 'Discipline is everything - train even when you don\'t feel like it', icon: 'muscle' },
+        { title: 'Clean Diet', desc: 'No junk, no alcohol - fuel your body right', icon: 'salad' },
       ],
       diet: ['Smoothies', 'Oats', 'Grilled chicken', 'Fish', 'Brown rice', 'Green vegetables', 'Seeds', 'Protein shakes'],
-    },
-    rohit: {
+ },
+ rohit: {
       name: 'Rohit Sharma',
       subtitle: 'Hitman Routine',
-      emoji: '🎯',
+      emoji: 'target',
       color: '#0891B2',
       strength: 'Lean Muscle & Balance',
       schedule: [
-        { time: '07:00', activity: 'Wake', desc: 'Start the day relaxed', icon: '🌅' },
-        { time: '07:15', activity: 'Breakfast', desc: 'Smoothie, Oats, Banana', icon: '🍳' },
-        { time: '08:30', activity: 'Cardio', desc: 'Cycling, Jogging', icon: '🚴', duration: '45 min' },
-        { time: '09:30', activity: 'Gym Training', desc: 'Chest, Back, Core', icon: '💪' },
-        { time: '11:00', activity: 'Recovery', desc: 'Massage, Stretching', icon: '💆' },
-        { time: '13:00', activity: 'Lunch', desc: 'Chicken/fish, Rice, Salad', icon: '🍲' },
-        { time: '15:00', activity: 'Rest', desc: 'Mental and physical recovery', icon: '😴', duration: '30-40 min' },
-        { time: '16:30', activity: 'Agility Training', desc: 'Quick footwork and reactions', icon: '⚡' },
-        { time: '18:00', activity: 'Snack', desc: 'Fruit + nuts', icon: '🍎' },
-        { time: '20:00', activity: 'Dinner', desc: 'Lean protein + vegetables', icon: '🍛' },
-        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: '🌙' },
+        { time: '07:00', activity: 'Wake', desc: 'Start the day relaxed', icon: 'sunrise' },
+        { time: '07:15', activity: 'Breakfast', desc: 'Smoothie, Oats, Banana', icon: 'breakfast_egg' },
+        { time: '08:30', activity: 'Cardio', desc: 'Cycling, Jogging', icon: 'cycling', duration: '45 min' },
+        { time: '09:30', activity: 'Gym Training', desc: 'Chest, Back, Core', icon: 'muscle' },
+        { time: '11:00', activity: 'Recovery', desc: 'Massage, Stretching', icon: 'massage' },
+        { time: '13:00', activity: 'Lunch', desc: 'Chicken/fish, Rice, Salad', icon: 'lunch_bowl' },
+        { time: '15:00', activity: 'Rest', desc: 'Mental and physical recovery', icon: 'sleeping', duration: '30-40 min' },
+        { time: '16:30', activity: 'Agility Training', desc: 'Quick footwork and reactions', icon: 'lightning' },
+        { time: '18:00', activity: 'Snack', desc: 'Fruit + nuts', icon: 'apple' },
+        { time: '20:00', activity: 'Dinner', desc: 'Lean protein + vegetables', icon: 'dinner_plate' },
+        { time: '22:30', activity: 'Sleep', desc: '7-8 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Compound Lifts', desc: 'Push-ups, Squats, Pull-ups, Lunges - Build functional strength', icon: '🏋️' },
-        { title: 'Protein Intake', desc: '1.6g-2g per kg bodyweight - Essential for muscle', icon: '🥩' },
-        { title: 'Clean Eating', desc: 'Avoid chips, cold drinks, fried food - Eat for growth', icon: '🥗' },
-        { title: 'Quality Sleep', desc: 'Growth hormone releases during sleep - 7-8 hours minimum', icon: '😴' },
+        { title: 'Compound Lifts', desc: 'Push-ups, Squats, Pull-ups, Lunges - Build functional strength', icon: 'weightlifting' },
+        { title: 'Protein Intake', desc: '1.6g-2g per kg bodyweight - Essential for muscle', icon: 'steak' },
+        { title: 'Clean Eating', desc: 'Avoid chips, cold drinks, fried food - Eat for growth', icon: 'salad' },
+        { title: 'Quality Sleep', desc: 'Growth hormone releases during sleep - 7-8 hours minimum', icon: 'sleeping' },
       ],
       diet: ['Smoothies', 'Oats', 'Chicken', 'Fish', 'Rice', 'Eggs', 'Paneer', 'Fruits', 'Nuts'],
-    },
-    neymar: {
+ },
+ neymar: {
       name: 'Neymar Jr',
       subtitle: 'Skill Master Routine',
-      emoji: '🌟',
+      emoji: 'star_glow',
       color: '#8B5CF6',
       strength: 'Flexibility & Skills',
       schedule: [
-        { time: '06:30', activity: 'Wake', desc: 'Start fresh', icon: '🌅' },
-        { time: '07:00', activity: 'Breakfast', desc: 'Eggs, Fruit, Juice', icon: '🍳' },
-        { time: '08:00', activity: 'Mobility & Warm-up', desc: 'Full body preparation', icon: '🧘' },
-        { time: '09:00', activity: 'Strength Training', desc: 'Legs, Core, Balance', icon: '💪' },
-        { time: '10:30', activity: 'Recovery', desc: 'Physiotherapy, Massage', icon: '💆' },
-        { time: '12:30', activity: 'Lunch', desc: 'Rice + beans, Chicken/fish', icon: '🍲' },
-        { time: '14:00', activity: 'Rest', desc: 'Recovery time', icon: '😴', duration: '40 min' },
-        { time: '15:30', activity: 'Speed & Coordination', desc: 'Quick feet and reactions', icon: '⚡' },
-        { time: '17:00', activity: 'Protein Snack', desc: 'Post-training nutrition', icon: '🥤' },
-        { time: '19:30', activity: 'Dinner', desc: 'Pasta/chicken, Vegetables', icon: '🍛' },
-        { time: '22:30', activity: 'Sleep', desc: '7-9 hours of quality sleep', icon: '🌙' },
+        { time: '06:30', activity: 'Wake', desc: 'Start fresh', icon: 'sunrise' },
+        { time: '07:00', activity: 'Breakfast', desc: 'Eggs, Fruit, Juice', icon: 'breakfast_egg' },
+        { time: '08:00', activity: 'Mobility & Warm-up', desc: 'Full body preparation', icon: 'yoga' },
+        { time: '09:00', activity: 'Strength Training', desc: 'Legs, Core, Balance', icon: 'muscle' },
+        { time: '10:30', activity: 'Recovery', desc: 'Physiotherapy, Massage', icon: 'massage' },
+        { time: '12:30', activity: 'Lunch', desc: 'Rice + beans, Chicken/fish', icon: 'lunch_bowl' },
+        { time: '14:00', activity: 'Rest', desc: 'Recovery time', icon: 'sleeping', duration: '40 min' },
+        { time: '15:30', activity: 'Speed & Coordination', desc: 'Quick feet and reactions', icon: 'lightning' },
+        { time: '17:00', activity: 'Protein Snack', desc: 'Post-training nutrition', icon: 'drink' },
+        { time: '19:30', activity: 'Dinner', desc: 'Pasta/chicken, Vegetables', icon: 'dinner_plate' },
+        { time: '22:30', activity: 'Sleep', desc: '7-9 hours of quality sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Flexibility Work', desc: 'Daily stretching prevents injury and improves agility', icon: '🧘' },
-        { title: 'Ball Skills', desc: 'Practice dribbling and close control daily', icon: '⚽' },
-        { title: 'Core Stability', desc: 'Strong core = better balance and power', icon: '🎯' },
-        { title: 'Recovery First', desc: 'Physiotherapy and massage are essential', icon: '💆' },
+        { title: 'Flexibility Work', desc: 'Daily stretching prevents injury and improves agility', icon: 'yoga' },
+        { title: 'Ball Skills', desc: 'Practice dribbling and close control daily', icon: 'football' },
+        { title: 'Core Stability', desc: 'Strong core = better balance and power', icon: 'target' },
+        { title: 'Recovery First', desc: 'Physiotherapy and massage are essential', icon: 'massage' },
       ],
       diet: ['Eggs', 'Rice', 'Beans', 'Chicken', 'Fish', 'Pasta', 'Fresh fruits', 'Vegetables', 'Natural juices'],
-    },
-    srk: {
+ },
+ srk: {
       name: 'Shah Rukh Khan',
       subtitle: 'King Khan Transformation',
-      emoji: '👑',
+      emoji: 'crown',
       color: '#F59E0B',
       strength: 'Discipline & Transformation',
       schedule: [
-        { time: '06:00', activity: 'Wake', desc: 'Early start for productivity', icon: '🌅' },
-        { time: '06:30', activity: 'Cardio', desc: 'Running or cycling', icon: '🏃', duration: '45 min' },
-        { time: '07:30', activity: 'Breakfast', desc: 'Eggs, Toast, Fresh juice', icon: '🍳' },
-        { time: '09:00', activity: 'Gym Training', desc: 'Full body workout', icon: '💪', duration: '90 min' },
-        { time: '11:00', activity: 'Recovery', desc: 'Stretching and rest', icon: '💆' },
-        { time: '12:30', activity: 'Lunch', desc: 'Grilled protein, Salad', icon: '🍲' },
-        { time: '14:00', activity: 'Work/Meetings', desc: 'Professional commitments', icon: '💼' },
-        { time: '17:00', activity: 'Snack', desc: 'Healthy snack', icon: '🥜' },
-        { time: '19:00', activity: 'Evening Workout', desc: 'Light training or yoga', icon: '🧘' },
-        { time: '20:30', activity: 'Dinner', desc: 'Light, protein-rich meal', icon: '🍛' },
-        { time: '23:00', activity: 'Sleep', desc: '6-7 hours of sleep', icon: '🌙' },
+        { time: '06:00', activity: 'Wake', desc: 'Early start for productivity', icon: 'sunrise' },
+        { time: '06:30', activity: 'Cardio', desc: 'Running or cycling', icon: 'running', duration: '45 min' },
+        { time: '07:30', activity: 'Breakfast', desc: 'Eggs, Toast, Fresh juice', icon: 'breakfast_egg' },
+        { time: '09:00', activity: 'Gym Training', desc: 'Full body workout', icon: 'muscle', duration: '90 min' },
+        { time: '11:00', activity: 'Recovery', desc: 'Stretching and rest', icon: 'massage' },
+        { time: '12:30', activity: 'Lunch', desc: 'Grilled protein, Salad', icon: 'lunch_bowl' },
+        { time: '14:00', activity: 'Work/Meetings', desc: 'Professional commitments', icon: 'briefcase' },
+        { time: '17:00', activity: 'Snack', desc: 'Healthy snack', icon: 'nuts' },
+        { time: '19:00', activity: 'Evening Workout', desc: 'Light training or yoga', icon: 'yoga' },
+        { time: '20:30', activity: 'Dinner', desc: 'Light, protein-rich meal', icon: 'dinner_plate' },
+        { time: '23:00', activity: 'Sleep', desc: '6-7 hours of sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Consistency', desc: 'Train even on busy days - no excuses', icon: '💪' },
-        { title: 'Transformation Mindset', desc: 'Age is just a number - keep pushing', icon: '🔥' },
-        { title: 'Work-Life Balance', desc: 'Balance work with fitness priorities', icon: '⚖️' },
-        { title: 'Personal Trainer', desc: 'Work with experts for best results', icon: '👨‍🏫' },
+        { title: 'Consistency', desc: 'Train even on busy days - no excuses', icon: 'muscle' },
+        { title: 'Transformation Mindset', desc: 'Age is just a number - keep pushing', icon: 'fire' },
+        { title: 'Work-Life Balance', desc: 'Balance work with fitness priorities', icon: 'balance_scale' },
+        { title: 'Personal Trainer', desc: 'Work with experts for best results', icon: 'teacher' },
       ],
       diet: ['Eggs', 'Grilled chicken', 'Fish', 'Salads', 'Fresh juices', 'Nuts', 'Limited carbs'],
-    },
-    salman: {
+ },
+ salman: {
       name: 'Salman Khan',
       subtitle: 'Bhai Workout',
-      emoji: '💪',
+      emoji: 'muscle',
       color: '#EF4444',
       strength: 'Muscle Building',
       schedule: [
-        { time: '07:00', activity: 'Wake', desc: 'Start the day strong', icon: '🌅' },
-        { time: '07:30', activity: 'Morning Cycling', desc: 'Cardio to start the day', icon: '🚴', duration: '30 min' },
-        { time: '08:00', activity: 'Breakfast', desc: 'High protein breakfast', icon: '🍳' },
-        { time: '09:00', activity: 'Heavy Lifting', desc: 'Chest, Shoulders, Arms', icon: '🏋️', duration: '90 min' },
-        { time: '11:00', activity: 'Swimming', desc: 'Recovery and cardio', icon: '🏊' },
-        { time: '12:30', activity: 'Lunch', desc: 'High protein meal', icon: '🍲' },
-        { time: '14:00', activity: 'Rest', desc: 'Muscle recovery', icon: '😴' },
-        { time: '16:00', activity: 'Evening Gym', desc: 'Back, Legs, Core', icon: '💪', duration: '60 min' },
-        { time: '18:00', activity: 'Snack', desc: 'Protein shake', icon: '🥤' },
-        { time: '20:00', activity: 'Dinner', desc: 'Protein with vegetables', icon: '🍛' },
-        { time: '23:00', activity: 'Sleep', desc: '7 hours of sleep', icon: '🌙' },
+        { time: '07:00', activity: 'Wake', desc: 'Start the day strong', icon: 'sunrise' },
+        { time: '07:30', activity: 'Morning Cycling', desc: 'Cardio to start the day', icon: 'cycling', duration: '30 min' },
+        { time: '08:00', activity: 'Breakfast', desc: 'High protein breakfast', icon: 'breakfast_egg' },
+        { time: '09:00', activity: 'Heavy Lifting', desc: 'Chest, Shoulders, Arms', icon: 'weightlifting', duration: '90 min' },
+        { time: '11:00', activity: 'Swimming', desc: 'Recovery and cardio', icon: 'swimming' },
+        { time: '12:30', activity: 'Lunch', desc: 'High protein meal', icon: 'lunch_bowl' },
+        { time: '14:00', activity: 'Rest', desc: 'Muscle recovery', icon: 'sleeping' },
+        { time: '16:00', activity: 'Evening Gym', desc: 'Back, Legs, Core', icon: 'muscle', duration: '60 min' },
+        { time: '18:00', activity: 'Snack', desc: 'Protein shake', icon: 'drink' },
+        { time: '20:00', activity: 'Dinner', desc: 'Protein with vegetables', icon: 'dinner_plate' },
+        { time: '23:00', activity: 'Sleep', desc: '7 hours of sleep', icon: 'moon' },
       ],
       tips: [
-        { title: 'Heavy Compound Lifts', desc: 'Bench press, Squats, Deadlifts - Build mass', icon: '🏋️' },
-        { title: 'High Protein', desc: 'Chicken, Fish, Eggs - Essential for muscle', icon: '🥩' },
-        { title: 'Cycling', desc: 'Regular cycling for cardio without losing muscle', icon: '🚴' },
-        { title: 'Consistency', desc: 'Train for decades - build a legacy physique', icon: '💪' },
+        { title: 'Heavy Compound Lifts', desc: 'Bench press, Squats, Deadlifts - Build mass', icon: 'weightlifting' },
+        { title: 'High Protein', desc: 'Chicken, Fish, Eggs - Essential for muscle', icon: 'steak' },
+        { title: 'Cycling', desc: 'Regular cycling for cardio without losing muscle', icon: 'cycling' },
+        { title: 'Consistency', desc: 'Train for decades - build a legacy physique', icon: 'muscle' },
       ],
       diet: ['Eggs', 'Chicken', 'Fish', 'Protein shakes', 'Rice', 'Vegetables', 'Almonds'],
-    },
-    akshay: {
+ },
+ akshay: {
       name: 'Akshay Kumar',
       subtitle: 'Khiladi Routine',
-      emoji: '🥋',
+      emoji: 'martial_arts',
       color: '#F97316',
       strength: 'Martial Arts & Discipline',
       schedule: [
-        { time: '04:30', activity: 'Wake', desc: 'Extremely early start', icon: '🌅' },
-        { time: '05:00', activity: 'Martial Arts', desc: 'Kickboxing, Taekwondo training', icon: '🥋', duration: '60 min' },
-        { time: '06:00', activity: 'Swimming', desc: 'Full body workout', icon: '🏊' },
-        { time: '07:00', activity: 'Breakfast', desc: 'Protein-rich meal', icon: '🍳' },
-        { time: '08:00', activity: 'Work/Shooting', desc: 'Professional commitments', icon: '🎬' },
-        { time: '12:00', activity: 'Lunch', desc: 'Simple, healthy meal', icon: '🍲' },
-        { time: '17:00', activity: 'Light Workout', desc: 'Stretching or yoga', icon: '🧘' },
-        { time: '18:30', activity: 'Dinner', desc: 'Dinner before sunset', icon: '🍛' },
-        { time: '19:30', activity: 'Family Time', desc: 'No work after dinner', icon: '👨‍👩‍👧' },
-        { time: '21:00', activity: 'Sleep', desc: 'Early to bed, 7+ hours', icon: '🌙' },
+        { time: '04:30', activity: 'Wake', desc: 'Extremely early start', icon: 'sunrise' },
+        { time: '05:00', activity: 'Martial Arts', desc: 'Kickboxing, Taekwondo training', icon: 'martial_arts', duration: '60 min' },
+        { time: '06:00', activity: 'Swimming', desc: 'Full body workout', icon: 'swimming' },
+        { time: '07:00', activity: 'Breakfast', desc: 'Protein-rich meal', icon: 'breakfast_egg' },
+        { time: '08:00', activity: 'Work/Shooting', desc: 'Professional commitments', icon: 'clapperboard' },
+        { time: '12:00', activity: 'Lunch', desc: 'Simple, healthy meal', icon: 'lunch_bowl' },
+        { time: '17:00', activity: 'Light Workout', desc: 'Stretching or yoga', icon: 'yoga' },
+        { time: '18:30', activity: 'Dinner', desc: 'Dinner before sunset', icon: 'dinner_plate' },
+        { time: '19:30', activity: 'Family Time', desc: 'No work after dinner', icon: 'family_parents_daughter' },
+        { time: '21:00', activity: 'Sleep', desc: 'Early to bed, 7+ hours', icon: 'moon' },
       ],
       tips: [
         { title: 'Early Rising', desc: 'Wake at 4:30 AM - maximum productivity', icon: '⏰' },
-        { title: 'Martial Arts', desc: 'Regular practice builds discipline and fitness', icon: '🥋' },
-        { title: 'No Late Dinners', desc: 'Eat before sunset - better digestion', icon: '🌅' },
-        { title: 'Work-Life Balance', desc: 'No work after 7 PM - family first', icon: '👨‍👩‍👧' },
+        { title: 'Martial Arts', desc: 'Regular practice builds discipline and fitness', icon: 'martial_arts' },
+        { title: 'No Late Dinners', desc: 'Eat before sunset - better digestion', icon: 'sunrise' },
+        { title: 'Work-Life Balance', desc: 'No work after 7 PM - family first', icon: 'family_parents_daughter' },
       ],
       diet: ['Simple home food', 'Proteins', 'Vegetables', 'No alcohol', 'No smoking', 'Limited sugar'],
-    },
-  };
+ },
+ };
 
-  const athlete = athleteData[selectedCelebrity] || athleteData.kohli;
+ const athlete = athleteData[selectedCelebrity] || athleteData.kohli;
 
-  useEffect(() => {
-    setTimeout(() => setShowContent(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowContent(true), 100);
+ }, []);
 
-  const handleContinue = () => {
-    navigate('/meal-freq');
-  };
+ const handleContinue = () => {
+ navigate('/meal-freq');
+ };
 
-  const tabs = [
-    { id: 'schedule', label: 'Daily Schedule', icon: '📅' },
-    { id: 'tips', label: 'Training Tips', icon: '💡' },
-    { id: 'diet', label: 'Diet Plan', icon: '🥗' },
-  ];
+ const tabs = [
+ { id: 'schedule', label: 'Daily Schedule', icon: 'calendar' },
+ { id: 'tips', label: 'Training Tips', icon: 'lightbulb' },
+ { id: 'diet', label: 'Diet Plan', icon: 'salad' },
+ ];
 
-  return (
-    <Layout
+ return (
+ <Layout
       title={athlete.name}
       subtitle={athlete.subtitle}
       showBack
       onBack={() => navigate('/category')}
-    >
+ >
       <div style={{ maxWidth: 700, margin: '0 auto' }}>
         {/* Hero Header */}
         <div style={{
@@ -320,8 +321,7 @@ export default function HeroRoutineScreen() {
             borderRadius: 12,
             fontSize: 14,
             fontWeight: 700,
-          }}>
-            🎯 Focus: {athlete.strength}
+          }}>Focus: {athlete.strength}
           </div>
         </div>
 
@@ -352,18 +352,18 @@ export default function HeroRoutineScreen() {
                 boxShadow: activeTab === tab.id ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
               }}
             >
-              {tab.icon} {tab.label}
+              <Icon name={tab.icon} size={18} /> {tab.label}
             </button>
           ))}
         </div>
 
         {/* Tab Content */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 20,
           padding: '28px',
           marginBottom: 28,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+          boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
         }}>
           {/* Schedule Tab */}
           {activeTab === 'schedule' && (
@@ -395,9 +395,7 @@ export default function HeroRoutineScreen() {
                     justifyContent: 'center',
                     fontSize: 22,
                     flexShrink: 0,
-                  }}>
-                    {item.icon}
-                  </div>
+                  }}><Icon name={item.icon} size={20} /></div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
                       <span style={{ fontSize: 14, fontWeight: 700, color: athlete.color }}>{item.time}</span>
@@ -449,9 +447,7 @@ export default function HeroRoutineScreen() {
                     justifyContent: 'center',
                     fontSize: 26,
                     marginBottom: 14,
-                  }}>
-                    {tip.icon}
-                  </div>
+                  }}><Icon name={tip.icon} size={20} /></div>
                   <h4 style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 8 }}>{tip.title}</h4>
                   <p style={{ fontSize: 13, color: '#666', lineHeight: 1.5 }}>{tip.desc}</p>
                 </div>
@@ -461,9 +457,8 @@ export default function HeroRoutineScreen() {
 
           {/* Diet Tab */}
           {activeTab === 'diet' && (
-            <div>
-              <p style={{ fontSize: 15, color: '#666', marginBottom: 20, lineHeight: 1.6 }}>
-                🍽️ <strong>{athlete.name}'s</strong> diet focuses on clean eating, high protein, and proper nutrition timing.
+            <div><p style={{ fontSize: 15, color: '#666', marginBottom: 20, lineHeight: 1.6 }}>
+                 <strong>{athlete.name}'s</strong> diet focuses on clean eating, high protein, and proper nutrition timing.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
                 {athlete.diet.map((food, i) => (
@@ -483,7 +478,7 @@ export default function HeroRoutineScreen() {
                       transitionDelay: `${i * 0.05}s`,
                     }}
                   >
-                    ✓ {food}
+                     {food}
                   </span>
                 ))}
               </div>
@@ -495,9 +490,8 @@ export default function HeroRoutineScreen() {
                 background: '#FEF3C7',
                 borderRadius: 14,
                 border: '1px solid #FCD34D',
-              }}>
-                <h4 style={{ fontSize: 15, fontWeight: 700, color: '#92400E', marginBottom: 12 }}>
-                  ✅ Common Pattern (All Elite Athletes)
+              }}><h4 style={{ fontSize: 15, fontWeight: 700, color: '#92400E', marginBottom: 12 }}>
+                   Common Pattern (All Elite Athletes)
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
                   {[
@@ -536,9 +530,9 @@ export default function HeroRoutineScreen() {
             transition: 'all 0.3s ease',
           }}
         >
-          🔥 Start {athlete.name} Challenge →
+          <Icon name="fire" size={18} /> Start {athlete.name} Challenge →
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

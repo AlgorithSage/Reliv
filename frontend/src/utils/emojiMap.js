@@ -1,0 +1,325 @@
+/**
+ * ═══════════════════════════════════════════════════════════════
+ *   EMOJI MAP — Reliv AI
+ *   Maps every emoji used across all screens to a descriptive
+ *   context marker. These markers will guide Phosphor icon
+ *   replacement.
+ *
+ *   830 emoji occurrences across 68 files
+ *   Deduplicated into unique entries below
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+const emojiMap = {
+
+    // ═══ NAVIGATION & ACTIONS ═══
+    '🏠': { marker: 'home', context: 'Home/back to home button' },
+    '🔙': { marker: 'back', context: 'Navigate back' },
+    '🚀': { marker: 'launch', context: 'Let\'s go / start action CTA' },
+    '✨': { marker: 'sparkle', context: 'Special highlight, free trial, magic/create action' },
+    '✅': { marker: 'check_circle', context: 'Success confirmation, task done, checkmark' },
+    '❌': { marker: 'cross', context: 'Wrong answer, failure, delete' },
+    '✔': { marker: 'check', context: 'Completed, verified, included feature' },
+    '✔✔': { marker: 'double_check', context: 'WhatsApp message read receipt' },
+    '❎': { marker: 'cross_box', context: 'Negative answer, rejection' },
+    '⚠️': { marker: 'warning', context: 'Warning, caution, alert, plan conflict' },
+    '🔄': { marker: 'refresh', context: 'Retry, refresh, try again, repeat' },
+    '🔗': { marker: 'link', context: 'Connection, linking, syncing' },
+    '📋': { marker: 'clipboard', context: 'Plan, schedule, list view' },
+
+    // ═══ HEALTH & FITNESS ═══
+    '💪': { marker: 'muscle', context: 'Workout, strength, fitness, push harder, training' },
+    '🏋️': { marker: 'weightlifting', context: 'Heavy lifting, gym, workout session' },
+    '🏊': { marker: 'swimming', context: 'Swimming exercise' },
+    '🏃': { marker: 'running', context: 'Sprint training, running, cardio, very active' },
+    '🚴': { marker: 'cycling', context: 'Cycling, cardio on bike' },
+    '🧘': { marker: 'yoga', context: 'Yoga, stretching, flexibility, meditation, mobility' },
+    '🥊': { marker: 'boxing', context: 'Martial arts, kickboxing' },
+    '⚡': { marker: 'lightning', context: 'Energy, power, HIIT, speed, quick action, daily plan' },
+    '🔥': { marker: 'fire', context: 'Streak, on fire, hot, trending, transformation' },
+    '❄️': { marker: 'snowflake', context: 'Ice bath, cryotherapy, recovery cold' },
+    '💆': { marker: 'massage', context: 'Recovery, massage, relaxation' },
+    '🏅': { marker: 'medal_sports', context: 'Cricket badge, sports category' },
+    '⚽': { marker: 'football', context: 'Football/soccer player category' },
+    '🎯': { marker: 'target', context: 'Goal, aim, target, core training' },
+    '📊': { marker: 'bar_chart', context: 'Progress analytics, stats, chart' },
+    '📈': { marker: 'chart_up', context: 'Progress trending up, see progress' },
+    '📉': { marker: 'chart_down', context: 'Decline, loss metric' },
+
+    // ═══ FOOD & MEALS ═══
+    '🍳': { marker: 'breakfast_egg', context: 'Breakfast meal' },
+    '🍲': { marker: 'lunch_bowl', context: 'Lunch meal' },
+    '🍛': { marker: 'dinner_plate', context: 'Dinner meal' },
+    '🍌': { marker: 'banana', context: 'Fruit snack, banana' },
+    '🍇': { marker: 'fruit', context: 'Fruit, healthy snack' },
+    '🥗': { marker: 'salad', context: 'Diet plan, healthy eating, balanced diet, vegetarian' },
+    '🍗': { marker: 'chicken', context: 'Non-vegetarian, meat protein' },
+    '🥚': { marker: 'egg', context: 'Eggetarian diet' },
+    '🌱': { marker: 'plant', context: 'Vegan diet' },
+    '🥛': { marker: 'milk', context: 'Protein drink, milk' },
+    '🥜': { marker: 'nuts', context: 'Healthy snack, nuts and seeds' },
+    '🥤': { marker: 'drink', context: 'Protein snack, shake' },
+    '🍽️': { marker: 'plate_cutlery', context: 'Meal time, food tracking' },
+    '🍕': { marker: 'pizza', context: 'Junk food, cheat meal' },
+    '🍔': { marker: 'burger', context: 'Fast food reference' },
+    '🥩': { marker: 'steak', context: 'Protein intake, meat' },
+
+    // ═══ WATER & HYDRATION ═══
+    '💧': { marker: 'water_drop', context: 'Water intake, hydration tracking, water reminders' },
+    '🚰': { marker: 'water_tap', context: 'Drink water, water intake target' },
+
+    // ═══ SLEEP & TIME ═══
+    '😴': { marker: 'sleeping', context: 'Sleep, rest, nap, recovery sleep' },
+    '🌅': { marker: 'sunrise', context: 'Morning routine, wake up, morning tab' },
+    '🌙': { marker: 'moon', context: 'Night routine, evening, sleep schedule, night tab' },
+    '⏱️': { marker: 'timer', context: 'Duration, takes X minutes' },
+
+    // ═══ SKIN & ACNE ═══
+    '🔴': { marker: 'red_circle', context: 'Active acne, skin concern' },
+    '⚫': { marker: 'black_circle', context: 'Blackheads skin type' },
+    '⚪': { marker: 'white_circle', context: 'Whiteheads skin type' },
+    '🏜': { marker: 'desert', context: 'Acne scars, dry skin' },
+    '🎿': { marker: 'mixed_type', context: 'Mixed skin types' },
+    '🧴': { marker: 'lotion', context: 'Skincare, moisturizer, cleanser, facewash' },
+    '🧼': { marker: 'soap', context: 'Gentle cleanser, face wash' },
+    '💊': { marker: 'pill', context: 'Spot treatment, medicine' },
+    '💉': { marker: 'syringe', context: 'Treatment serum, medical treatment' },
+    '☀️': { marker: 'sun', context: 'Sunscreen, sun protection' },
+    '🍯': { marker: 'honey', context: 'Oil cleanser, natural treatment' },
+    '✳': { marker: 'eight_star', context: 'Exfoliant, special treatment step' },
+    '💋': { marker: 'lips', context: 'Treatment serum, night routine' },
+    '🧑‍🍳': { marker: 'chef', context: 'Cooking time reference' },
+    '🖐️': { marker: 'hand_stop', context: 'Never pop pimples, don\'t touch face' },
+    '🤚': { marker: 'raised_hand', context: 'Don\'t touch face' },
+
+    // ═══ WHATSAPP & COMMUNICATION ═══
+    '📱': { marker: 'phone', context: 'WhatsApp, phone, mobile device' },
+    '💬': { marker: 'chat_bubble', context: 'Help button, chat, WhatsApp messages' },
+    '📞': { marker: 'phone_call', context: 'Phone call, contact' },
+    '📩': { marker: 'email', context: 'Use different phone number' },
+    '🤖': { marker: 'robot', context: 'Bot face, AI bot, bot avatar, bot status' },
+    '👋': { marker: 'wave', context: 'Welcome, greeting, wave hand' },
+    '👍': { marker: 'thumbs_up', context: 'Approval, confirm, great, logged' },
+    '👎': { marker: 'thumbs_down', context: 'Disapproval, not done' },
+    '👤': { marker: 'user', context: 'User avatar, person' },
+    '👥': { marker: 'users_group', context: 'Friends group, multiple people' },
+    '👫': { marker: 'couple', context: 'Couple plan, two people together' },
+
+    // ═══ PAYMENT & SECURITY ═══
+    '💳': { marker: 'credit_card', context: 'Secure payments, pay action' },
+    '💰': { marker: 'money_bag', context: 'Price, payment, purchase' },
+    '🔒': { marker: 'lock', context: 'Security, secure, bank-grade security, photo privacy' },
+    '🔐': { marker: 'locked_key', context: 'Secured by Razorpay, safe payment' },
+    '🛡️': { marker: 'shield', context: 'No auto-renewal, protection' },
+
+    // ═══ CODES & ACCESS ═══
+    '🔑': { marker: 'key', context: 'Access code, login code, OTP' },
+    '🔓': { marker: 'unlock', context: 'Unlock, open access' },
+
+    // ═══ CELEBRATIONS & SUCCESS ═══
+    '🎉': { marker: 'party', context: 'Success, celebration, you\'re all set, congrats' },
+    '🎁': { marker: 'gift', context: 'Welcome back offer, surprise, bonus' },
+    '🎊': { marker: 'confetti', context: 'Birthday, celebration event' },
+    '🎶': { marker: 'music_notes', context: 'Sound theme, melody' },
+    '🎵': { marker: 'music_note', context: 'Music, melody sound' },
+    '🏆': { marker: 'trophy', context: 'Achievement, winner, champion' },
+    '🥇': { marker: 'gold_medal', context: 'First place, gold rank' },
+    '🥈': { marker: 'silver_medal', context: 'Second place, silver rank' },
+    '🥉': { marker: 'bronze_medal', context: 'Third place, bronze rank' },
+    '🏅': { marker: 'sports_medal', context: 'Medal achievement' },
+    '💎': { marker: 'diamond', context: 'Premium, valuable, special' },
+
+    // ═══ EMOTIONS & FACES ═══
+    '😊': { marker: 'smile', context: 'Happy, cheerful personality, calm' },
+    '😄': { marker: 'grin', context: 'Cheerful personality, enthusiastic' },
+    '😌': { marker: 'relieved', context: 'Calm personality, peaceful' },
+    '😠': { marker: 'angry', context: 'Strict personality, firm' },
+    '😈': { marker: 'devil', context: 'Face expression option' },
+    '😔': { marker: 'sad', context: 'OTP fail, error, disappointment' },
+    '🤔': { marker: 'thinking', context: 'Code fail, confused, try again' },
+    '😘': { marker: 'kiss', context: 'Love, affection' },
+    '🙂': { marker: 'slight_smile', context: 'Low cortisol, calm emotion' },
+
+    // ═══ PLANS & FEATURES ═══
+    '👑': { marker: 'crown', context: 'Premium, king, featured celebrity' },
+    '🔮': { marker: 'crystal_ball', context: 'Predictions, future plans, see kiosk' },
+    '📅': { marker: 'calendar', context: 'Schedule, day plan, date' },
+    '📝': { marker: 'notepad', context: 'Plan details, notes, quick setup guide' },
+    '📌': { marker: 'pin', context: 'Pinned item, important note' },
+    '📢': { marker: 'megaphone', context: 'Announcement, shoutout' },
+
+    // ═══ IOT BOT ═══
+    '🔔': { marker: 'bell', context: 'Smart reminders, notification, alert sound' },
+    '🔈': { marker: 'speaker', context: 'Sound theme, beep' },
+    '🗣️': { marker: 'speaking_head', context: 'Voice sound option' },
+    '👆': { marker: 'touch', context: 'Touch sensor, pet bot' },
+    '🎮': { marker: 'game_controller', context: 'Mini games feature' },
+    '💻': { marker: 'laptop', context: 'Serial monitor, work/meetings' },
+    '💡': { marker: 'lightbulb', context: 'RGB LED, tip, idea, built-in features' },
+    '⭐': { marker: 'star', context: 'Stars/points, unlock requirement' },
+    '📦': { marker: 'package', context: 'Product box, 3D printed enclosure, package' },
+    '🔌': { marker: 'plug', context: 'USB cable, power on' },
+    '📺': { marker: 'screen', context: 'OLED display, screen indicator' },
+    '💚': { marker: 'green_heart', context: 'Bot online status, whatsapp' },
+    '🔧': { marker: 'wrench', context: 'Settings, configure, edit' },
+    '⚙️': { marker: 'gear', context: 'Settings screen, configure' },
+    '✏️': { marker: 'pencil', context: 'Edit settings' },
+
+    // ═══ CELEBRITIES ═══
+    '🐐': { marker: 'goat_messi', context: 'Messi / The GOAT' },
+    '🌟': { marker: 'star_glow', context: 'Neymar / Glamour / Star quality' },
+    '🎤': { marker: 'microphone', context: 'Arijit Singh / Musicians / Voice' },
+    '🎼': { marker: 'musical_score', context: 'Music / Badshah / Melody' },
+    '🤴': { marker: 'prince', context: 'Shah Rukh Khan / King Khan / Royalty' },
+    '🎬': { marker: 'clapperboard', context: 'Movies, shooting, work, Akshay Kumar' },
+
+    // ═══ FRIEND & COUPLE SCREENS ═══
+    '💑': { marker: 'couple_heart', context: 'Couple plan, partner' },
+    '👨‍🍳': { marker: 'cook_together', context: 'Cooking together question' },
+    '🚶': { marker: 'walking', context: 'Moderate activity, occasional' },
+    '🍲': { marker: 'hot_pot', context: 'Different food preferences' },
+    '👌': { marker: 'ok_hand', context: 'Separately, individual' },
+
+    // ═══ QUOTES & INFO ═══
+    '📖': { marker: 'book', context: 'Learn more, keep learning' },
+    '📚': { marker: 'books', context: 'Study, learning' },
+    '💼': { marker: 'briefcase', context: 'Work, professional, business' },
+    '🏥': { marker: 'hospital', context: 'First aid, medical, health emergency' },
+    '🩹': { marker: 'bandaid', context: 'First aid, quick help' },
+    '♟️': { marker: 'chess', context: 'Decision training, strategy games' },
+    '📵': { marker: 'no_phone', context: 'Digital control, limit screen time' },
+    '⚖️': { marker: 'balance_scale', context: 'Work-life balance, maintain weight' },
+    '👨‍👩‍👦': { marker: 'family', context: 'Family time, no work after dinner' },
+    '👨‍🏫': { marker: 'teacher', context: 'Personal trainer reference' },
+
+    // ═══ NUMBERS / STEPS ═══
+    '1️⃣': { marker: 'number_one', context: 'Step 1' },
+    '2️⃣': { marker: 'number_two', context: 'Step 2' },
+    '3️⃣': { marker: 'number_three', context: 'Step 3' },
+    '4️⃣': { marker: 'number_four', context: 'Step 4' },
+
+    // ═══ MISC ═══
+    '🇮🇳': { marker: 'india_flag', context: 'India country code +91' },
+    '📸': { marker: 'camera', context: 'Upload photo, camera, Instagram' },
+    '☕': { marker: 'coffee', context: 'Morning routine, cafe' },
+    '☺': { marker: 'smiling_face', context: 'Product review, happy, star' },
+    '📡': { marker: 'satellite', context: 'Network, connection, signal' },
+    '💤': { marker: 'zzz', context: 'Auto sleep mode' },
+    '🏢': { marker: 'building', context: 'Bank server timeout' },
+    '📶': { marker: 'signal', context: 'Weak internet, connection' },
+    '💞': { marker: 'hearts_revolving', context: 'Love, partner, couple' },
+    '🧠': { marker: 'brain', context: 'The complete brain, AI intelligence' },
+    '💾': { marker: 'floppy_disk', context: 'Save, store, everything is stored' },
+    '🔁': { marker: 'repeat', context: 'Cycle, repeat, retry' },
+    '❓': { marker: 'question', context: 'What if scenario' },
+    '🏆': { marker: 'trophy_cup', context: 'Public board, champions' },
+    '🎪': { marker: 'circus', context: 'Public shoutout board, showcase' },
+    '🏎': { marker: 'formula_car', context: 'Speed, fast, race' },
+    '🐱': { marker: 'cat', context: 'Bot face type - cat' },
+    '🐶': { marker: 'dog', context: 'Bot face type - dog' },
+    '🐼': { marker: 'panda', context: 'Bot face type - panda' },
+    '🐰': { marker: 'bunny', context: 'Bot face type - bunny' },
+    '🐻': { marker: 'bear', context: 'Bot face type - bear' },
+    '🎭': { marker: 'theater_masks', context: 'Expressions, face display, personality' },
+    '💜': { marker: 'purple_heart', context: 'Celebration, party mode' },
+    '🩺': { marker: 'stethoscope', context: 'Health check, medical analysis' },
+    '🔬': { marker: 'microscope', context: 'AI analyzing, skin analysis' },
+    '📤': { marker: 'upload', context: 'Photo uploading' },
+    '🖼️': { marker: 'framed_picture', context: 'Keep photo, image' },
+    '🗑️': { marker: 'trash', context: 'Delete photo' },
+    '🛑️': { marker: 'stop_sign', context: 'Skip photo, stop action' },
+    '📷': { marker: 'camera_old', context: 'Upload acne photo, scan QR' },
+    '🎥': { marker: 'video_camera', context: 'Demo, simulate' },
+    '💉': { marker: 'injection', context: 'Treatment, skincare serum' },
+    '🧑‍⚕️': { marker: 'doctor', context: 'Health professional, medical' },
+    '💅': { marker: 'nail_polish', context: 'Beauty, skincare routine' },
+    '🏛': { marker: 'classical_building', context: 'Showcase board, public space' },
+    '🛒': { marker: 'shopping_cart', context: 'Purchase, buy' },
+    '👏': { marker: 'clapping', context: 'Crushed it, well done, celebration' },
+    '🤦': { marker: 'facepalm', context: 'Never pop pimples' },
+    '📑': { marker: 'document', context: 'What\'s next, instructions' },
+    '💝': { marker: 'gift_heart', context: 'Heart, love, couple special' },
+    '🎗': { marker: 'ribbon', context: 'Awareness, health' },
+    '📆': { marker: 'tear_calendar', context: 'Day schedule view' },
+    '🏋': { marker: 'person_lifting', context: 'Functional training' },
+    '🍎': { marker: 'apple', context: 'Healthy food, fruit snack' },
+    '🥑': { marker: 'avocado', context: 'Healthy fat, food item' },
+    '🧃': { marker: 'juice', context: 'Drink' },
+    '🏰': { marker: 'castle', context: 'Premium, royal feel' },
+    '🌊': { marker: 'wave_water', context: 'Small wins build habits' },
+    '👀': { marker: 'eyes', context: 'See / Look at / Preview' },
+    '🎓': { marker: 'graduation_cap', context: 'Learning, health quiz' },
+    '📮': { marker: 'postbox', context: 'Contact support' },
+    '❗': { marker: 'exclamation', context: 'Important, notice' },
+
+    // ═══ ADDITIONAL EMOJIS (from cross-check) ═══
+    '🟤': { marker: 'brown_circle', context: 'Acne scars skin type' },
+    '🎨': { marker: 'palette', context: 'Mixed skin types, customize, art' },
+    '️⃣': { marker: 'keycap_number', context: 'Step number indicator (1️⃣ 2️⃣ 3️⃣)' },
+    '🗂️': { marker: 'card_dividers', context: 'Keep photo, file organizer' },
+    '🫧': { marker: 'bubbles', context: 'Oil cleanser, skincare' },
+    '🛏️': { marker: 'bed', context: 'Change pillowcase, sleep hygiene' },
+    '🍫': { marker: 'chocolate', context: 'Reduce sugar and dairy intake' },
+    '🙌': { marker: 'raised_hands', context: 'Celebration, never pop pimples caution, high-five' },
+    '🧣': { marker: 'scarf', context: 'Don\'t touch face / covering' },
+    '️': { marker: 'variation_selector', context: 'Unicode variation selector (FE0F)' },
+    '📟': { marker: 'pager', context: 'Beep sound, OLED screen ready' },
+    '😤': { marker: 'frustrated', context: 'Strict personality mode' },
+    '🎂': { marker: 'birthday_cake', context: 'Birthday mode, birthday shoutout/celebration' },
+    '🔊': { marker: 'loud_speaker', context: 'Sound theme selection' },
+    '📄': { marker: 'page', context: 'Quick setup guide, document' },
+    '🏏': { marker: 'cricket_bat', context: 'Cricket category, Dhoni/Kohli/Rohit' },
+    '🥋': { marker: 'martial_arts', context: 'Martial arts, karate, Akshay Kumar category' },
+    '🔀': { marker: 'shuffle', context: 'Change plan, try different plan' },
+    '🧘‍♀️': { marker: 'yoga_woman', context: 'Alia Bhatt, female meditation/yoga' },
+    '✓': { marker: 'simple_check', context: 'Simple checkmark, completed, verified' },
+    '👥👤': { marker: 'group_2_friends', context: 'Me + 2 Friends group size' },
+    '👥👥': { marker: 'group_3_friends', context: 'Me + 3 Friends group size' },
+    '👥👥👤': { marker: 'group_4_friends', context: 'Me + 4 Friends group size' },
+    '🧹': { marker: 'broom', context: '7-Day cleanse, reset body' },
+    '👨‍👩‍👧': { marker: 'family_parents_daughter', context: 'Family time, work-life balance' },
+    '🏦': { marker: 'bank', context: 'Bank server timeout, payment issue' },
+    '🤖🎊': { marker: 'robot_celebration', context: 'Bot is celebrating (renewal screen)' },
+    '🟢': { marker: 'green_circle', context: 'Online status, bot online indicator' },
+    '❤️': { marker: 'red_heart', context: '50K+ users, love' },
+    '✗': { marker: 'cross_mark', context: 'If NO, negative response' },
+    '💕': { marker: 'two_hearts', context: 'Couple personalized plans' },
+    '🚫': { marker: 'prohibited', context: 'No auto-renewal' },
+    '💫': { marker: 'dizzy_star', context: 'Sparkle effect, wow factor' },
+    '📹': { marker: 'video_recorder', context: 'Video camera, WhatsApp video' },
+    '✓✓': { marker: 'double_checkmark', context: 'WhatsApp double-tick read receipt' },
+};
+
+/**
+ * Files where emojis were found (68 files, 830 total occurrences):
+ *
+ * PAGES:
+ * AcneManualSelectScreen, AcnePhotoQRScreen, AcnePhotoUploadedScreen,
+ * AcneTimeoutScreen, AcneTreatmentScreen, ActivationScreen,
+ * BotCustomizeScreen, BotOfferScreen, BotPairingScreen,
+ * BotPurchaseScreen, BotStatusScreen, CategoryScreen,
+ * ChangePlanScreen, CodeEntryScreen, CodeFailScreen,
+ * CodeGeneratedScreen, CouplePhoneScreen, CoupleQuestionsScreen,
+ * CreateShoutoutScreen, DailyFriendsPayScreen, DailyPartnerPayScreen,
+ * DailyPayScreen, DailyWhatsAppPreviewScreen, FanCricketScreen,
+ * FanQuizDetailsScreen, FanQuizModeScreen, FanQuizResultScreen,
+ * FanQuizScreen, FanQuizTypeScreen, FormCheckScreen,
+ * FriendAddScreen, FriendQuestionsScreen, FriendSizeScreen,
+ * GoalScreen, HeroRoutineScreen, KioskOfflineScreen,
+ * MakeEasierScreen, MealFreqScreen, MealTimeScreen,
+ * MealTimesScreen, OTPFailScreen, OTPScreen,
+ * PaymentFailedScreen, PhoneEntryScreen, PlanConflictScreen,
+ * ProductShowcaseBoard, RenewPlanScreen, ReturnActiveScreen,
+ * ReturnDailyAgainScreen, ReturnExpiredScreen, ReturningPayScreen,
+ * ReturnTodayScreen, SoloQuestionsScreen, SummaryScreen,
+ * TodaysPlanScreen, TrialUsedScreen, UpdateSettingsScreen,
+ * WADayFlowScreen, WAMealFlowScreen, WAPreviewScreen,
+ * WAWorkoutFlowScreen, WeeklyCouplePayScreen, WeeklyFriendsPayScreen,
+ * WeeklySoloPayScreen, WelcomeScreen, WhatsAppPreviewScreen,
+ * WhyTrackingScreen
+ *
+ * COMPONENTS:
+ * Layout.jsx
+ */
+
+export default emojiMap;

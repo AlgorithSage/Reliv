@@ -1,36 +1,37 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function ReturningPayScreen() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [loading, setLoading] = useState(false);
+ const navigate = useNavigate();
+ const location = useLocation();
+ const [loading, setLoading] = useState(false);
 
-  const phone = location.state?.phone || localStorage.getItem('phone') || '+91XXXXXXXXXX';
+ const phone = location.state?.phone || localStorage.getItem('phone') || '+91XXXXXXXXXX';
 
-  const handlePay = () => {
-    setLoading(true);
-    setTimeout(() => {
+ const handlePay = () => {
+ setLoading(true);
+ setTimeout(() => {
       localStorage.setItem('paymentComplete', 'true');
       navigate('/activation');
-    }, 1200);
-  };
+ }, 1200);
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Welcome Back!"
       subtitle="Renew your health journey"
       showBack
       onBack={() => navigate('/')}
-    >
+ >
       <div style={{ maxWidth: 540, margin: '0 auto' }}>
         {/* Main Card */}
         <div style={{
           background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%)',
           borderRadius: 28,
           padding: '44px 40px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.12)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
           border: '2px solid rgba(240, 105, 34, 0.15)',
           marginBottom: 28,
         }}>
@@ -45,9 +46,9 @@ export default function ReturningPayScreen() {
             justifyContent: 'center',
             margin: '0 auto 28px',
             fontSize: 44,
-            boxShadow: '0 12px 40px rgba(240, 105, 34, 0.3)',
+            boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}>
-            👋
+            
           </div>
 
           {/* User Info */}
@@ -71,9 +72,9 @@ export default function ReturningPayScreen() {
             padding: '24px',
             marginBottom: 28,
             border: '1px solid rgba(34, 197, 94, 0.2)',
-          }}>
+          }}><Icon name="simple_check" size={18} />
             <h3 style={{ fontSize: 14, fontWeight: 700, color: '#059669', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>🎁</span> Renewal Benefits
+              <span></span> Renewal Benefits
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
@@ -83,7 +84,7 @@ export default function ReturningPayScreen() {
                 '1 bonus day FREE!',
               ].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ color: '#22C55E', fontSize: 12 }}>✓</span>
+                  <span style={{ color: '#22C55E', fontSize: 12 }}></span>
                   <span style={{ fontSize: 14, color: '#065F46', fontWeight: 500 }}>{item}</span>
                 </div>
               ))}
@@ -114,7 +115,7 @@ export default function ReturningPayScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -130,11 +131,11 @@ export default function ReturningPayScreen() {
                   borderTopColor: '#FFFFFF',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
-                }} />
+                }} /><Icon name="lock" size={18} />
                 Processing...
               </>
             ) : (
-              '💳 Pay ₹29 & Continue'
+              ' Pay ₹29 & Continue'
             )}
           </button>
         </div>
@@ -149,7 +150,7 @@ export default function ReturningPayScreen() {
           justifyContent: 'center',
           gap: 8,
         }}>
-          <span>🔒</span> Secure payment via Razorpay
+          <span></span> Secure payment via Razorpay
         </p>
       </div>
 
@@ -159,6 +160,6 @@ export default function ReturningPayScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

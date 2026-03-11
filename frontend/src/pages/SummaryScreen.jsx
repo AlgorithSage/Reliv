@@ -1,67 +1,68 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function SummaryScreen() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [showItems, setShowItems] = useState(false);
+ const navigate = useNavigate();
+ const [loading, setLoading] = useState(false);
+ const [showItems, setShowItems] = useState(false);
 
-  const planType = localStorage.getItem('planType') || 'solo';
-  const category = localStorage.getItem('category') || 'weight-loss';
-  const mealTimes = JSON.parse(localStorage.getItem('mealTimes') || '{"breakfast":"08:00","lunch":"13:00","dinner":"20:00"}');
+ const planType = localStorage.getItem('planType') || 'solo';
+ const category = localStorage.getItem('category') || 'weight-loss';
+ const mealTimes = JSON.parse(localStorage.getItem('mealTimes') || '{"breakfast":"08:00","lunch":"13:00","dinner":"20:00"}');
 
-  const planInfo = {
-    solo: { name: 'Solo Plan', price: '₹29', icon: '👤', color: '#F06922' },
-    couple: { name: 'Couple Plan', price: '₹54', icon: '💑', color: '#EC4899' },
-    friends: { name: 'Friends Plan', price: '₹84', icon: '👥', color: '#8B5CF6' },
-    daily: { name: 'Daily Plan', price: '₹15', icon: '⚡', color: '#F59E0B' },
-  };
+ const planInfo = {
+ solo: { name: 'Solo Plan', price: '₹29', icon: 'user', color: '#F06922' },
+ couple: { name: 'Couple Plan', price: '₹54', icon: 'couple_heart', color: '#EC4899' },
+ friends: { name: 'Friends Plan', price: '₹84', icon: 'users_group', color: '#8B5CF6' },
+ daily: { name: 'Daily Plan', price: '₹15', icon: 'lightning', color: '#F59E0B' },
+ };
 
-  const categoryNames = {
-    'muscle': '💪 Build Muscle / Abs',
-    'weight-loss': '🥗 Lose Weight / Diet',
-    'acne': '🧴 Clear Acne / Skin',
-    'first-aid': '🩹 First Aid / Quick Help',
-    'general': '💊 General Health',
-  };
+ const categoryNames = {
+ 'muscle': 'Build Muscle / Abs',
+ 'weight-loss': 'Lose Weight / Diet',
+ 'acne': 'Clear Acne / Skin',
+ 'first-aid': 'First Aid / Quick Help',
+ 'general': 'General Health',
+ };
 
-  const plan = planInfo[planType] || planInfo.solo;
+ const plan = planInfo[planType] || planInfo.solo;
 
-  useEffect(() => {
-    setTimeout(() => setShowItems(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowItems(true), 100);
+ }, []);
 
-  const handleActivate = () => {
-    setLoading(true);
-    setTimeout(() => {
+ const handleActivate = () => {
+ setLoading(true);
+ setTimeout(() => {
       navigate('/activation');
-    }, 1500);
-  };
+ }, 1500);
+ };
 
-  const formatTime = (time) => {
-    const [h, m] = time.split(':');
-    const hour = parseInt(h);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const hour12 = hour % 12 || 12;
-    return `${hour12}:${m} ${ampm}`;
-  };
+ const formatTime = (time) => {
+ const [h, m] = time.split(':');
+ const hour = parseInt(h);
+ const ampm = hour >= 12 ? 'PM' : 'AM';
+ const hour12 = hour % 12 || 12;
+ return `${hour12}:${m} ${ampm}`;
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Plan Summary"
       subtitle="Review your personalized health plan"
       showBack
       onBack={() => navigate('/meal-time')}
-    >
+ >
       <div style={{ maxWidth: 580, margin: '0 auto' }}>
         {/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '36px 32px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.1)',
-          border: '1px solid rgba(240, 105, 34, 0.08)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+          border: 'none',
           marginBottom: 28,
         }}>
           {/* Plan Header */}
@@ -85,9 +86,7 @@ export default function SummaryScreen() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: 30,
-            }}>
-              {plan.icon}
-            </div>
+            }}><Icon name={plan.icon} size={20} /></div>
             <div style={{ flex: 1 }}>
               <h2 style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 4 }}>
                 {plan.name}
@@ -144,14 +143,13 @@ export default function SummaryScreen() {
             opacity: showItems ? 1 : 0,
             transform: showItems ? 'translateY(0)' : 'translateY(10px)',
             transition: 'all 0.4s ease 0.3s',
-          }}>
-            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#059669', marginBottom: 14 }}>
-              ✅ What's Included
+          }}><h3 style={{ fontSize: 14, fontWeight: 700, color: '#059669', marginBottom: 14 }}>
+               What's Included
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
               {['Daily meal plans', 'WhatsApp reminders', 'Progress tracking', 'AI coaching'].map((item, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ color: '#22C55E', fontSize: 12 }}>✓</span>
+                  <span style={{ color: '#22C55E', fontSize: 12 }}></span>
                   <span style={{ fontSize: 13, color: '#065F46', fontWeight: 500 }}>{item}</span>
                 </div>
               ))}
@@ -172,7 +170,7 @@ export default function SummaryScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 40px rgba(34, 197, 94, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.15), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
@@ -189,12 +187,11 @@ export default function SummaryScreen() {
                   borderTopColor: '#FFFFFF',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
-                }} />
-                Activating Your Plan...
+                }} />Activating Your Plan...
               </>
             ) : (
               <>
-                ✨ Activate My Plan
+                 Activate My Plan
               </>
             )}
           </button>
@@ -211,9 +208,9 @@ export default function SummaryScreen() {
           transition: 'all 0.4s ease 0.4s',
         }}>
           {[
-            { icon: '🔒', text: 'Secure' },
-            { icon: '📱', text: 'WhatsApp' },
-            { icon: '❤️', text: '50K+ Users' },
+            { icon: 'lock', text: 'Secure' },
+            { icon: 'phone', text: 'WhatsApp' },
+            { icon: 'red_heart', text: '50K+ Users' },
           ].map((badge, i) => (
             <div
               key={i}
@@ -226,7 +223,7 @@ export default function SummaryScreen() {
                 fontWeight: 500,
               }}
             >
-              <span>{badge.icon}</span>
+              <Icon name={badge.icon} size={20} />
               {badge.text}
             </div>
           ))}
@@ -239,6 +236,6 @@ export default function SummaryScreen() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

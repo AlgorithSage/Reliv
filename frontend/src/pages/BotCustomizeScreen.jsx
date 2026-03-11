@@ -1,34 +1,35 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function BotCustomizeScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [face, setFace] = useState('robot');
-  const [sound, setSound] = useState('chime');
-  const [personality, setPersonality] = useState('cheerful');
-  const [sleepTime, setSleepTime] = useState('22:00');
-  const [wakeTime, setWakeTime] = useState('07:00');
-  const [saving, setSaving] = useState(false);
-  const canvasRef = useRef(null);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
+ const [face, setFace] = useState('robot');
+ const [sound, setSound] = useState('chime');
+ const [personality, setPersonality] = useState('cheerful');
+ const [sleepTime, setSleepTime] = useState('22:00');
+ const [wakeTime, setWakeTime] = useState('07:00');
+ const [saving, setSaving] = useState(false);
+ const canvasRef = useRef(null);
 
-  useEffect(() => { setTimeout(() => setShow(true), 150); }, []);
+ useEffect(() => { setTimeout(() => setShow(true), 150); }, []);
 
-  // Particle canvas
-  useEffect(() => {
-    const canvas = canvasRef.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = canvas.offsetWidth, H = canvas.offsetHeight;
-    const particles = Array.from({ length: 28 }, () => ({
+ // Particle canvas
+ useEffect(() => {
+ const canvas = canvasRef.current; if (!canvas) return;
+ const ctx = canvas.getContext('2d');
+ canvas.width = canvas.offsetWidth * 2; canvas.height = canvas.offsetHeight * 2;
+ ctx.scale(2, 2);
+ const W = canvas.offsetWidth, H = canvas.offsetHeight;
+ const particles = Array.from({ length: 28 }, () => ({
       x: Math.random() * W, y: Math.random() * H, r: 1 + Math.random() * 2,
       dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
       opacity: 0.1 + Math.random() * 0.2,
       color: ['#F06922', '#8B5CF6', '#EC4899', '#3B82F6'][Math.floor(Math.random() * 4)],
-    }));
-    let id;
-    const draw = () => {
+ }));
+ let id;
+ const draw = () => {
       ctx.clearRect(0, 0, W, H);
       particles.forEach(p => {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -38,59 +39,59 @@ export default function BotCustomizeScreen() {
         if (p.y < 0 || p.y > H) p.dy *= -1;
       });
       ctx.globalAlpha = 1; id = requestAnimationFrame(draw);
-    };
-    draw(); return () => cancelAnimationFrame(id);
-  }, []);
+ };
+ draw(); return () => cancelAnimationFrame(id);
+ }, []);
 
-  const faces = [
-    { id: 'robot', icon: '🤖', label: 'Robot', stars: 0, unlocked: true },
-    { id: 'cat', icon: '🐱', label: 'Cat', stars: 20, unlocked: false },
-    { id: 'dog', icon: '🐶', label: 'Dog', stars: 40, unlocked: false },
-    { id: 'panda', icon: '🐼', label: 'Panda', stars: 60, unlocked: false },
-    { id: 'bunny', icon: '🐰', label: 'Bunny', stars: 80, unlocked: false },
-    { id: 'bear', icon: '🐻', label: 'Bear', stars: 100, unlocked: false },
-  ];
+ const faces = [
+ { id: 'robot', icon: 'robot', label: 'Robot', stars: 0, unlocked: true },
+ { id: 'cat', icon: 'cat', label: 'Cat', stars: 20, unlocked: false },
+ { id: 'dog', icon: 'dog', label: 'Dog', stars: 40, unlocked: false },
+ { id: 'panda', icon: 'panda', label: 'Panda', stars: 60, unlocked: false },
+ { id: 'bunny', icon: 'bunny', label: 'Bunny', stars: 80, unlocked: false },
+ { id: 'bear', icon: 'bear', label: 'Bear', stars: 100, unlocked: false },
+ ];
 
-  const sounds = [
-    { id: 'chime', icon: '🔔', label: 'Chime' },
-    { id: 'melody', icon: '🎵', label: 'Melody' },
-    { id: 'beep', icon: '📟', label: 'Beep' },
-    { id: 'voice', icon: '🗣️', label: 'Voice', soon: true },
-  ];
+ const sounds = [
+ { id: 'chime', icon: 'bell', label: 'Chime' },
+ { id: 'melody', icon: 'music_note', label: 'Melody' },
+ { id: 'beep', icon: 'pager', label: 'Beep' },
+ { id: 'voice', icon: 'speaking_head', label: 'Voice', soon: true },
+ ];
 
-  const personalities = [
-    { id: 'cheerful', icon: '😄', label: 'Cheerful', desc: 'Enthusiastic, positive messages', color: '#F59E0B' },
-    { id: 'calm', icon: '😌', label: 'Calm', desc: 'Gentle, soothing reminders', color: '#3B82F6' },
-    { id: 'strict', icon: '😤', label: 'Strict', desc: 'Firm, no-nonsense pushes', color: '#EF4444' },
-  ];
+ const personalities = [
+ { id: 'cheerful', icon: 'grin', label: 'Cheerful', desc: 'Enthusiastic, positive messages', color: '#F59E0B' },
+ { id: 'calm', icon: 'relieved', label: 'Calm', desc: 'Gentle, soothing reminders', color: '#3B82F6' },
+ { id: 'strict', icon: 'frustrated', label: 'Strict', desc: 'Firm, no-nonsense pushes', color: '#EF4444' },
+ ];
 
-  const builtInFeatures = [
-    '🎮 3 Mini Games', '😊 18 Face Expressions', '✨ 12+ Animations', '🧠 Health Quiz',
-    '💬 50+ Messages', '📊 Progress Bars', '🔥 Streak Tracker', '🎂 Birthday Mode',
-    '🔔 4 Sound Patterns', '💡 RGB LEDs',
-  ];
+ const builtInFeatures = [
+ '<Icon name="game_controller" size={18} /> 3 Mini Games', '<Icon name="smile" size={18} /> 18 Face Expressions', '<Icon name="sparkle" size={18} /> 12+ Animations', '<Icon name="brain" size={18} /> Health Quiz',
+ '<Icon name="chat_bubble" size={18} /> 50+ Messages', '<Icon name="bar_chart" size={18} /> Progress Bars', '<Icon name="fire" size={18} /> Streak Tracker', '<Icon name="birthday_cake" size={18} /> Birthday Mode',
+ '<Icon name="bell" size={18} /> 4 Sound Patterns', '<Icon name="lightbulb" size={18} /> RGB LEDs',
+ ];
 
-  const handleSave = () => {
-    setSaving(true);
-    const config = { face, sound, personality, sleepTime, wakeTime };
-    localStorage.setItem('botConfig', JSON.stringify(config));
-    setTimeout(() => { setSaving(false); navigate('/bot-status'); }, 1500);
-  };
+ const handleSave = () => {
+ setSaving(true);
+ const config = { face, sound, personality, sleepTime, wakeTime };
+ localStorage.setItem('botConfig', JSON.stringify(config));
+ setTimeout(() => { setSaving(false); navigate('/bot-status'); }, 1500);
+ };
 
-  const glassCard = {
-    background: 'rgba(255,255,255,0.04)',
-    backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
-    borderRadius: 22, padding: '24px',
-    border: '1px solid rgba(255,255,255,0.06)',
-  };
+ const glassCard = {
+ background: 'rgba(255,255,255,0.04)',
+ backdropFilter: 'none', WebkitbackdropFilter: 'none',
+ borderRadius: 22, padding: '24px',
+ border: '1px solid rgba(255,255,255,0.06)',
+ };
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #0F0F12 0%, #1A1A2E 40%, #16213E 100%)',
       fontFamily: "'Inter', 'Outfit', sans-serif",
       position: 'relative', overflow: 'hidden',
-    }}>
+ }}>
       <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
 
       {/* Gradient orbs */}
@@ -109,17 +110,17 @@ export default function BotCustomizeScreen() {
           <button onClick={() => navigate(-1)} style={{
             background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
             borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
-            fontSize: 14, fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(20px)',
+            fontSize: 14, fontWeight: 600, cursor: 'pointer', backdropFilter: 'none',
           }}>← Back</button>
           <div>
-            <h1 style={{ fontSize: 22, fontWeight: 800, background: 'linear-gradient(135deg, #F06922, #FF8A4C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>🎨 Customize Bot</h1>
+            <h1 style={{ fontSize: 22, fontWeight: 800, background: 'linear-gradient(135deg, #F06922, #FF8A4C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}> Customize Bot</h1>
             <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Make it yours</p>
           </div>
         </div>
 
         {/* Face Type */}
         <div style={glassCard}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}>😊 Face Type</h3>
+          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Face Type</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
             {faces.map((f) => (
               <button key={f.id} onClick={() => f.unlocked && setFace(f.id)} disabled={!f.unlocked} style={{
@@ -130,10 +131,10 @@ export default function BotCustomizeScreen() {
                 opacity: f.unlocked ? 1 : 0.4,
                 transition: 'all 0.25s ease', position: 'relative',
               }}>
-                <div style={{ fontSize: 32, marginBottom: 6 }}>{f.icon}</div>
+                <Icon name={f.icon} size={32} />
                 <div style={{ fontSize: 12, fontWeight: 600, color: face === f.id ? '#F06922' : 'rgba(255,255,255,0.5)' }}>{f.label}</div>
                 {!f.unlocked && (
-                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginTop: 4 }}>🔒 {f.stars}⭐</div>
+                  <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', marginTop: 4 }}><Icon name="lock" size={18} /> {f.stars}⭐</div>
                 )}
                 {face === f.id && (
                   <div style={{
@@ -151,7 +152,7 @@ export default function BotCustomizeScreen() {
 
         {/* Sound Theme */}
         <div style={glassCard}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}>🔊 Sound Theme</h3>
+          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Sound Theme</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
             {sounds.map((s) => (
               <button key={s.id} onClick={() => !s.soon && setSound(s.id)} disabled={s.soon} style={{
@@ -161,7 +162,7 @@ export default function BotCustomizeScreen() {
                 cursor: s.soon ? 'not-allowed' : 'pointer', opacity: s.soon ? 0.35 : 1,
                 transition: 'all 0.25s ease',
               }}>
-                <div style={{ fontSize: 24, marginBottom: 4 }}>{s.icon}</div>
+                <Icon name={s.icon} size={24} />
                 <div style={{ fontSize: 11, fontWeight: 600, color: sound === s.id ? '#F06922' : 'rgba(255,255,255,0.5)' }}>{s.label}</div>
                 {s.soon && <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', marginTop: 2 }}>Soon</div>}
               </button>
@@ -171,7 +172,7 @@ export default function BotCustomizeScreen() {
 
         {/* Personality */}
         <div style={glassCard}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}>💬 Personality Mode</h3>
+          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Personality Mode</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {personalities.map((p) => (
               <button key={p.id} onClick={() => setPersonality(p.id)} style={{
@@ -181,7 +182,7 @@ export default function BotCustomizeScreen() {
                 border: personality === p.id ? `2px solid ${p.color}60` : '2px solid rgba(255,255,255,0.06)',
                 borderRadius: 16, cursor: 'pointer', transition: 'all 0.25s ease',
               }}>
-                <span style={{ fontSize: 28 }}>{p.icon}</span>
+                <Icon name={p.icon} size={28} />
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: personality === p.id ? p.color : 'rgba(255,255,255,0.7)' }}>{p.label}</div>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{p.desc}</div>
@@ -192,8 +193,7 @@ export default function BotCustomizeScreen() {
         </div>
 
         {/* Sleep Schedule */}
-        <div style={glassCard}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}>🌙 Sleep Schedule</h3>
+        <div style={glassCard}><h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Sleep Schedule</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
             {[{ label: 'Sleep Time', value: sleepTime, set: setSleepTime }, { label: 'Wake Time', value: wakeTime, set: setWakeTime }].map((t, i) => (
               <div key={i}>
@@ -213,8 +213,7 @@ export default function BotCustomizeScreen() {
           ...glassCard,
           background: 'rgba(240,105,34,0.04)',
           border: '1px solid rgba(240,105,34,0.12)',
-        }}>
-          <h3 style={{ fontSize: 15, fontWeight: 800, color: '#F06922', marginBottom: 16 }}>🔧 Built-in Features</h3>
+        }}><h3 style={{ fontSize: 15, fontWeight: 800, color: '#F06922', marginBottom: 16 }}> Built-in Features</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
             {builtInFeatures.map((f, i) => (
               <div key={i} style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7 }}>{f}</div>
@@ -230,7 +229,7 @@ export default function BotCustomizeScreen() {
           boxShadow: saving ? 'none' : '0 12px 40px rgba(240,105,34,0.35)',
           position: 'relative', overflow: 'hidden', transition: 'all 0.3s ease',
         }}>
-          <span style={{ position: 'relative', zIndex: 1 }}>{saving ? '⏳ Syncing Bot...' : '💾 Save & Sync Bot'}</span>
+          <span style={{ position: 'relative', zIndex: 1 }}>{saving ? '⏳ Syncing Bot...' : ' Save & Sync Bot'}</span>
           {!saving && <div style={{
             position: 'absolute', top: 0, left: '-100%', width: '100%', height: '100%',
             background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
@@ -244,6 +243,6 @@ export default function BotCustomizeScreen() {
         @keyframes floatOrb2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(25px,-20px); } }
         @keyframes btnShimmer { 0% { left: -100%; } 100% { left: 200%; } }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

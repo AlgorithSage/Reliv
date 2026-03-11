@@ -1,24 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function ReturnTodayScreen() {
-  const navigate = useNavigate();
-  const todayPlan = [
-    { icon: '💧', title: 'Water', target: '4 glasses', color: '#3B82F6', tip: 'Stay hydrated throughout the day' },
-    { icon: '🍽️', title: 'Meals', target: '3 meals tracked', color: '#F59E0B', tip: 'Reply YES/NO to meal reminders' },
-    { icon: '💪', title: 'Workout', target: '30 minutes', color: '#EC4899', tip: 'Any physical activity counts!' }
-  ];
+ const navigate = useNavigate();
+ const todayPlan = [
+ { icon: 'water_drop', title: 'Water', target: '4 glasses', color: '#3B82F6', tip: 'Stay hydrated throughout the day' },
+ { icon: 'plate_cutlery', title: 'Meals', target: '3 meals tracked', color: '#F59E0B', tip: 'Reply YES/NO to meal reminders' },
+ { icon: 'muscle', title: 'Workout', target: '30 minutes', color: '#EC4899', tip: 'Any physical activity counts!' }
+ ];
 
-  return (
-    <Layout title="Today's Plan" subtitle="Here's what to focus on today">
+ return (
+ <Layout title="Today's Plan" subtitle="Here's what to focus on today">
       <div style={{ maxWidth: 520, margin: '0 auto' }}>
         {/* Today's Goals */}
-        <div style={{ background: '#FFFFFF', borderRadius: 20, padding: 24, border: '1px solid #FFD296', marginBottom: 20, boxShadow: '0 4px 20px rgba(240, 105, 34, 0.08)' }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: C.text, marginBottom: 18 }}>🎯 Today's Goals</h3>
+        <div style={{ background: '#FAFAF8', borderRadius: 20, padding: 24, border: 'none', marginBottom: 20, boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)' }}>
+          <h3 style={{ fontSize: 15, fontWeight: 700, color: C.text, marginBottom: 18 }}> Today's Goals</h3>
           {todayPlan.map((item, i) => (
             <div key={i} style={{ background: 'linear-gradient(135deg, #FFF5F0 0%, #FFEEE5 100%)', borderRadius: 14, padding: '16px 20px', marginBottom: i < 2 ? 12 : 0, display: 'flex', alignItems: 'center', gap: 16 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 12, background: `${item.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>{item.icon}</div>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: `${item.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}><Icon name={item.icon} size={20} /></div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                   <p style={{ fontSize: 16, fontWeight: 700, color: C.text }}>{item.title}</p>
@@ -42,10 +43,10 @@ export default function ReturnTodayScreen() {
         </div>
 
         {/* Done Button */}
-        <button onClick={() => navigate('/')} style={{ width: '100%', background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)', border: 'none', borderRadius: 14, padding: '18px', fontSize: 17, fontWeight: 700, color: '#FFFFFF', cursor: 'pointer', boxShadow: '0 6px 25px rgba(240, 105, 34, 0.35)' }}>
-          Got It! Let's Go! 🚀
+        <button onClick={() => navigate('/')} style={{ width: '100%', background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)', border: 'none', borderRadius: 14, padding: '18px', fontSize: 17, fontWeight: 700, color: '#FFFFFF', cursor: 'pointer', boxShadow: '6px 6px 16px rgba(0,0,0,0.15), -4px -4px 12px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
+          Got It! Let's Go! <Icon name="launch" size={18} />
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

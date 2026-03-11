@@ -1,19 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function CodeFailScreen() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
 
-  return (
-    <Layout showBack onBack={() => navigate('/code')}>
+ return (
+ <Layout showBack onBack={() => navigate('/code')}>
       <div style={{ maxWidth: 520, margin: '0 auto', textAlign: 'center' }}>
         {/* Main Card */}
         <div style={{
-          background: '#FFFFFF',
+          background: '#FAFAF8',
           borderRadius: 28,
           padding: '56px 48px',
-          boxShadow: '0 20px 60px rgba(240, 105, 34, 0.1)',
-          border: '1px solid rgba(240, 105, 34, 0.08)',
+          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+          border: 'none',
         }}>
           {/* Icon */}
           <div style={{
@@ -27,7 +28,7 @@ export default function CodeFailScreen() {
             margin: '0 auto 28px',
             border: '2px solid #FFD296',
           }}>
-            <span style={{ fontSize: 50 }}>🤔</span>
+            <span style={{ fontSize: 50 }}></span>
           </div>
 
           {/* Title */}
@@ -59,11 +60,11 @@ export default function CodeFailScreen() {
             borderRadius: 16,
             padding: '20px 24px',
             marginBottom: 32,
-            border: '1px solid #FFD296',
+            border: 'none',
             textAlign: 'left',
           }}>
             <h3 style={{ fontSize: 14, fontWeight: 700, color: '#F06922', marginBottom: 12 }}>
-              💡 Quick Tips
+               Quick Tips
             </h3>
             <ul style={{
               margin: 0,
@@ -79,7 +80,7 @@ export default function CodeFailScreen() {
           </div>
 
           {/* Action Buttons */}
-          <div style={{ display: 'grid', gap: 14 }}>
+          <div style={{ display: 'grid', gap: 14 }}><Icon name="phone" size={18} />
             <button
               onClick={() => navigate('/code')}
               style={{
@@ -100,15 +101,15 @@ export default function CodeFailScreen() {
                 gap: 10,
               }}
             >
-              🔄 Try Again
+               Try Again
             </button>
 
             <button
               onClick={() => navigate('/phone')}
               style={{
                 width: '100%',
-                background: '#FFFFFF',
-                border: '2px solid #E5E7EB',
+                background: '#FAFAF8',
+                border: 'none',
                 borderRadius: 14,
                 padding: '16px',
                 fontSize: 15,
@@ -122,7 +123,7 @@ export default function CodeFailScreen() {
                 gap: 10,
               }}
             >
-              📱 Start Fresh with Phone
+               Start Fresh with Phone
             </button>
           </div>
         </div>
@@ -137,10 +138,10 @@ export default function CodeFailScreen() {
           justifyContent: 'center',
           gap: 8,
         }}>
-          <span>💬</span>
+          
           Lost your code? Contact support
         </p>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

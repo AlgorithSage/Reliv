@@ -2,45 +2,46 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function WAPreviewScreen() {
-  const navigate = useNavigate();
-  const [tab, setTab] = useState('water');
-  
-  const tabs = [
-    { id: 'water', icon: '💧', label: 'Water', color: '#3B82F6' },
-    { id: 'meal', icon: '🍽️', label: 'Meals', color: '#F59E0B' },
-    { id: 'workout', icon: '💪', label: 'Workout', color: '#EC4899' }
-  ];
-  
-  const conversations = {
-    water: [
-      { type: 'bot', text: '💧 Good Morning! Time for your 1st glass of water. Ready?' },
+ const navigate = useNavigate();
+ const [tab, setTab] = useState('water');
+ 
+ const tabs = [
+ { id: 'water', icon: 'water_drop', label: 'Water', color: '#3B82F6' },
+ { id: 'meal', icon: 'plate_cutlery', label: 'Meals', color: '#F59E0B' },
+ { id: 'workout', icon: 'muscle', label: 'Workout', color: '#EC4899' }
+ ];
+ 
+ const conversations = {
+ water: [
+      { type: 'bot', text: 'Good Morning! Time for your 1st glass of water. Ready?' },
       { type: 'user', text: 'YES' },
-      { type: 'bot', text: '✅ Great start! 1/4 glasses done.\n\n⏰ Next reminder: 10:00 AM 💧' },
+      { type: 'bot', text: 'Great start! 1/4 glasses done.\n\n⏰ Next reminder: 10:00 AM' },
       { type: 'divider', text: '── 10:00 AM ──' },
-      { type: 'bot', text: '💧 2nd glass time! Staying hydrated?' },
+      { type: 'bot', text: '2nd glass time! Staying hydrated?' },
       { type: 'user', text: 'NO' },
-      { type: 'bot', text: '👍 No worries! I\'ll remind you again in 30 minutes 🔔' },
-    ],
-    meal: [
-      { type: 'bot', text: '🍳 Good morning! Breakfast time!\n\nYour meal: Eggs (2) + Parathas (2) + Milk\n📊 ~650 calories\n\nHad this?' },
+      { type: 'bot', text: 'No worries! I\'ll remind you again in 30 minutes ' },
+ ],
+ meal: [
+      { type: 'bot', text: 'Good morning! Breakfast time!\n\nYour meal: Eggs (2) + Parathas (2) + Milk\n ~650 calories\n\nHad this?' },
       { type: 'user', text: 'YES' },
-      { type: 'bot', text: '✅ Logged! You\'re on track! 🔥\n\n⏰ Next: Lunch at 1:00 PM 🍲' },
+      { type: 'bot', text: 'Logged! You\'re on track! \n\n⏰ Next: Lunch at 1:00 PM' },
       { type: 'divider', text: '── 1:00 PM ──' },
-      { type: 'bot', text: '🍲 Lunch time!\n\nYour meal: Rice + Dal + Sabzi\n📊 ~750 calories\n\nDid you eat this?' },
-    ],
-    workout: [
-      { type: 'bot', text: '💪 Workout Time!\n\nToday\'s exercise: 10 Pushups\n⏱️ Takes just 5 minutes!\n\nDone / Not done?' },
+      { type: 'bot', text: 'Lunch time!\n\nYour meal: Rice + Dal + Sabzi\n ~750 calories\n\nDid you eat this?' },
+ ],
+ workout: [
+      { type: 'bot', text: 'Workout Time!\n\nToday\'s exercise: 10 Pushups\n⏱️ Takes just 5 minutes!\n\nDone / Not done?' },
       { type: 'user', text: 'Done' },
-      { type: 'bot', text: '🔥 Amazing! Streak: 3 days! 💪\n\nNext: 10 Squats. Ready?' },
+      { type: 'bot', text: 'Amazing! Streak: 3 days! \n\nNext: 10 Squats. Ready?' },
       { type: 'user', text: 'Done' },
-      { type: 'bot', text: '🏆 CRUSHED IT! Both exercises done!\n\nYou\'re 15% stronger than yesterday! 💪' },
-    ]
-  };
+      { type: 'bot', text: 'CRUSHED IT! Both exercises done!\n\nYou\'re 15% stronger than yesterday!' },
+ ]
+ };
 
-  return (
-    <Layout title="WhatsApp Preview" subtitle="Here's how Reliv AI will chat with you" showBack onBack={() => navigate(-1)}>
+ return (
+ <Layout title="WhatsApp Preview" subtitle="Here's how Reliv AI will chat with you" showBack onBack={() => navigate(-1)}>
       <div style={{ maxWidth: 520, margin: '0 auto' }}>
         {/* Tab Buttons */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
@@ -61,7 +62,7 @@ export default function WAPreviewScreen() {
                 transition: 'all 0.2s'
               }}
             >
-              {t.icon} {t.label}
+              <Icon name={t.icon} size={18} /> {t.label}
             </button>
           ))}
         </div>
@@ -71,7 +72,7 @@ export default function WAPreviewScreen() {
           background: '#0B141A', 
           borderRadius: 20, 
           overflow: 'hidden',
-          boxShadow: '0 8px 30px rgba(0,0,0,0.2)'
+          boxShadow: '8px 8px 20px rgba(0,0,0,0.1), -8px -8px 20px rgba(255,255,255,0.6)'
         }}>
           {/* WhatsApp Header */}
           <div style={{ 
@@ -111,13 +112,13 @@ export default function WAPreviewScreen() {
                     justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start',
                     marginBottom: 8
                   }}
-                >
+                ><Icon name="user" size={18} />
                   <div style={{ 
                     background: msg.type === 'user' ? '#005C4B' : '#1F2C33', 
                     borderRadius: msg.type === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px', 
                     padding: '10px 14px', 
                     maxWidth: '85%',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                    boxShadow: '3px 3px 8px rgba(0,0,0,0.08), -3px -3px 8px rgba(255,255,255,0.6)'
                   }}>
                     <p style={{ 
                       fontSize: 14, 
@@ -126,8 +127,8 @@ export default function WAPreviewScreen() {
                       lineHeight: 1.5,
                       fontWeight: msg.type === 'user' ? 600 : 400
                     }}>
-                      {msg.type === 'bot' && <span style={{ marginRight: 6 }}>🤖</span>}
-                      {msg.type === 'user' && <span style={{ marginRight: 6 }}>👤</span>}
+                      {msg.type === 'bot' && <span style={{ marginRight: 6 }}></span>}
+                      {msg.type === 'user' && <span style={{ marginRight: 6 }}></span>}
                       {msg.text}
                     </p>
                   </div>
@@ -149,7 +150,7 @@ export default function WAPreviewScreen() {
           alignItems: 'center',
           gap: 14
         }}>
-          <span style={{ fontSize: 28 }}>✨</span>
+          <span style={{ fontSize: 28 }}></span>
           <div>
             <p style={{ fontSize: 14, fontWeight: 600, color: '#059669' }}>Personalized just for you!</p>
             <p style={{ fontSize: 12, color: '#10B981' }}>All messages based on YOUR meals, goals & schedule</p>
@@ -169,12 +170,12 @@ export default function WAPreviewScreen() {
             fontWeight: 700, 
             color: '#FFFFFF', 
             cursor: 'pointer',
-            boxShadow: '0 6px 25px rgba(240, 105, 34, 0.35)'
+            boxShadow: '6px 6px 16px rgba(0,0,0,0.15), -4px -4px 12px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)'
           }}
         >
           Got It! Start My Journey →
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

@@ -1,36 +1,37 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FriendSizeScreen() {
-  const navigate = useNavigate();
-  const [selected, setSelected] = useState(null);
-  const [showOptions, setShowOptions] = useState(false);
+ const navigate = useNavigate();
+ const [selected, setSelected] = useState(null);
+ const [showOptions, setShowOptions] = useState(false);
 
-  const options = [
-    { value: 2, label: 'Me + 1 Friend', emoji: '👥', price: '₹49', perPerson: '₹24.50' },
-    { value: 3, label: 'Me + 2 Friends', emoji: '👥👤', price: '₹84', perPerson: '₹28' },
-    { value: 4, label: 'Me + 3 Friends', emoji: '👥👥', price: '₹112', perPerson: '₹28' },
-    { value: 5, label: 'Me + 4 Friends', emoji: '👥👥👤', price: '₹140', perPerson: '₹28' },
-  ];
+ const options = [
+ { value: 2, label: 'Me + 1 Friend', emoji: 'users_group', price: '₹49', perPerson: '₹24.50' },
+ { value: 3, label: 'Me + 2 Friends', emoji: 'group_2_friends', price: '₹84', perPerson: '₹28' },
+ { value: 4, label: 'Me + 3 Friends', emoji: 'group_3_friends', price: '₹112', perPerson: '₹28' },
+ { value: 5, label: 'Me + 4 Friends', emoji: 'group_4_friends', price: '₹140', perPerson: '₹28' },
+ ];
 
-  useEffect(() => {
-    setTimeout(() => setShowOptions(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShowOptions(true), 100);
+ }, []);
 
-  const handleContinue = () => {
-    if (!selected) return;
-    localStorage.setItem('friendCount', selected);
-    navigate('/friend-questions');
-  };
+ const handleContinue = () => {
+ if (!selected) return;
+ localStorage.setItem('friendCount', selected);
+ navigate('/friend-questions');
+ };
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="How Many Friends?"
       subtitle="Select your squad size"
       showBack
       onBack={() => navigate('/group-type')}
-    >
+ >
       <div style={{ maxWidth: 550, margin: '0 auto' }}>
         {/* Squad Icon */}
         <div style={{
@@ -47,9 +48,9 @@ export default function FriendSizeScreen() {
             justifyContent: 'center',
             margin: '0 auto',
             fontSize: 48,
-            boxShadow: '0 12px 40px rgba(139, 92, 246, 0.3)',
+            boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5)',
           }}>
-            👥
+            
           </div>
         </div>
 
@@ -151,6 +152,6 @@ export default function FriendSizeScreen() {
           Continue
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

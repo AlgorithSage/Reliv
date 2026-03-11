@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FanQuizDetailsScreen() {
-    const navigate = useNavigate();
-    const [showDetails, setShowDetails] = useState(false);
+ const navigate = useNavigate();
+ const [showDetails, setShowDetails] = useState(false);
 
-    const celebrity = localStorage.getItem('celebrity') || 'virat';
-    const celebInfo = {
-        virat: { name: 'Virat Kohli', emoji: '🏏', color: '#1E40AF', style: 'Fitness King' },
-        alia: { name: 'Alia Bhatt', emoji: '🧘‍♀️', color: '#DB2777', style: 'Lean & Graceful' },
-        salman: { name: 'Salman Khan', emoji: '💪', color: '#16A34A', style: 'Muscle Mode' },
-        deepika: { name: 'Deepika Padukone', emoji: '✨', color: '#9333EA', style: 'Tall & Toned' },
-        hrithik: { name: 'Hrithik Roshan', emoji: '🔥', color: '#DC2626', style: 'Greek God' },
-        priyanka: { name: 'Priyanka Chopra', emoji: '🌟', color: '#F59E0B', style: 'Global Star' },
-    };
-    const info = celebInfo[celebrity] || celebInfo.virat;
+ const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebInfo = {
+        virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF', style: 'Fitness King' },
+        alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777', style: 'Lean & Graceful' },
+        salman: { name: 'Salman Khan', emoji: 'muscle', color: '#16A34A', style: 'Muscle Mode' },
+        deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#9333EA', style: 'Tall & Toned' },
+        hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#DC2626', style: 'Greek God' },
+        priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F59E0B', style: 'Global Star' },
+ };
+ const info = celebInfo[celebrity] || celebInfo.virat;
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowDetails(true), 100);
-    }, []);
+ }, []);
 
-    const schedule = [
+ const schedule = [
         { time: '7:00 AM', title: 'Morning Routine', desc: 'Wake up ritual & hydration' },
         { time: '8:00 AM', title: 'Breakfast', desc: `${info.name}-style power breakfast` },
         { time: '10:00 AM', title: 'Snack', desc: 'Energy boost' },
@@ -29,9 +30,9 @@ export default function FanQuizDetailsScreen() {
         { time: '4:00 PM', title: 'Snack', desc: 'Pre-workout fuel' },
         { time: '6:00 PM', title: 'Workout', desc: `${info.name}'s training style` },
         { time: '8:00 PM', title: 'Dinner', desc: 'Light & nutritious' },
-    ];
+ ];
 
-    return (
+ return (
         <Layout
             title={`${info.emoji} ${info.name} Day`}
             subtitle={info.style}
@@ -74,13 +75,12 @@ export default function FanQuizDetailsScreen() {
 
                 {/* Schedule */}
                 <div style={{
-                    background: '#FFFFFF',
+                    background: '#FAFAF8',
                     borderRadius: 24,
                     padding: '32px',
                     boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
                     marginBottom: 28,
-                }}>
-                    <h3 style={{
+                }}><h3 style={{
                         fontSize: 14,
                         fontWeight: 700,
                         color: '#9CA3AF',
@@ -88,7 +88,7 @@ export default function FanQuizDetailsScreen() {
                         letterSpacing: '1px',
                         marginBottom: 24,
                     }}>
-                        📅 Your Day Schedule
+                         Your Day Schedule
                     </h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                         {schedule.map((item, i) => (
@@ -149,5 +149,5 @@ export default function FanQuizDetailsScreen() {
                 </button>
             </div>
         </Layout>
-    );
+ );
 }

@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 /**
  * S33 — Acne Photo Timeout
  * Shown when 2-minute QR timer expires without photo upload.
  */
 export default function AcneTimeoutScreen() {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
 
-  return (
-    <Layout title="⏰ Time's Up" subtitle="No photo received" showBack onBack={() => navigate('/acne-photo-qr')}>
+ return (
+ <Layout title="⏰ Time's Up" subtitle="No photo received" showBack onBack={() => navigate('/acne-photo-qr')}>
       <div style={{ maxWidth: 520, margin: '0 auto', padding: '40px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 28 }}>
         {/* Icon */}
         <div style={{ fontSize: 80 }}>⏰</div>
@@ -23,7 +24,7 @@ export default function AcneTimeoutScreen() {
         </p>
 
         {/* Option cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 8 }}><Icon name="hand_stop" size={18} />
           {/* Try again */}
           <button
             onClick={() => navigate('/acne-photo-qr')}
@@ -46,7 +47,7 @@ export default function AcneTimeoutScreen() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           >
-            📸 Try Photo Again
+             Try Photo Again
           </button>
 
           {/* Manual select */}
@@ -54,8 +55,8 @@ export default function AcneTimeoutScreen() {
             onClick={() => navigate('/acne-manual')}
             style={{
               background: 'rgba(255,255,255,0.9)',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
+              backdropFilter: 'none',
+              WebkitbackdropFilter: 'none',
               color: '#F06922',
               border: '2px solid #F06922',
               borderRadius: 16,
@@ -78,7 +79,7 @@ export default function AcneTimeoutScreen() {
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            🖐️ Skip Photo — Select Manually
+             Skip Photo — Select Manually
           </button>
 
           {/* Continue without */}
@@ -91,6 +92,6 @@ export default function AcneTimeoutScreen() {
           </button>
         </div>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

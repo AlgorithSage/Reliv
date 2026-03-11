@@ -2,34 +2,35 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function WAWorkoutFlowScreen() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('done');
-  
-  const doneFlow = [
-    { type: 'bot', text: "💪 Workout time! 10 pushups — takes just 5 min. Done / Not done?" },
-    { type: 'user', text: "Done" },
-    { type: 'bot', text: "🔥 Streak: 3 days! You're on fire! 💪" },
-    { type: 'bot', text: "💪 Now 10 squats. Ready? Done / Not done?" },
-    { type: 'user', text: "Done" },
-    { type: 'bot', text: "🏆 Both exercises done! You crushed it today!" },
-  ];
-  
-  const notDoneFlow = [
-    { type: 'bot', text: "💪 Workout time! 10 pushups — takes just 5 min. Done / Not done?" },
-    { type: 'user', text: "Not done" },
-    { type: 'bot', text: "👍 No worries! Try again at 6PM — 10 pushups 🙌" },
-    { type: 'divider', text: "At 6 PM" },
-    { type: 'bot', text: "💪 6PM: pushups still pending! Just 5 min 🏋️" },
-    { type: 'user', text: "Done" },
-    { type: 'bot', text: "✅ Better late than never! Logged ✓" },
-  ];
-  
-  const currentFlow = activeTab === 'done' ? doneFlow : notDoneFlow;
+ const navigate = useNavigate();
+ const [activeTab, setActiveTab] = useState('done');
+ 
+ const doneFlow = [
+ { type: 'bot', text: "Workout time! 10 pushups — takes just 5 min. Done / Not done?" },
+ { type: 'user', text: "Done" },
+ { type: 'bot', text: "Streak: 3 days! You're on fire!" },
+ { type: 'bot', text: "Now 10 squats. Ready? Done / Not done?" },
+ { type: 'user', text: "Done" },
+ { type: 'bot', text: "Both exercises done! You crushed it today!" },
+ ];
+ 
+ const notDoneFlow = [
+ { type: 'bot', text: "Workout time! 10 pushups — takes just 5 min. Done / Not done?" },
+ { type: 'user', text: "Not done" },
+ { type: 'bot', text: "No worries! Try again at 6PM — 10 pushups" },
+ { type: 'divider', text: "At 6 PM" },
+ { type: 'bot', text: "6PM: pushups still pending! Just 5 min" },
+ { type: 'user', text: "Done" },
+ { type: 'bot', text: "Better late than never! Logged" },
+ ];
+ 
+ const currentFlow = activeTab === 'done' ? doneFlow : notDoneFlow;
 
-  return (
-    <Layout title="WhatsApp — Workout" showBack onBack={() => navigate('/wa-preview')}>
+ return (
+ <Layout title="WhatsApp — Workout" showBack onBack={() => navigate('/wa-preview')}>
       <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
         
         {/* Info Card */}
@@ -53,7 +54,7 @@ export default function WAWorkoutFlowScreen() {
             justifyContent: 'center',
             fontSize: 22
           }}>
-            💪
+            
           </div>
           <div>
             <p style={{ fontSize: 14, fontWeight: 600, color: C.text }}>Workout Tracking Flow</p>
@@ -68,8 +69,7 @@ export default function WAWorkoutFlowScreen() {
           borderRadius: 12,
           padding: 4,
           marginBottom: 20
-        }}>
-          <button
+        }}><button
             onClick={() => setActiveTab('done')}
             style={{
               flex: 1,
@@ -84,7 +84,7 @@ export default function WAWorkoutFlowScreen() {
               boxShadow: activeTab === 'done' ? C.shadow : 'none'
             }}
           >
-            ✓ If Done
+             If Done
           </button>
           <button
             onClick={() => setActiveTab('notdone')}
@@ -101,7 +101,7 @@ export default function WAWorkoutFlowScreen() {
               boxShadow: activeTab === 'notdone' ? C.shadow : 'none'
             }}
           >
-            ✗ If Not Done
+             If Not Done
           </button>
         </div>
         
@@ -111,8 +111,7 @@ export default function WAWorkoutFlowScreen() {
           borderRadius: 20,
           overflow: 'hidden',
           marginBottom: 24
-        }}>
-          {/* WhatsApp Header */}
+        }}>{/* WhatsApp Header */}
           <div style={{
             background: '#1f2c34',
             padding: '12px 16px',
@@ -129,7 +128,7 @@ export default function WAWorkoutFlowScreen() {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <span style={{ fontSize: 18 }}>🏋️</span>
+              <span style={{ fontSize: 18 }}></span>
             </div>
             <div>
               <p style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>Reliv AI</p>
@@ -187,29 +186,27 @@ export default function WAWorkoutFlowScreen() {
           padding: 16,
           border: `1px solid ${C.success}30`,
           marginBottom: 20
-        }}>
-          <p style={{ fontSize: 13, color: C.success, fontWeight: 600 }}>
-            🔥 Streaks motivate! We track consecutive days and celebrate milestones.
+        }}><p style={{ fontSize: 13, color: C.success, fontWeight: 600 }}>
+             Streaks motivate! We track consecutive days and celebrate milestones.
           </p>
         </div>
         
         {/* Navigation */}
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button
+        <div style={{ display: 'flex', gap: 12 }}><button
             onClick={() => navigate('/wa-meal-flow')}
             style={{
               flex: 1,
               padding: '14px',
               border: `2px solid ${C.border}`,
               borderRadius: 12,
-              background: '#fff',
+              background: '#FAFAF8',
               color: C.text,
               fontWeight: 600,
               fontSize: 14,
               cursor: 'pointer'
             }}
           >
-            🍽️ Meal Flow
+             Meal Flow
           </button>
           <button
             onClick={() => navigate('/wa-day-flow')}
@@ -225,11 +222,11 @@ export default function WAWorkoutFlowScreen() {
               cursor: 'pointer'
             }}
           >
-            📅 Full Day →
+             Full Day →
           </button>
         </div>
         
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

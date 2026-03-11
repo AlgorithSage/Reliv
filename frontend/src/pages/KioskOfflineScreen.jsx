@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 /**
  * Kiosk Offline Screen — Auto-retries every 5 seconds.
  */
 export default function KioskOfflineScreen() {
-  const navigate = useNavigate();
-  const [retryCount, setRetryCount] = useState(0);
-  const [checking, setChecking] = useState(false);
+ const navigate = useNavigate();
+ const [retryCount, setRetryCount] = useState(0);
+ const [checking, setChecking] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+ useEffect(() => {
+ const interval = setInterval(() => {
       setChecking(true);
       setRetryCount((c) => c + 1);
       // Simulate check — in real app, would ping /api/health
@@ -20,12 +21,12 @@ export default function KioskOfflineScreen() {
           navigate('/');
         }
       }, 1500);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [navigate]);
+ }, 5000);
+ return () => clearInterval(interval);
+ }, [navigate]);
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -35,13 +36,13 @@ export default function KioskOfflineScreen() {
       fontFamily: "'Inter', -apple-system, sans-serif",
       padding: 32,
       textAlign: 'center',
-    }}>
+ }}>
       <div style={{
         fontSize: 80,
         marginBottom: 24,
         animation: 'float 3s ease-in-out infinite',
       }}>
-        📡
+        
       </div>
 
       <h1 style={{ fontSize: 32, fontWeight: 900, color: '#FFF', marginBottom: 8 }}>
@@ -54,14 +55,14 @@ export default function KioskOfflineScreen() {
       {/* Retry indicator */}
       <div style={{
         background: 'rgba(255,255,255,0.05)',
-        backdropFilter: 'blur(12px)',
+        backdropFilter: 'none',
         borderRadius: 16,
         padding: '20px 32px',
         border: '1px solid rgba(255,255,255,0.1)',
         marginBottom: 24,
       }}>
         <div style={{ fontSize: 14, color: checking ? '#FFA500' : '#9CA3AF', fontWeight: 600 }}>
-          {checking ? '🔄 Checking connection...' : '⏳ Next retry in 5 seconds'}
+          {checking ? ' Checking connection...' : '⏳ Next retry in 5 seconds'}
         </div>
         <div style={{ fontSize: 12, color: '#6B7280', marginTop: 8 }}>
           Retries: {retryCount}
@@ -89,7 +90,7 @@ export default function KioskOfflineScreen() {
           boxShadow: '0 8px 24px rgba(240,105,34,0.3)',
         }}
       >
-        🔄 Retry Now
+        <Icon name="refresh" size={18} /> Retry Now
       </button>
 
       <style>{`
@@ -98,6 +99,6 @@ export default function KioskOfflineScreen() {
           50% { transform: translateY(-10px); }
         }
       `}</style>
-    </div>
-  );
+ </div>
+ );
 }

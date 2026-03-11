@@ -5,61 +5,61 @@ import { useState, useEffect, useRef, useCallback } from 'react';
  * anti-gravity floating particles. Toggled on/off via flag.
  *
  * Usage:
- *   <AntigravityBackground enabled={true} />
+ * <AntigravityBackground enabled={true} />
  *
  * The `enabled` prop controls rendering. Pass false to remove it.
  */
 
 const DOT_COUNT = 60;
 const COLORS = [
-  'rgba(240,105,34,0.35)',
-  'rgba(255,160,90,0.30)',
-  'rgba(255,200,150,0.25)',
-  'rgba(236,72,153,0.20)',
-  'rgba(168,85,247,0.18)',
-  'rgba(59,130,246,0.15)',
+ 'rgba(240,105,34,0.35)',
+ 'rgba(255,160,90,0.30)',
+ 'rgba(255,200,150,0.25)',
+ 'rgba(236,72,153,0.20)',
+ 'rgba(168,85,247,0.18)',
+ 'rgba(59,130,246,0.15)',
 ];
 
 function randomBetween(a, b) {
-  return a + Math.random() * (b - a);
+ return a + Math.random() * (b - a);
 }
 
 function createDot() {
-  return {
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    r: randomBetween(2, 7),
-    // anti-gravity drift (negative = upwards)
-    vx: randomBetween(-0.15, 0.15),
-    vy: randomBetween(-0.25, -0.04),
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    opacity: randomBetween(0.3, 0.9),
-    pulse: randomBetween(0, Math.PI * 2),
-    pulseSpeed: randomBetween(0.005, 0.02),
-  };
+ return {
+ x: Math.random() * 100,
+ y: Math.random() * 100,
+ r: randomBetween(2, 7),
+ // anti-gravity drift (negative = upwards)
+ vx: randomBetween(-0.15, 0.15),
+ vy: randomBetween(-0.25, -0.04),
+ color: COLORS[Math.floor(Math.random() * COLORS.length)],
+ opacity: randomBetween(0.3, 0.9),
+ pulse: randomBetween(0, Math.PI * 2),
+ pulseSpeed: randomBetween(0.005, 0.02),
+ };
 }
 
 export default function AntigravityBackground({ enabled = true }) {
-  const canvasRef = useRef(null);
-  const dotsRef = useRef([]);
-  const animRef = useRef(null);
+ const canvasRef = useRef(null);
+ const dotsRef = useRef([]);
+ const animRef = useRef(null);
 
-  // Initialise dots once
-  useEffect(() => {
-    if (!enabled) return;
-    dotsRef.current = Array.from({ length: DOT_COUNT }, createDot);
-  }, [enabled]);
+ // Initialise dots once
+ useEffect(() => {
+ if (!enabled) return;
+ dotsRef.current = Array.from({ length: DOT_COUNT }, createDot);
+ }, [enabled]);
 
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = (canvas.width = canvas.offsetWidth);
-    const H = (canvas.height = canvas.offsetHeight);
+ const draw = useCallback(() => {
+ const canvas = canvasRef.current;
+ if (!canvas) return;
+ const ctx = canvas.getContext('2d');
+ const W = (canvas.width = canvas.offsetWidth);
+ const H = (canvas.height = canvas.offsetHeight);
 
-    ctx.clearRect(0, 0, W, H);
+ ctx.clearRect(0, 0, W, H);
 
-    dotsRef.current.forEach((d) => {
+ dotsRef.current.forEach((d) => {
       // update position — anti-gravity floats upward
       d.x += d.vx;
       d.y += d.vy;
@@ -90,10 +90,10 @@ export default function AntigravityBackground({ enabled = true }) {
       ctx.arc(cx, cy, currentR, 0, Math.PI * 2);
       ctx.fillStyle = d.color.replace(/[\d.]+\)$/, `${currentOpacity})`);
       ctx.fill();
-    });
+ });
 
-    // draw faint connecting lines between nearby dots
-    for (let i = 0; i < dotsRef.current.length; i++) {
+ // draw faint connecting lines between nearby dots
+ for (let i = 0; i < dotsRef.current.length; i++) {
       for (let j = i + 1; j < dotsRef.current.length; j++) {
         const a = dotsRef.current[i];
         const b = dotsRef.current[j];
@@ -109,21 +109,21 @@ export default function AntigravityBackground({ enabled = true }) {
           ctx.stroke();
         }
       }
-    }
+ }
 
-    animRef.current = requestAnimationFrame(draw);
-  }, []);
+ animRef.current = requestAnimationFrame(draw);
+ }, []);
 
-  useEffect(() => {
-    if (!enabled) return;
-    animRef.current = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(animRef.current);
-  }, [enabled, draw]);
+ useEffect(() => {
+ if (!enabled) return;
+ animRef.current = requestAnimationFrame(draw);
+ return () => cancelAnimationFrame(animRef.current);
+ }, [enabled, draw]);
 
-  if (!enabled) return null;
+ if (!enabled) return null;
 
-  return (
-    <canvas
+ return (
+ <canvas
       ref={canvasRef}
       style={{
         position: 'fixed',
@@ -133,6 +133,6 @@ export default function AntigravityBackground({ enabled = true }) {
         pointerEvents: 'none',
         zIndex: 0,
       }}
-    />
-  );
+ />
+ );
 }

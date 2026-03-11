@@ -1,46 +1,46 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function FriendQuestionsScreen() {
-  const navigate = useNavigate();
-  const [friends, setFriends] = useState([{ name: '', phone: '' }]);
-  const [showForm, setShowForm] = useState(false);
+ const navigate = useNavigate();
+ const [friends, setFriends] = useState([{ name: '', phone: '' }]);
+ const [showForm, setShowForm] = useState(false);
 
-  const friendCount = parseInt(localStorage.getItem('friendCount') || '2') - 1; // Excluding self
+ const friendCount = parseInt(localStorage.getItem('friendCount') || '2') - 1; // Excluding self
 
-  useEffect(() => {
-    // Initialize friend slots
-    const initialFriends = [];
-    for (let i = 0; i < friendCount; i++) {
+ useEffect(() => {
+ // Initialize friend slots
+ const initialFriends = [];
+ for (let i = 0; i < friendCount; i++) {
       initialFriends.push({ name: '', phone: '' });
-    }
-    setFriends(initialFriends);
-    setTimeout(() => setShowForm(true), 100);
-  }, [friendCount]);
+ }
+ setFriends(initialFriends);
+ setTimeout(() => setShowForm(true), 100);
+ }, [friendCount]);
 
-  const updateFriend = (index, field, value) => {
-    const updated = [...friends];
-    updated[index][field] = field === 'phone' ? value.replace(/\D/g, '') : value;
-    setFriends(updated);
-  };
+ const updateFriend = (index, field, value) => {
+ const updated = [...friends];
+ updated[index][field] = field === 'phone' ? value.replace(/\D/g, '') : value;
+ setFriends(updated);
+ };
 
-  const handleContinue = () => {
-    localStorage.setItem('friendsList', JSON.stringify(friends));
-    navigate('/weekly-friends-pay');
-  };
+ const handleContinue = () => {
+ localStorage.setItem('friendsList', JSON.stringify(friends));
+ navigate('/weekly-friends-pay');
+ };
 
-  const isValid = friends.every(f => f.name.trim() && f.phone.length === 10);
+ const isValid = friends.every(f => f.name.trim() && f.phone.length === 10);
 
-  return (
-    <Layout
+ return (
+ <Layout
       title="Add Your Squad"
       subtitle={`Enter details for ${friendCount} friend${friendCount > 1 ? 's' : ''}`}
       showBack
       onBack={() => navigate('/friend-size')}
-    >
-      <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        {/* Info */}
+ >
+      <div style={{ maxWidth: 560, margin: '0 auto' }}>{/* Info */}
         <div style={{
           background: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
           borderRadius: 16,
@@ -54,7 +54,7 @@ export default function FriendQuestionsScreen() {
           transform: showForm ? 'translateY(0)' : 'translateY(10px)',
           transition: 'all 0.4s ease',
         }}>
-          <span style={{ fontSize: 22 }}>📱</span>
+          <span style={{ fontSize: 22 }}></span>
           <p style={{ fontSize: 13, color: '#6D28D9', margin: 0 }}>
             Each friend will get their own personalized plan and WhatsApp reminders.
           </p>
@@ -71,11 +71,11 @@ export default function FriendQuestionsScreen() {
             <div
               key={index}
               style={{
-                background: '#FFFFFF',
+                background: '#FAFAF8',
                 borderRadius: 20,
                 padding: '28px',
-                border: '2px solid #E5E7EB',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                border: 'none',
+                boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
                 opacity: showForm ? 1 : 0,
                 transform: showForm ? 'translateY(0)' : 'translateY(20px)',
                 transition: 'all 0.4s ease',
@@ -123,7 +123,7 @@ export default function FriendQuestionsScreen() {
                     padding: '16px 18px',
                     fontSize: 15,
                     fontWeight: 500,
-                    border: '2px solid #E5E7EB',
+                    border: 'none',
                     borderRadius: 12,
                     outline: 'none',
                     transition: 'all 0.3s ease',
@@ -150,7 +150,7 @@ export default function FriendQuestionsScreen() {
                     fontWeight: 700,
                     color: '#8B5CF6',
                   }}>
-                    🇮🇳 +91
+                     +91
                   </div>
                   <input
                     type="tel"
@@ -163,7 +163,7 @@ export default function FriendQuestionsScreen() {
                       padding: '16px 18px',
                       fontSize: 15,
                       fontWeight: 500,
-                      border: '2px solid #E5E7EB',
+                      border: 'none',
                       borderRadius: 12,
                       outline: 'none',
                       letterSpacing: '1px',
@@ -201,6 +201,6 @@ export default function FriendQuestionsScreen() {
           Continue to Payment
         </button>
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }

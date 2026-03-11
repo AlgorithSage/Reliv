@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 /**
  * S32 — Acne Photo QR Upload Screen
@@ -9,18 +10,18 @@ import Layout from '../components/Layout';
  * Polls for upload status. 2-minute timeout.
  */
 export default function AcnePhotoQRScreen() {
-  const navigate = useNavigate();
-  const [status, setStatus] = useState('waiting'); // waiting | uploading | analyzing | complete
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [showSkip, setShowSkip] = useState(false);
-  const sessionId = useRef(`upload_${localStorage.getItem('userCode') || '0000'}_${Date.now()}`);
-  const pollRef = useRef(null);
+ const navigate = useNavigate();
+ const [status, setStatus] = useState('waiting'); // waiting | uploading | analyzing | complete
+ const [timeLeft, setTimeLeft] = useState(120);
+ const [showSkip, setShowSkip] = useState(false);
+ const sessionId = useRef(`upload_${localStorage.getItem('userCode') || '0000'}_${Date.now()}`);
+ const pollRef = useRef(null);
 
-  const uploadUrl = `${window.location.origin}/acne-upload?session=${sessionId.current}`;
+ const uploadUrl = `${window.location.origin}/acne-upload?session=${sessionId.current}`;
 
-  // Countdown timer
-  useEffect(() => {
-    const timer = setInterval(() => {
+ // Countdown timer
+ useEffect(() => {
+ const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
@@ -30,35 +31,35 @@ export default function AcnePhotoQRScreen() {
         if (prev <= 60) setShowSkip(true);
         return prev - 1;
       });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [navigate, status]);
+ }, 1000);
+ return () => clearInterval(timer);
+ }, [navigate, status]);
 
-  // Simulated poll (frontend-only demo)
-  useEffect(() => {
-    // In production, this would poll /api/check-acne-upload/:sessionId
-    // For frontend-only demo, we simulate after 8 seconds if user doesn't navigate away
-    return () => {
+ // Simulated poll (frontend-only demo)
+ useEffect(() => {
+ // In production, this would poll /api/check-acne-upload/:sessionId
+ // For frontend-only demo, we simulate after 8 seconds if user doesn't navigate away
+ return () => {
       if (pollRef.current) clearTimeout(pollRef.current);
-    };
-  }, []);
+ };
+ }, []);
 
-  const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+ const formatTime = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
-  const statusConfig = {
-    waiting:   { icon: '⏳', text: 'Waiting for photo...', color: '#FF6B35' },
-    uploading: { icon: '📤', text: 'Photo uploading...', color: '#FF6B35' },
-    analyzing: { icon: '🔬', text: 'Analyzing with AI...', color: '#FF6B35' },
-    complete:  { icon: '✅', text: 'Analysis complete!', color: '#00B894' },
-  };
+ const statusConfig = {
+ waiting: { icon: '⏳', text: 'Waiting for photo...', color: '#FF6B35' },
+ uploading: { icon: 'upload', text: 'Photo uploading...', color: '#FF6B35' },
+ analyzing: { icon: 'microscope', text: 'Analyzing with AI...', color: '#FF6B35' },
+ complete: { icon: 'check_circle', text: 'Analysis complete!', color: '#00B894' },
+ };
 
-  const cur = statusConfig[status];
+ const cur = statusConfig[status];
 
-  /* Demo: simulate receiving a photo */
-  const simulateUpload = () => {
-    setStatus('uploading');
-    setTimeout(() => setStatus('analyzing'), 1500);
-    setTimeout(() => {
+ /* Demo: simulate receiving a photo */
+ const simulateUpload = () => {
+ setStatus('uploading');
+ setTimeout(() => setStatus('analyzing'), 1500);
+ setTimeout(() => {
       setStatus('complete');
       // Save demo analysis
       localStorage.setItem('acneAnalysis', JSON.stringify({
@@ -74,18 +75,17 @@ export default function AcnePhotoQRScreen() {
           'Avoid touching face throughout the day',
           'Change pillowcase every 3-4 days',
           'Drink 8 glasses of water daily',
-          '💡 Cheek acne: Clean phone screen daily, avoid sleeping on dirty pillows',
+          'Cheek acne: Clean phone screen daily, avoid sleeping on dirty pillows',
         ],
       }));
       setTimeout(() => navigate('/acne-uploaded'), 800);
-    }, 4000);
-  };
+ }, 4000);
+ };
 
-  return (
-    <Layout title="📸 Upload Acne Photo" subtitle="AI will analyze your skin" showBack onBack={() => navigate(-1)}>
-      <div style={{ maxWidth: 600, margin: '0 auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 28, textAlign: 'center' }}>
-        {/* Phone icon */}
-        <div style={{ fontSize: 64 }}>📱</div>
+ return (
+ <Layout title="Upload Acne Photo" subtitle="AI will analyze your skin" showBack onBack={() => navigate(-1)}>
+      <div style={{ maxWidth: 600, margin: '0 auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 28, textAlign: 'center' }}>{/* Phone icon */}
+        <div style={{ fontSize: 64 }}></div>
 
         <p style={{ fontSize: 18, fontWeight: 600, color: '#2D3436' }}>
           Scan this QR code with your phone:
@@ -97,8 +97,8 @@ export default function AcnePhotoQRScreen() {
           width: 272,
           height: 272,
           background: 'rgba(255,255,255,0.85)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          backdropFilter: 'none',
+          WebkitbackdropFilter: 'none',
           border: '3px solid #FF6B35',
           borderRadius: 16,
           display: 'flex',
@@ -124,31 +124,21 @@ export default function AcnePhotoQRScreen() {
         {/* Instructions card */}
         <div style={{
           background: 'rgba(255,107,53,0.08)',
-          backdropFilter: 'blur(12px)',
+          backdropFilter: 'none',
           borderRadius: 16,
           padding: '20px 24px',
           textAlign: 'left',
           border: '1px solid rgba(255,107,53,0.15)',
         }}>
           <h3 style={{ fontSize: 15, fontWeight: 800, color: '#FF6B35', marginBottom: 14 }}>How it works:</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#2D3436', lineHeight: 1.6 }}>
-            <div>1️⃣ Scan QR → Camera opens on your phone</div>
-            <div>2️⃣ Take photo → Auto uploads to kiosk</div>
-            <div>3️⃣ AI analyzes → Shows diagnosis in 10 seconds</div>
-          </div>
-        </div>
-
-        {/* Privacy card */}
-        <div style={{
-          background: 'rgba(0,184,148,0.08)',
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#2D3436', lineHeight: 1.6 }}> <div>1 Scan QR → Camera opens on your phone</div> <div>2 Take photo → Auto uploads to kiosk</div> <div>3 AI analyzes → Shows diagnosis in 10 seconds</div> </div> </div> {/* Privacy card */} <div style={{ background:'rgba(0,184,148,0.08)',
           border: '2px solid rgba(0,184,148,0.3)',
           borderRadius: 16,
           padding: '16px 20px',
           display: 'flex',
           gap: 12,
           alignItems: 'flex-start',
-        }}>
-          <span style={{ fontSize: 24 }}>🔐</span>
+        }}><span style={{ fontSize: 24 }}></span>
           <div style={{ textAlign: 'left', flex: 1 }}>
             <h3 style={{ fontSize: 15, fontWeight: 800, color: '#00B894', marginBottom: 6 }}>Privacy Guaranteed</h3>
             <p style={{ fontSize: 13, color: '#2D3436', lineHeight: 1.5 }}>
@@ -169,7 +159,7 @@ export default function AcnePhotoQRScreen() {
         }}>
           <div style={{ fontSize: 17, fontWeight: 700, color: '#2D3436' }}>Status:</div>
           <div style={{ fontSize: 16, fontWeight: 600, color: cur.color }}>
-            {cur.icon} {cur.text}
+            <Icon name={cur.icon} size={18} /> {cur.text}
           </div>
           {status === 'analyzing' && (
             <div style={{ width: '100%', height: 4, background: '#E0E0E0', borderRadius: 2, overflow: 'hidden' }}>
@@ -194,7 +184,7 @@ export default function AcnePhotoQRScreen() {
           className="btn btn-primary btn-lg"
           style={{ width: '100%' }}
         >
-          🎬 Demo: Simulate Photo Upload
+          Demo: Simulate Photo Upload
         </button>
 
         {/* Skip button */}
@@ -211,11 +201,11 @@ export default function AcnePhotoQRScreen() {
 
       <style>{`
         @keyframes loadingSlide {
-          0%   { transform: translateX(-100%); }
-          50%  { transform: translateX(100%); }
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(100%); }
           100% { transform: translateX(-100%); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

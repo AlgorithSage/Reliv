@@ -1,32 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 export default function MealTimeScreen() {
-    const navigate = useNavigate();
-    const [times, setTimes] = useState({
+ const navigate = useNavigate();
+ const [times, setTimes] = useState({
         breakfast: '08:00',
         lunch: '13:00',
         dinner: '20:00',
-    });
-    const [showForm, setShowForm] = useState(false);
+ });
+ const [showForm, setShowForm] = useState(false);
 
-    useEffect(() => {
+ useEffect(() => {
         setTimeout(() => setShowForm(true), 100);
-    }, []);
+ }, []);
 
-    const handleContinue = () => {
+ const handleContinue = () => {
         localStorage.setItem('mealTimes', JSON.stringify(times));
         navigate('/summary');
-    };
+ };
 
-    const meals = [
-        { key: 'breakfast', label: 'Breakfast', icon: '🌅', desc: 'Start your day right' },
-        { key: 'lunch', label: 'Lunch', icon: '☀️', desc: 'Midday fuel' },
-        { key: 'dinner', label: 'Dinner', icon: '🌙', desc: 'Evening nourishment' },
-    ];
+ const meals = [
+        { key: 'breakfast', label: 'Breakfast', icon: 'sunrise', desc: 'Start your day right' },
+        { key: 'lunch', label: 'Lunch', icon: 'sun', desc: 'Midday fuel' },
+        { key: 'dinner', label: 'Dinner', icon: 'moon', desc: 'Evening nourishment' },
+ ];
 
-    return (
+ return (
         <Layout
             title="Meal Timings"
             subtitle="When do you usually eat?"
@@ -43,7 +44,7 @@ export default function MealTimeScreen() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 14,
-                    border: '1px solid #FFD296',
+                    border: 'none',
                     opacity: showForm ? 1 : 0,
                     transform: showForm ? 'translateY(0)' : 'translateY(10px)',
                     transition: 'all 0.5s ease',
@@ -65,14 +66,14 @@ export default function MealTimeScreen() {
                         <div
                             key={meal.key}
                             style={{
-                                background: '#FFFFFF',
+                                background: '#FAFAF8',
                                 borderRadius: 18,
                                 padding: '24px 28px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 20,
-                                border: '2px solid #E5E7EB',
-                                boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                                border: 'none',
+                                boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
                                 opacity: showForm ? 1 : 0,
                                 transform: showForm ? 'translateY(0)' : 'translateY(20px)',
                                 transition: 'all 0.4s ease',
@@ -80,19 +81,7 @@ export default function MealTimeScreen() {
                             }}
                         >
                             {/* Icon */}
-                            <div style={{
-                                width: 60,
-                                height: 60,
-                                background: 'linear-gradient(135deg, #FFF5F0 0%, #FFEEDD 100%)',
-                                borderRadius: 16,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: 30,
-                                flexShrink: 0,
-                            }}>
-                                {meal.icon}
-                            </div>
+                            <Icon name={meal.icon} size={30} />
 
                             {/* Content */}
                             <div style={{ flex: 1 }}>
@@ -114,7 +103,7 @@ export default function MealTimeScreen() {
                                 onChange={(e) => setTimes(prev => ({ ...prev, [meal.key]: e.target.value }))}
                                 style={{
                                     background: '#F5F5F5',
-                                    border: '2px solid #E5E7EB',
+                                    border: 'none',
                                     borderRadius: 12,
                                     padding: '14px 16px',
                                     fontSize: 16,
@@ -150,7 +139,7 @@ export default function MealTimeScreen() {
                         fontWeight: 700,
                         color: '#FFFFFF',
                         cursor: 'pointer',
-                        boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+                        boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
                         transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
@@ -168,5 +157,5 @@ export default function MealTimeScreen() {
                 </button>
             </div>
         </Layout>
-    );
+ );
 }

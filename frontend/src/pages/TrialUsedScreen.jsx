@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../utils/Icon';
 
 export default function TrialUsedScreen() {
-  const navigate = useNavigate();
-  const [show, setShow] = useState(false);
+ const navigate = useNavigate();
+ const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 100);
-  }, []);
+ useEffect(() => {
+ setTimeout(() => setShow(true), 100);
+ }, []);
 
-  return (
-    <div style={{
+ return (
+ <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(180deg, #FFFAF7 0%, #FFF5F0 50%, #FFEEDD 100%)',
       fontFamily: "'Inter', 'Outfit', sans-serif",
@@ -18,15 +19,15 @@ export default function TrialUsedScreen() {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 40,
-    }}>
+ }}>
       <div style={{
         maxWidth: 560,
         width: '100%',
-        background: '#FFFFFF',
+        background: '#FAFAF8',
         borderRadius: 32,
         padding: '48px 44px',
-        boxShadow: '0 24px 80px rgba(240, 105, 34, 0.1)',
-        border: '1px solid rgba(240, 105, 34, 0.1)',
+        boxShadow: '14px 14px 32px rgba(0,0,0,0.12), -14px -14px 32px rgba(255,255,255,0.6)',
+        border: 'none',
         textAlign: 'center',
         opacity: show ? 1 : 0,
         transform: show ? 'scale(1)' : 'scale(0.95)',
@@ -45,7 +46,7 @@ export default function TrialUsedScreen() {
           fontSize: 50,
           border: '2px solid #F59E0B',
         }}>
-          🔒
+          
         </div>
 
         <h1 style={{ fontSize: 28, fontWeight: 800, color: '#111', marginBottom: 12 }}>
@@ -65,7 +66,7 @@ export default function TrialUsedScreen() {
           border: '1px solid rgba(240, 105, 34, 0.15)',
         }}>
           <p style={{ fontSize: 14, fontWeight: 700, color: '#F06922', marginBottom: 8 }}>
-            One trial per phone 📱
+            One trial per phone 
           </p>
           <p style={{ fontSize: 13, color: '#B45309', lineHeight: 1.6 }}>
             Fair for everyone! If you already have a code, tap "Returning User" on the home screen to continue.
@@ -85,12 +86,12 @@ export default function TrialUsedScreen() {
           </h3>
           <div style={{ display: 'grid', gap: 12 }}>
             {[
-              { icon: '🔑', text: 'Log in with your code if you already have one' },
-              { icon: '📞', text: 'Use a different phone number' },
-              { icon: '💬', text: 'Contact support if you\'re facing issues' },
+              { icon: 'key', text: 'Log in with your code if you already have one' },
+              { icon: 'phone_call', text: 'Use a different phone number' },
+              { icon: 'chat_bubble', text: 'Contact support if you\'re facing issues' },
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: '#666' }}>
-                <span style={{ fontSize: 18 }}>{item.icon}</span>
+                <Icon name={item.icon} size={18} />
                 {item.text}
               </div>
             ))}
@@ -98,7 +99,7 @@ export default function TrialUsedScreen() {
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'grid', gap: 14 }}>
+        <div style={{ display: 'grid', gap: 14 }}><Icon name="home" size={18} />
           <button
             onClick={() => navigate('/code')}
             style={{
@@ -111,18 +112,18 @@ export default function TrialUsedScreen() {
               fontWeight: 700,
               color: '#FFFFFF',
               cursor: 'pointer',
-              boxShadow: '0 10px 40px rgba(240, 105, 34, 0.35)',
+              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
             }}
           >
-            🔑 Log In with Code
+             Log In with Code
           </button>
 
           <button
             onClick={() => navigate('/')}
             style={{
               width: '100%',
-              background: '#FFFFFF',
-              border: '2px solid #E5E7EB',
+              background: '#FAFAF8',
+              border: 'none',
               borderRadius: 14,
               padding: '16px',
               fontSize: 15,
@@ -131,10 +132,10 @@ export default function TrialUsedScreen() {
               cursor: 'pointer',
             }}
           >
-            🏠 Back to Home
+             Back to Home
           </button>
         </div>
       </div>
-    </div>
-  );
+ </div>
+ );
 }

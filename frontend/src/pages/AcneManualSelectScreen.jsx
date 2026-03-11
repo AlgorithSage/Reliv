@@ -1,63 +1,64 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Icon from '../utils/Icon';
 
 /**
  * S34 — Manual Acne Type Selection
  * When photo upload is skipped, user picks acne type manually.
  */
 export default function AcneManualSelectScreen() {
-  const navigate = useNavigate();
-  const [selected, setSelected] = useState(null);
-  const [hovered, setHovered] = useState(null);
+ const navigate = useNavigate();
+ const [selected, setSelected] = useState(null);
+ const [hovered, setHovered] = useState(null);
 
-  const types = [
-    {
+ const types = [
+ {
       id: 'active_acne',
-      icon: '🔴',
+      icon: 'red_circle',
       title: 'Active Acne',
       desc: 'Red, inflamed pimples and breakouts',
       color: '#EF4444',
       tips: ['Salicylic acid cleanser', 'Benzoyl peroxide treatment', 'Anti-inflammatory serum'],
-    },
-    {
+ },
+ {
       id: 'blackheads',
-      icon: '⚫',
+      icon: 'black_circle',
       title: 'Blackheads',
       desc: 'Open comedones, clogged pores',
       color: '#374151',
       tips: ['BHA exfoliant', 'Clay mask weekly', 'Oil-free moisturizer'],
-    },
-    {
+ },
+ {
       id: 'whiteheads',
-      icon: '⚪',
+      icon: 'white_circle',
       title: 'Whiteheads',
       desc: 'Closed comedones under the surface',
       color: '#9CA3AF',
       tips: ['Gentle retinol', 'Non-comedogenic products', 'Chemical exfoliation'],
-    },
-    {
+ },
+ {
       id: 'acne_scars',
-      icon: '🟤',
+      icon: 'brown_circle',
       title: 'Acne Scars',
       desc: 'Post-acne marks and dark spots',
       color: '#92400E',
       tips: ['Vitamin C serum', 'Niacinamide treatment', 'SPF 50 sunscreen daily'],
-    },
-    {
+ },
+ {
       id: 'mixed',
-      icon: '🎨',
+      icon: 'palette',
       title: 'Mixed Types',
       desc: 'Combination of multiple concerns',
       color: '#8B5CF6',
       tips: ['Multi-step routine', 'Zone-specific treatment', 'Gentle cleanser base'],
-    },
-  ];
+ },
+ ];
 
-  const handleContinue = () => {
-    if (!selected) return;
-    const sel = types.find((t) => t.id === selected);
-    localStorage.setItem('acneAnalysis', JSON.stringify({
+ const handleContinue = () => {
+ if (!selected) return;
+ const sel = types.find((t) => t.id === selected);
+ localStorage.setItem('acneAnalysis', JSON.stringify({
       type: selected,
       severity: 'moderate',
       location: ['face'],
@@ -65,12 +66,12 @@ export default function AcneManualSelectScreen() {
       lesionCount: 0,
       source: 'manual',
       recommendations: sel?.tips || [],
-    }));
-    navigate('/acne-treatment');
-  };
+ }));
+ navigate('/acne-treatment');
+ };
 
-  return (
-    <Layout title="🧴 Select Skin Concern" subtitle="Pick the one that best matches" showBack onBack={() => navigate(-1)}>
+ return (
+ <Layout title="Select Skin Concern" subtitle="Pick the one that best matches" showBack onBack={() => navigate(-1)}>
       <div style={{ maxWidth: 600, margin: '0 auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Type cards */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -108,9 +109,7 @@ export default function AcneManualSelectScreen() {
                 justifyContent: 'center',
                 fontSize: 28,
                 flexShrink: 0,
-              }}>
-                {t.icon}
-              </div>
+              }}><Icon name={t.icon} size={20} /></div>
 
               {/* Text */}
               <div style={{ flex: 1 }}>
@@ -147,7 +146,7 @@ export default function AcneManualSelectScreen() {
         {selected && (
           <div style={{
             background: 'rgba(255,255,255,0.85)',
-            backdropFilter: 'blur(12px)',
+            backdropFilter: 'none',
             border: '1px solid rgba(240,105,34,0.15)',
             borderRadius: 16,
             padding: '20px 24px',
@@ -191,9 +190,9 @@ export default function AcneManualSelectScreen() {
       <style>{`
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </Layout>
-  );
+ </Layout>
+ );
 }

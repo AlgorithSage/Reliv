@@ -1,29 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
+import Icon from '../utils/Icon';
 
 export default function WADayFlowScreen() {
-  const navigate = useNavigate();
-  
-  const daySchedule = [
-    { time: '8:00 AM', icon: '💧', text: '1st glass of water?', type: 'water' },
-    { time: '8:30 AM', icon: '🍳', text: 'Breakfast: eggs + parathas?', type: 'meal' },
-    { time: '10:00 AM', icon: '💧', text: '2nd glass of water?', type: 'water' },
-    { time: '12:30 PM', icon: '🍲', text: 'Lunch: rice + dal + sabzi?', type: 'meal' },
-    { time: '3:00 PM', icon: '💧', text: '3rd glass of water?', type: 'water' },
-    { time: '5:00 PM', icon: '💪', text: '10 pushups + 10 squats?', type: 'workout' },
-    { time: '6:00 PM', icon: '💧', text: '4th glass of water?', type: 'water' },
-    { time: '8:00 PM', icon: '🍛', text: 'Dinner: chicken + roti + salad?', type: 'meal' },
-  ];
-  
-  const typeColors = {
-    water: '#3B82F6',
-    meal: C.primary,
-    workout: C.success
-  };
+ const navigate = useNavigate();
+ 
+ const daySchedule = [
+ { time: '8:00 AM', icon: 'water_drop', text: '1st glass of water?', type: 'water' },
+ { time: '8:30 AM', icon: 'breakfast_egg', text: 'Breakfast: eggs + parathas?', type: 'meal' },
+ { time: '10:00 AM', icon: 'water_drop', text: '2nd glass of water?', type: 'water' },
+ { time: '12:30 PM', icon: 'lunch_bowl', text: 'Lunch: rice + dal + sabzi?', type: 'meal' },
+ { time: '3:00 PM', icon: 'water_drop', text: '3rd glass of water?', type: 'water' },
+ { time: '5:00 PM', icon: 'muscle', text: '10 pushups + 10 squats?', type: 'workout' },
+ { time: '6:00 PM', icon: 'water_drop', text: '4th glass of water?', type: 'water' },
+ { time: '8:00 PM', icon: 'dinner_plate', text: 'Dinner: chicken + roti + salad?', type: 'meal' },
+ ];
+ 
+ const typeColors = {
+ water: '#3B82F6',
+ meal: C.primary,
+ workout: C.success
+ };
 
-  return (
-    <Layout title="A Full Day — The Loop" showBack onBack={() => navigate('/wa-preview')}>
+ return (
+ <Layout title="A Full Day — The Loop" showBack onBack={() => navigate('/wa-preview')}>
       <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
         
         {/* Header Card */}
@@ -35,7 +36,7 @@ export default function WADayFlowScreen() {
           marginBottom: 24
         }}>
           <h2 style={{ fontSize: 18, fontWeight: 700, color: C.text, marginBottom: 8 }}>
-            🧠 The Complete Brain
+             The Complete Brain
           </h2>
           <p style={{ fontSize: 13, color: C.textMid, lineHeight: 1.6 }}>
             1️⃣ Bot generates YOUR plan (meals + water + workout)<br/>
@@ -47,15 +48,14 @@ export default function WADayFlowScreen() {
         
         {/* Day Timeline */}
         <div style={{
-          background: '#fff',
+          background: '#FAFAF8',
           borderRadius: 20,
           padding: 20,
           border: `1px solid ${C.border}`,
           boxShadow: C.shadow,
           marginBottom: 24
-        }}>
-          <h3 style={{ fontSize: 14, fontWeight: 700, color: C.textMid, marginBottom: 16 }}>
-            📅 YOUR DAY — AUTOMATED
+        }}><h3 style={{ fontSize: 14, fontWeight: 700, color: C.textMid, marginBottom: 16 }}>
+             YOUR DAY — AUTOMATED
           </h3>
           
           <div style={{ position: 'relative' }}>
@@ -104,9 +104,7 @@ export default function WADayFlowScreen() {
                   fontSize: 18,
                   flexShrink: 0,
                   zIndex: 1
-                }}>
-                  {item.icon}
-                </div>
+                }}><Icon name={item.icon} size={20} /></div>
                 
                 {/* Message */}
                 <div style={{
@@ -131,9 +129,8 @@ export default function WADayFlowScreen() {
           padding: 16,
           border: `1px solid ${C.primary}20`,
           marginBottom: 20
-        }}>
-          <p style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 6 }}>
-            ❓ What if you say NO?
+        }}><p style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 6 }}>
+             What if you say NO?
           </p>
           <p style={{ fontSize: 12, color: C.textMid, lineHeight: 1.5 }}>
             No problem! We remind you again later the same day. No guilt, no shame — just gentle nudges until you're ready.
@@ -147,9 +144,8 @@ export default function WADayFlowScreen() {
           padding: 16,
           border: `1px solid ${C.success}20`,
           marginBottom: 24
-        }}>
-          <p style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 6 }}>
-            💾 Everything is Stored
+        }}><p style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 6 }}>
+             Everything is Stored
           </p>
           <p style={{ fontSize: 12, color: C.textMid, lineHeight: 1.5 }}>
             Next time you visit the kiosk, we read your history and adjust your plan based on what actually worked!
@@ -190,10 +186,10 @@ export default function WADayFlowScreen() {
             boxShadow: C.shadowPrimary
           }}
         >
-          🔄 See: What Kiosk Sees on Return Visit
+          <Icon name="refresh" size={18} /> See: What Kiosk Sees on Return Visit
         </button>
         
       </div>
-    </Layout>
-  );
+ </Layout>
+ );
 }
