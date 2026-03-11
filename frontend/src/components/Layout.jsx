@@ -1,25 +1,31 @@
 import { useState, useEffect } from 'react';
 import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
+import AntigravityBackground from './AntigravityBackground';
+
+// ═══ ANTIGRAVITY BACKGROUND FLAG ═══
+// Set to true to show the floating dotted glassmorphic background
+// Set to false to hide it (just the gradient background)
+const ENABLE_ANTIGRAVITY = false;
 
 export default function Layout({ children, title, subtitle, showBack, onBack }) {
- const [scrolled, setScrolled] = useState(false);
- const [pageLoaded, setPageLoaded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
- useEffect(() => {
- setPageLoaded(true);
- const handleScroll = () => setScrolled(window.scrollY > 20);
- window.addEventListener('scroll', handleScroll);
- return () => window.removeEventListener('scroll', handleScroll);
- }, []);
+  useEffect(() => {
+    setPageLoaded(true);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
- return (
- <div style={{
+  return (
+    <div style={{
       minHeight: '100vh',
       background: '#E4E0DC',
       fontFamily: "'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif",
       position: 'relative',
- }}>
+    }}>
       {/* ═══ NEOMORPHIC HEADER ═══ */}
       <header
         style={{
@@ -292,6 +298,6 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
           © 2025 Reliv AI. All rights reserved.
         </p>
       </footer>
- </div>
- );
+    </div>
+  );
 }
