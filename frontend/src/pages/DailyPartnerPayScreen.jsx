@@ -28,7 +28,6 @@ export default function DailyPartnerPayScreen() {
  title="Daily Partner Plan"
  subtitle={`Both of you, ${info.name} style`}
  showBack
- onBack={() => navigate(-1)}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  <div style={{

@@ -34,7 +34,7 @@ export default function FriendAddScreen() {
  };
 
  return (
- <Layout title="Add Your Squad" showBack onBack={() => navigate('/friend-size')}>
+ <Layout title="Add Your Squad" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
  
  {/* Header */}
@@ -144,28 +144,18 @@ export default function FriendAddScreen() {
  </div>
  </div>
  
- {/* Continue Button */}
- <button 
- onClick={handleContinue} 
- disabled={!allValid} 
- style={{ 
- width: '100%', 
- background: allValid 
- ? `linear-gradient(135deg, ${C.primary}, ${C.primaryDark})` 
- : C.bgMid, 
- border: 'none', 
- borderRadius: 14, 
- padding: '18px', 
- fontSize: 17, 
- fontWeight: 700, 
- color: allValid ? '#fff' : C.textMid, 
- cursor: allValid ? 'pointer' : 'not-allowed',
- boxShadow: allValid ? C.shadowPrimary : 'none',
- transition: 'all 0.2s'
+ {/* Continue Button */} <MaterialButton
+ variant="filled"
+ disabled={!allValid}
+ onClick={handleContinue}
+ style={{
+ width: '100%',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
  Send Invites & Continue →
- </button>
+ </MaterialButton>
  
  <p style={{ fontSize: 12, color: C.textMid, textAlign: 'center', marginTop: 16 }}>
  <Icon name="phone" size={18} /> Each friend will receive OTP to verify

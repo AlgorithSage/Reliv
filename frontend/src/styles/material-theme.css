@@ -1,0 +1,153 @@
+/* ═══════════════════════════════════════════════════════════════
+   MATERIAL WEB — THEME OVERRIDES
+   Maps @material/web components to Reliv Orange + Cream palette
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Primary ── */
+  --md-sys-color-primary: #F06922;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #FFE0CC;
+  --md-sys-color-on-primary-container: #3D1600;
+
+  /* ── Secondary ── */
+  --md-sys-color-secondary: #E85C25;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #FFDBC8;
+  --md-sys-color-on-secondary-container: #2B0E00;
+
+  /* ── Tertiary ── */
+  --md-sys-color-tertiary: #8B5CF6;
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #EDDCFF;
+  --md-sys-color-on-tertiary-container: #23005C;
+
+  /* ── Error ── */
+  --md-sys-color-error: #EF4444;
+  --md-sys-color-on-error: #FFFFFF;
+  --md-sys-color-error-container: #FFDAD6;
+  --md-sys-color-on-error-container: #410002;
+
+  /* ── Surface ── */
+  --md-sys-color-surface: #FAFAF8;
+  --md-sys-color-on-surface: #111111;
+  --md-sys-color-on-surface-variant: #6B7280;
+  --md-sys-color-surface-container-lowest: #FFFFFF;
+  --md-sys-color-surface-container-low: #EAE6E1;
+  --md-sys-color-surface-container: #E4E0DC;
+  --md-sys-color-surface-container-high: #DDD9D4;
+  --md-sys-color-surface-container-highest: #D6D2CD;
+
+  /* ── Outline ── */
+  --md-sys-color-outline: #9CA3AF;
+  --md-sys-color-outline-variant: #D1D5DB;
+
+  /* ── Typefaces ── */
+  --md-ref-typeface-brand: 'Poppins', sans-serif;
+  --md-ref-typeface-plain: 'Space Grotesk', sans-serif;
+}
+
+/* ── Filled Button ── */
+md-filled-button {
+  --md-filled-button-container-shape: 16px;
+  --md-filled-button-container-height: 48px;
+  --md-filled-button-label-text-font: 'Space Grotesk', sans-serif;
+  --md-filled-button-label-text-weight: 700;
+  --md-filled-button-label-text-size: 16px;
+  --md-filled-button-container-color: #F06922;
+  --md-filled-button-label-text-color: #FFFFFF;
+  --md-filled-button-hover-state-layer-color: rgba(0, 0, 0, 0.08);
+  --md-filled-button-pressed-state-layer-color: rgba(0, 0, 0, 0.12);
+}
+
+/* ── Outlined Button ── */
+md-outlined-button {
+  --md-outlined-button-container-shape: 16px;
+  --md-outlined-button-container-height: 48px;
+  --md-outlined-button-label-text-font: 'Space Grotesk', sans-serif;
+  --md-outlined-button-label-text-weight: 600;
+  --md-outlined-button-label-text-size: 16px;
+  --md-outlined-button-label-text-color: #F06922;
+  --md-outlined-button-outline-color: #F06922;
+}
+
+/* ── Text Button ── */
+md-text-button {
+  --md-text-button-label-text-font: 'Space Grotesk', sans-serif;
+  --md-text-button-label-text-weight: 600;
+  --md-text-button-label-text-color: #F06922;
+}
+
+/* ── Outlined Text Field ── */
+md-outlined-text-field {
+  --md-outlined-text-field-container-shape: 16px;
+  --md-outlined-text-field-focus-outline-color: #F06922;
+  --md-outlined-text-field-hover-outline-color: #E85C25;
+  --md-outlined-text-field-outline-color: #D1D5DB;
+  --md-outlined-text-field-input-text-font: 'Space Grotesk', sans-serif;
+  --md-outlined-text-field-input-text-size: 16px;
+  --md-outlined-text-field-label-text-font: 'Space Grotesk', sans-serif;
+  --md-outlined-text-field-label-text-size: 14px;
+  --md-outlined-text-field-focus-label-text-color: #F06922;
+  --md-outlined-text-field-input-text-color: #111111;
+}
+
+/* ── Filled Text Field ── */
+md-filled-text-field {
+  --md-filled-text-field-container-shape: 16px;
+  --md-filled-text-field-active-indicator-color: #F06922;
+  --md-filled-text-field-focus-active-indicator-color: #F06922;
+  --md-filled-text-field-container-color: #EAE6E1;
+  --md-filled-text-field-input-text-font: 'Space Grotesk', sans-serif;
+  --md-filled-text-field-label-text-font: 'Space Grotesk', sans-serif;
+  --md-filled-text-field-focus-label-text-color: #F06922;
+}
+
+/* ── Dialog ── */
+md-dialog {
+  --md-dialog-container-shape: 28px;
+  --md-dialog-container-color: #FAFAF8;
+  --md-dialog-headline-font: 'Poppins', sans-serif;
+  --md-dialog-headline-weight: 700;
+  --md-dialog-supporting-text-font: 'Space Grotesk', sans-serif;
+}
+
+/* ── FAB ── */
+md-fab {
+  --md-fab-container-shape: 16px;
+  --md-fab-container-color: #F06922;
+  --md-fab-icon-color: #FFFFFF;
+  --md-fab-label-text-font: 'Space Grotesk', sans-serif;
+}
+
+md-fab[size="small"] {
+  --md-fab-container-shape: 12px;
+}
+
+md-fab[size="large"] {
+  --md-fab-container-shape: 28px;
+}
+
+/* ── Filter Chip ── */
+md-filter-chip {
+  --md-filter-chip-container-shape: 9999px;
+  --md-filter-chip-label-text-font: 'Space Grotesk', sans-serif;
+  --md-filter-chip-label-text-weight: 600;
+  --md-filter-chip-selected-container-color: #FFE0CC;
+  --md-filter-chip-selected-label-text-color: #3D1600;
+  --md-filter-chip-outline-color: #D1D5DB;
+}
+
+/* ── Assist Chip ── */
+md-assist-chip {
+  --md-assist-chip-container-shape: 9999px;
+  --md-assist-chip-label-text-font: 'Space Grotesk', sans-serif;
+  --md-assist-chip-label-text-weight: 600;
+  --md-assist-chip-outline-color: #D1D5DB;
+}
+
+/* ── Ripple color override ── */
+md-ripple {
+  --md-ripple-pressed-color: rgba(240, 105, 34, 0.12);
+  --md-ripple-hover-color: rgba(240, 105, 34, 0.08);
+}

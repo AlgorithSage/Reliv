@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
+import MaterialTextField from '../components/material/MaterialTextField';
 
 export default function PhoneEntryScreen() {
  const navigate = useNavigate();
@@ -31,7 +33,7 @@ export default function PhoneEntryScreen() {
  };
 
  return (
- <Layout title="Let's Get Started" subtitle="Enter your phone number to begin your health transformation" showBack onBack={() => navigate('/')}>
+ <Layout title="Let's Get Started" subtitle="Enter your phone number to begin your health transformation" showBack>
  <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
  <div style={{
  background: '#FAFAF8',
@@ -52,9 +54,7 @@ export default function PhoneEntryScreen() {
  margin: '0 auto 28px',
  border: '1px solid rgba(240, 105, 34, 0.15)',
  fontSize: 40,
- }}>
- 
- </div>
+  }}><Icon name="phone" size={36} /></div>
 
  {/* Phone Input Section */}
  <div style={{ marginBottom: 28 }}><label style={{
@@ -139,29 +139,15 @@ export default function PhoneEntryScreen() {
  OPTIONAL
  </span>
  </label>
- <input
- type="text"
- maxLength="6"
+ <MaterialTextField
+ variant="outlined"
+ label="Referral Code"
  value={referral}
- onChange={(e) => setReferral(e.target.value.toUpperCase())}
- onFocus={() => setFocused('referral')}
- onBlur={() => setFocused(null)}
+ onChange={(val) => setReferral(val.toUpperCase())}
+ maxLength={6}
  placeholder="Enter code for bonus"
- style={{
- width: '100%',
- background: focused === 'referral' ? '#FFFAF7' : '#FAFAFA',
- border: `2px solid ${focused === 'referral' ? '#F06922' : '#E5E7EB'}`,
- borderRadius: 14,
- padding: '18px 20px',
- fontSize: 16,
- fontWeight: 500,
- color: '#111111',
- outline: 'none',
- transition: 'all 0.3s ease',
- textTransform: 'uppercase',
- letterSpacing: '2px',
- boxShadow: focused === 'referral' ? '0 0 0 4px rgba(240, 105, 34, 0.1)' : 'none',
- }}
+ supportingText=""
+ style={{ width: '100%', textTransform: 'uppercase', letterSpacing: '2px' }}
  />
  <p style={{
  fontSize: 13,
@@ -194,50 +180,18 @@ export default function PhoneEntryScreen() {
  )}
 
  {/* Submit Button */}
- <button
- onClick={handleSubmit}
+ <MaterialButton
+ variant="filled"
  disabled={loading || phone.length !== 10}
+ onClick={handleSubmit}
  style={{
  width: '100%',
- background: phone.length === 10
- ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: phone.length === 10 ? '#FFFFFF' : '#9CA3AF',
- cursor: phone.length === 10 && !loading ? 'pointer' : 'not-allowed',
- boxShadow: phone.length === 10 ? '0 10px 40px rgba(240, 105, 34, 0.35)' : 'none',
- transition: 'all 0.3s ease',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 12,
- transform: loading ? 'scale(0.98)' : 'scale(1)',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
- {loading ? (
- <>
- <span style={{
- width: 22,
- height: 22,
- border: '3px solid rgba(255,255,255,0.3)',
- borderTopColor: '#FFFFFF',
- borderRadius: '50%',
- animation: 'spin 0.8s linear infinite',
- }} />Sending OTP...
- </>
- ) : (
- <>
- Send OTP
- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
- <path d="M5 12h14M12 5l7 7-7 7" />
- </svg>
- </>
- )}
- </button>
+ {loading ? 'Sending OTP...' : 'Send OTP →'}
+ </MaterialButton>
  </div>
 
  {/* Security Note */}

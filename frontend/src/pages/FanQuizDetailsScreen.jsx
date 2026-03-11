@@ -37,7 +37,6 @@ export default function FanQuizDetailsScreen() {
  title={`${info.emoji} ${info.name} Day`}
  subtitle={info.style}
  showBack
- onBack={() => navigate('/fan-quiz-type')}
  >
  <div style={{ maxWidth: 600, margin: '0 auto' }}>
  {/* Hero Card */}

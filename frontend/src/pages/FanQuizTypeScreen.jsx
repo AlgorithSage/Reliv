@@ -57,7 +57,6 @@ export default function FanQuizTypeScreen() {
  title="Who's Your Fav?"
  subtitle="Quick question!"
  showBack
- onBack={() => navigate('/group-type')}
  >
  <div style={{ maxWidth: 560, margin: '0 auto' }}>
  {/* Category Grid - 2x2 */}

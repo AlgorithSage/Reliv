@@ -11,7 +11,7 @@ export default function PlanConflictScreen() {
  const groupType = localStorage.getItem('groupType') || 'solo';
 
  return (
- <Layout title="Plan Conflict" subtitle="You already have an active plan" showBack onBack={() => navigate(-1)}>
+ <Layout title="Plan Conflict" subtitle="You already have an active plan" showBack>
  <div style={{ maxWidth: 520, margin: '0 auto', padding: '40px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 24 }}>
  <div style={{ fontSize: 72, marginBottom: 8 }}></div>
 

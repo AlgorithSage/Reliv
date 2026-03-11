@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
 
 export default function GoalScreen() {
  const navigate = useNavigate();
@@ -58,7 +59,6 @@ export default function GoalScreen() {
  title="Set Your Target"
  subtitle="What do you want to achieve?"
  showBack
- onBack={() => navigate('/category')}
  >
  <div style={{ maxWidth: 580, margin: '0 auto' }}>
  {/* Header Info */}
@@ -90,7 +90,7 @@ export default function GoalScreen() {
  return (
  <div
  key={opt.id}
- onClick={() => toggleGoal(opt.id)}
+ className="md-state-layer" onClick={() => toggleGoal(opt.id)}
  style={{
  background: isSelected
  ? 'linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%)'
@@ -158,27 +158,18 @@ export default function GoalScreen() {
  </div>
 
  {/* Continue Button */}
- <button
- onClick={handleContinue}
+ <MaterialButton
+ variant="filled"
  disabled={goals.length === 0}
+ onClick={handleContinue}
  style={{
  width: '100%',
- background: goals.length > 0
- ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: goals.length > 0 ? '#FFFFFF' : '#9CA3AF',
- cursor: goals.length > 0 ? 'pointer' : 'not-allowed',
- boxShadow: goals.length > 0 ? '0 10px 40px rgba(240, 105, 34, 0.35)' : 'none',
- transition: 'all 0.3s ease',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
  Continue {goals.length > 0 && `(${goals.length} selected)`}
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

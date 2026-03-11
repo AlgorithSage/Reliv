@@ -21,7 +21,6 @@ export default function WeeklyCouplePayScreen() {
  title="Couple Weekly Plan"
  subtitle="Transform together for 7 days"
  showBack
- onBack={() => navigate('/couple-questions')}
  >
  <div style={{ maxWidth: 560, margin: '0 auto' }}>
  {/* Pricing Card */}

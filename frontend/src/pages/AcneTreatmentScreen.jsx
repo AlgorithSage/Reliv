@@ -59,7 +59,7 @@ export default function AcneTreatmentScreen() {
  ];
 
  return (
- <Layout title="Your Skincare Plan" subtitle={analysis ? typeLabel[analysis.type] || 'Custom Plan' : 'Personalized Routine'} showBack onBack={() => navigate(-1)}>
+ <Layout title="Your Skincare Plan" subtitle={analysis ? typeLabel[analysis.type] || 'Custom Plan' : 'Personalized Routine'} showBack>
  <div style={{
  maxWidth: 640,
  margin: '0 auto',

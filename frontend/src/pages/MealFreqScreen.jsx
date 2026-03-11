@@ -15,7 +15,7 @@ export default function MealFreqScreen() {
  ];
 
  return (
- <Layout title="How many meals per day?" subtitle="We'll remind you for each meal at your preferred times" showBack onBack={() => navigate(-1)}>
+ <Layout title="How many meals per day?" subtitle="We'll remind you for each meal at your preferred times" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto' }}>
  <div style={{ display: 'grid', gap: 14, marginBottom: 28 }}>
  {mealOptions.map(m => (

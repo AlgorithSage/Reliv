@@ -32,7 +32,6 @@ export default function MealTimeScreen() {
  title="Meal Timings"
  subtitle="When do you usually eat?"
  showBack
- onBack={() => navigate('/goal')}
  >
  <div style={{ maxWidth: 550, margin: '0 auto' }}>
  {/* Info */}

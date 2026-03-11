@@ -71,7 +71,6 @@ export default function CoupleQuestionsScreen() {
  title={`About You & ${partnerName}`}
  subtitle="Quick questions to personalize your plan"
  showBack
- onBack={() => navigate('/couple-phone')}
  >
  <div style={{ maxWidth: 540, margin: '0 auto' }}>
  {/* Progress */}

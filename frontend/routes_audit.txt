@@ -1,0 +1,262 @@
+AcneManualSelectScreen.jsx:
+  /acne-treatment
+
+AcnePhotoQRScreen.jsx:
+  /acne-timeout
+  /acne-uploaded
+  /acne-manual
+
+AcnePhotoUploadedScreen.jsx:
+  /acne-manual
+  /acne-treatment
+
+AcneTimeoutScreen.jsx:
+  /acne-photo-qr
+  /acne-manual
+  /meal-freq
+
+AcneTreatmentScreen.jsx:
+  /meal-freq
+  /meal-freq
+
+ActivationScreen.jsx:
+  /bot-offer
+  /wa-preview
+  /
+
+BentoPhoneEntryScreen.jsx:
+  /returning-pay
+  /otp
+  /otp
+  /
+
+BentoWelcomeScreen.jsx:
+  /ProductShowcaseBoard
+  /phone
+  /code
+  /code
+
+BotCustomizeScreen.jsx:
+  /bot-status
+
+BotOfferScreen.jsx:
+  /bot-purchase
+  /wa-preview
+
+BotPairingScreen.jsx:
+  /bot-customize
+
+BotPurchaseScreen.jsx:
+  /bot-pairing
+  /bot-offer
+  /ProductShowcaseBoard
+
+BotStatusScreen.jsx:
+  /bot-customize
+  /wa-preview
+  /
+
+CategoryScreen.jsx:
+  /hero-routine
+  /acne-photo-qr
+  /meal-freq
+
+CodeEntryScreen.jsx:
+  /phone
+
+CodeFailScreen.jsx:
+  /code
+  /phone
+
+CodeGeneratedScreen.jsx:
+  /group-type
+  /group-type
+
+CouplePhoneScreen.jsx:
+  /couple-questions
+
+CoupleQuestionsScreen.jsx:
+  /weekly-couple-pay
+
+CreateShoutoutScreen.jsx:
+  /
+  /ProductShowcaseBoard
+
+DailyFriendsPayScreen.jsx:
+  /activation
+
+DailyPartnerPayScreen.jsx:
+  /activation
+
+DailyPayScreen.jsx:
+  /activation
+
+DailyWhatsAppPreviewScreen.jsx:
+  /activation
+
+FanCricketScreen.jsx:
+  /category
+  /category
+
+FanQuizDetailsScreen.jsx:
+  /daily-pay
+
+FanQuizModeScreen.jsx:
+  /daily-pay
+
+FanQuizResultScreen.jsx:
+  /daily-pay
+  /fan-quiz-type
+
+FanQuizScreen.jsx:
+  /fan-quiz-result
+
+FormCheckScreen.jsx:
+  /todays-plan
+  /make-easier
+  /todays-plan
+
+FriendAddScreen.jsx:
+  /friend-questions
+
+FriendQuestionsScreen.jsx:
+  /weekly-friends-pay
+
+FriendSizeScreen.jsx:
+  /friend-questions
+
+GoalScreen.jsx:
+  /meal-time
+
+HeroRoutineScreen.jsx:
+  /meal-freq
+
+KioskOfflineScreen.jsx:
+  /
+  /
+
+MakeEasierScreen.jsx:
+  /todays-plan
+  /
+
+MealFreqScreen.jsx:
+  /meal-times
+
+MealTimeScreen.jsx:
+  /summary
+
+MealTimesScreen.jsx:
+  /summary
+
+OTPFailScreen.jsx:
+  /phone
+  /
+
+OTPScreen.jsx:
+  /phone
+  /code-generated
+  /code-generated
+  /otp-fail
+  /phone
+
+PaymentFailedScreen.jsx:
+  /group-type
+  /
+
+PhoneEntryScreen.jsx:
+  /returning-pay
+  /otp
+  /otp
+
+PlanConflictScreen.jsx:
+  /return-active
+  /
+
+ProductShowcaseBoard.jsx:
+  /create-shoutout
+
+RenewPlanScreen.jsx:
+  /todays-plan
+  /update-settings
+
+ReturnActiveScreen.jsx:
+  /todays-plan
+  /form-check
+  /make-easier
+  /why-tracking
+  /bot-status
+  /update-settings
+  /
+
+ReturnDailyAgainScreen.jsx:
+  /daily-pay
+  /fan-quiz-type
+  /group-type
+
+ReturnExpiredScreen.jsx:
+  /renew-plan
+  /change-plan
+
+ReturningPayScreen.jsx:
+  /activation
+
+ReturnTodayScreen.jsx:
+  /
+
+SoloQuestionsScreen.jsx:
+  /category
+
+SummaryScreen.jsx:
+  /activation
+
+TodaysPlanScreen.jsx:
+  /wa-preview
+  /update-settings
+  /bot-status
+
+TrialUsedScreen.jsx:
+  /code
+  /
+
+UpdateSettingsScreen.jsx:
+  /return-active
+  /bot-customize
+
+WADayFlowScreen.jsx:
+  /activation
+  /return-active
+
+WAMealFlowScreen.jsx:
+  /wa-workout-flow
+  /wa-day-flow
+
+WAPreviewScreen.jsx:
+  /
+
+WAWorkoutFlowScreen.jsx:
+  /wa-meal-flow
+  /wa-day-flow
+
+WeeklyCouplePayScreen.jsx:
+  /category
+
+WeeklyFriendsPayScreen.jsx:
+  /category
+
+WeeklySoloPayScreen.jsx:
+  /category
+
+WelcomeScreen.jsx:
+  /ProductShowcaseBoard
+  /code
+  /phone
+  /code
+  /ProductShowcaseBoard
+
+WhatsAppPreviewScreen.jsx:
+  /
+
+WhyTrackingScreen.jsx:
+  /todays-plan
+  /
+

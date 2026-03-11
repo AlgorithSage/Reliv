@@ -71,7 +71,6 @@ export default function SoloQuestionsScreen() {
  title="Quick Questions"
  subtitle="Help us personalize your plan"
  showBack
- onBack={() => navigate('/weekly-solo-pay')}
  >
  <div style={{ maxWidth: 540, margin: '0 auto' }}>
  {/* Progress */}

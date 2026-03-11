@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
 
 export default function CategoryScreen() {
  const navigate = useNavigate();
@@ -110,7 +111,6 @@ export default function CategoryScreen() {
  title="What are you here for?"
  subtitle="Select your health goal"
  showBack
- onBack={() => navigate(-1)}
  >
  <div style={{ maxWidth: 700, margin: '0 auto' }}>{/* Categories Grid */}
  <div style={{
@@ -220,7 +220,7 @@ export default function CategoryScreen() {
  <h3 style={{
  fontSize: c.isHeroTraining ? 20 : 17,
  fontWeight: 700,
- color: selected === c.id ? c.color : '#111',
+ color: '#111',
  marginBottom: 6,
  }}>
  {c.title}
@@ -243,7 +243,7 @@ export default function CategoryScreen() {
  background: '#FEF3C7',
  borderRadius: 10,
  border: '1px solid #FCD34D',
- }}><span style={{ fontSize: 12, color: '#92400E', fontWeight: 600 }}>
+ }}><span style={{ fontSize: 12, color: '#111', fontWeight: 600 }}>
  Full day schedule + diet + workout
  </span>
  </div>
@@ -253,33 +253,19 @@ export default function CategoryScreen() {
  </div>
 
  {/* Continue Button */}
- <button
- onClick={handleContinue}
+ <MaterialButton
+ variant="filled"
  disabled={!selected}
+ onClick={handleContinue}
  style={{
  width: '100%',
- background: selected
- ? selected === 'hero-training' && currentHero
- ? `linear-gradient(135deg, ${currentHero.color} 0%, ${currentHero.color}dd 100%)`
- : 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: selected ? '#FFFFFF' : '#9CA3AF',
- cursor: selected ? 'pointer' : 'not-allowed',
- boxShadow: selected
- ? selected === 'hero-training' && currentHero
- ? `0 10px 40px ${currentHero.color}40`
- : '0 10px 40px rgba(240, 105, 34, 0.35)'
- : 'none',
- transition: 'all 0.3s ease',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
+ '--md-filled-button-container-color': selected === 'hero-training' && currentHero ? currentHero.color : '#F06922',
  }}
  >
  {selected === 'hero-training' ? `Start ${celebrityName} Challenge →` : 'Continue →'}
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

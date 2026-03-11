@@ -31,7 +31,6 @@ export default function DailyFriendsPayScreen() {
  title="Daily Squad Plan"
  subtitle={`${friendCount} friends, ${info.name} style`}
  showBack
- onBack={() => navigate(-1)}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  <div style={{

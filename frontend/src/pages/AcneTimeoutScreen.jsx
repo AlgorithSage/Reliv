@@ -10,7 +10,7 @@ export default function AcneTimeoutScreen() {
  const navigate = useNavigate();
 
  return (
- <Layout title="⏰ Time's Up" subtitle="No photo received" showBack onBack={() => navigate('/acne-photo-qr')}>
+ <Layout title="⏰ Time's Up" subtitle="No photo received" showBack>
  <div style={{ maxWidth: 520, margin: '0 auto', padding: '40px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 28 }}>
  {/* Icon */}
  <div style={{ fontSize: 80 }}>⏰</div>

@@ -6,7 +6,7 @@ export default function OTPFailScreen() {
  const navigate = useNavigate();
 
  return (
- <Layout showBack onBack={() => navigate('/phone')}>
+ <Layout showBack>
  <div style={{ maxWidth: 520, margin: '0 auto', textAlign: 'center' }}>
  {/* Main Card */}
  <div style={{

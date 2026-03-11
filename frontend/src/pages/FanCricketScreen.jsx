@@ -75,7 +75,7 @@ export default function FanCricketScreen() {
  localStorage.setItem('dailyPrice', selectedPlayer.price);
  localStorage.setItem('heroTraining', 'true');
  setShowChallenge(false);
- navigate('/category');
+ navigate('/daily-pay');
  };
 
  const handleDeclineChallenge = () => {
@@ -92,7 +92,6 @@ export default function FanCricketScreen() {
  title={currentCategory.title}
  subtitle="Pick your favorite!"
  showBack
- onBack={() => navigate('/fan-quiz-type')}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  {/* Player Cards */}
@@ -247,7 +246,7 @@ export default function FanCricketScreen() {
  fontSize: 48,
  margin: '0 auto 24px',
  }}>
- <Icon name={player.emoji} size={32} />
+ <Icon name={selectedPlayer.emoji} size={32} />
  </div>
 
  {/* Title */}

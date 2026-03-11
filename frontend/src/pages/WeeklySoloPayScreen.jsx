@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
 
 export default function WeeklySoloPayScreen() {
  const navigate = useNavigate();
@@ -31,7 +32,6 @@ export default function WeeklySoloPayScreen() {
  title="Solo Weekly Plan"
  subtitle="7 days of personalized health coaching"
  showBack
- onBack={() => navigate('/group-type')}
  >
  <div style={{ maxWidth: 560, margin: '0 auto' }}>
  {/* Pricing Card */}
@@ -148,45 +148,18 @@ export default function WeeklySoloPayScreen() {
  </div>
 
  {/* Pay Button */}
- <button
- onClick={handlePay}
+ <MaterialButton
+ variant="filled"
  disabled={loading}
+ onClick={handlePay}
  style={{
  width: '100%',
- background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '22px',
- fontSize: 18,
- fontWeight: 700,
- color: '#FFFFFF',
- cursor: loading ? 'not-allowed' : 'pointer',
- boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
- transition: 'all 0.3s ease',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 12,
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
- {loading ? (
- <>
- <span style={{
- width: 24,
- height: 24,
- border: '3px solid rgba(255,255,255,0.3)',
- borderTopColor: '#FFFFFF',
- borderRadius: '50%',
- animation: 'spin 0.8s linear infinite',
- }} />
- Processing...
- </>
- ) : (
- <>
- Pay ₹29 & Continue
- </>
- )}
- </button>
+ {loading ? 'Processing...' : 'Pay ₹29 & Continue'}
+ </MaterialButton>
  </div>
 
  {/* Trust Section */}

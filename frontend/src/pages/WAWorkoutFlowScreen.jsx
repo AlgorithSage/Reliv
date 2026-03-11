@@ -30,7 +30,7 @@ export default function WAWorkoutFlowScreen() {
  const currentFlow = activeTab === 'done' ? doneFlow : notDoneFlow;
 
  return (
- <Layout title="WhatsApp — Workout" showBack onBack={() => navigate('/wa-preview')}>
+ <Layout title="WhatsApp — Workout" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
  
  {/* Info Card */}

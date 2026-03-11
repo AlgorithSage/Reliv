@@ -44,7 +44,7 @@ export default function AcnePhotoUploadedScreen() {
  const confidence = Math.round((analysis.confidence || 0.87) * 100);
 
  return (
- <Layout title="Analysis Results" subtitle="AI Skin Diagnosis" showBack onBack={() => navigate(-1)}>
+ <Layout title="Analysis Results" subtitle="AI Skin Diagnosis" showBack>
  <div style={{
  maxWidth: 640,
  margin: '0 auto',

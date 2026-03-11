@@ -22,7 +22,7 @@ export default function FriendSizeScreen() {
  const handleContinue = () => {
  if (!selected) return;
  localStorage.setItem('friendCount', selected);
- navigate('/friend-questions');
+ navigate('/friend-add');
  };
 
  return (
@@ -30,7 +30,7 @@ export default function FriendSizeScreen() {
  title="How Many Friends?"
  subtitle="Select your squad size"
  showBack
- onBack={() => navigate('/group-type')}
+ 
  >
  <div style={{ maxWidth: 550, margin: '0 auto' }}>
  {/* Squad Icon */}

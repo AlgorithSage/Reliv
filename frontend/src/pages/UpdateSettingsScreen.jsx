@@ -101,7 +101,7 @@ export default function UpdateSettingsScreen() {
  fontSize: 22, transition: 'all 0.3s ease',
  }}>{icon}</div>
  <p style={{ flex: 1, fontSize: 13, fontWeight: 700, color: '#111' }}>{label}</p>
- <div onClick={() => onChange(!checked)} style={{
+ <div className="md-state-layer" onClick={() => onChange(!checked)} style={{
  width: 52, height: 28, borderRadius: 14, position: 'relative', cursor: 'pointer',
  background: checked ? `linear-gradient(135deg, ${color}, ${color}CC)` : '#DDD',
  transition: 'all 0.3s ease',

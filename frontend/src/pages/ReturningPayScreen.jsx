@@ -23,7 +23,6 @@ export default function ReturningPayScreen() {
  title="Welcome Back!"
  subtitle="Renew your health journey"
  showBack
- onBack={() => navigate('/')}
  >
  <div style={{ maxWidth: 540, margin: '0 auto' }}>
  {/* Main Card */}

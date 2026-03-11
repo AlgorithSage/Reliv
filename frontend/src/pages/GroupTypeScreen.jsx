@@ -87,7 +87,6 @@ export default function GroupTypeScreen() {
  title="Choose Your Plan"
  subtitle="Select how you want to start your health journey"
  showBack
- onBack={() => navigate("/")}
  >
  <div style={{ maxWidth: 800, margin: '0 auto' }}>
  {/* Plan Cards Grid */}

@@ -24,7 +24,7 @@ export default function DailyPayScreen() {
  setLoading(true);
  setTimeout(() => {
  localStorage.setItem('paymentComplete', 'true');
- navigate('/activation');
+ navigate('/category');
  }, 1200);
  };
 
@@ -33,7 +33,7 @@ export default function DailyPayScreen() {
  title="Daily Plan Payment"
  subtitle={`One day inspired by ${info.name}`}
  showBack
- onBack={() => navigate('/fan-quiz-type')}
+ 
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  {/* Main Card */}

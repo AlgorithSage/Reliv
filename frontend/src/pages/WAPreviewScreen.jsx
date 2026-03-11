@@ -41,7 +41,7 @@ export default function WAPreviewScreen() {
  };
 
  return (
- <Layout title="WhatsApp Preview" subtitle="Here's how Reliv AI will chat with you" showBack onBack={() => navigate(-1)}>
+ <Layout title="WhatsApp Preview" subtitle="Here's how Reliv AI will chat with you" showBack>
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  {/* Tab Buttons */}
  <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>

@@ -24,7 +24,7 @@ export default function WADayFlowScreen() {
  };
 
  return (
- <Layout title="A Full Day — The Loop" showBack onBack={() => navigate('/wa-preview')}>
+ <Layout title="A Full Day — The Loop" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
  
  {/* Header Card */}

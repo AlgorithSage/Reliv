@@ -281,7 +281,6 @@ export default function HeroRoutineScreen() {
  title={athlete.name}
  subtitle={athlete.subtitle}
  showBack
- onBack={() => navigate('/category')}
  >
  <div style={{ maxWidth: 700, margin: '0 auto' }}>
  {/* Hero Header */}
@@ -367,58 +366,114 @@ export default function HeroRoutineScreen() {
  }}>
  {/* Schedule Tab */}
  {activeTab === 'schedule' && (
- <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
- {athlete.schedule.map((item, i) => (
- <div
- key={i}
- style={{
- display: 'flex',
- alignItems: 'center',
- gap: 16,
- padding: '16px',
- background: '#FAFAFA',
- borderRadius: 14,
- borderLeft: `4px solid ${athlete.color}`,
- opacity: showContent ? 1 : 0,
- transform: showContent ? 'translateX(0)' : 'translateX(-10px)',
- transition: 'all 0.4s ease',
- transitionDelay: `${i * 0.03}s`,
- }}
- >
- <div style={{
- width: 48,
- height: 48,
- background: `${athlete.color}15`,
- borderRadius: 12,
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- fontSize: 22,
- flexShrink: 0,
- }}><Icon name={item.icon} size={20} /></div>
- <div style={{ flex: 1 }}>
- <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
- <span style={{ fontSize: 14, fontWeight: 700, color: athlete.color }}>{item.time}</span>
- <span style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>{item.activity}</span>
- {item.duration && (
- <span style={{
- fontSize: 11,
- background: `${athlete.color}15`,
- color: athlete.color,
- padding: '3px 8px',
- borderRadius: 6,
- fontWeight: 600,
- }}>
- {item.duration}
- </span>
- )}
- </div>
- <p style={{ fontSize: 13, color: '#666' }}>{item.desc}</p>
- </div>
- </div>
- ))}
- </div>
- )}
+	<div style={{ position: 'relative', paddingLeft: 36 }}>
+	{/* Vertical timeline track */}
+	<div style={{
+	position: 'absolute',
+	top: 20,
+	left: 14,
+	bottom: 20,
+	width: 3,
+	background: `linear-gradient(180deg, ${athlete.color}40 0%, ${athlete.color}15 100%)`,
+	borderRadius: 2,
+	}} />
+
+	{athlete.schedule.map((item, i) => {
+	const isWorkout = item.duration;
+	return (
+	<div
+	key={i}
+	style={{
+	position: 'relative',
+	marginBottom: i < athlete.schedule.length - 1 ? 8 : 0,
+	opacity: showContent ? 1 : 0,
+	transform: showContent ? 'translateX(0)' : 'translateX(-16px)',
+	transition: 'all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+	transitionDelay: `${i * 0.04}s`,
+	}}
+	>
+	{/* Timeline dot */}
+	<div style={{
+	position: 'absolute',
+	left: -28,
+	top: 22,
+	width: isWorkout ? 14 : 10,
+	height: isWorkout ? 14 : 10,
+	borderRadius: '50%',
+	background: isWorkout ? athlete.color : '#FFFFFF',
+	border: `3px solid ${athlete.color}`,
+	boxShadow: isWorkout ? `0 0 12px ${athlete.color}50` : `0 0 6px ${athlete.color}20`,
+	zIndex: 2,
+	}} />
+
+	{/* Card */}
+	<div style={{
+	display: 'flex',
+	alignItems: 'center',
+	gap: 14,
+	padding: '14px 18px',
+	background: isWorkout
+	? `linear-gradient(135deg, ${athlete.color}08 0%, ${athlete.color}04 100%)`
+	: i % 2 === 0 ? '#FFFFFF' : '#FAFAFA',
+	borderRadius: 16,
+	border: isWorkout ? `1px solid ${athlete.color}20` : '1px solid rgba(0,0,0,0.04)',
+	cursor: 'default',
+	transition: 'all 0.3s ease',
+	}}>
+	{/* Icon */}
+	<div style={{
+	width: 46,
+	height: 46,
+	background: `linear-gradient(135deg, ${athlete.color}18 0%, ${athlete.color}30 100%)`,
+	borderRadius: 14,
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexShrink: 0,
+	boxShadow: `0 4px 12px ${athlete.color}12`,
+	}}><Icon name={item.icon} size={20} /></div>
+
+	{/* Content */}
+	<div style={{ flex: 1, minWidth: 0 }}>
+	<div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3, flexWrap: 'wrap' }}>
+	<span style={{
+	fontSize: 13,
+	fontWeight: 800,
+	color: athlete.color,
+	fontVariantNumeric: 'tabular-nums',
+	letterSpacing: '-0.3px',
+	}}>{item.time}</span>
+	<span style={{
+	fontSize: 15,
+	fontWeight: 700,
+	color: '#111',
+	}}>{item.activity}</span>
+	{item.duration && (
+	<span style={{
+	fontSize: 10,
+	fontWeight: 700,
+	background: `${athlete.color}18`,
+	color: athlete.color,
+	padding: '3px 10px',
+	borderRadius: 20,
+	letterSpacing: '0.3px',
+	textTransform: 'uppercase',
+	}}>{item.duration}</span>
+	)}
+	</div>
+	<p style={{
+	fontSize: 12,
+	color: '#888',
+	lineHeight: 1.4,
+	margin: 0,
+	}}>{item.desc}</p>
+	</div>
+	</div>
+	</div>
+	);
+	})}
+	</div>
+	)}
 
  {/* Tips Tab */}
  {activeTab === 'tips' && (

@@ -71,7 +71,7 @@ export default function AcneManualSelectScreen() {
  };
 
  return (
- <Layout title="Select Skin Concern" subtitle="Pick the one that best matches" showBack onBack={() => navigate(-1)}>
+ <Layout title="Select Skin Concern" subtitle="Pick the one that best matches" showBack>
  <div style={{ maxWidth: 600, margin: '0 auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
  {/* Type cards */}
  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -163,28 +163,18 @@ export default function AcneManualSelectScreen() {
  </div>
  )}
 
- {/* Continue */}
- <button
- onClick={handleContinue}
+ {/* Continue */} <MaterialButton
+ variant="filled"
  disabled={!selected}
+ onClick={handleContinue}
  style={{
  width: '100%',
- background: selected
- ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '18px',
- fontSize: 17,
- fontWeight: 700,
- color: selected ? '#FFF' : '#9CA3AF',
- cursor: selected ? 'pointer' : 'not-allowed',
- boxShadow: selected ? '0 8px 30px rgba(240,105,34,0.3)' : 'none',
- transition: 'all 0.3s ease',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
  Get My Skincare Plan →
- </button>
+ </MaterialButton>
  </div>
 
  <style>{`

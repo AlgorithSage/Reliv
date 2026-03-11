@@ -40,7 +40,7 @@ export default function MealTimesScreen() {
  });
 
  return (
- <Layout title="Set Your Meal Times" subtitle="WhatsApp will remind you 15 minutes before each meal" showBack onBack={() => navigate(-1)}>
+ <Layout title="Set Your Meal Times" subtitle="WhatsApp will remind you 15 minutes before each meal" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto' }}>
  {/* Meal Time Cards */}
  <div style={{ display: 'grid', gap: 14, marginBottom: 28 }}>

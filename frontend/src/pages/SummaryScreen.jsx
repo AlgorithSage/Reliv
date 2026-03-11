@@ -53,7 +53,6 @@ export default function SummaryScreen() {
  title="Plan Summary"
  subtitle="Review your personalized health plan"
  showBack
- onBack={() => navigate('/meal-time')}
  >
  <div style={{ maxWidth: 580, margin: '0 auto' }}>
  {/* Main Card */}

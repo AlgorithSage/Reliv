@@ -3,6 +3,7 @@ import CreateShoutoutScreen from './pages/CreateShoutoutScreen.jsx';
 import BentoWelcomeScreen from './pages/BentoWelcomeScreen.jsx';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { NavigationProvider } from './contexts/NavigationStack';
 
 // ═══ ENTRY & AUTH ═══
 import WelcomeScreen from './pages/WelcomeScreen.jsx';
@@ -95,6 +96,7 @@ import TrialUsedScreen from './pages/TrialUsedScreen.jsx';
 export default function App() {
 	return (
 		<BrowserRouter>
+			<NavigationProvider>
 			<Routes>
 				{/* ═══ ENTRY ═══ */}
 				<Route path="/" element={<BentoWelcomeScreen />} />
@@ -205,6 +207,7 @@ export default function App() {
 				{/* ═══ FALLBACK ═══ */}
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
+			</NavigationProvider>
 		</BrowserRouter>
 	);
 }

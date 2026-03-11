@@ -83,7 +83,7 @@ export default function AcnePhotoQRScreen() {
  };
 
  return (
- <Layout title="Upload Acne Photo" subtitle="AI will analyze your skin" showBack onBack={() => navigate(-1)}>
+ <Layout title="Upload Acne Photo" subtitle="AI will analyze your skin" showBack>
  <div style={{ maxWidth: 600, margin: '0 auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 28, textAlign: 'center' }}>{/* Phone icon */}
  <div style={{ fontSize: 64 }}></div>
 

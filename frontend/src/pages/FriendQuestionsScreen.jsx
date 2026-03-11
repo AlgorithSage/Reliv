@@ -38,7 +38,6 @@ export default function FriendQuestionsScreen() {
  title="Add Your Squad"
  subtitle={`Enter details for ${friendCount} friend${friendCount > 1 ? 's' : ''}`}
  showBack
- onBack={() => navigate('/friend-size')}
  >
  <div style={{ maxWidth: 560, margin: '0 auto' }}>{/* Info */}
  <div style={{
@@ -178,28 +177,18 @@ export default function FriendQuestionsScreen() {
  ))}
  </div>
 
- {/* Continue Button */}
- <button
- onClick={handleContinue}
+ {/* Continue Button */} <MaterialButton
+ variant="filled"
  disabled={!isValid}
+ onClick={handleContinue}
  style={{
  width: '100%',
- background: isValid
- ? 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: isValid ? '#FFFFFF' : '#9CA3AF',
- cursor: isValid ? 'pointer' : 'not-allowed',
- boxShadow: isValid ? '0 10px 40px rgba(139, 92, 246, 0.35)' : 'none',
- transition: 'all 0.3s ease',
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
  Continue to Payment
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

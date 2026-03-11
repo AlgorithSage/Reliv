@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
 
 export default function CodeEntryScreen() {
  const navigate = useNavigate();
@@ -77,7 +78,6 @@ export default function CodeEntryScreen() {
  title="Welcome Back!"
  subtitle="Enter your 4-digit access code to continue"
  showBack
- onBack={() => navigate('/')}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>
  {/* Main Card */}
@@ -190,45 +190,18 @@ export default function CodeEntryScreen() {
  )}
 
  {/* Continue Button */}
- <button
- onClick={handleSubmit}
+ <MaterialButton
+ variant="filled"
  disabled={loading || !isComplete}
+ onClick={handleSubmit}
  style={{
  width: '100%',
- background: isComplete
- ? 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: isComplete ? '#FFFFFF' : '#9CA3AF',
- cursor: isComplete && !loading ? 'pointer' : 'not-allowed',
- boxShadow: isComplete ? '0 10px 40px rgba(240, 105, 34, 0.35)' : 'none',
- transition: 'all 0.3s ease',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 12,
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
  }}
  >
- {loading ? (
- <>
- <span style={{
- width: 22,
- height: 22,
- border: '3px solid rgba(255,255,255,0.3)',
- borderTopColor: '#FFFFFF',
- borderRadius: '50%',
- animation: 'spin 0.8s linear infinite',
- }} />
- Checking...
- </>
- ) : (
- 'Continue'
- )}
- </button>
+ {loading ? 'Checking...' : 'Continue'}
+ </MaterialButton>
 
  {/* Divider */}
  <div style={{
@@ -245,27 +218,13 @@ export default function CodeEntryScreen() {
  </div>
 
  {/* New User Button */}
- <button
+ <MaterialButton
+ variant="outlined"
  onClick={() => navigate('/phone')}
- style={{
- width: '100%',
- background: '#FAFAF8',
- border: 'none',
- borderRadius: 14,
- padding: '16px',
- fontSize: 15,
- fontWeight: 600,
- color: '#666666',
- cursor: 'pointer',
- transition: 'all 0.3s ease',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 10,
- }}
+ style={{ width: '100%' }}
  >
  Start Fresh with Phone Number
- </button>
+ </MaterialButton>
  </div>
 
  {/* Help Text */}

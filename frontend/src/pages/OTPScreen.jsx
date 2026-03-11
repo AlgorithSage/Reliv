@@ -103,7 +103,6 @@ export default function OTPScreen() {
  title="Verify Your Number"
  subtitle={`We've sent a 4-digit code to ${phone || 'your phone'}`}
  showBack
- onBack={() => navigate('/phone')}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
  <div style={{

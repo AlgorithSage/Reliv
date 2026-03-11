@@ -29,7 +29,7 @@ export default function WAMealFlowScreen() {
  const currentFlow = activeTab === 'yes' ? yesFlow : noFlow;
 
  return (
- <Layout title="WhatsApp — Meals" showBack onBack={() => navigate('/wa-preview')}>
+ <Layout title="WhatsApp — Meals" showBack>
  <div style={{ maxWidth: 500, margin: '0 auto', padding: '0 16px' }}>
  
  {/* Info Card */}

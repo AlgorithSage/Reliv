@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { api } from '../utils/constants';
 import Icon from '../utils/Icon';
+import MaterialButton from '../components/material/MaterialButton';
+import MaterialTextField from '../components/material/MaterialTextField';
 
 export default function CouplePhoneScreen() {
  const navigate = useNavigate();
@@ -32,7 +34,6 @@ export default function CouplePhoneScreen() {
  title="Add Your Partner"
  subtitle="Enter your partner's details"
  showBack
- onBack={() => navigate('/group-type')}
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
  <div style={{
@@ -59,38 +60,18 @@ export default function CouplePhoneScreen() {
  </div>
 
  {/* Name Input */}
- <div style={{ marginBottom: 24 }}>
- <label style={{
- display: 'block',
- fontSize: 14,
- color: '#666666',
- marginBottom: 10,
- fontWeight: 600,
- }}>
- Partner's Name
- </label>
- <input
- type="text"
+ <MaterialTextField
+ variant="outlined"
+ label="Partner's Name"
  value={name}
- onChange={(e) => setName(e.target.value)}
- onFocus={() => setFocused('name')}
- onBlur={() => setFocused(null)}
+ onChange={(val) => setName(val)}
  placeholder="Enter their name"
  style={{
  width: '100%',
- background: focused === 'name' ? '#FFFAF7' : '#FAFAFA',
- border: `2px solid ${focused === 'name' ? '#EC4899' : '#E5E7EB'}`,
- borderRadius: 14,
- padding: '18px 20px',
- fontSize: 17,
- fontWeight: 500,
- color: '#111111',
- outline: 'none',
- transition: 'all 0.3s ease',
- boxShadow: focused === 'name' ? '0 0 0 4px rgba(236, 72, 153, 0.1)' : 'none',
+ '--md-outlined-text-field-focus-outline-color': '#EC4899',
+ '--md-outlined-text-field-hover-outline-color': '#DB2777',
  }}
  />
- </div>
 
  {/* Phone Input */}
  <div style={{ marginBottom: 28 }}><label style={{
@@ -160,44 +141,19 @@ export default function CouplePhoneScreen() {
  )}
 
  {/* Submit Button */}
- <button
- onClick={handleSubmit}
+ <MaterialButton
+ variant="filled"
  disabled={loading || phone.length !== 10 || !name.trim()}
+ onClick={handleSubmit}
  style={{
  width: '100%',
- background: phone.length === 10 && name.trim()
- ? 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)'
- : 'linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 18,
- fontWeight: 700,
- color: phone.length === 10 && name.trim() ? '#FFFFFF' : '#9CA3AF',
- cursor: phone.length === 10 && name.trim() && !loading ? 'pointer' : 'not-allowed',
- boxShadow: phone.length === 10 && name.trim() ? '0 10px 40px rgba(236, 72, 153, 0.35)' : 'none',
- transition: 'all 0.3s ease',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 12,
+ '--md-filled-button-container-height': '56px',
+ '--md-filled-button-label-text-size': '18px',
+ '--md-filled-button-container-color': '#EC4899',
  }}
  >
- {loading ? (
- <>
- <span style={{
- width: 22,
- height: 22,
- border: '3px solid rgba(255,255,255,0.3)',
- borderTopColor: '#FFFFFF',
- borderRadius: '50%',
- animation: 'spin 0.8s linear infinite',
- }} />Adding Partner...
- </>
- ) : (
- 'Continue'
- )}
- </button>
+ {loading ? 'Adding Partner...' : 'Continue'}
+ </MaterialButton>
  </div>
 
  {/* Note */}
