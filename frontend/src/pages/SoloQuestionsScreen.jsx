@@ -10,56 +10,56 @@ export default function SoloQuestionsScreen() {
  const [showQ, setShowQ] = useState(false);
 
  const questions = [
-        {
-            id: 'diet_type',
-            question: 'What\'s your preferred diet type?',
-            options: [
-                { value: 'veg', label: 'Vegetarian', emoji: 'salad' },
-                { value: 'nonveg', label: 'Non-Vegetarian', emoji: 'chicken' },
-                { value: 'eggetarian', label: 'Eggetarian', emoji: 'egg' },
-                { value: 'vegan', label: 'Vegan', emoji: 'plant' },
-            ],
-        },
-        {
-            id: 'activity',
-            question: 'How active are you?',
-            options: [
-                { value: 'sedentary', label: 'Desk Job / Low Activity', emoji: 'laptop' },
-                { value: 'moderate', label: 'Moderate Activity', emoji: 'walking' },
-                { value: 'active', label: 'Very Active', emoji: 'running' },
-                { value: 'athlete', label: 'Athlete Level', emoji: 'weightlifting' },
-            ],
-        },
-        {
-            id: 'cooking',
-            question: 'How much time can you spend cooking?',
-            options: [
-                { value: 'minimal', label: 'Under 15 mins', emoji: 'lightning' },
-                { value: 'moderate', label: '15-30 mins', emoji: '⏱️' },
-                { value: 'plenty', label: '30+ mins', emoji: 'chef' },
-            ],
-        },
+ {
+ id: 'diet_type',
+ question: 'What\'s your preferred diet type?',
+ options: [
+ { value: 'veg', label: 'Vegetarian', emoji: 'salad' },
+ { value: 'nonveg', label: 'Non-Vegetarian', emoji: 'chicken' },
+ { value: 'eggetarian', label: 'Eggetarian', emoji: 'egg' },
+ { value: 'vegan', label: 'Vegan', emoji: 'plant' },
+ ],
+ },
+ {
+ id: 'activity',
+ question: 'How active are you?',
+ options: [
+ { value: 'sedentary', label: 'Desk Job / Low Activity', emoji: 'laptop' },
+ { value: 'moderate', label: 'Moderate Activity', emoji: 'walking' },
+ { value: 'active', label: 'Very Active', emoji: 'running' },
+ { value: 'athlete', label: 'Athlete Level', emoji: 'weightlifting' },
+ ],
+ },
+ {
+ id: 'cooking',
+ question: 'How much time can you spend cooking?',
+ options: [
+ { value: 'minimal', label: 'Under 15 mins', emoji: 'lightning' },
+ { value: 'moderate', label: '15-30 mins', emoji: '⏱' },
+ { value: 'plenty', label: '30+ mins', emoji: 'chef' },
+ ],
+ },
  ];
 
  useEffect(() => {
-        setTimeout(() => setShowQ(true), 100);
+ setTimeout(() => setShowQ(true), 100);
  }, []);
 
  const handleAnswer = (qId, value) => {
-        setAnswers(prev => ({ ...prev, [qId]: value }));
+ setAnswers(prev => ({ ...prev, [qId]: value }));
 
-        if (currentQ < questions.length - 1) {
-            setShowQ(false);
-            setTimeout(() => {
-                setCurrentQ(prev => prev + 1);
-                setShowQ(true);
-            }, 300);
-        }
+ if (currentQ < questions.length - 1) {
+ setShowQ(false);
+ setTimeout(() => {
+ setCurrentQ(prev => prev + 1);
+ setShowQ(true);
+ }, 300);
+ }
  };
 
  const handleContinue = () => {
-        localStorage.setItem('soloAnswers', JSON.stringify(answers));
-        navigate('/category');
+ localStorage.setItem('soloAnswers', JSON.stringify(answers));
+ navigate('/category');
  };
 
  const q = questions[currentQ];
@@ -67,134 +67,134 @@ export default function SoloQuestionsScreen() {
  const allAnswered = Object.keys(answers).length === questions.length;
 
  return (
-        <Layout
-            title="Quick Questions"
-            subtitle="Help us personalize your plan"
-            showBack
-            onBack={() => navigate('/weekly-solo-pay')}
-        >
-            <div style={{ maxWidth: 540, margin: '0 auto' }}>
-                {/* Progress */}
-                <div style={{ marginBottom: 32 }}>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        marginBottom: 10,
-                        fontSize: 13,
-                        color: '#9CA3AF',
-                    }}>
-                        <span>Question {currentQ + 1} of {questions.length}</span>
-                        <span>{Math.round(progress)}%</span>
-                    </div>
-                    <div style={{
-                        height: 8,
-                        background: '#F5F5F5',
-                        borderRadius: 8,
-                        overflow: 'hidden',
-                    }}>
-                        <div style={{
-                            width: `${progress}%`,
-                            height: '100%',
-                            background: 'linear-gradient(90deg, #F06922 0%, #E85C25 100%)',
-                            borderRadius: 8,
-                            transition: 'width 0.5s ease',
-                        }} />
-                    </div>
-                </div>
+ <Layout
+ title="Quick Questions"
+ subtitle="Help us personalize your plan"
+ showBack
+ onBack={() => navigate('/weekly-solo-pay')}
+ >
+ <div style={{ maxWidth: 540, margin: '0 auto' }}>
+ {/* Progress */}
+ <div style={{ marginBottom: 32 }}>
+ <div style={{
+ display: 'flex',
+ justifyContent: 'space-between',
+ marginBottom: 10,
+ fontSize: 13,
+ color: '#9CA3AF',
+ }}>
+ <span>Question {currentQ + 1} of {questions.length}</span>
+ <span>{Math.round(progress)}%</span>
+ </div>
+ <div style={{
+ height: 8,
+ background: '#F5F5F5',
+ borderRadius: 8,
+ overflow: 'hidden',
+ }}>
+ <div style={{
+ width: `${progress}%`,
+ height: '100%',
+ background: 'linear-gradient(90deg, #F06922 0%, #E85C25 100%)',
+ borderRadius: 8,
+ transition: 'width 0.5s ease',
+ }} />
+ </div>
+ </div>
 
-                {/* Question Card */}
-                <div style={{
-                    background: '#FAFAF8',
-                    borderRadius: 24,
-                    padding: '40px 36px',
-                    boxShadow: '0 16px 50px rgba(240, 105, 34, 0.1)',
-                    border: 'none',
-                    opacity: showQ ? 1 : 0,
-                    transform: showQ ? 'translateX(0)' : 'translateX(20px)',
-                    transition: 'all 0.3s ease',
-                }}>
-                    <h2 style={{
-                        fontSize: 22,
-                        fontWeight: 700,
-                        color: '#111',
-                        marginBottom: 28,
-                        textAlign: 'center',
-                    }}>
-                        {q.question}
-                    </h2>
+ {/* Question Card */}
+ <div style={{
+ background: '#FAFAF8',
+ borderRadius: 24,
+ padding: '40px 36px',
+ boxShadow: '0 16px 50px rgba(240, 105, 34, 0.1)',
+ border: 'none',
+ opacity: showQ ? 1 : 0,
+ transform: showQ ? 'translateX(0)' : 'translateX(20px)',
+ transition: 'all 0.3s ease',
+ }}>
+ <h2 style={{
+ fontSize: 22,
+ fontWeight: 700,
+ color: '#111',
+ marginBottom: 28,
+ textAlign: 'center',
+ }}>
+ {q.question}
+ </h2>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                        {q.options.map((opt) => {
-                            const isSelected = answers[q.id] === opt.value;
-                            return (
-                                <button
-                                    key={opt.value}
-                                    onClick={() => handleAnswer(q.id, opt.value)}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 16,
-                                        padding: '18px 22px',
-                                        background: isSelected
-                                            ? 'linear-gradient(135deg, #FFF5F0 0%, #FFEEDD 100%)'
-                                            : '#FAFAFA',
-                                        border: isSelected ? '2px solid #F06922' : '2px solid transparent',
-                                        borderRadius: 14,
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                    }}
-                                >
-                                    <span style={{ fontSize: 26 }}>{opt.emoji}</span>
-                                    <span style={{
-                                        fontSize: 15,
-                                        fontWeight: 600,
-                                        color: isSelected ? '#F06922' : '#333',
-                                        flex: 1,
-                                        textAlign: 'left',
-                                    }}>
-                                        {opt.label}
-                                    </span>
-                                    {isSelected && (
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="3">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
+ <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+ {q.options.map((opt) => {
+ const isSelected = answers[q.id] === opt.value;
+ return (
+ <button
+ key={opt.value}
+ onClick={() => handleAnswer(q.id, opt.value)}
+ style={{
+ display: 'flex',
+ alignItems: 'center',
+ gap: 16,
+ padding: '18px 22px',
+ background: isSelected
+ ? 'linear-gradient(135deg, #FFF5F0 0%, #FFEEDD 100%)'
+ : '#FAFAFA',
+ border: isSelected ? '2px solid #F06922' : '2px solid transparent',
+ borderRadius: 14,
+ cursor: 'pointer',
+ transition: 'all 0.3s ease',
+ }}
+ >
+ <span style={{ fontSize: 26 }}><Icon name={opt.emoji} size={32} /></span>
+ <span style={{
+ fontSize: 15,
+ fontWeight: 600,
+ color: isSelected ? '#F06922' : '#333',
+ flex: 1,
+ textAlign: 'left',
+ }}>
+ {opt.label}
+ </span>
+ {isSelected && (
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="3">
+ <path d="M20 6L9 17l-5-5" />
+ </svg>
+ )}
+ </button>
+ );
+ })}
+ </div>
+ </div>
 
-                {/* Continue Button */}
-                {allAnswered && (
-                    <button
-                        onClick={handleContinue}
-                        style={{
-                            width: '100%',
-                            marginTop: 28,
-                            background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
-                            border: 'none',
-                            borderRadius: 16,
-                            padding: '20px',
-                            fontSize: 18,
-                            fontWeight: 700,
-                            color: '#FFFFFF',
-                            cursor: 'pointer',
-                            boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
-                            animation: 'fadeIn 0.3s ease',
-                        }}
-                    >
-                        Continue
-                    </button>
-                )}
-            </div>
+ {/* Continue Button */}
+ {allAnswered && (
+ <button
+ onClick={handleContinue}
+ style={{
+ width: '100%',
+ marginTop: 28,
+ background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
+ border: 'none',
+ borderRadius: 16,
+ padding: '20px',
+ fontSize: 18,
+ fontWeight: 700,
+ color: '#FFFFFF',
+ cursor: 'pointer',
+ boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
+ animation: 'fadeIn 0.3s ease',
+ }}
+ >
+ Continue
+ </button>
+ )}
+ </div>
 
-            <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-        </Layout>
+ <style>{`
+ @keyframes fadeIn {
+ from { opacity: 0; transform: translateY(10px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
+ `}</style>
+ </Layout>
  );
 }

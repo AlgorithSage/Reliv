@@ -65,7 +65,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: 
 }
 @keyframes pulsePill {
  0%,100% { box-shadow: 0 0 0 0 rgba(244,97,10,.4); }
- 50%     { box-shadow: 0 0 0 8px rgba(244,97,10,0); }
+ 50% { box-shadow: 0 0 0 8px rgba(244,97,10,0); }
 }
 .hero {
  position: relative; z-index: 1;
@@ -242,78 +242,78 @@ export default function ProductShowcaseBoard() {
  // Load user shoutouts from localStorage
  useEffect(() => {
  try {
-      const saved = JSON.parse(localStorage.getItem("userShoutouts") || "[]");
-      if (saved.length > 0) {
-        // Merge user shoutouts with demo posts, user shoutouts first
-        setPosts([...saved.map(s => ({ ...s, live: true })), ...DEMO_POSTS]);
-      }
+ const saved = JSON.parse(localStorage.getItem("userShoutouts") || "[]");
+ if (saved.length > 0) {
+ // Merge user shoutouts with demo posts, user shoutouts first
+ setPosts([...saved.map(s => ({ ...s, live: true })), ...DEMO_POSTS]);
+ }
  } catch (e) {
-      console.error("Error loading shoutouts:", e);
+ console.error("Error loading shoutouts:", e);
  }
  }, []);
 
  return (
  <>
-      <style>{FONTS + CSS}</style>
-      <div className="mesh-bg" />
-      <div className="grid-lines" />
-      <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
-        {/* NAV */}
-        <nav className="nav">
-          <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
-          <div className="nav-logo">Shout<span>House</span></div>
-          <div className="nav-pill">Public Board</div>
-        </nav>
+ <style>{FONTS + CSS}</style>
+ <div className="mesh-bg" />
+ <div className="grid-lines" />
+ <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
+ {/* NAV */}
+ <nav className="nav">
+ <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
+ <div className="nav-logo">Shout<span>House</span></div>
+ <div className="nav-pill">Public Board</div>
+ </nav>
 
-        {/* HERO */}
-        <section className="hero">
-          <div className="hero-eyebrow">
-            <span className="live-dot" /> Live Shoutouts & Products
-          </div>
-          <h1 className="hero-h1">
-            Your Moment,<br /><em>Their Screen.</em>
-          </h1>
-          <p className="hero-sub">
-            See real shoutouts, birthdays, and product stories from our community.<br />
-            <strong style={{ color: "var(--orange)" }}>People really pay for this display.</strong>
-          </p>
-        </section>
+ {/* HERO */}
+ <section className="hero">
+ <div className="hero-eyebrow">
+ <span className="live-dot" /> Live Shoutouts & Products
+ </div>
+ <h1 className="hero-h1">
+ Your Moment,<br /><em>Their Screen.</em>
+ </h1>
+ <p className="hero-sub">
+ See real shoutouts, birthdays, and product stories from our community.<br />
+ <strong style={{ color: "var(--orange)" }}>People really pay for this display.</strong>
+ </p>
+ </section>
 
-        {/* BOARD GRID */}
-        <div className="board-grid">
-          {posts.map((p, i) => (
-            <div className="card" key={i} style={{ animationDelay: `${0.1 * i}s` }}>
-              <div className="card-ribbon">{p.type} Shoutout</div>
-              <div className="card-body">
-                <img className="card-avi" src={p.image} alt={p.name} />
-                <div className="card-name">{p.name}</div>
-                <div className="card-type"><Icon name="coffee" size={18} /><Icon name="camera" size={18} />
-                  {p.type === "Birthday" && ""}
-                  {p.type === "Instagram" && ""}
-                  {p.type === "Product" && ""}
-                  {p.type === "Star" && "⭐"}
-                  <span>{p.type}</span>
-                </div>
-                <div className="card-msg">"{p.message}"</div>
-                <div className="card-footer">
-                  {p.live && <><span className="ldot" /> Live Now</>}
-                  {!p.live && <span style={{ color: "var(--grey-300)" }}>Featured</span>}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+ {/* BOARD GRID */}
+ <div className="board-grid">
+ {posts.map((p, i) => (
+ <div className="card" key={i} style={{ animationDelay: `${0.1 * i}s` }}>
+ <div className="card-ribbon">{p.type} Shoutout</div>
+ <div className="card-body">
+ <img className="card-avi" src={p.image} alt={p.name} />
+ <div className="card-name">{p.name}</div>
+ <div className="card-type"><Icon name="coffee" size={18} />
+ {p.type === "Birthday" && ""}
+ {p.type === "Instagram" && ""}
+ {p.type === "Product" && ""}
+ {p.type === "Star" && "⭐"}
+ <span>{p.type}</span>
+ </div>
+ <div className="card-msg">"{p.message}"</div>
+ <div className="card-footer">
+ {p.live && <><span className="ldot" /> Live Now</>}
+ {!p.live && <span style={{ color: "var(--grey-300)" }}>Featured</span>}
+ </div>
+ </div>
+ </div>
+ ))}
+ </div>
 
-        {/* CTA */}
-        <div className="cta-section">
-          <button className="cta-btn" onClick={() => navigate("/create-shoutout")}>
-             Create MY Shoutout
-          </button>
-          <p className="cta-sub">Only ₹100 · Takes 30 seconds · Seen by 500+ people</p>
-        </div>
+ {/* CTA */}
+ <div className="cta-section">
+ <button className="cta-btn" onClick={() => navigate("/create-shoutout")}>
+ Create MY Shoutout
+ </button>
+ <p className="cta-sub">Only ₹100 · Takes 30 seconds · Seen by 500+ people</p>
+ </div>
 
-        <div className="footer-note">ShoutHouse · Premium Spotlight Platform</div>
-      </div>
+ <div className="footer-note">ShoutHouse · Premium Spotlight Platform</div>
+ </div>
  </>
  );
 }

@@ -10,213 +10,213 @@ export default function WeeklyCouplePayScreen() {
  const handlePay = () => {
  setLoading(true);
  setTimeout(() => {
-      localStorage.setItem('paymentComplete', 'true');
-      localStorage.setItem('planType', 'couple');
-      navigate('/category');
+ localStorage.setItem('paymentComplete', 'true');
+ localStorage.setItem('planType', 'couple');
+ navigate('/category');
  }, 1200);
  };
 
  return (
  <Layout
-      title="Couple Weekly Plan"
-      subtitle="Transform together for 7 days"
-      showBack
-      onBack={() => navigate('/couple-questions')}
+ title="Couple Weekly Plan"
+ subtitle="Transform together for 7 days"
+ showBack
+ onBack={() => navigate('/couple-questions')}
  >
-      <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        {/* Pricing Card */}
-        <div style={{
-          background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF0F7 100%)',
-          borderRadius: 28,
-          padding: '40px 36px',
-          boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
-          border: '2px solid rgba(236, 72, 153, 0.15)',
-          marginBottom: 28,
-        }}>
-          {/* Header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 20,
-            marginBottom: 32,
-            paddingBottom: 28,
-            borderBottom: '1px solid rgba(236, 72, 153, 0.1)',
-          }}>
-            <div style={{
-              width: 72,
-              height: 72,
-              background: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
-              borderRadius: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 36,
-              boxShadow: '8px 8px 20px rgba(0,0,0,0.15), -6px -6px 16px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
-            }}>
-              
-            </div>
-            <div style={{ flex: 1 }}>
-              <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111', marginBottom: 4 }}>
-                Couple Plan
-              </h2>
-              <p style={{ fontSize: 14, color: '#666' }}>
-                Both partners • Valid 7 days
-              </p>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{
-                fontSize: 36,
-                fontWeight: 800,
-                color: '#EC4899',
-                lineHeight: 1,
-              }}>
-                ₹54
-              </div>
-              <div style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 500 }}>
-                per week
-              </div>
-            </div>
-          </div>
+ <div style={{ maxWidth: 560, margin: '0 auto' }}>
+ {/* Pricing Card */}
+ <div style={{
+ background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF0F7 100%)',
+ borderRadius: 28,
+ padding: '40px 36px',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+ border: '2px solid rgba(236, 72, 153, 0.15)',
+ marginBottom: 28,
+ }}>
+ {/* Header */}
+ <div style={{
+ display: 'flex',
+ alignItems: 'center',
+ gap: 20,
+ marginBottom: 32,
+ paddingBottom: 28,
+ borderBottom: '1px solid rgba(236, 72, 153, 0.1)',
+ }}>
+ <div style={{
+ width: 72,
+ height: 72,
+ background: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
+ borderRadius: 20,
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ fontSize: 36,
+ boxShadow: '8px 8px 20px rgba(0,0,0,0.15), -6px -6px 16px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+ }}>
+ 
+ </div>
+ <div style={{ flex: 1 }}>
+ <h2 style={{ fontSize: 24, fontWeight: 800, color: '#111', marginBottom: 4 }}>
+ Couple Plan
+ </h2>
+ <p style={{ fontSize: 14, color: '#666' }}>
+ Both partners • Valid 7 days
+ </p>
+ </div>
+ <div style={{ textAlign: 'right' }}>
+ <div style={{
+ fontSize: 36,
+ fontWeight: 800,
+ color: '#EC4899',
+ lineHeight: 1,
+ }}>
+ ₹54
+ </div>
+ <div style={{ fontSize: 13, color: '#9CA3AF', fontWeight: 500 }}>
+ per week
+ </div>
+ </div>
+ </div>
 
-          {/* Partners Info */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 16,
-            marginBottom: 28,
-          }}><Icon name="user" size={18} />
-            {['Partner 1', 'Partner 2'].map((p, i) => (
-              <div
-                key={i}
-                style={{
-                  background: 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)',
-                  borderRadius: 14,
-                  padding: '16px 20px',
-                  textAlign: 'center',
-                  border: '1px solid rgba(236, 72, 153, 0.15)',
-                }}
-              >
-                <span style={{ fontSize: 28 }}>{i === 0 ? '' : ''}</span>
-                <p style={{ fontSize: 13, fontWeight: 600, color: '#333', marginTop: 8 }}>{p}</p>
-                <p style={{ fontSize: 12, color: '#EC4899' }}>Individual reminders</p>
-              </div>
-            ))}
-          </div>
+ {/* Partners Info */}
+ <div style={{
+ display: 'grid',
+ gridTemplateColumns: '1fr 1fr',
+ gap: 16,
+ marginBottom: 28,
+ }}>
+ {['Partner 1', 'Partner 2'].map((p, i) => (
+ <div
+ key={i}
+ style={{
+ background: 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)',
+ borderRadius: 14,
+ padding: '16px 20px',
+ textAlign: 'center',
+ border: '1px solid rgba(236, 72, 153, 0.15)',
+ }}
+ >
+ <span style={{ fontSize: 28 }}>{i === 0 ? '' : ''}</span>
+ <p style={{ fontSize: 13, fontWeight: 600, color: '#333', marginTop: 8 }}>{p}</p>
+ <p style={{ fontSize: 12, color: '#EC4899' }}>Individual reminders</p>
+ </div>
+ ))}
+ </div>
 
-          {/* Features */}
-          <div style={{
-            display: 'grid',
-            gap: 12,
-            marginBottom: 28,
-          }}>
-            {[
-              { icon: 'two_hearts', text: 'Both partners get personalized plans' },
-              { icon: 'phone', text: 'Individual WhatsApp reminders' },
-              { icon: 'trophy', text: 'Couple challenges & competitions' },
-              { icon: 'bar_chart', text: 'Shared progress dashboard' },
-            ].map((f, i) => (
-              <div
-                key={i}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  padding: '14px 18px',
-                  background: '#FAFAF8',
-                  borderRadius: 12,
-                  border: 'none',
-                }}
-              >
-                <Icon name={f.icon} size={20} />
-                <span style={{ fontSize: 14, color: '#333', fontWeight: 500 }}>{f.text}</span>
-              </div>
-            ))}
-          </div>
+ {/* Features */}
+ <div style={{
+ display: 'grid',
+ gap: 12,
+ marginBottom: 28,
+ }}>
+ {[
+ { icon: 'two_hearts', text: 'Both partners get personalized plans' },
+ { icon: 'phone', text: 'Individual WhatsApp reminders' },
+ { icon: 'trophy', text: 'Couple challenges & competitions' },
+ { icon: 'bar_chart', text: 'Shared progress dashboard' },
+ ].map((f, i) => (
+ <div
+ key={i}
+ style={{
+ display: 'flex',
+ alignItems: 'center',
+ gap: 14,
+ padding: '14px 18px',
+ background: '#FAFAF8',
+ borderRadius: 12,
+ border: 'none',
+ }}
+ >
+ <Icon name={f.icon} size={20} />
+ <span style={{ fontSize: 14, color: '#333', fontWeight: 500 }}>{f.text}</span>
+ </div>
+ ))}
+ </div>
 
-          {/* Value */}
-          <div style={{
-            background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)',
-            borderRadius: 16,
-            padding: '18px 24px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 14,
-            marginBottom: 28,
-            border: '1px solid rgba(34, 197, 94, 0.2)',
-          }}>
-            <span style={{ fontSize: 24 }}></span>
-            <div>
-              <p style={{ fontSize: 14, fontWeight: 700, color: '#059669', margin: 0 }}>
-                Only ₹27 per person
-              </p>
-              <p style={{ fontSize: 12, color: '#10B981', margin: 0 }}>
-                Save ₹4 compared to 2 solo plans!
-              </p>
-            </div>
-          </div>
+ {/* Value */}
+ <div style={{
+ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)',
+ borderRadius: 16,
+ padding: '18px 24px',
+ display: 'flex',
+ alignItems: 'center',
+ gap: 14,
+ marginBottom: 28,
+ border: '1px solid rgba(34, 197, 94, 0.2)',
+ }}>
+ 
+ <div>
+ <p style={{ fontSize: 14, fontWeight: 700, color: '#059669', margin: 0 }}>
+ Only ₹27 per person
+ </p>
+ <p style={{ fontSize: 12, color: '#10B981', margin: 0 }}>
+ Save ₹4 compared to 2 solo plans!
+ </p>
+ </div>
+ </div>
 
-          {/* Pay Button */}
-          <button
-            onClick={handlePay}
-            disabled={loading}
-            style={{
-              width: '100%',
-              background: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
-              border: 'none',
-              borderRadius: 16,
-              padding: '22px',
-              fontSize: 18,
-              fontWeight: 700,
-              color: '#FFFFFF',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 12,
-            }}
-          >
-            {loading ? (
-              <>
-                <span style={{
-                  width: 24,
-                  height: 24,
-                  border: '3px solid rgba(255,255,255,0.3)',
-                  borderTopColor: '#FFFFFF',
-                  borderRadius: '50%',
-                  animation: 'spin 0.8s linear infinite',
-                }} /><Icon name="lock" size={18} />
-                Processing...
-              </>
-            ) : (
-              <>
-                 Pay ₹54 & Continue
-              </>
-            )}
-          </button>
-        </div>
+ {/* Pay Button */}
+ <button
+ onClick={handlePay}
+ disabled={loading}
+ style={{
+ width: '100%',
+ background: 'linear-gradient(135deg, #EC4899 0%, #DB2777 100%)',
+ border: 'none',
+ borderRadius: 16,
+ padding: '22px',
+ fontSize: 18,
+ fontWeight: 700,
+ color: '#FFFFFF',
+ cursor: loading ? 'not-allowed' : 'pointer',
+ boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
+ transition: 'all 0.3s ease',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ gap: 12,
+ }}
+ >
+ {loading ? (
+ <>
+ <span style={{
+ width: 24,
+ height: 24,
+ border: '3px solid rgba(255,255,255,0.3)',
+ borderTopColor: '#FFFFFF',
+ borderRadius: '50%',
+ animation: 'spin 0.8s linear infinite',
+ }} /><Icon name="lock" size={18} />
+ Processing...
+ </>
+ ) : (
+ <>
+ Pay ₹54 & Continue
+ </>
+ )}
+ </button>
+ </div>
 
-        {/* Trust */}
-        <div style={{
-          textAlign: 'center',
-          fontSize: 13,
-          color: '#9CA3AF',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 8,
-        }}>
-          <span></span> Secure payment via Razorpay
-        </div>
-      </div>
+ {/* Trust */}
+ <div style={{
+ textAlign: 'center',
+ fontSize: 13,
+ color: '#9CA3AF',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ gap: 8,
+ }}>
+ Secure payment via Razorpay
+ </div>
+ </div>
 
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+ <style>{`
+ @keyframes spin {
+ from { transform: rotate(0deg); }
+ to { transform: rotate(360deg); }
+ }
+ `}</style>
  </Layout>
  );
 }

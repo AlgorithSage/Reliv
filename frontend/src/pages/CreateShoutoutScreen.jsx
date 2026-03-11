@@ -200,10 +200,10 @@ export default function CreateShoutoutScreen() {
  // Save to localStorage (would be backend in production)
  const existing = JSON.parse(localStorage.getItem("shoutouts") || "[]");
  const newEntry = {
-      ...form,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-      live: true,
+ ...form,
+ id: Date.now(),
+ createdAt: new Date().toISOString(),
+ live: true,
  };
  existing.unshift(newEntry);
  localStorage.setItem("shoutouts", JSON.stringify(existing));
@@ -212,27 +212,27 @@ export default function CreateShoutoutScreen() {
 
  if (submitted) {
  return (
-      <>
-        <style>{FONTS + CSS}</style>
-        <div className="mesh-bg" />
-        <div className="grid-lines" />
-        <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
-          <nav className="nav">
-            <button className="nav-back" onClick={() => navigate("/")}>← Home</button>
-            <div className="nav-logo">Shout<span>House</span></div>
-            <div /></nav>
-          <div className="form-wrap">
-            <div className="success-card">
-              <div className="success-icon"></div>
-              <div className="success-title">Shoutout Created!</div>
-              <div className="success-sub">Your shoutout is now live and will appear on screens during idle time.</div>
-              <button className="success-btn" onClick={() => navigate("/ProductShowcaseBoard")}>
-                View Public Board
-              </button>
-            </div>
-          </div>
-        </div>
-      </>
+ <>
+ <style>{FONTS + CSS}</style>
+ <div className="mesh-bg" />
+ <div className="grid-lines" />
+ <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
+ <nav className="nav">
+ <button className="nav-back" onClick={() => navigate("/")}>← Home</button>
+ <div className="nav-logo">Shout<span>House</span></div>
+ <div /></nav>
+ <div className="form-wrap">
+ <div className="success-card">
+ <div className="success-icon"></div>
+ <div className="success-title">Shoutout Created!</div>
+ <div className="success-sub">Your shoutout is now live and will appear on screens during idle time.</div>
+ <button className="success-btn" onClick={() => navigate("/ProductShowcaseBoard")}>
+ View Public Board
+ </button>
+ </div>
+ </div>
+ </div>
+ </>
  );
  }
 
@@ -240,87 +240,87 @@ export default function CreateShoutoutScreen() {
 
  return (
  <>
-      <style>{FONTS + CSS}</style>
-      <div className="mesh-bg" />
-      <div className="grid-lines" />
-      <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
-        {/* NAV */}
-        <nav className="nav">
-          <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
-          <div className="nav-logo">Shout<span>House</span></div>
-          <div /></nav>
+ <style>{FONTS + CSS}</style>
+ <div className="mesh-bg" />
+ <div className="grid-lines" />
+ <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
+ {/* NAV */}
+ <nav className="nav">
+ <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
+ <div className="nav-logo">Shout<span>House</span></div>
+ <div /></nav>
 
-        {/* FORM */}
-        <div className="form-wrap">
-          <div className="form-card">
-            <div className="form-title">Create Your Shoutout </div>
-            <div className="form-sub">Your message will appear on screens during idle time.</div>
+ {/* FORM */}
+ <div className="form-wrap">
+ <div className="form-card">
+ <div className="form-title">Create Your Shoutout </div>
+ <div className="form-sub">Your message will appear on screens during idle time.</div>
 
-            <div className="field">
-              <label className="field-label">Your Name *</label>
-              <input className="field-input" placeholder="e.g. Priya Sharma" value={form.name} onChange={upd("name")} />
-            </div>
+ <div className="field">
+ <label className="field-label">Your Name *</label>
+ <input className="field-input" placeholder="e.g. Priya Sharma" value={form.name} onChange={upd("name")} />
+ </div>
 
-            <div className="field">
-              <label className="field-label">Shoutout Type</label>
-              <div className="type-row">
-                {TYPES.map((t) => (
-                  <button
-                    key={t.id}
-                    className={`type-pill${form.type === t.id ? " on" : ""}`}
-                    onClick={() => setForm((f) => ({ ...f, type: t.id }))}
-                    type="button"
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+ <div className="field">
+ <label className="field-label">Shoutout Type</label>
+ <div className="type-row">
+ {TYPES.map((t) => (
+ <button
+ key={t.id}
+ className={`type-pill${form.type === t.id ? " on" : ""}`}
+ onClick={() => setForm((f) => ({ ...f, type: t.id }))}
+ type="button"
+ >
+ {t.label}
+ </button>
+ ))}
+ </div>
+ </div>
 
-            <div className="field">
-              <label className="field-label">Message (optional)</label>
-              <textarea
-                className="field-input field-textarea"
-                placeholder="e.g. Happy Birthday! or Check out my new product!"
-                value={form.message}
-                onChange={upd("message")}
-              />
-            </div>
+ <div className="field">
+ <label className="field-label">Message (optional)</label>
+ <textarea
+ className="field-input field-textarea"
+ placeholder="e.g. Happy Birthday! or Check out my new product!"
+ value={form.message}
+ onChange={upd("message")}
+ />
+ </div>
 
-            <div className="field">
-              <label className="field-label">Image URL (optional)</label>
-              <input
-                className="field-input"
-                placeholder="https://example.com/photo.jpg"
-                value={form.image}
-                onChange={upd("image")}
-              />
-            </div>
+ <div className="field">
+ <label className="field-label">Image URL (optional)</label>
+ <input
+ className="field-input"
+ placeholder="https://example.com/photo.jpg"
+ value={form.image}
+ onChange={upd("image")}
+ />
+ </div>
 
-            <button className="submit-btn" onClick={handleSubmit}>
-              <Icon name="launch" size={18} /> Publish Shoutout
-            </button>
+ <button className="submit-btn" onClick={handleSubmit}>
+ <Icon name="launch" size={18} /> Publish Shoutout
+ </button>
 
-            {/* Live Preview */}
-            {form.name && (
-              <div className="preview-card">
-                <div className="preview-label">Live Preview</div>
-                {form.image && (
-                  <img
-                    src={form.image}
-                    alt="preview"
-                    style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", marginBottom: 12, border: "3px solid #F4610A" }}
-                    onError={(e) => (e.target.style.display = "none")}
-                  />
-                )}
-                <div className="preview-name">{form.name}</div>
-                <div className="preview-type">{typeObj?.emoji} {typeObj?.label.replace(/^[^ ]+ /, "")} Shoutout</div>
-                {form.message && <div className="preview-msg">"{form.message}"</div>}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+ {/* Live Preview */}
+ {form.name && (
+ <div className="preview-card">
+ <div className="preview-label">Live Preview</div>
+ {form.image && (
+ <img
+ src={form.image}
+ alt="preview"
+ style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", marginBottom: 12, border: "3px solid #F4610A" }}
+ onError={(e) => (e.target.style.display = "none")}
+ />
+ )}
+ <div className="preview-name">{form.name}</div>
+ <div className="preview-type">{typeObj?.emoji} {typeObj?.label.replace(/^[^ ]+ /, "")} Shoutout</div>
+ {form.message && <div className="preview-msg">"{form.message}"</div>}
+ </div>
+ )}
+ </div>
+ </div>
+ </div>
  </>
  );
 }
