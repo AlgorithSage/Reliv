@@ -53,48 +53,48 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
      alignItems: 'center',
      gap: 20,
     }}>
-     {/* Back Button — Neomorphic (uses stack-based LIFO goBack) */}
-     {showBack && (
-      <button
-       onClick={handleBack}
-       style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        background: '#EFECE9',
-        border: 'none',
-        borderRadius: 14,
-        padding: '12px 20px',
-        fontSize: 14,
-        fontWeight: 600,
-        color: '#F06922',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)',
-        fontFamily: 'inherit',
-       }}
-       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateX(-4px)';
-        e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.12), -6px -6px 14px rgba(255, 255, 255, 0.7)';
-       }}
-       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateX(0)';
-        e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
-       }}
-       onMouseDown={(e) => {
-        e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
-        e.currentTarget.style.transform = 'translateX(0) scale(0.97)';
-       }}
-       onMouseUp={(e) => {
-        e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
-        e.currentTarget.style.transform = 'translateX(0)';
-       }}
-      >
-       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M19 12H5M12 19l-7-7 7-7" />
-       </svg>
-       Back
-      </button>
+      {/* Back Button — Neomorphic (uses stack-based LIFO goBack) */}
+      {showBack && (
+       <button
+        onClick={handleBack}
+        style={{
+         display: 'flex',
+         alignItems: 'center',
+         gap: 10,
+         background: '#EFECE9',
+         border: 'none',
+         borderRadius: 16,
+         padding: '14px 28px',
+         fontSize: 17,
+         fontWeight: 700,
+         color: '#F06922',
+         cursor: 'pointer',
+         transition: 'all 0.3s ease',
+         boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)',
+         fontFamily: 'inherit',
+        }}
+        onMouseEnter={(e) => {
+         e.currentTarget.style.transform = 'translateX(-4px)';
+         e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.12), -6px -6px 14px rgba(255, 255, 255, 0.7)';
+        }}
+        onMouseLeave={(e) => {
+         e.currentTarget.style.transform = 'translateX(0)';
+         e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
+        }}
+        onMouseDown={(e) => {
+         e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
+         e.currentTarget.style.transform = 'translateX(0) scale(0.97)';
+        }}
+        onMouseUp={(e) => {
+         e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
+         e.currentTarget.style.transform = 'translateX(0)';
+        }}
+       >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+         <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back
+       </button>
      )}
 
      {/* Logo & Brand */}
