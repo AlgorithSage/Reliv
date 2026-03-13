@@ -191,7 +191,7 @@ export default function BentoWelcomeScreen() {
         onError={(e) => {
          e.target.style.display = "none";
          e.target.parentElement.innerHTML =
-          '<div style="width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#F06922,#FF8C4B);display:flex;align-items:center;justify-content:center;"><svg width=48 height=48 viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
+          '<div style="width:210px;height:210px;border-radius:50%;background:linear-gradient(135deg,#F06922,#FF8C4B);display:flex;align-items:center;justify-content:center;"><svg width=64 height=64 viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>';
         }}
        />
       </div>
