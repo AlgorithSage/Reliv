@@ -13,7 +13,9 @@ export default function WeeklySoloPayScreen() {
  setLoading(true);
  setTimeout(() => {
  localStorage.setItem('paymentComplete', 'true');
- localStorage.setItem('planType', 'solo');
+ localStorage.setItem('planType', '');
+  localStorage.removeItem('heroTraining');
+  localStorage.removeItem('selectedCelebrity');
  navigate('/category');
  }, 1200);
  };

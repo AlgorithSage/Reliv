@@ -87,7 +87,11 @@ export default function CodeGeneratedScreen() {
  margin: '0 auto 28px', fontSize: 50,
  boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5)',
  animation: 'bounceIn 0.7s ease',
- }}></div>
+ }}>
+   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+     <polyline points="20 6 9 17 4 12"></polyline>
+   </svg>
+ </div>
 
  <h1 style={{ fontSize: 30, fontWeight: 800, color: '#111', marginBottom: 8 }}>Account Created!</h1>
  <p style={{ fontSize: 15, color: '#666', marginBottom: 36, lineHeight: 1.6 }}>

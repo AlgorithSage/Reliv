@@ -11,7 +11,9 @@ export default function WeeklyCouplePayScreen() {
  setLoading(true);
  setTimeout(() => {
  localStorage.setItem('paymentComplete', 'true');
- localStorage.setItem('planType', 'couple');
+ localStorage.setItem('planType', '');
+  localStorage.removeItem('heroTraining');
+  localStorage.removeItem('selectedCelebrity');
  navigate('/category');
  }, 1200);
  };
