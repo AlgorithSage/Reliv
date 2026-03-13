@@ -262,29 +262,8 @@ export default function BentoWelcomeScreen() {
      </div>
     </div>
 
-    {/* ── 6. TESTIMONIAL — Bottom right ── */}
-    <div className="bento-tile bento-tile--testimonial bento-tile--delay-6">
-     <span className="bento-tile__label">TESTIMONIAL</span>
-     <div className="bento-testimonial__content">
-      <div className="bento-testimonial__header">
-       <img
-        src={testimonials[activeTestimonial].avatar}
-        alt={testimonials[activeTestimonial].name}
-        className="bento-testimonial__avatar"
-       />
-       <div className="bento-testimonial__stars">
-        {[...Array(5)].map((_, i) => (
-         <Icon key={i} name="star" size={14} color="#F59E0B" weight="fill" />
-        ))}
-       </div>
-       <div className="bento-testimonial__name">{testimonials[activeTestimonial].name}</div>
-      </div>
-      <p className="bento-testimonial__quote">
-       "{testimonials[activeTestimonial].quote}"
-      </p>
-     </div>
+    {/* ── TESTIMONIAL REMOVED to expand bottom cards ── */}
     </div>
-   </div>
 
    {/* Floating login button */}
    <button className="bento-fab-login" onClick={() => navigate("/code")}>
