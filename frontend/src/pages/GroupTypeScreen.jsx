@@ -133,18 +133,19 @@ export default function GroupTypeScreen() {
  {/* Tag Badge */}
  {p.tag && (
  <div style={{
- position: 'absolute',
- top: -12,
- right: 20,
- background: p.tagColor,
- color: '#FFFFFF',
- fontSize: 11,
- fontWeight: 700,
- padding: '6px 14px',
- borderRadius: 20,
+ display: 'inline-flex',
+ alignItems: 'center',
+ marginBottom: 16,
+ background: `${p.tagColor}15`,
+ color: p.tagColor,
+ fontSize: 12,
+ fontWeight: 800,
+ padding: '6px 16px',
+ borderRadius: 12,
  textTransform: 'uppercase',
- letterSpacing: '0.5px',
- boxShadow: `3px 3px 8px rgba(0,0,0,0.15), -2px -2px 6px rgba(255,255,255,0.3)`,
+ letterSpacing: '0.8px',
+ border: `1px solid ${p.tagColor}40`,
+ boxShadow: `inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.03)`,
  }}>
  {p.tag}
  </div>
