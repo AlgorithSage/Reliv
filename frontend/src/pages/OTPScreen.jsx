@@ -47,30 +47,31 @@ export default function OTPScreen() {
         setLoading(true);
         setError('');
 
-        // DEMO BYPASS
-        if (code === '111111') {
-            localStorage.setItem('accessCode', 'DEMO1234');
-            setSuccess(true);
-            setTimeout(() => navigate('/code-generated'), 800);
-            return;
-        }
+        console.log("Submitting code to Firebase:", code);
 
         try {
             if (!window.confirmationResult) {
+                console.error("No window.confirmationResult found!");
                 throw new Error('Please go back and enter your phone number again.');
             }
             
+            console.log("Calling confirmationResult.confirm...");
             const result = await window.confirmationResult.confirm(code);
-            const user = result.user;
+            console.log("OTP Verified! User:", result.user.uid);
             
+            const user = result.user;
             const userDocRef = doc(db, 'users', user.uid);
+            
+            console.log("Checking Firestore for existing user...");
             const userDocSnap = await getDoc(userDocRef);
             
             let accessCode;
             
             if (userDocSnap.exists()) {
+                console.log("User exists in Firestore.");
                 accessCode = userDocSnap.data().accessCode;
             } else {
+                console.log("New user. Generating access code and saving to Firestore...");
                 accessCode = await generateAccessCode();
                 await setDoc(userDocRef, {
                     uid: user.uid,
@@ -83,6 +84,7 @@ export default function OTPScreen() {
                     streak: 0,
                     stars: 0
                 });
+                console.log("Saved new user to Firestore.");
             }
             
             localStorage.setItem('token', user.accessToken);
@@ -92,14 +94,23 @@ export default function OTPScreen() {
             setSuccess(true);
             setTimeout(() => navigate('/code-generated'), 800);
         } catch (err) {
-            console.error(err);
+            console.error("🔥 Firebase Auth Error:", err);
+            if (err.code) console.error("Error Code:", err.code);
+            if (err.message) console.error("Error Message:", err.message);
+
             hasFailedOnce.current = true;
             setAttempts(a => {
                 const next = a + 1;
                 if (next >= 3) navigate('/otp-fail');
                 return next;
             });
-            setError('Invalid OTP. Please try again.');
+            
+            let errorMessage = 'Invalid OTP. Please try again.';
+            if (err.code === 'auth/network-request-failed') errorMessage = 'Network error. Please try again.';
+            if (err.code === 'auth/invalid-verification-code') errorMessage = 'Incorrect code. Please try again.';
+            if (err.code === 'auth/code-expired') errorMessage = 'Code expired. Please request a new one.';
+
+            setError(errorMessage);
             setOtp(['', '', '', '', '', '']);
             inputRefs.current[0]?.focus();
         } finally {
