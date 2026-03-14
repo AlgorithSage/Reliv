@@ -186,29 +186,19 @@ export default function WhatsAppPreviewScreen() {
  </div>
 
  {/* Action Button */}
- <MaterialButton
- onClick={() => navigate('/')}
- style={{
- marginTop: 36,
- background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '18px 48px',
- fontSize: 16,
- fontWeight: 700,
- color: '#FFFFFF',
- cursor: 'pointer',
- boxShadow: '8px 8px 22px rgba(0,0,0,0.15), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
- display: 'flex',
- alignItems: 'center',
- gap: 10,
- opacity: show ? 1 : 0,
- transform: show ? 'translateY(0)' : 'translateY(20px)',
- transition: 'all 0.5s ease 0.4s',
- }}
- >
- Got It! Back to Home
- </MaterialButton>
+   <MaterialButton
+  onClick={() => navigate('/')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Got It! Back to Home
+  </MaterialButton>
 
  <style>{`
  @keyframes slideUp {

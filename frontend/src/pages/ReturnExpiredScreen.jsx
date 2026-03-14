@@ -47,7 +47,13 @@ export default function ReturnExpiredScreen() {
  fontSize: 50,
  border: '2px solid #FFD296',
  }}>
- ⏰
+ 
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <polyline points="12 6 12 12 16 14"></polyline>
+      <path d="M16.5 2.1l1.5 1.5"></path>
+      <path d="M7.5 2.1l-1.5 1.5"></path>
+    </svg>
  </div>
 
  <h1 style={{
@@ -111,44 +117,33 @@ export default function ReturnExpiredScreen() {
 
  {/* Action Buttons */}
  <div style={{ display: 'grid', gap: 14 }}>
- <MaterialButton
- onClick={() => navigate('/renew-plan')}
- style={{
- width: '100%',
- background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
- border: 'none',
- borderRadius: 16,
- padding: '20px',
- fontSize: 17,
- fontWeight: 700,
- color: '#FFFFFF',
- cursor: 'pointer',
- boxShadow: '8px 8px 22px rgba(0,0,0,0.18), -6px -6px 18px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.2)',
- display: 'flex',
- alignItems: 'center',
- justifyContent: 'center',
- gap: 10,
- }}
- >
- Renew for ₹29/week
- </MaterialButton>
+   <MaterialButton
+  onClick={() => navigate('/change-plan')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Try a Different Plan
+  </MaterialButton>
 
- <MaterialButton
- onClick={() => navigate('/change-plan')}
- style={{
- width: '100%',
- background: '#FAFAF8',
- border: 'none',
- borderRadius: 14,
- padding: '16px',
- fontSize: 15,
- fontWeight: 600,
- color: '#666',
- cursor: 'pointer',
- }}
- >
- Try a Different Plan
- </MaterialButton>
+  <MaterialButton
+  onClick={() => navigate('/return-active')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Continue with Existing Plan
+  </MaterialButton>
  </div>
  </div>
  </div>

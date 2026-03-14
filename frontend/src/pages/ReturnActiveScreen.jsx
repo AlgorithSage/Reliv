@@ -106,7 +106,13 @@ export default function ReturnActiveScreen() {
  margin: '0 auto 24px', fontSize: 50,
  boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5)',
  animation: 'bounceIn 0.7s ease',
- }}></div>
+ }}>
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+      <circle cx="8.5" cy="7" r="4"></circle>
+      <polyline points="17 11 19 13 23 9"></polyline>
+    </svg>
+  </div>
 
  <h1 style={{ fontSize: 28, fontWeight: 800, color: '#111', marginBottom: 8 }}>Welcome Back! </h1>
  <p style={{ fontSize: 15, color: '#666', marginBottom: 24, lineHeight: 1.6 }}>Your plan is still active. Keep going!</p>
