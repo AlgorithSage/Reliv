@@ -3,6 +3,7 @@ import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
 import AntigravityBackground from './AntigravityBackground';
 import { useNavStack } from '../contexts/NavigationStack';
+import { useNavigate } from 'react-router-dom';
 
 // ═══ ANTIGRAVITY BACKGROUND FLAG ═══
 // Set to true to show the floating dotted glassmorphic background
@@ -13,6 +14,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
  const [scrolled, setScrolled] = useState(false);
  const [pageLoaded, setPageLoaded] = useState(false);
  const { goBack } = useNavStack();
+ const navigate = useNavigate();
 
  // Use explicit onBack if provided, otherwise use stack-based LIFO goBack
  const handleBack = onBack || goBack;
@@ -187,15 +189,16 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
      </div>
 
      {/* Desktop Nav — Help Button Neomorphic */}
-     <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 12,
-     }}>
-      <button
-       style={{
-        display: 'flex',
-        alignItems: 'center',
+      <div style={{
+       display: 'flex',
+       alignItems: 'center',
+       gap: 12,
+      }}>
+       <button
+        onClick={() => navigate('/help')}
+        style={{
+         display: 'flex',
+         alignItems: 'center',
         gap: 10,
         background: '#EFECE9',
         border: 'none',

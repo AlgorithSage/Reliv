@@ -93,6 +93,9 @@ import PlanConflictScreen from './pages/PlanConflictScreen.jsx';
 import PaymentFailedScreen from './pages/PaymentFailedScreen.jsx';
 import TrialUsedScreen from './pages/TrialUsedScreen.jsx';
 
+// ═══ SUPPORT ═══
+import HelpScreen from './pages/HelpScreen.jsx';
+
 export default function App() {
 	return (
 		<BrowserRouter>
@@ -203,6 +206,9 @@ export default function App() {
 				<Route path="/plan-conflict" element={<PlanConflictScreen />} />
 				<Route path="/payment-failed" element={<PaymentFailedScreen />} />
 				<Route path="/trial-used" element={<TrialUsedScreen />} />
+				
+				{/* ═══ SUPPORT ═══ */}
+				<Route path="/help" element={<HelpScreen />} />
 				
 				{/* ═══ FALLBACK ═══ */}
 				<Route path="*" element={<Navigate to="/" replace />} />
