@@ -15,7 +15,7 @@ export default function OTPScreen() {
     const navigate = useNavigate();
     const location = useLocation();
     const { phone, sessionId } = location.state || {};
-    const [otp, setOtp] = useState(['', '', '', '']);
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [attempts, setAttempts] = useState(0);
@@ -42,7 +42,7 @@ export default function OTPScreen() {
     }, []);
 
     const doSubmit = useCallback(async (code) => {
-        if (code.length !== 4 || isSubmitting.current) return;
+        if (code.length !== 6 || isSubmitting.current) return;
         isSubmitting.current = true;
         setLoading(true);
         setError('');
@@ -71,7 +71,7 @@ export default function OTPScreen() {
                 return next;
             });
             setError('Invalid OTP. Please try again.');
-            setOtp(['', '', '', '']);
+            setOtp(['', '', '', '', '', '']);
             inputRefs.current[0]?.focus();
         } finally {
             setLoading(false);
@@ -86,12 +86,12 @@ export default function OTPScreen() {
         setOtp(newOtp);
         setError('');
 
-        if (val && i < 3) {
+        if (val && i < 5) {
             inputRefs.current[i + 1]?.focus();
         }
 
-        // Auto-click the verify button when all 4 digits are filled (first attempt only)
-        if (val && i === 3 && newOtp.every(d => d !== '') && !hasFailedOnce.current) {
+        // Auto-click the verify button when all 6 digits are filled (first attempt only)
+        if (val && i === 5 && newOtp.every(d => d !== '') && !hasFailedOnce.current) {
             setTimeout(() => {
                 if (verifyBtnRef.current) {
                     verifyBtnRef.current.click();
@@ -110,14 +110,14 @@ export default function OTPScreen() {
 
     const handlePaste = (e) => {
         e.preventDefault();
-        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
+        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
         const newOtp = [...otp];
         for (let i = 0; i < pasted.length; i++) {
             newOtp[i] = pasted[i];
         }
         setOtp(newOtp);
-        if (pasted.length === 4) {
-            inputRefs.current[3]?.focus();
+        if (pasted.length === 6) {
+            inputRefs.current[5]?.focus();
             // Auto-click on full paste (first attempt only)
             if (!hasFailedOnce.current) {
                 setTimeout(() => {
@@ -136,7 +136,7 @@ export default function OTPScreen() {
     return (
         <Layout
             title="Verify Your Number"
-            subtitle={`We've sent a 4-digit code to ${phone || 'your phone'}`}
+            subtitle={`We've sent a 6-digit code to ${phone || 'your phone'}`}
             showBack
         >
             <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
@@ -176,7 +176,7 @@ export default function OTPScreen() {
                         marginBottom: 32,
                         lineHeight: 1.6,
                     }}>
-                        Check your WhatsApp for the verification code<br />
+                        Check your SMS for the verification code<br />
                         <span style={{
                             fontSize: 13,
                             color: '#9CA3AF',
@@ -184,7 +184,7 @@ export default function OTPScreen() {
                             alignItems: 'center',
                             gap: 6,
                             marginTop: 8,
-                        }}>Use <strong style={{ color: '#F06922', fontWeight: 700 }}>1111</strong> for testing
+                        }}>Use <strong style={{ color: '#F06922', fontWeight: 700 }}>111111</strong> for testing
                         </span>
                     </p>
 
@@ -208,7 +208,7 @@ export default function OTPScreen() {
                                 onChange={(e) => handleChange(i, e.target.value)}
                                 onKeyDown={(e) => handleKeyDown(i, e)}
                                 style={{
-                                    width: 72,
+                                    width: 50,
                                     height: 88,
                                     background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
                                     border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
