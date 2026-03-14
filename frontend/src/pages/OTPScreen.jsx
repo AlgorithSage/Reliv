@@ -46,24 +46,53 @@ export default function OTPScreen() {
         isSubmitting.current = true;
         setLoading(true);
         setError('');
+
+        // DEMO BYPASS
+        if (code === '111111') {
+            localStorage.setItem('accessCode', 'DEMO1234');
+            setSuccess(true);
+            setTimeout(() => navigate('/code-generated'), 800);
+            return;
+        }
+
         try {
-            const res = await api.call('/auth/verify-otp', {
-                method: 'POST',
-                body: JSON.stringify({ sessionId, otp: code })
-            });
-            localStorage.setItem('token', res.token);
-            localStorage.setItem('accessCode', res.accessCode);
-            localStorage.setItem('userId', res.userId);
+            if (!window.confirmationResult) {
+                throw new Error('Please go back and enter your phone number again.');
+            }
+            
+            const result = await window.confirmationResult.confirm(code);
+            const user = result.user;
+            
+            const userDocRef = doc(db, 'users', user.uid);
+            const userDocSnap = await getDoc(userDocRef);
+            
+            let accessCode;
+            
+            if (userDocSnap.exists()) {
+                accessCode = userDocSnap.data().accessCode;
+            } else {
+                accessCode = await generateAccessCode();
+                await setDoc(userDocRef, {
+                    uid: user.uid,
+                    phone: user.phoneNumber,
+                    accessCode: accessCode,
+                    createdAt: new Date().toISOString(),
+                    planType: null,
+                    subscriptionStatus: 'inactive',
+                    hasBot: false,
+                    streak: 0,
+                    stars: 0
+                });
+            }
+            
+            localStorage.setItem('token', user.accessToken);
+            localStorage.setItem('userId', user.uid);
+            localStorage.setItem('accessCode', accessCode);
+            
             setSuccess(true);
             setTimeout(() => navigate('/code-generated'), 800);
         } catch (err) {
-            if (code === '1111') {
-                localStorage.setItem('accessCode', 'DEMO1234');
-                setSuccess(true);
-                setTimeout(() => navigate('/code-generated'), 800);
-                return;
-            }
-            // Mark that we've failed — disable auto-submit for future attempts
+            console.error(err);
             hasFailedOnce.current = true;
             setAttempts(a => {
                 const next = a + 1;
@@ -77,7 +106,7 @@ export default function OTPScreen() {
             setLoading(false);
             isSubmitting.current = false;
         }
-    }, [sessionId, navigate]);
+    }, [navigate]);
 
     const handleChange = (i, val) => {
         if (val.length > 1) val = val[0];
