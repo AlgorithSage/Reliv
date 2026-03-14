@@ -216,16 +216,7 @@ export default function OTPScreen() {
                         marginBottom: 32,
                         lineHeight: 1.6,
                     }}>
-                        Check your SMS for the verification code<br />
-                        <span style={{
-                            fontSize: 13,
-                            color: '#9CA3AF',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 6,
-                            marginTop: 8,
-                        }}>Use <strong style={{ color: '#F06922', fontWeight: 700 }}>111111</strong> for testing
-                        </span>
+                        Check your SMS for the verification code
                     </p>
 
                     {/* OTP Input Boxes */}
