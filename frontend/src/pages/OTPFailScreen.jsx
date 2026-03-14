@@ -99,23 +99,19 @@ export default function OTPFailScreen() {
  Try Different Number
  </MaterialButton>
 
- <MaterialButton
- onClick={() => navigate('/')}
- style={{
- width: '100%',
- background: '#FAFAF8',
- border: 'none',
- borderRadius: 14,
- padding: '16px',
- fontSize: 15,
- fontWeight: 600,
- color: '#666666',
- cursor: 'pointer',
- transition: 'all 0.3s ease',
- }}
- >
- Back to Home
- </MaterialButton>
+     <MaterialButton
+  onClick={() => navigate('/')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Back to Home
+  </MaterialButton>
  </div>
  </div>
 

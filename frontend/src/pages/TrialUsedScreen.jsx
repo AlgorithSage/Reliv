@@ -119,22 +119,19 @@ export default function TrialUsedScreen() {
  Log In with Code
  </MaterialButton>
 
- <MaterialButton
- onClick={() => navigate('/')}
- style={{
- width: '100%',
- background: '#FAFAF8',
- border: 'none',
- borderRadius: 14,
- padding: '16px',
- fontSize: 15,
- fontWeight: 600,
- color: '#666',
- cursor: 'pointer',
- }}
- >
- Back to Home
- </MaterialButton>
+     <MaterialButton
+  onClick={() => navigate('/')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Back to Home
+  </MaterialButton>
  </div>
  </div>
  </div>
