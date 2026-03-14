@@ -103,7 +103,7 @@ export default function ReturnDailyAgainScreen() {
  </div>
 
  {/* Options */}
- <div style={{ display: 'grid', gap: 14 }}><Icon name="calendar" size={18} />
+ <div style={{ display: "grid", gap: 14 }}>
  <MaterialButton
  onClick={() => {
  localStorage.setItem('planType', 'daily');
@@ -151,22 +151,19 @@ export default function ReturnDailyAgainScreen() {
  Try New Celebrity
  </MaterialButton>
 
- <MaterialButton
- onClick={() => navigate('/group-type')}
- style={{
- width: '100%',
- background: '#FAFAF8',
- border: 'none',
- borderRadius: 14,
- padding: '16px',
- fontSize: 15,
- fontWeight: 600,
- color: '#666',
- cursor: 'pointer',
- }}
- >
- Switch to Weekly Plan
- </MaterialButton>
+   <MaterialButton
+  onClick={() => navigate('/group-type')}
+  style={{
+    width: '100%',
+    color: '#F06922',
+    borderRadius: 14,
+    padding: '16px',
+    fontSize: 15,
+    fontWeight: 600,
+  }}
+  >
+    Switch to Weekly Plan
+  </MaterialButton>
  </div>
  </div>
  </div>
