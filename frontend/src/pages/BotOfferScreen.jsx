@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -66,12 +67,12 @@ export default function BotOfferScreen() {
  <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', borderRadius: '50%', animation: 'floatOrb2 25s ease-in-out infinite' }} />
  </div>
 
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  position: 'fixed', top: 24, left: 24, zIndex: 50,
  background: 'rgba(255,255,255,0.08)', backdropFilter: 'none', WebkitbackdropFilter: 'none',
  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '12px 20px',
  color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer', transition: 'all 0.3s',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
 
  <div style={{
  position: 'relative', zIndex: 10, maxWidth: 640, margin: '0 auto', padding: '80px 24px 40px',
@@ -127,14 +128,14 @@ export default function BotOfferScreen() {
  </div>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
  {features.map((f, i) => (
- <button key={i} onClick={() => setActiveFeature(i)} style={{
+ <MaterialButton key={i} onClick={() => setActiveFeature(i)} style={{
  background: i === activeFeature ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.03)',
  border: i === activeFeature ? '1px solid rgba(255,255,255,0.15)' : '1px solid transparent',
  borderRadius: 14, padding: '14px 8px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.3s',
  }}>
  <Icon name={f.icon} size={22} />
  <div style={{ fontSize: 10, fontWeight: 600, color: i === activeFeature ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.35)' }}>{f.title.split(' ')[0]}</div>
- </button>
+ </MaterialButton>
  ))}
  </div>
  </div>
@@ -154,7 +155,7 @@ export default function BotOfferScreen() {
  </div>
 
  {/* CTA */}
- <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}><button onClick={() => navigate('/bot-purchase')} onMouseEnter={() => setHovered('buy')} onMouseLeave={() => setHovered(null)} style={{
+ <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}><MaterialButton onClick={() => navigate('/bot-purchase')} onMouseEnter={() => setHovered('buy')} onMouseLeave={() => setHovered(null)} style={{
  width: '100%', position: 'relative', overflow: 'hidden',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 50%, #D4521C 100%)',
  border: 'none', borderRadius: 20, padding: '22px', fontSize: 18, fontWeight: 800, color: '#FFF', cursor: 'pointer',
@@ -164,12 +165,12 @@ export default function BotOfferScreen() {
  }}>
  <div style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', animation: 'btnShimmer 3s ease-in-out infinite' }} />
  <span style={{ position: 'relative', zIndex: 1 }}> Buy Pet Bot — ₹499</span>
- </button>
- <button onClick={() => navigate('/wa-preview')} onMouseEnter={() => setHovered('skip')} onMouseLeave={() => setHovered(null)} style={{
+ </MaterialButton>
+ <MaterialButton onClick={() => navigate('/wa-preview')} onMouseEnter={() => setHovered('skip')} onMouseLeave={() => setHovered(null)} style={{
  width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
  borderRadius: 16, padding: '18px', fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
  transform: hovered === 'skip' ? 'translateY(-1px)' : 'translateY(0)', transition: 'all 0.3s',
- }}>Skip for Now →</button>
+ }}>Skip for Now →</MaterialButton>
  </div>
  </div>
 

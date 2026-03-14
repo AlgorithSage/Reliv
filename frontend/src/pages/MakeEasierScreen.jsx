@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -170,7 +171,7 @@ export default function MakeEasierScreen() {
 
  {/* Buttons */}
  {!accepted && (
- <div style={{ display: 'grid', gap: 12 }}><button onClick={handleAccept} style={{
+ <div style={{ display: 'grid', gap: 12 }}><MaterialButton onClick={handleAccept} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -183,12 +184,12 @@ export default function MakeEasierScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
- <button onClick={() => navigate('/')} style={{
+ </MaterialButton>
+ <MaterialButton onClick={() => navigate('/')} style={{
  width: '100%', background: 'rgba(0,0,0,0.02)',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
- }}>Keep Current Plan</button>
+ }}>Keep Current Plan</MaterialButton>
  </div>
  )}
  </div>

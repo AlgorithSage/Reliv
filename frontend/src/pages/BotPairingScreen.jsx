@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -75,12 +76,12 @@ export default function BotPairingScreen() {
  transition: 'all 0.7s cubic-bezier(0.16,1,0.3,1)',
  }}>
  {/* Back */}
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
  borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
  fontSize: 14, fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start',
  backdropFilter: 'none',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
 
  {/* Success badge */}
  <div style={{ textAlign: 'center' }}>
@@ -184,7 +185,7 @@ export default function BotPairingScreen() {
  </div>
 
  {/* Continue Button */}
- <button
+ <MaterialButton
  onClick={() => navigate('/bot-customize')}
  style={{
  width: '100%', border: 'none', borderRadius: 16, padding: '18px',
@@ -200,7 +201,7 @@ export default function BotPairingScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
+ </MaterialButton>
  </div>
 
  <style>{`

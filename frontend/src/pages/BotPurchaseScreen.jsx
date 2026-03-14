@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -104,12 +105,12 @@ export default function BotPurchaseScreen() {
  <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: 500, height: 500, background: 'radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%)', borderRadius: '50%', animation: 'floatO2 25s ease-in-out infinite' }} />
  </div>
 
- <button onClick={() => navigate('/bot-offer')} style={{
+ <MaterialButton onClick={() => navigate('/bot-offer')} style={{
  position: 'fixed', top: 24, left: 24, zIndex: 50,
  background: 'rgba(255,255,255,0.08)', backdropFilter: 'none',
  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '12px 20px',
  color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
 
  {/* Inactivity attract screen overlay */}
  {inactive && shoutouts.length > 0 && (
@@ -169,7 +170,7 @@ export default function BotPurchaseScreen() {
  }} />
  ))}
  </div>
- <button
+ <MaterialButton
  onClick={() => { setInactive(false); navigate('/ProductShowcaseBoard'); }}
  style={{
  background: 'linear-gradient(135deg,#F97316,#F4610A)',
@@ -179,7 +180,7 @@ export default function BotPurchaseScreen() {
  }}
  >
  <Icon name="launch" size={18} /> See Public Board
- </button>
+ </MaterialButton>
  <p style={{ color: '#fff', fontSize: 13, marginTop: 10, opacity: 0.8 }}>Tap anywhere to return</p>
  </div>
  </div>
@@ -250,7 +251,7 @@ export default function BotPurchaseScreen() {
  </div>
  </div>
 
- <button onClick={handlePay} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{
+ <MaterialButton onClick={handlePay} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} style={{
  width: '100%', position: 'relative', overflow: 'hidden',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 50%, #D4521C 100%)',
  border: 'none', borderRadius: 20, padding: '22px', fontSize: 18, fontWeight: 800, color: '#FFF', cursor: 'pointer',
@@ -259,7 +260,7 @@ export default function BotPurchaseScreen() {
  }}>
  <div style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', animation: 'btnShimmer 3s ease-in-out infinite' }} /><Icon name="credit_card" size={18} />
  <span style={{ position: 'relative', zIndex: 1 }}> Pay ₹499</span>
- </button>
+ </MaterialButton>
  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}> Secured by Razorpay • 100% safe</p>
  </>)}
 

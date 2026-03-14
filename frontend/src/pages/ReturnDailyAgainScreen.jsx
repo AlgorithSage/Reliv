@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -101,7 +102,7 @@ export default function ReturnDailyAgainScreen() {
 
  {/* Options */}
  <div style={{ display: 'grid', gap: 14 }}><Icon name="calendar" size={18} />
- <button
+ <MaterialButton
  onClick={() => {
  localStorage.setItem('planType', 'daily');
  navigate('/daily-pay');
@@ -124,9 +125,9 @@ export default function ReturnDailyAgainScreen() {
  }}
  >
  Repeat Same Plan
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/fan-quiz-type')}
  style={{
  width: '100%',
@@ -146,9 +147,9 @@ export default function ReturnDailyAgainScreen() {
  }}
  >
  Try New Celebrity
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/group-type')}
  style={{
  width: '100%',
@@ -163,7 +164,7 @@ export default function ReturnDailyAgainScreen() {
  }}
  >
  Switch to Weekly Plan
- </button>
+ </MaterialButton>
  </div>
  </div>
  </div>

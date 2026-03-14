@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -104,7 +105,7 @@ export default function MealTimesScreen() {
  </div>
 
  {/* Continue Button */}
- <button 
+ <MaterialButton 
  onClick={() => { localStorage.setItem('mealTimes', JSON.stringify(times)); navigate('/summary'); }} 
  style={{ 
  width: '100%', 
@@ -121,7 +122,7 @@ export default function MealTimesScreen() {
  }}
  >
  <Icon name="simple_check" size={18} /> Confirm Times
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

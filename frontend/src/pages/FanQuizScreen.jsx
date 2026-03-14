@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -135,7 +136,7 @@ export default function FanQuizScreen() {
  const showCorrect = selected !== null && isCorrect;
 
  return (
- <button
+ <MaterialButton
  key={i}
  onClick={() => handleAnswer(i)}
  disabled={selected !== null}
@@ -168,7 +169,7 @@ export default function FanQuizScreen() {
  {opt}
  {showCorrect && <Icon name="check_circle" size={20} color="#22C55E" />}
  {isWrong && <Icon name="cross" size={20} color="#EF4444" />}
- </button>
+ </MaterialButton>
  );
  })}
  </div>

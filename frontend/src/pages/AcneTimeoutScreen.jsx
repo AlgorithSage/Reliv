@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
@@ -26,7 +27,7 @@ export default function AcneTimeoutScreen() {
  {/* Option cards */}
  <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 8 }}>
  {/* Try again */}
- <button
+ <MaterialButton
  onClick={() => navigate('/acne-photo-qr')}
  style={{
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -48,10 +49,10 @@ export default function AcneTimeoutScreen() {
  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
  >
  Try Photo Again
- </button>
+ </MaterialButton>
 
  {/* Manual select */}
- <button
+ <MaterialButton
  onClick={() => navigate('/acne-manual')}
  style={{
  background: 'rgba(255,255,255,0.9)',
@@ -80,16 +81,16 @@ export default function AcneTimeoutScreen() {
  }}
  >
  Skip Photo — Select Manually
- </button>
+ </MaterialButton>
 
  {/* Continue without */}
- <button
+ <MaterialButton
  onClick={() => navigate('/meal-freq')}
  className="btn btn-ghost"
  style={{ fontSize: 14 }}
  >
  Continue Without Skin Analysis →
- </button>
+ </MaterialButton>
  </div>
  </div>
  </Layout>

@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { C, api } from '../utils/constants';
@@ -42,7 +43,7 @@ export default function BentoPhoneEntryScreen() {
  </div>
 
  {/* Back Button — Fixed top left */}
- <button
+ <MaterialButton
  onClick={() => navigate('/')}
  className="bento-phone__back-btn"
  >
@@ -50,7 +51,7 @@ export default function BentoPhoneEntryScreen() {
  <path d="M19 12H5M12 19l-7-7 7-7" />
  </svg>
  Back
- </button>
+ </MaterialButton>
 
  {/* Main Card */}
  <div className="bento-phone__card">
@@ -121,7 +122,7 @@ export default function BentoPhoneEntryScreen() {
  )}
 
  {/* Submit Button */}
- <button
+ <MaterialButton
  onClick={handleSubmit}
  disabled={loading || !isValid}
  className={`bento-phone__submit ${isValid ? 'bento-phone__submit--active' : ''}`}
@@ -139,7 +140,7 @@ export default function BentoPhoneEntryScreen() {
  </svg>
  </>
  )}
- </button>
+ </MaterialButton>
  </div>
 
  {/* Security Note */}

@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
@@ -75,7 +76,7 @@ export default function OTPFailScreen() {
 
  {/* Action Buttons */}
  <div style={{ display: 'grid', gap: 14 }}>
- <button
+ <MaterialButton
  onClick={() => navigate('/phone')}
  style={{
  width: '100%',
@@ -96,9 +97,9 @@ export default function OTPFailScreen() {
  }}
  >
  Try Different Number
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/')}
  style={{
  width: '100%',
@@ -114,7 +115,7 @@ export default function OTPFailScreen() {
  }}
  >
  Back to Home
- </button>
+ </MaterialButton>
  </div>
  </div>
 

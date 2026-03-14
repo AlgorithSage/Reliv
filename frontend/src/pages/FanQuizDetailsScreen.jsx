@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -129,7 +130,7 @@ export default function FanQuizDetailsScreen() {
  </div>
 
  {/* CTA */}
- <button
+ <MaterialButton
  onClick={() => navigate('/daily-pay')}
  style={{
  width: '100%',
@@ -145,7 +146,7 @@ export default function FanQuizDetailsScreen() {
  }}
  >
  Get This Plan
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

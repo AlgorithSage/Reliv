@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -130,7 +131,7 @@ export default function FriendSizeScreen() {
  </div>
 
  {/* Continue Button */}
- <button
+ <MaterialButton
  onClick={handleContinue}
  disabled={!selected}
  style={{
@@ -150,7 +151,7 @@ export default function FriendSizeScreen() {
  }}
  >
  Continue
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

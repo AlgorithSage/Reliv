@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -139,7 +140,7 @@ export default function RenewPlanScreen() {
  { label: 'Use same settings', value: true },
  { label: 'Change settings', value: false },
  ].map((opt) => (
- <button key={String(opt.value)} onClick={() => {
+ <MaterialButton key={String(opt.value)} onClick={() => {
  setUseSameSettings(opt.value);
  if (!opt.value) navigate('/update-settings');
  }} style={{
@@ -153,12 +154,12 @@ export default function RenewPlanScreen() {
  boxShadow: useSameSettings === opt.value ? '0 4px 16px rgba(240,105,34,0.08)' : 'none',
  }}>
  {opt.label}
- </button>
+ </MaterialButton>
  ))}
  </div>
 
  {/* Pay */}
- <button onClick={handlePay} disabled={processing} style={{
+ <MaterialButton onClick={handlePay} disabled={processing} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '20px',
  fontSize: 17, fontWeight: 700, color: '#FFF',
  cursor: processing ? 'not-allowed' : 'pointer',
@@ -172,13 +173,13 @@ export default function RenewPlanScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />}
- </button>
+ </MaterialButton>
 
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  width: '100%', background: 'transparent', border: 'none',
  padding: '14px', fontSize: 14, fontWeight: 600, color: '#9CA3AF',
  cursor: 'pointer', marginTop: 8,
- }}>← Back</button>
+ }}>← Back</MaterialButton>
  </>
  )}
  </div>

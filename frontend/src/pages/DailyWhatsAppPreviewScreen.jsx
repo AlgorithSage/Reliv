@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -165,7 +166,7 @@ export default function DailyWhatsAppPreviewScreen() {
  </div>
 
  {/* Button */}
- <button
+ <MaterialButton
  onClick={() => navigate('/activation')}
  style={{
  marginTop: 28,
@@ -181,7 +182,7 @@ export default function DailyWhatsAppPreviewScreen() {
  }}
  >
  Continue to Activation
- </button>
+ </MaterialButton>
 
  <style>{`
  @keyframes fadeIn {

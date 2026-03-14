@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -100,7 +101,7 @@ export default function TrialUsedScreen() {
 
  {/* Actions */}
  <div style={{ display: 'grid', gap: 14 }}>
- <button
+ <MaterialButton
  onClick={() => navigate('/code')}
  style={{
  width: '100%',
@@ -116,9 +117,9 @@ export default function TrialUsedScreen() {
  }}
  >
  Log In with Code
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/')}
  style={{
  width: '100%',
@@ -133,7 +134,7 @@ export default function TrialUsedScreen() {
  }}
  >
  Back to Home
- </button>
+ </MaterialButton>
  </div>
  </div>
  </div>

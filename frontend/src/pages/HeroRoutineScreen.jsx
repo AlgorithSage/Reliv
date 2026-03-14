@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -334,7 +335,7 @@ export default function HeroRoutineScreen() {
  padding: 6,
  }}>
  {tabs.map(tab => (
- <button
+ <MaterialButton
  key={tab.id}
  onClick={() => setActiveTab(tab.id)}
  style={{
@@ -352,7 +353,7 @@ export default function HeroRoutineScreen() {
  }}
  >
  <Icon name={tab.icon} size={18} /> {tab.label}
- </button>
+ </MaterialButton>
  ))}
  </div>
 
@@ -569,7 +570,7 @@ export default function HeroRoutineScreen() {
  </div>
 
  {/* Continue Button */}
- <button
+ <MaterialButton
  onClick={handleContinue}
  style={{
  width: '100%',
@@ -586,7 +587,7 @@ export default function HeroRoutineScreen() {
  }}
  >
  <Icon name="fire" size={18} /> Start {athlete.name} Challenge →
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

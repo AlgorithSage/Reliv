@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
@@ -81,7 +82,7 @@ export default function CodeFailScreen() {
 
  {/* Action Buttons */}
  <div style={{ display: 'grid', gap: 14 }}>
- <button
+ <MaterialButton
  onClick={() => navigate('/code')}
  style={{
  width: '100%',
@@ -102,9 +103,9 @@ export default function CodeFailScreen() {
  }}
  >
  Try Again
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/phone')}
  style={{
  width: '100%',
@@ -124,7 +125,7 @@ export default function CodeFailScreen() {
  }}
  >
  Start Fresh with Phone
- </button>
+ </MaterialButton>
  </div>
  </div>
 

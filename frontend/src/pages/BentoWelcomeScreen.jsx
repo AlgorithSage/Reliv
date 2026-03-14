@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from "react";
 import Icon from '../utils/Icon';
 import { useNavigate } from "react-router-dom";
@@ -102,9 +103,9 @@ export default function BentoWelcomeScreen() {
         <div key={i} className={`bento-attract__dot ${i === currentIdx ? "bento-attract__dot--active" : "bento-attract__dot--inactive"}`} />
        ))}
       </div>
-      <button className="bento-attract__btn" onClick={(e) => { e.stopPropagation(); setInactive(false); navigate("/ProductShowcaseBoard"); }}>
+      <MaterialButton className="bento-attract__btn" onClick={(e) => { e.stopPropagation(); setInactive(false); navigate("/ProductShowcaseBoard"); }}>
        See Public Board
-      </button>
+      </MaterialButton>
       <p className="bento-attract__hint">Tap anywhere to return</p>
      </div>
     </div>
@@ -253,12 +254,12 @@ export default function BentoWelcomeScreen() {
        <span className="bento-pricing__number">9</span>
        <span className="bento-pricing__period">/day</span>
       </div>
-      <button className="bento-pricing__btn" onClick={() => navigate("/phone")}>
+      <MaterialButton className="bento-pricing__btn" onClick={() => navigate("/phone")}>
        <span>Start Free Trial</span>
-      </button>
-      <button className="bento-pricing__login-btn" onClick={() => navigate("/code")}>
+      </MaterialButton>
+      <MaterialButton className="bento-pricing__login-btn" onClick={() => navigate("/code")}>
        Returning User? Login
-      </button>
+      </MaterialButton>
      </div>
     </div>
 
@@ -266,10 +267,10 @@ export default function BentoWelcomeScreen() {
     </div>
 
    {/* Floating login button */}
-   <button className="bento-fab-login" onClick={() => navigate("/code")}>
+   <MaterialButton className="bento-fab-login" onClick={() => navigate("/code")}>
     <Icon name="key" size={20} color="currentColor" />
     <span>Login</span>
-   </button>
+   </MaterialButton>
   </div>
  );
 }

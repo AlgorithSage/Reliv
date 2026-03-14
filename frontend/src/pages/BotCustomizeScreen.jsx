@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -107,11 +108,11 @@ export default function BotCustomizeScreen() {
  }}>
  {/* Header */}
  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
  borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
  fontSize: 14, fontWeight: 600, cursor: 'pointer', backdropFilter: 'none',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
  <div>
  <h1 style={{ fontSize: 22, fontWeight: 800, background: 'linear-gradient(135deg, #F06922, #FF8A4C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}> Customize Bot</h1>
  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>Make it yours</p>
@@ -123,7 +124,7 @@ export default function BotCustomizeScreen() {
  <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Face Type</h3>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
  {faces.map((f) => (
- <button key={f.id} onClick={() => f.unlocked && setFace(f.id)} disabled={!f.unlocked} style={{
+ <MaterialButton key={f.id} onClick={() => f.unlocked && setFace(f.id)} disabled={!f.unlocked} style={{
  background: face === f.id ? 'rgba(240,105,34,0.12)' : 'rgba(255,255,255,0.03)',
  border: face === f.id ? '2px solid rgba(240,105,34,0.5)' : '2px solid rgba(255,255,255,0.06)',
  borderRadius: 16, padding: '16px 10px', textAlign: 'center',
@@ -145,7 +146,7 @@ export default function BotCustomizeScreen() {
  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="3"><path d="M20 6L9 17l-5-5" /></svg>
  </div>
  )}
- </button>
+ </MaterialButton>
  ))}
  </div>
  </div>
@@ -155,7 +156,7 @@ export default function BotCustomizeScreen() {
  <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Sound Theme</h3>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
  {sounds.map((s) => (
- <button key={s.id} onClick={() => !s.soon && setSound(s.id)} disabled={s.soon} style={{
+ <MaterialButton key={s.id} onClick={() => !s.soon && setSound(s.id)} disabled={s.soon} style={{
  background: sound === s.id ? 'rgba(240,105,34,0.12)' : 'rgba(255,255,255,0.03)',
  border: sound === s.id ? '2px solid rgba(240,105,34,0.5)' : '2px solid rgba(255,255,255,0.06)',
  borderRadius: 14, padding: '14px 8px', textAlign: 'center',
@@ -165,7 +166,7 @@ export default function BotCustomizeScreen() {
  <Icon name={s.icon} size={24} />
  <div style={{ fontSize: 11, fontWeight: 600, color: sound === s.id ? '#F06922' : 'rgba(255,255,255,0.5)' }}>{s.label}</div>
  {s.soon && <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', marginTop: 2 }}>Soon</div>}
- </button>
+ </MaterialButton>
  ))}
  </div>
  </div>
@@ -175,7 +176,7 @@ export default function BotCustomizeScreen() {
  <h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 16 }}> Personality Mode</h3>
  <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
  {personalities.map((p) => (
- <button key={p.id} onClick={() => setPersonality(p.id)} style={{
+ <MaterialButton key={p.id} onClick={() => setPersonality(p.id)} style={{
  display: 'flex', alignItems: 'center', gap: 14,
  padding: '16px 20px', width: '100%', textAlign: 'left',
  background: personality === p.id ? `${p.color}15` : 'rgba(255,255,255,0.03)',
@@ -187,7 +188,7 @@ export default function BotCustomizeScreen() {
  <div style={{ fontSize: 14, fontWeight: 700, color: personality === p.id ? p.color : 'rgba(255,255,255,0.7)' }}>{p.label}</div>
  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{p.desc}</div>
  </div>
- </button>
+ </MaterialButton>
  ))}
  </div>
  </div>
@@ -222,7 +223,7 @@ export default function BotCustomizeScreen() {
  </div>
 
  {/* Save Button */}
- <button onClick={handleSave} disabled={saving} style={{
+ <MaterialButton onClick={handleSave} disabled={saving} style={{
  width: '100%', border: 'none', borderRadius: 16, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: saving ? 'not-allowed' : 'pointer',
  background: saving ? 'linear-gradient(135deg, #6B7280, #4B5563)' : 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -235,7 +236,7 @@ export default function BotCustomizeScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />}
- </button>
+ </MaterialButton>
  </div>
 
  <style>{`

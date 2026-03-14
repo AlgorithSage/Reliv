@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -185,7 +186,7 @@ export default function WhatsAppPreviewScreen() {
  </div>
 
  {/* Action Button */}
- <button
+ <MaterialButton
  onClick={() => navigate('/')}
  style={{
  marginTop: 36,
@@ -207,7 +208,7 @@ export default function WhatsAppPreviewScreen() {
  }}
  >
  Got It! Back to Home
- </button>
+ </MaterialButton>
 
  <style>{`
  @keyframes slideUp {

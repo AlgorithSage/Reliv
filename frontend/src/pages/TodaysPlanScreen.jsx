@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -152,7 +153,7 @@ export default function TodaysPlanScreen() {
  )}
 
  {/* Action Buttons */}
- <div style={{ width: '100%', display: 'grid', gap: 12 }}><button onClick={() => navigate('/wa-preview')} style={{
+ <div style={{ width: '100%', display: 'grid', gap: 12 }}><MaterialButton onClick={() => navigate('/wa-preview')} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #22C55E 0%, #16A34A 100%)',
@@ -165,21 +166,21 @@ export default function TodaysPlanScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
+ </MaterialButton>
 
  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
- <button onClick={() => navigate('/update-settings')} style={{
+ <MaterialButton onClick={() => navigate('/update-settings')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '15px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Settings</button>
- <button onClick={() => navigate('/bot-status')} style={{
+ }}> Settings</MaterialButton>
+ <MaterialButton onClick={() => navigate('/bot-status')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '15px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Bot Status</button>
+ }}> Bot Status</MaterialButton>
  </div>
  </div>
  </div>

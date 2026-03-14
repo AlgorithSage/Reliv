@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -179,23 +180,23 @@ export default function AcnePhotoQRScreen() {
  )}
 
  {/* Demo button (simulate upload) */}
- <button
+ <MaterialButton
  onClick={simulateUpload}
  className="btn btn-primary btn-lg"
  style={{ width: '100%' }}
  >
  Demo: Simulate Photo Upload
- </button>
+ </MaterialButton>
 
  {/* Skip button */}
  {showSkip && status === 'waiting' && (
- <button
+ <MaterialButton
  onClick={() => navigate('/acne-manual')}
  className="btn btn-ghost"
  style={{ width: '100%' }}
  >
  Skip Photo Analysis →
- </button>
+ </MaterialButton>
  )}
  </div>
 

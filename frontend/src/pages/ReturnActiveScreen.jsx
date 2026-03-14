@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -175,11 +176,11 @@ export default function ReturnActiveScreen() {
  
  <span style={{ fontSize: 13, fontWeight: 700, color: '#4F46E5' }}>Bot: Online </span>
  </div>
- <button onClick={() => navigate('/bot-status')} style={{
+ <MaterialButton onClick={() => navigate('/bot-status')} style={{
  background: 'rgba(79,70,229,0.1)', border: '1px solid rgba(79,70,229,0.2)',
  borderRadius: 10, padding: '6px 14px', fontSize: 12, fontWeight: 700,
  color: '#4F46E5', cursor: 'pointer',
- }}>View →</button>
+ }}>View →</MaterialButton>
  </div>
  )}
 
@@ -194,7 +195,7 @@ export default function ReturnActiveScreen() {
  </div>
 
  {/* Buttons */}
- <div style={{ display: 'grid', gap: 14 }}><button onClick={handleContinue} style={{
+ <div style={{ display: 'grid', gap: 14 }}><MaterialButton onClick={handleContinue} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '20px',
  fontSize: 17, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -207,20 +208,20 @@ export default function ReturnActiveScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
+ </MaterialButton>
  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
- <button onClick={() => navigate('/update-settings')} style={{
+ <MaterialButton onClick={() => navigate('/update-settings')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Settings</button>
- <button onClick={() => navigate('/')} style={{
+ }}> Settings</MaterialButton>
+ <MaterialButton onClick={() => navigate('/')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Home</button>
+ }}> Home</MaterialButton>
  </div>
  </div>
  </div>

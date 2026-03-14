@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -126,7 +127,7 @@ export default function MealTimeScreen() {
  </div>
 
  {/* Continue Button */}
- <button
+ <MaterialButton
  onClick={handleContinue}
  style={{
  width: '100%',
@@ -153,7 +154,7 @@ export default function MealTimeScreen() {
  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
  <path d="M5 12h14M12 5l7 7-7 7" />
  </svg>
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

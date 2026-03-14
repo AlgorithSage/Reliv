@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from "react";
 import Icon from '../utils/Icon';
 import { useNavigate } from "react-router-dom";
@@ -268,7 +269,7 @@ export default function GroupTypeScreen() {
  </div>
 
  {/* Continue Button */}
- <button
+ <MaterialButton
  onClick={handleContinue}
  disabled={!selected || loading}
  style={{
@@ -309,7 +310,7 @@ export default function GroupTypeScreen() {
  ) : (
  <>Continue →</>
  )}
- </button>
+ </MaterialButton>
 
  {/* Trust Badges */}
  <div style={{

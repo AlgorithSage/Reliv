@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from '../utils/Icon';
@@ -260,7 +261,7 @@ export default function ProductShowcaseBoard() {
  <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
  {/* NAV */}
  <nav className="nav">
- <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
+ <MaterialButton className="nav-back" onClick={() => navigate(-1)}>← Back</MaterialButton>
  <div className="nav-logo">Shout<span>House</span></div>
  <div className="nav-pill">Public Board</div>
  </nav>
@@ -306,9 +307,9 @@ export default function ProductShowcaseBoard() {
 
  {/* CTA */}
  <div className="cta-section">
- <button className="cta-btn" onClick={() => navigate("/create-shoutout")}>
+ <MaterialButton className="cta-btn" onClick={() => navigate("/create-shoutout")}>
  Create MY Shoutout
- </button>
+ </MaterialButton>
  <p className="cta-sub">Only ₹100 · Takes 30 seconds · Seen by 500+ people</p>
  </div>
 

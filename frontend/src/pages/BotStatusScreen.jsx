@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -76,12 +77,12 @@ export default function BotStatusScreen() {
  transition: 'all 0.7s cubic-bezier(0.16,1,0.3,1)',
  }}>
  {/* Back */}
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
  borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
  fontSize: 14, fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start',
  backdropFilter: 'none',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
 
  {/* Status Card - Hero */}
  <div style={{
@@ -158,13 +159,13 @@ export default function BotStatusScreen() {
  </div>
  ))}
  </div>
- <button onClick={() => navigate('/bot-customize')} style={{
+ <MaterialButton onClick={() => navigate('/bot-customize')} style={{
  marginTop: 16, width: '100%',
  background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
  borderRadius: 14, padding: '14px', fontSize: 13, fontWeight: 600,
  color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
  backdropFilter: 'none', transition: 'all 0.2s',
- }}>Edit Settings</button>
+ }}>Edit Settings</MaterialButton>
  </div>
 
  {/* Warning */}
@@ -178,18 +179,18 @@ export default function BotStatusScreen() {
  </div>
 
  {/* Nav Buttons */}
- <div style={{ display: 'flex', gap: 12 }}><button onClick={() => navigate('/wa-preview')} style={{
+ <div style={{ display: 'flex', gap: 12 }}><MaterialButton onClick={() => navigate('/wa-preview')} style={{
  flex: 1, border: 'none', borderRadius: 16, padding: '16px',
  fontSize: 14, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
  boxShadow: '0 8px 30px rgba(37,211,102,0.25)',
- }}> WhatsApp</button>
- <button onClick={() => navigate('/')} style={{
+ }}> WhatsApp</MaterialButton>
+ <MaterialButton onClick={() => navigate('/')} style={{
  flex: 1, background: 'rgba(255,255,255,0.04)',
  border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '16px',
  fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
  backdropFilter: 'none',
- }}> Home</button>
+ }}> Home</MaterialButton>
  </div>
  </div>
 

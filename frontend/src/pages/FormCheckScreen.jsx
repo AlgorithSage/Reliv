@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -145,7 +146,7 @@ export default function FormCheckScreen() {
  </div>
 
  {/* Buttons */}
- <div style={{ display: 'grid', gap: 12 }}><button onClick={() => navigate('/todays-plan')} style={{
+ <div style={{ display: 'grid', gap: 12 }}><MaterialButton onClick={() => navigate('/todays-plan')} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -158,20 +159,20 @@ export default function FormCheckScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
+ </MaterialButton>
  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
- <button onClick={() => navigate('/make-easier')} style={{
+ <MaterialButton onClick={() => navigate('/make-easier')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Make Easier</button>
- <button onClick={() => navigate('/todays-plan')} style={{
+ }}> Make Easier</MaterialButton>
+ <MaterialButton onClick={() => navigate('/todays-plan')} style={{
  background: 'rgba(255,255,255,0.9)', backdropFilter: 'none',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#666', cursor: 'pointer',
  boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
- }}> Today's Plan</button>
+ }}> Today's Plan</MaterialButton>
  </div>
  </div>
  </div>

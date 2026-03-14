@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -225,7 +226,7 @@ export default function OTPScreen() {
  )}
 
  {/* Verify Button */}
- <button
+ <MaterialButton
  onClick={handleSubmit}
  disabled={loading || !isComplete}
  style={{
@@ -272,7 +273,7 @@ export default function OTPScreen() {
  ) : (
  'Verify & Continue'
  )}
- </button>
+ </MaterialButton>
 
  {/* Resend Link */}
  <div style={{
@@ -288,7 +289,7 @@ export default function OTPScreen() {
  Resend in {resendTimer}s
  </span>
  ) : (
- <button
+ <MaterialButton
  onClick={() => { setResendTimer(30); }}
  style={{
  background: 'none',
@@ -301,7 +302,7 @@ export default function OTPScreen() {
  }}
  >
  Resend OTP
- </button>
+ </MaterialButton>
  )}
  </div>
  </div>

@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
@@ -43,9 +44,9 @@ export default function ReturnTodayScreen() {
  </div>
 
  {/* Done Button */}
- <button onClick={() => navigate('/')} style={{ width: '100%', background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)', border: 'none', borderRadius: 14, padding: '18px', fontSize: 17, fontWeight: 700, color: '#FFFFFF', cursor: 'pointer', boxShadow: '6px 6px 16px rgba(0,0,0,0.15), -4px -4px 12px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
+ <MaterialButton onClick={() => navigate('/')} style={{ width: '100%', background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)', border: 'none', borderRadius: 14, padding: '18px', fontSize: 17, fontWeight: 700, color: '#FFFFFF', cursor: 'pointer', boxShadow: '6px 6px 16px rgba(0,0,0,0.15), -4px -4px 12px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
  Got It! Let's Go! <Icon name="launch" size={18} />
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

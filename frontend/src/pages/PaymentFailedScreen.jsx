@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -113,7 +114,7 @@ export default function PaymentFailedScreen() {
  </div>
 
  {/* Buttons */}
- <div style={{ display: 'grid', gap: 12 }}><button onClick={() => navigate(lastPayRoute)} style={{
+ <div style={{ display: 'grid', gap: 12 }}><MaterialButton onClick={() => navigate(lastPayRoute)} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -126,17 +127,17 @@ export default function PaymentFailedScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
- <button onClick={() => navigate('/group-type')} style={{
+ </MaterialButton>
+ <MaterialButton onClick={() => navigate('/group-type')} style={{
  width: '100%', background: 'rgba(0,0,0,0.03)',
  border: 'none', borderRadius: 16, padding: '14px',
  fontSize: 14, fontWeight: 600, color: '#444', cursor: 'pointer',
- }}>Choose Different Plan</button>
- <button onClick={() => navigate('/')} style={{
+ }}>Choose Different Plan</MaterialButton>
+ <MaterialButton onClick={() => navigate('/')} style={{
  width: '100%', background: 'transparent',
  border: 'none', borderRadius: 14, padding: '12px',
  fontSize: 13, fontWeight: 600, color: '#999', cursor: 'pointer',
- }}> Go Home</button>
+ }}> Go Home</MaterialButton>
  </div>
  </div>
 

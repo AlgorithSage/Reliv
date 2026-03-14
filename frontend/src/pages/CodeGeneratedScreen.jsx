@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -149,7 +150,7 @@ export default function CodeGeneratedScreen() {
  </div>
 
  {/* Continue */}
- <button onClick={() => navigate('/group-type')} style={{
+ <MaterialButton onClick={() => navigate('/group-type')} style={{
  width: '100%', border: 'none', borderRadius: 18, padding: '20px',
  fontSize: 17, fontWeight: 700, color: '#FFF', cursor: 'pointer',
  background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
@@ -162,7 +163,7 @@ export default function CodeGeneratedScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />
- </button>
+ </MaterialButton>
 
  {/* Countdown */}
  <div style={{ marginTop: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>

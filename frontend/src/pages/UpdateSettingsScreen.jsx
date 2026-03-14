@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -140,11 +141,11 @@ export default function UpdateSettingsScreen() {
  }}>
  {/* Header */}
  <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  width: 40, height: 40, borderRadius: 14, border: 'none',
  background: 'rgba(0,0,0,0.02)', cursor: 'pointer', display: 'flex',
  alignItems: 'center', justifyContent: 'center', fontSize: 18,
- }}>←</button>
+ }}>←</MaterialButton>
  <div>
  <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111' }}>Settings</h1>
  <p style={{ fontSize: 13, color: '#888' }}>Customize your reminders</p>
@@ -191,7 +192,7 @@ export default function UpdateSettingsScreen() {
  )}
 
  {/* Save Button */}
- <button onClick={handleSave} disabled={saving} style={{
+ <MaterialButton onClick={handleSave} disabled={saving} style={{
  width: '100%', marginTop: 28, border: 'none', borderRadius: 18, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: saving ? 'default' : 'pointer',
  background: saving
@@ -210,7 +211,7 @@ export default function UpdateSettingsScreen() {
  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
  animation: 'btnShimmer 2.5s infinite',
  }} />}
- </button>
+ </MaterialButton>
  </div>
 
  <style>{`

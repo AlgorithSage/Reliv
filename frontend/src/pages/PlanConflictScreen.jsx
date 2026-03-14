@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
@@ -44,7 +45,7 @@ export default function PlanConflictScreen() {
  </div>
 
  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
- <button
+ <MaterialButton
  onClick={() => navigate('/return-active')}
  style={{
  width: '100%',
@@ -60,9 +61,9 @@ export default function PlanConflictScreen() {
  }}
  >
  View My Current Plan
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/')}
  style={{
  width: '100%',
@@ -77,7 +78,7 @@ export default function PlanConflictScreen() {
  }}
  >
  Go Home
- </button>
+ </MaterialButton>
  </div>
  </div>
  </Layout>

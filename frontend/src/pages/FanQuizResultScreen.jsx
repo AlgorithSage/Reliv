@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -145,7 +146,7 @@ export default function FanQuizResultScreen() {
  </p>
 
  {/* Actions */}
- <div style={{ display: 'grid', gap: 14 }}><button
+ <div style={{ display: 'grid', gap: 14 }}><MaterialButton
  onClick={() => navigate('/daily-pay')}
  style={{
  width: '100%',
@@ -161,9 +162,9 @@ export default function FanQuizResultScreen() {
  }}
  >
  Get {info.name} Plan
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/fan-quiz-type')}
  style={{
  width: '100%',
@@ -178,7 +179,7 @@ export default function FanQuizResultScreen() {
  }}
  >
  Try Another Celebrity
- </button>
+ </MaterialButton>
  </div>
  </div>
 

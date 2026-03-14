@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -70,7 +71,7 @@ export default function KioskOfflineScreen() {
  </div>
 
  {/* Manual retry */}
- <button
+ <MaterialButton
  onClick={() => {
  setChecking(true);
  setTimeout(() => {
@@ -91,7 +92,7 @@ export default function KioskOfflineScreen() {
  }}
  >
  <Icon name="refresh" size={18} /> Retry Now
- </button>
+ </MaterialButton>
 
  <style>{`
  @keyframes float {

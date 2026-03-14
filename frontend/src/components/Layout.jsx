@@ -1,3 +1,4 @@
+import MaterialButton from './material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
@@ -57,7 +58,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
     }}>
       {/* Back Button — Neomorphic (uses stack-based LIFO goBack) */}
       {showBack && (
-       <button
+       <MaterialButton
         onClick={handleBack}
         style={{
          display: 'flex',
@@ -102,7 +103,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
          <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
         Back
-       </button>
+       </MaterialButton>
      )}
 
      {/* Logo & Brand */}
@@ -194,7 +195,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
        alignItems: 'center',
        gap: 12,
       }}>
-       <button
+       <MaterialButton
         onClick={() => navigate('/help')}
         style={{
          display: 'flex',
@@ -241,7 +242,7 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
         <path d="M12 17h.01"></path>
        </svg>
        Help
-      </button>
+      </MaterialButton>
      </div>
     </div>
    </header>

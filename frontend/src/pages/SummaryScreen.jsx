@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -156,7 +157,7 @@ export default function SummaryScreen() {
  </div>
 
  {/* Activate Button */}
- <button
+ <MaterialButton
  onClick={handleActivate}
  disabled={loading}
  style={{
@@ -193,7 +194,7 @@ export default function SummaryScreen() {
  Activate My Plan
  </>
  )}
- </button>
+ </MaterialButton>
  </div>
 
  {/* Trust Badges */}

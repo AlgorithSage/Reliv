@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -46,7 +47,7 @@ export default function WAPreviewScreen() {
  {/* Tab Buttons */}
  <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
  {tabs.map(t => (
- <button 
+ <MaterialButton 
  key={t.id} 
  onClick={() => setTab(t.id)} 
  style={{ 
@@ -63,7 +64,7 @@ export default function WAPreviewScreen() {
  }}
  >
  <Icon name={t.icon} size={18} /> {t.label}
- </button>
+ </MaterialButton>
  ))}
  </div>
 
@@ -157,7 +158,7 @@ export default function WAPreviewScreen() {
  </div>
 
  {/* Done Button */}
- <button 
+ <MaterialButton 
  onClick={() => navigate('/')} 
  style={{ 
  width: '100%', 
@@ -173,7 +174,7 @@ export default function WAPreviewScreen() {
  }}
  >
  Got It! Start My Journey →
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

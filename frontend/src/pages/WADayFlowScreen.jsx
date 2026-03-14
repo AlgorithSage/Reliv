@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { C } from '../utils/constants';
@@ -153,7 +154,7 @@ export default function WADayFlowScreen() {
  </div>
  
  {/* Back to Activation */}
- <button
+ <MaterialButton
  onClick={() => navigate('/activation')}
  style={{
  width: '100%',
@@ -169,9 +170,9 @@ export default function WADayFlowScreen() {
  }}
  >
  ← Back to Activation
- </button>
+ </MaterialButton>
  
- <button
+ <MaterialButton
  onClick={() => navigate('/return-active')}
  style={{
  width: '100%',
@@ -187,7 +188,7 @@ export default function WADayFlowScreen() {
  }}
  >
  <Icon name="refresh" size={18} /> See: What Kiosk Sees on Return Visit
- </button>
+ </MaterialButton>
  
  </div>
  </Layout>

@@ -1,3 +1,4 @@
+import MaterialButton from './components/material/MaterialButton';
 import { useState } from "react";
 
 /* ─── COLORS ─── */
@@ -724,8 +725,8 @@ export default function App() {
             <span style={{ fontSize:11, color:C.textDim, marginLeft:2 }}>Workflow</span>
           </div>
           <div style={{ display:"flex", gap:5 }}>
-            <button onClick={()=>{setCur("welcome");setHist(["welcome"])}} style={{ background:C.accent+"20", border:"none", color:C.accent, borderRadius:6, padding:"4px 11px", fontSize:11, fontWeight:700, cursor:"pointer" }}>↺ Reset</button>
-            {hist.length>1 && <button onClick={back} style={{ background:C.border, border:"none", color:C.textMid, borderRadius:6, padding:"4px 11px", fontSize:11, fontWeight:600, cursor:"pointer" }}>← Back</button>}
+            <MaterialButton onClick={()=>{setCur("welcome");setHist(["welcome"])}} style={{ background:C.accent+"20", border:"none", color:C.accent, borderRadius:6, padding:"4px 11px", fontSize:11, fontWeight:700, cursor:"pointer" }}>↺ Reset</MaterialButton>
+            {hist.length>1 && <MaterialButton onClick={back} style={{ background:C.border, border:"none", color:C.textMid, borderRadius:6, padding:"4px 11px", fontSize:11, fontWeight:600, cursor:"pointer" }}>← Back</MaterialButton>}
           </div>
         </div>
       </div>
@@ -800,7 +801,7 @@ export default function App() {
             <p style={{ fontSize:11, color:C.textDim, fontWeight:700, textTransform:"uppercase", letterSpacing:0.9, marginBottom:9 }}>What happens next →</p>
             <div style={{ display:"flex", flexDirection:"column", gap:7 }}>
               {node.paths.map((p,i)=>(
-                <button key={i} onClick={()=>go(p.next)} style={{
+                <MaterialButton key={i} onClick={()=>go(p.next)} style={{
                   background:p.color+"0e", border:`1px solid ${p.color}28`, borderRadius:12,
                   padding:"13px 17px", cursor:"pointer",
                   display:"flex", alignItems:"center", justifyContent:"space-between",
@@ -813,7 +814,7 @@ export default function App() {
                     {(W[p.next]?.title||"").slice(0,24)}
                     <svg width="15" height="15" viewBox="0 0 15 15"><path d="M3 7.5h7M8.5 5l2.5 2.5-2.5 2.5" stroke={p.color} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </span>
-                </button>
+                </MaterialButton>
               ))}
             </div>
           </div>
@@ -826,12 +827,12 @@ export default function App() {
             {Object.entries(W).map(([k,n])=>{
               const active=cur===k;
               const pc=PHASES[n.phase]?.color||C.accent;
-              return <button key={k} onClick={()=>go(k)} style={{
+              return <MaterialButton key={k} onClick={()=>go(k)} style={{
                 background:active?pc+"22":"transparent",
                 border:`1px solid ${active?pc+"50":C.border}`,
                 borderRadius:7, padding:"4px 9px", cursor:"pointer",
                 color:active?pc:C.textMid, fontSize:11.5, fontWeight:active?700:500,
-              }}>{n.icon} {n.title.slice(0,24)}</button>;
+              }}>{n.icon} {n.title.slice(0,24)}</MaterialButton>;
             })}
           </div>
         </div>

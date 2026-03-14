@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -126,7 +127,7 @@ export default function CoupleQuestionsScreen() {
  {q.options.map((opt) => {
  const isSelected = answers[q.id] === opt.value;
  return (
- <button
+ <MaterialButton
  key={opt.value}
  onClick={() => handleAnswer(q.id, opt.value)}
  style={{
@@ -158,7 +159,7 @@ export default function CoupleQuestionsScreen() {
  </svg>
  </div>
  )}
- </button>
+ </MaterialButton>
  );
  })}
  </div>
@@ -166,7 +167,7 @@ export default function CoupleQuestionsScreen() {
 
  {/* Continue Button */}
  {allAnswered && (
- <button
+ <MaterialButton
  onClick={handleContinue}
  style={{
  width: '100%',
@@ -184,7 +185,7 @@ export default function CoupleQuestionsScreen() {
  }}
  >
  Continue to Payment
- </button>
+ </MaterialButton>
  )}
  </div>
 

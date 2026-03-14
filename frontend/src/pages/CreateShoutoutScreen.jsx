@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from '../utils/Icon';
@@ -218,7 +219,7 @@ export default function CreateShoutoutScreen() {
  <div className="grid-lines" />
  <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
  <nav className="nav">
- <button className="nav-back" onClick={() => navigate("/")}>← Home</button>
+ <MaterialButton className="nav-back" onClick={() => navigate("/")}>← Home</MaterialButton>
  <div className="nav-logo">Shout<span>House</span></div>
  <div /></nav>
  <div className="form-wrap">
@@ -226,9 +227,9 @@ export default function CreateShoutoutScreen() {
  <div className="success-icon"></div>
  <div className="success-title">Shoutout Created!</div>
  <div className="success-sub">Your shoutout is now live and will appear on screens during idle time.</div>
- <button className="success-btn" onClick={() => navigate("/ProductShowcaseBoard")}>
+ <MaterialButton className="success-btn" onClick={() => navigate("/ProductShowcaseBoard")}>
  View Public Board
- </button>
+ </MaterialButton>
  </div>
  </div>
  </div>
@@ -246,7 +247,7 @@ export default function CreateShoutoutScreen() {
  <div style={{ minHeight: "100vh", position: "relative", zIndex: 1 }}>
  {/* NAV */}
  <nav className="nav">
- <button className="nav-back" onClick={() => navigate(-1)}>← Back</button>
+ <MaterialButton className="nav-back" onClick={() => navigate(-1)}>← Back</MaterialButton>
  <div className="nav-logo">Shout<span>House</span></div>
  <div /></nav>
 
@@ -265,14 +266,14 @@ export default function CreateShoutoutScreen() {
  <label className="field-label">Shoutout Type</label>
  <div className="type-row">
  {TYPES.map((t) => (
- <button
+ <MaterialButton
  key={t.id}
  className={`type-pill${form.type === t.id ? " on" : ""}`}
  onClick={() => setForm((f) => ({ ...f, type: t.id }))}
  type="button"
  >
  {t.label}
- </button>
+ </MaterialButton>
  ))}
  </div>
  </div>
@@ -297,9 +298,9 @@ export default function CreateShoutoutScreen() {
  />
  </div>
 
- <button className="submit-btn" onClick={handleSubmit}>
+ <MaterialButton className="submit-btn" onClick={handleSubmit}>
  <Icon name="launch" size={18} /> Publish Shoutout
- </button>
+ </MaterialButton>
 
  {/* Live Preview */}
  {form.name && (

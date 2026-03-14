@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -82,7 +83,7 @@ export default function AcneTreatmentScreen() {
  border: 'none',
  }}>
  {tabs.map((tab) => (
- <button
+ <MaterialButton
  key={tab.id}
  onClick={() => setActiveTab(tab.id)}
  style={{
@@ -102,7 +103,7 @@ export default function AcneTreatmentScreen() {
  }}
  >
  {tab.label}
- </button>
+ </MaterialButton>
  ))}
  </div>
 
@@ -221,7 +222,7 @@ export default function AcneTreatmentScreen() {
  </div>
 
  {/* Continue button */}
- <button
+ <MaterialButton
  onClick={() => navigate('/meal-freq')}
  style={{
  width: '100%',
@@ -237,7 +238,7 @@ export default function AcneTreatmentScreen() {
  }}
  >
  Continue Setup →
- </button>
+ </MaterialButton>
  </div>
 
  <style>{`

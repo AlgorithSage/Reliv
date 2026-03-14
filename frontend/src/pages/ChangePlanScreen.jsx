@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -93,7 +94,7 @@ export default function ChangePlanScreen() {
  {/* Plans */}
  <div style={{ display: 'grid', gap: 14, marginBottom: 28 }}>
  {plans.map((plan, i) => (
- <button key={plan.id} onClick={() => handleSelect(plan)}
+ <MaterialButton key={plan.id} onClick={() => handleSelect(plan)}
  disabled={plan.id === currentPlan}
  style={{
  width: '100%',
@@ -124,15 +125,15 @@ export default function ChangePlanScreen() {
  background: `${plan.color}10`, padding: '6px 12px', borderRadius: 10,
  border: `1px solid ${plan.color}15`,
  }}>{plan.price}</span>
- </button>
+ </MaterialButton>
  ))}
  </div>
 
- <button onClick={() => navigate(-1)} style={{
+ <MaterialButton onClick={() => navigate(-1)} style={{
  width: '100%', background: 'rgba(0,0,0,0.02)',
  border: 'none', borderRadius: 16, padding: '16px',
  fontSize: 15, fontWeight: 600, color: '#666', cursor: 'pointer',
- }}>← Back</button>
+ }}>← Back</MaterialButton>
  </div>
 
  <style>{`

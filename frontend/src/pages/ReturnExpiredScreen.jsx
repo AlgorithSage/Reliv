@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
@@ -110,7 +111,7 @@ export default function ReturnExpiredScreen() {
 
  {/* Action Buttons */}
  <div style={{ display: 'grid', gap: 14 }}>
- <button
+ <MaterialButton
  onClick={() => navigate('/renew-plan')}
  style={{
  width: '100%',
@@ -130,9 +131,9 @@ export default function ReturnExpiredScreen() {
  }}
  >
  Renew for ₹29/week
- </button>
+ </MaterialButton>
 
- <button
+ <MaterialButton
  onClick={() => navigate('/change-plan')}
  style={{
  width: '100%',
@@ -147,7 +148,7 @@ export default function ReturnExpiredScreen() {
  }}
  >
  Try a Different Plan
- </button>
+ </MaterialButton>
  </div>
  </div>
  </div>

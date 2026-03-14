@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -19,7 +20,7 @@ export default function MealFreqScreen() {
  <div style={{ maxWidth: 500, margin: '0 auto' }}>
  <div style={{ display: 'grid', gap: 14, marginBottom: 28 }}>
  {mealOptions.map(m => (
- <button 
+ <MaterialButton 
  key={m.id} 
  onClick={() => setSelected(m.id)} 
  style={{ 
@@ -67,7 +68,7 @@ export default function MealFreqScreen() {
  }}>{meal}</span>
  ))}
  </div>
- </button>
+ </MaterialButton>
  ))}
  </div>
 
@@ -87,7 +88,7 @@ export default function MealFreqScreen() {
  </div>
 
  {/* Continue Button */}
- <button 
+ <MaterialButton 
  onClick={() => { localStorage.setItem('mealFreq', selected); navigate('/meal-times'); }} 
  disabled={!selected} 
  style={{ 
@@ -105,7 +106,7 @@ export default function MealFreqScreen() {
  }}
  >
  Set Meal Times →
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

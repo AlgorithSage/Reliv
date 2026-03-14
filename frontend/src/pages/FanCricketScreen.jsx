@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -294,7 +295,7 @@ export default function FanCricketScreen() {
  </div>
 
  {/* Accept Button */}
- <button
+ <MaterialButton
  onClick={handleAcceptChallenge}
  style={{
  width: '100%',
@@ -312,10 +313,10 @@ export default function FanCricketScreen() {
  }}
  >
  Yes! I'm Ready for the Challenge
- </button>
+ </MaterialButton>
 
  {/* Decline Button */}
- <button
+ <MaterialButton
  onClick={handleDeclineChallenge}
  style={{
  width: '100%',
@@ -331,7 +332,7 @@ export default function FanCricketScreen() {
  }}
  >
  No thanks, I'll go with regular plans
- </button>
+ </MaterialButton>
 
  {/* Price Tag */}
  <div style={{

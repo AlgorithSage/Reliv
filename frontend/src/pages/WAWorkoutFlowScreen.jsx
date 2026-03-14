@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -69,7 +70,7 @@ export default function WAWorkoutFlowScreen() {
  borderRadius: 12,
  padding: 4,
  marginBottom: 20
- }}><button
+ }}><MaterialButton
  onClick={() => setActiveTab('done')}
  style={{
  flex: 1,
@@ -85,8 +86,8 @@ export default function WAWorkoutFlowScreen() {
  }}
  >
  If Done
- </button>
- <button
+ </MaterialButton>
+ <MaterialButton
  onClick={() => setActiveTab('notdone')}
  style={{
  flex: 1,
@@ -102,7 +103,7 @@ export default function WAWorkoutFlowScreen() {
  }}
  >
  If Not Done
- </button>
+ </MaterialButton>
  </div>
  
  {/* Chat Preview */}
@@ -192,7 +193,7 @@ export default function WAWorkoutFlowScreen() {
  </div>
  
  {/* Navigation */}
- <div style={{ display: 'flex', gap: 12 }}><button
+ <div style={{ display: 'flex', gap: 12 }}><MaterialButton
  onClick={() => navigate('/wa-meal-flow')}
  style={{
  flex: 1,
@@ -207,8 +208,8 @@ export default function WAWorkoutFlowScreen() {
  }}
  >
  Meal Flow
- </button>
- <button
+ </MaterialButton>
+ <MaterialButton
  onClick={() => navigate('/wa-day-flow')}
  style={{
  flex: 1,
@@ -223,7 +224,7 @@ export default function WAWorkoutFlowScreen() {
  }}
  >
  Full Day →
- </button>
+ </MaterialButton>
  </div>
  
  </div>

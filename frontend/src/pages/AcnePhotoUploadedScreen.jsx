@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -155,7 +156,7 @@ export default function AcnePhotoUploadedScreen() {
  Photo Privacy
  </h3>
  <div style={{ display: 'flex', gap: 12 }}>
- <button
+ <MaterialButton
  onClick={() => setKeepPhoto(true)}
  style={{
  flex: 1,
@@ -172,8 +173,8 @@ export default function AcnePhotoUploadedScreen() {
  >
  Keep Photo
  <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>For progress tracking</div>
- </button>
- <button
+ </MaterialButton>
+ <MaterialButton
  onClick={() => setKeepPhoto(false)}
  style={{
  flex: 1,
@@ -190,12 +191,12 @@ export default function AcnePhotoUploadedScreen() {
  >
  <Icon name="trash" size={18} /> Delete Photo
  <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 4 }}>Remove after analysis</div>
- </button>
+ </MaterialButton>
  </div>
  </div>
 
  {/* CTA */}
- <button
+ <MaterialButton
  onClick={() => {
  localStorage.setItem('acneKeepPhoto', keepPhoto ? 'yes' : 'no');
  navigate('/acne-treatment');
@@ -217,7 +218,7 @@ export default function AcnePhotoUploadedScreen() {
  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
  >
  Get My Skincare Routine →
- </button>
+ </MaterialButton>
  </div>
  </Layout>
  );

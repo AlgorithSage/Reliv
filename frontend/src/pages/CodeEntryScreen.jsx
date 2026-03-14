@@ -223,7 +223,7 @@ export default function CodeEntryScreen() {
  </div>
 
  {/* New User Button */}
- <button
+ <MaterialButton
   onClick={() => navigate('/phone')}
   style={{
    width: '100%',
@@ -266,7 +266,7 @@ export default function CodeEntryScreen() {
   }}
  >
   Start Fresh with Phone Number
- </button>
+ </MaterialButton>
  </div>
 
  {/* Help Text */}

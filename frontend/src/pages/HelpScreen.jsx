@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useRef, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Icon from '../utils/Icon';
@@ -124,7 +125,7 @@ export default function HelpScreen() {
                     transition: 'all 0.3s ease',
                   }}
                 >
-                  <button
+                  <MaterialButton
                     onClick={() => setExpandedId(isExpanded ? null : faq.id)}
                     style={{
                       width: '100%',
@@ -156,7 +157,7 @@ export default function HelpScreen() {
                     }}>
                       <Icon name="chevron_down" size={24} />
                     </div>
-                  </button>
+                  </MaterialButton>
                   
                   <div style={{
                     maxHeight: isExpanded ? 500 : 0,

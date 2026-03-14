@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { C, api } from "../utils/constants";
@@ -138,7 +139,7 @@ export default function WelcomeScreen() {
  }} />
  ))}
  </div>
- <button
+ <MaterialButton
  onClick={() => { setInactive(false); navigate('/ProductShowcaseBoard'); }}
  style={{
  background: 'linear-gradient(135deg,#F97316,#F4610A)',
@@ -148,7 +149,7 @@ export default function WelcomeScreen() {
  }}
  >
  <Icon name="launch" size={18} /> See Public Board
- </button>
+ </MaterialButton>
  <p style={{ color: '#fff', fontSize: 13, marginTop: 10, opacity: 0.8 }}>Tap anywhere to return</p>
  </div>
  </div>
@@ -315,7 +316,7 @@ export default function WelcomeScreen() {
  </div>
  
  {/* Login Button - Premium Glass */}
- <button
+ <MaterialButton
  onClick={() => navigate('/code')}
  style={{
  background: 'rgba(255, 255, 255, 0.7)',
@@ -347,7 +348,7 @@ export default function WelcomeScreen() {
  }}
  >
  Login with Code
- </button>
+ </MaterialButton>
  </div>
  </header>
 
@@ -481,7 +482,7 @@ export default function WelcomeScreen() {
  {/* CTA Buttons */}
  <div style={{ display: 'flex', gap: 20, marginBottom: 56 }}>
  {/* Primary CTA */}
- <button
+ <MaterialButton
  onClick={() => navigate("/phone")}
  style={{
  position: 'relative',
@@ -523,10 +524,10 @@ export default function WelcomeScreen() {
  <svg style={{ position: 'relative', zIndex: 1 }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
  <path d="M5 12h14M12 5l7 7-7 7" />
  </svg>
- </button>
+ </MaterialButton>
 
  {/* Secondary CTA */}
- <button
+ <MaterialButton
  onClick={() => navigate('/code')}
  style={{
  display: 'flex',
@@ -559,10 +560,10 @@ export default function WelcomeScreen() {
  }}
  >
  Returning User
- </button>
+ </MaterialButton>
 
  {/* Public Board CTA */}
- <button
+ <MaterialButton
  onClick={() => navigate('/ProductShowcaseBoard')}
  style={{
  display: 'flex',
@@ -591,7 +592,7 @@ export default function WelcomeScreen() {
  }}
  >
  Public Shoutout Board
- </button>
+ </MaterialButton>
  </div>
 
  {/* Trust Badges */}

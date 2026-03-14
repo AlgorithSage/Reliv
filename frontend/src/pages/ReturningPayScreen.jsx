@@ -1,3 +1,4 @@
+import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -101,7 +102,7 @@ export default function ReturningPayScreen() {
  </div>
 
  {/* Pay Button */}
- <button
+ <MaterialButton
  onClick={handlePay}
  disabled={loading}
  style={{
@@ -136,7 +137,7 @@ export default function ReturningPayScreen() {
  ) : (
  ' Pay ₹29 & Continue'
  )}
- </button>
+ </MaterialButton>
  </div>
 
  {/* Trust */}
