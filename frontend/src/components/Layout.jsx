@@ -74,20 +74,26 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
          fontFamily: 'inherit',
         }}
         onMouseEnter={(e) => {
-         e.currentTarget.style.transform = 'translateX(-4px)';
-         e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.12), -6px -6px 14px rgba(255, 255, 255, 0.7)';
+         e.currentTarget.style.background = '#F06922';
+         e.currentTarget.style.color = '#fff';
+         e.currentTarget.style.transform = 'translateY(-2px)';
+         e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
         }}
         onMouseLeave={(e) => {
-         e.currentTarget.style.transform = 'translateX(0)';
+         e.currentTarget.style.background = '#EFECE9';
+         e.currentTarget.style.color = '#F06922';
+         e.currentTarget.style.transform = 'translateY(0)';
          e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
         }}
         onMouseDown={(e) => {
          e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
-         e.currentTarget.style.transform = 'translateX(0) scale(0.97)';
+         e.currentTarget.style.transform = 'translateY(0) scale(0.97)';
         }}
         onMouseUp={(e) => {
-         e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.6)';
-         e.currentTarget.style.transform = 'translateX(0)';
+         e.currentTarget.style.background = '#F06922';
+         e.currentTarget.style.color = '#fff';
+         e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
+         e.currentTarget.style.transform = 'translateY(0)';
         }}
        >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -190,13 +196,13 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
        style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 8,
+        gap: 10,
         background: '#EFECE9',
         border: 'none',
-        borderRadius: 12,
-        padding: '10px 16px',
-        fontSize: 13,
-        fontWeight: 600,
+        borderRadius: 16,
+        padding: '14px 28px',
+        fontSize: 17,
+        fontWeight: 700,
         color: '#666',
         cursor: 'pointer',
         transition: 'all 0.3s ease',
@@ -204,14 +210,33 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
         fontFamily: 'inherit',
        }}
        onMouseEnter={(e) => {
-        e.currentTarget.style.color = '#F06922';
-        e.currentTarget.style.boxShadow = '6px 6px 14px rgba(0, 0, 0, 0.1), -6px -6px 14px rgba(255, 255, 255, 0.7)';
+        e.currentTarget.style.background = '#F06922';
+        e.currentTarget.style.color = '#fff';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
        }}
        onMouseLeave={(e) => {
+        e.currentTarget.style.background = '#EFECE9';
         e.currentTarget.style.color = '#666';
+        e.currentTarget.style.transform = 'translateY(0)';
         e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)';
        }}
+       onMouseDown={(e) => {
+        e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
+        e.currentTarget.style.transform = 'translateY(0) scale(0.97)';
+       }}
+       onMouseUp={(e) => {
+        e.currentTarget.style.background = '#F06922';
+        e.currentTarget.style.color = '#fff';
+        e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
+        e.currentTarget.style.transform = 'translateY(0)';
+       }}
       >
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <path d="M12 17h.01"></path>
+       </svg>
        Help
       </button>
      </div>
