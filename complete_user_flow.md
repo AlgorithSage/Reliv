@@ -1,4 +1,5 @@
 # 🔄 FITBOT KIOSK — COMPLETE USER FLOW
+
 ## All 51 Screens Connected with Navigation Logic
 
 **Version:** 2.0  
@@ -1139,26 +1140,31 @@ Start → 1 → 6 → 9 → 42 → 39 → Exit
 ## ERROR SCREENS
 
 ### Screen 47: Payment Failed
+
 - **Trigger:** Razorpay payment failure
 - **Routes to:** Retry payment or go back
 - **Backend:** No changes, payment not processed
 
 ### Screen 48: Trial Used
+
 - **Trigger:** Phone already used free trial
 - **Routes to:** Welcome screen
 - **Message:** "One trial per phone. Fair for everyone!"
 
 ### Screen 49: Invalid Referral
+
 - **Trigger:** Referral code not found (optional, inline error)
 - **Routes to:** Continue without referral
 - **Message:** "Invalid code. Continue without bonus."
 
 ### Screen 50: Kiosk Offline
+
 - **Trigger:** Backend unreachable
 - **Routes to:** Retry connection
 - **Message:** "Connection lost. Check network."
 
 ### Screen 51: Plan Conflict
+
 - **Trigger:** User already in another group
 - **Routes to:** Group selection
 - **Message:** "You're already in a plan. Choose new one."

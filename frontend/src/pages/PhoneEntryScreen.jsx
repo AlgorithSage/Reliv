@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../utils/firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
@@ -14,25 +16,46 @@ export default function PhoneEntryScreen() {
  const [error, setError] = useState('');
  const [focused, setFocused] = useState(null);
 
- const handleSubmit = async () => {
- if (phone.length !== 10) return setError('Enter valid 10-digit number');
- setLoading(true);
- setError('');
- try {
- const res = await api.call('/auth/send-otp', {
- method: 'POST',
- body: JSON.stringify({ phone: `+91${phone}`, referralCode: referral })
- });
- if (res.alreadyUsedTrial) navigate('/returning-pay', { state: { phone: `+91${phone}` } });
- else navigate('/otp', { state: { phone: `+91${phone}`, sessionId: res.sessionId } });
- } catch (err) {
- navigate('/otp', { state: { phone: `+91${phone}`, sessionId: 'demo' } });
- } finally {
- setLoading(false);
- }
- };
+ 
+  const setupRecaptcha = () => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
+    }
+  };
 
- return (
+  const handleSubmit = async () => {
+    if (phone.length !== 10) return setError('Enter valid 10-digit number');
+    setLoading(true);
+    setError('');
+    
+    // DEMO bypass
+    if (phone === '9999999999') {
+      window.confirmationResult = { confirm: () => ({ user: { uid: 'demo-user' }}) };
+      navigate('/otp', { state: { phone: `+91${phone}` } });
+      return;
+    }
+    
+    try {
+      setupRecaptcha();
+      const appVerifier = window.recaptchaVerifier;
+      const phoneNumber = `+91${phone}`;
+      
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
+      
+      navigate('/otp', { state: { phone: phoneNumber } });
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Failed to send OTP. Try again.');
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+return (
  <Layout title="Let's Get Started" subtitle="Enter your phone number to begin your health transformation" showBack>
  <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
  <div style={{
@@ -179,6 +202,9 @@ export default function PhoneEntryScreen() {
  </div>
  )}
 
+ {/* reCAPTCHA Container */}
+ <div id="recaptcha-container" style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}></div>
+
  {/* Submit Button */}
  <MaterialButton
  variant="filled"
@@ -222,6 +248,6 @@ export default function PhoneEntryScreen() {
  to { transform: rotate(360deg); }
  }
  `}</style>
- </Layout>
+     </Layout>
  );
 }

@@ -14,12 +14,12 @@ export default function FanQuizResultScreen() {
 
  const celebrity = localStorage.getItem('celebrity') || 'virat';
  const celebInfo = {
- virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF' },
- alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777' },
- salman: { name: 'Salman Khan', emoji: 'muscle', color: '#16A34A' },
- deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#9333EA' },
- hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#DC2626' },
- priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F59E0B' },
+ virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#F06922' },
+ alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#F06922' },
+ salman: { name: 'Salman Khan', emoji: 'muscle', color: '#F06922' },
+ deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#F06922' },
+ hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#F06922' },
+ priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F06922' },
  };
  const info = celebInfo[celebrity] || celebInfo.virat;
 

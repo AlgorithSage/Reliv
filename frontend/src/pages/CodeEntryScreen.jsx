@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
+import { auth, db } from '../utils/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { C } from '../utils/constants';
 import Icon from '../utils/Icon';
 import MaterialButton from '../components/material/MaterialButton';
@@ -54,21 +56,48 @@ export default function CodeEntryScreen() {
  setLoading(true);
  setError('');
 
- // Demo codes for testing
- const demoCodes = ['9876', '6241', '1234'];
+  // Demo codes for testing immediately
+  const demoCodes = ['9876', '6241', '1234'];
+  if (demoCodes.includes(accessCode)) {
+    setTimeout(() => {
+      localStorage.setItem('accessCode', accessCode);
+      localStorage.setItem('userType', 'returning');
+      // Randomly route to different return states for demo
+      const routes = ['/return-active', '/return-expired', '/return-daily-again'];
+      navigate(routes[Math.floor(Math.random() * routes.length)]);
+    }, 800);
+    return;
+  }
 
- setTimeout(() => {
- if (demoCodes.includes(accessCode)) {
- localStorage.setItem('accessCode', accessCode);
- localStorage.setItem('userType', 'returning');
- // Randomly route to different return states for demo
- const routes = ['/return-active', '/return-expired', '/return-daily-again'];
- navigate(routes[Math.floor(Math.random() * routes.length)]);
- } else {
- setError('Code not found');
- setLoading(false);
- }
- }, 800);
+  try {
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, where('accessCode', '==', accessCode));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      setError('Code not found');
+      setLoading(false);
+      return;
+    }
+
+    const userData = querySnapshot.docs[0].data();
+    
+    // Save info
+    localStorage.setItem('accessCode', accessCode);
+    localStorage.setItem('userId', userData.uid);
+    localStorage.setItem('userType', 'returning');
+    
+    // Quick route based on their active plan
+    if (userData.subscriptionStatus === 'active') {
+      navigate('/return-active');
+    } else {
+      navigate('/return-expired');
+    }
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    setError('Network error. Check connection.');
+    setLoading(false);
+  }
  };
 
  const isComplete = code.every(d => d);

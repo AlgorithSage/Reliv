@@ -12,7 +12,7 @@ export default function FriendAddScreen() {
  const [focused, setFocused] = useState(null);
  
  useEffect(() => {
- const size = parseInt(localStorage.getItem('friendSize') || '3');
+ const size = parseInt(localStorage.getItem('friendCount') || '3');
  setFriendSize(size);
  // Create phone slots for friends (excluding self)
  setPhones(Array(size - 1).fill(''));
@@ -52,7 +52,7 @@ export default function FriendAddScreen() {
  width: 48,
  height: 48,
  borderRadius: 12,
- background: `${C.success}15`,
+ background: `${C.primary}15`,
  display: 'flex',
  alignItems: 'center',
  justifyContent: 'center',
@@ -62,7 +62,7 @@ export default function FriendAddScreen() {
  </div>
  <div>
  <p style={{ fontSize: 12, color: C.textMid }}>Member 1 (You)</p>
- <p style={{ fontSize: 16, fontWeight: 600, color: C.success }}>+91 XXXXX XXXXX</p>
+ <p style={{ fontSize: 16, fontWeight: 600, color: C.primary }}>+91 XXXXX XXXXX</p>
  </div>
  </div>
  <div style={{
@@ -112,7 +112,7 @@ export default function FriendAddScreen() {
  style={{ 
  flex: 1, 
  background: C.bgLight, 
- border: `2px solid ${focused === index ? C.primary : phone.length === 10 ? C.success : C.border}`, 
+ border: `2px solid ${focused === index ? C.primary : phone.length === 10 ? C.primary : C.border}`, 
  borderRadius: 12, 
  padding: '16px', 
  fontSize: 16, 
@@ -141,7 +141,7 @@ export default function FriendAddScreen() {
  </div>
  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
  <span style={{ fontSize: 14, color: C.textMid }}>Per person</span>
- <span style={{ fontSize: 14, fontWeight: 600, color: C.success }}>₹{pricePerPerson}/week</span>
+ <span style={{ fontSize: 14, fontWeight: 600, color: C.primary }}>₹{pricePerPerson}/week</span>
  </div>
  </div>
  

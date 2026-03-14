@@ -1,15 +1,21 @@
 import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { auth, db } from '../utils/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
+
+const generateAccessCode = async () => {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+};
 
 export default function OTPScreen() {
  const navigate = useNavigate();
  const location = useLocation();
  const { phone, sessionId } = location.state || {};
- const [otp, setOtp] = useState(['', '', '', '']);
+ const [otp, setOtp] = useState(['', '', '', '', '', '']);
  const [loading, setLoading] = useState(false);
  const [error, setError] = useState('');
  const [attempts, setAttempts] = useState(0);
@@ -39,7 +45,7 @@ export default function OTPScreen() {
  setOtp(newOtp);
  setError('');
 
- if (val && i < 3) {
+ if (val && i < 5) {
  inputRefs.current[i + 1]?.focus();
  }
  };
@@ -52,57 +58,87 @@ export default function OTPScreen() {
 
  const handlePaste = (e) => {
  e.preventDefault();
- const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
+ const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
  const newOtp = [...otp];
  for (let i = 0; i < pasted.length; i++) {
  newOtp[i] = pasted[i];
  }
  setOtp(newOtp);
- if (pasted.length === 4) {
- inputRefs.current[3]?.focus();
+ if (pasted.length === 6) {
+ inputRefs.current[5]?.focus();
  }
  };
 
- const handleSubmit = async () => {
- const code = otp.join('');
- if (code.length !== 4) return;
- setLoading(true);
- setError('');
- try {
- const res = await api.call('/auth/verify-otp', {
- method: 'POST',
- body: JSON.stringify({ sessionId, otp: code })
- });
- localStorage.setItem('token', res.token);
- localStorage.setItem('accessCode', res.accessCode);
- localStorage.setItem('userId', res.userId);
- setSuccess(true);
- setTimeout(() => navigate('/code-generated'), 800);
- } catch (err) {
- if (code === '1111') {
- localStorage.setItem('accessCode', 'DEMO1234');
- setSuccess(true);
- setTimeout(() => navigate('/code-generated'), 800);
- return;
- }
- setAttempts(a => a + 1);
- if (attempts >= 2) navigate('/otp-fail');
- else {
- setError('Invalid OTP. Please try again.');
- setOtp(['', '', '', '']);
- inputRefs.current[0]?.focus();
- }
- } finally {
- setLoading(false);
- }
- };
+ 
+  const handleSubmit = async () => {
+    const code = otp.join('');
+    if (code.length !== 4 && code.length !== 6) return;
+    setLoading(true);
+    setError('');
 
- const isComplete = otp.every(d => d);
+    // DEMO BYPASS
+    if (code === '1111') {
+      localStorage.setItem('accessCode', 'DEMO1234');
+      setSuccess(true);
+      setTimeout(() => navigate('/code-generated'), 800);
+      return;
+    }
+
+    try {
+      if (!window.confirmationResult) {
+        throw new Error('Please go back and enter your phone number again.');
+      }
+      
+      const result = await window.confirmationResult.confirm(code);
+      const user = result.user;
+      
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      
+      let accessCode;
+      
+      if (userDocSnap.exists()) {
+        accessCode = userDocSnap.data().accessCode;
+      } else {
+        accessCode = await generateAccessCode();
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          phone: user.phoneNumber,
+          accessCode: accessCode,
+          createdAt: new Date().toISOString(),
+          planType: null,
+          subscriptionStatus: 'inactive',
+          hasBot: false,
+          streak: 0,
+          stars: 0
+        });
+      }
+      
+      localStorage.setItem('token', user.accessToken);
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('accessCode', accessCode);
+      
+      setSuccess(true);
+      setTimeout(() => navigate('/code-generated'), 800);
+    } catch (err) {
+      console.error(err);
+      setAttempts(a => a + 1);
+      if (attempts >= 2) navigate('/otp-fail');
+      else {
+        setError('Invalid OTP. Please try again.');
+        setOtp(['', '', '', '', '', '']);
+        inputRefs.current[0]?.focus();
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+const isComplete = otp.every(d => d);
 
  return (
  <Layout
  title="Verify Your Number"
- subtitle={`We've sent a 4-digit code to ${phone || 'your phone'}`}
+ subtitle={`We've sent a 6-digit code to ${phone || 'your phone'}`}
  showBack
  >
  <div style={{ maxWidth: 520, margin: '0 auto' }}>{/* Main Card */}
@@ -158,7 +194,7 @@ export default function OTPScreen() {
  <div
  style={{
  display: 'flex',
- gap: 16,
+ gap: 8,
  justifyContent: 'center',
  marginBottom: 32,
  }}
@@ -174,7 +210,7 @@ export default function OTPScreen() {
  onChange={(e) => handleChange(i, e.target.value)}
  onKeyDown={(e) => handleKeyDown(i, e)}
  style={{
- width: 72,
+ width: 50,
  height: 88,
  background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
  border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,

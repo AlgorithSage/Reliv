@@ -19,7 +19,7 @@ export default function FanCricketScreen() {
  const categoryData = {
  '/fan-cricket': {
  title: 'Pick Your Cricketer',
- color: '#1E40AF',
+ color: '#F06922',
  players: [
  { id: 'dhoni', name: 'MS Dhoni', subtitle: 'Captain Cool', price: 10, emoji: 'cricket_bat', strength: 'Sharp Mind & Leadership' },
  { id: 'kohli', name: 'Virat Kohli', subtitle: 'King Kohli', price: 12, emoji: 'muscle', strength: 'Speed & Stamina' },
@@ -28,7 +28,7 @@ export default function FanCricketScreen() {
  },
  '/fan-football': {
  title: 'Pick Your Footballer',
- color: '#16A34A',
+ color: '#F06922',
  players: [
  { id: 'ronaldo', name: 'Cristiano Ronaldo', subtitle: 'CR7', price: 15, emoji: 'football', strength: 'Speed & Stamina' },
  { id: 'messi', name: 'Lionel Messi', subtitle: 'The GOAT', price: 15, emoji: 'goat_messi', strength: 'Sharp Mind & Agility' },
@@ -37,7 +37,7 @@ export default function FanCricketScreen() {
  },
  '/fan-singer': {
  title: 'Pick Your Singer',
- color: '#9333EA',
+ color: '#F06922',
  players: [
  { id: 'arijit', name: 'Arijit Singh', subtitle: 'Voice of Hearts', price: 8, emoji: 'microphone', strength: 'Calm & Focus' },
  { id: 'badshah', name: 'Badshah', subtitle: 'Rap King', price: 11, emoji: 'music_note', strength: 'Energy & Stamina' },
@@ -46,7 +46,7 @@ export default function FanCricketScreen() {
  },
  '/fan-bollywood': {
  title: 'Pick Your Star',
- color: '#DC2626',
+ color: '#F06922',
  players: [
  { id: 'srk', name: 'Shah Rukh Khan', subtitle: 'King Khan', price: 14, emoji: 'crown', strength: 'Discipline & Transformation' },
  { id: 'salman', name: 'Salman Khan', subtitle: 'Bhai', price: 12, emoji: 'muscle', strength: 'Muscle Building' },
@@ -272,25 +272,25 @@ export default function FanCricketScreen() {
 
  {/* Warning Message */}
  <div style={{
- background: '#FEF3C7',
+ background: '#FFF5EB',
  borderRadius: 16,
  padding: '20px',
  marginBottom: 28,
  border: '1px solid #FCD34D',
  }}><p style={{
  fontSize: 15,
- color: '#92400E',
+ color: '#7C2D12',
  lineHeight: 1.6,
  }}>
  <strong>Training like {selectedPlayer.name}</strong> will be <strong>very difficult!</strong>
  </p>
  <p style={{
  fontSize: 14,
- color: '#B45309',
+ color: '#9A3412',
  marginTop: 12,
  lineHeight: 1.5,
  }}>
- But if you follow even <strong>half of it</strong>, you'll see a <strong style={{ color: '#059669' }}>super good transformation!</strong>
+ But if you follow even <strong>half of it</strong>, you'll see a <strong style={{ color: '#F06922' }}>super good transformation!</strong>
  </p>
  </div>
 
@@ -338,11 +338,11 @@ export default function FanCricketScreen() {
  <div style={{
  marginTop: 20,
  padding: '12px',
- background: '#F0FDF4',
+ background: '#FFF5EB',
  borderRadius: 12,
- border: '1px solid #BBF7D0',
+ border: '1px solid #FDDBB5',
  }}>
- <span style={{ fontSize: 14, color: '#16A34A', fontWeight: 600 }}>
+ <span style={{ fontSize: 14, color: '#F06922', fontWeight: 600 }}>
  Today's challenge: ₹{selectedPlayer.price} only
  </span>
  </div>

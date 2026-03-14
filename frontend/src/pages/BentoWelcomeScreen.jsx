@@ -263,7 +263,18 @@ export default function BentoWelcomeScreen() {
      </div>
     </div>
 
-    {/* ── TESTIMONIAL REMOVED to expand bottom cards ── */}
+    {/* ── 6. SHOUTOUT — Full width row ── */}
+    <div
+     className="bento-tile bento-tile--shoutout bento-tile--delay-6"
+     onClick={() => navigate("/ProductShowcaseBoard")}
+     style={{ cursor: "pointer" }}
+    >
+     <div className="bento-shoutout__content">
+      <span className="bento-shoutout__emoji">🎉</span>
+      <span className="bento-shoutout__text">Public Shoutout Board</span>
+      <Icon name="arrow_forward" size={20} color="#F06922" />
+     </div>
+    </div>
     </div>
 
    {/* Floating login button */}

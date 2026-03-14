@@ -16,7 +16,7 @@ export default function FanQuizModeScreen() {
    title: 'Easy Mode',
    desc: 'Relaxed version with flexible timing',
    icon: 'smile',
-   color: '#22C55E',
+   color: '#FF8C4B',
    price: '₹7',
   },
   {
@@ -24,7 +24,7 @@ export default function FanQuizModeScreen() {
    title: 'Standard Mode',
    desc: 'Balanced celebrity-style routine',
    icon: 'muscle',
-   color: '#3B82F6',
+   color: '#F06922',
    price: '₹12',
    popular: true,
   },
@@ -33,7 +33,7 @@ export default function FanQuizModeScreen() {
    title: 'Extreme Mode',
    desc: 'Full celebrity workout + diet',
    icon: 'fire',
-   color: '#EF4444',
+   color: '#E85C25',
    price: '₹15',
   },
  ];

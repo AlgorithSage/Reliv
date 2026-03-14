@@ -10,12 +10,12 @@ export default function FanQuizDetailsScreen() {
 
  const celebrity = localStorage.getItem('celebrity') || 'virat';
  const celebInfo = {
- virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF', style: 'Fitness King' },
- alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777', style: 'Lean & Graceful' },
- salman: { name: 'Salman Khan', emoji: 'muscle', color: '#16A34A', style: 'Muscle Mode' },
- deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#9333EA', style: 'Tall & Toned' },
- hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#DC2626', style: 'Greek God' },
- priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F59E0B', style: 'Global Star' },
+ virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#F06922', style: 'Fitness King' },
+ alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#F06922', style: 'Lean & Graceful' },
+ salman: { name: 'Salman Khan', emoji: 'muscle', color: '#F06922', style: 'Muscle Mode' },
+ deepika: { name: 'Deepika Padukone', emoji: 'sparkle', color: '#F06922', style: 'Tall & Toned' },
+ hrithik: { name: 'Hrithik Roshan', emoji: 'fire', color: '#F06922', style: 'Greek God' },
+ priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', color: '#F06922', style: 'Global Star' },
  };
  const info = celebInfo[celebrity] || celebInfo.virat;
 

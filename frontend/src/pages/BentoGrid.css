@@ -132,6 +132,7 @@
 .bento-tile--delay-4 { animation-delay: 0.26s; }
 .bento-tile--delay-5 { animation-delay: 0.33s; }
 .bento-tile--delay-6 { animation-delay: 0.40s; }
+.bento-tile--delay-7 { animation-delay: 0.47s; }
 
 /* ── Tile label ── */
 .bento-tile__label {
@@ -653,7 +654,47 @@
   box-shadow: inset 4px 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* ═══ TESTIMONIAL TILE ═══ */
+/* ═══ SHOUTOUT TILE ═══ */
+.bento-tile--shoutout {
+  grid-column: 1 / 7;
+  grid-row: 4;
+  background: linear-gradient(135deg, #FFF5EB 0%, #FFE8D4 50%, #FFDCC0 100%);
+  border: 2px solid rgba(240, 105, 34, 0.15);
+  padding: 20px 32px;
+  transition: all 0.4s var(--md-sys-motion-easing-emphasized, cubic-bezier(0.2, 0, 0, 1));
+}
+
+.bento-tile--shoutout:hover {
+  background: linear-gradient(135deg, #FFEAD4 0%, #FDDBB5 50%, #F9C78E 100%);
+  border-color: rgba(240, 105, 34, 0.3);
+  transform: translateY(-3px) scale(1.005);
+  box-shadow:
+    14px 14px 32px rgba(0, 0, 0, 0.06),
+    -14px -14px 32px rgba(255, 255, 255, 0.5),
+    0 0 60px rgba(240, 105, 34, 0.18),
+    0 0 120px rgba(240, 105, 34, 0.1);
+}
+
+.bento-shoutout__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.bento-shoutout__emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.bento-shoutout__text {
+  font-size: 18px;
+  font-weight: 800;
+  color: #F06922;
+  letter-spacing: 0.5px;
+}
+
+/* ═══ TESTIMONIAL TILE (legacy) ═══ */
 .bento-testimonial__content {
   display: flex;
   flex-direction: column;
@@ -954,7 +995,8 @@
   .bento-tile--features,
   .bento-tile--stats,
   .bento-tile--pricing,
-  .bento-tile--testimonial {
+  .bento-tile--testimonial,
+  .bento-tile--shoutout {
     grid-column: 1 !important;
     grid-row: auto !important;
   }

@@ -1,6 +1,8 @@
 import MaterialButton from '../components/material/MaterialButton';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../utils/firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { C, api } from '../utils/constants';
 import './BentoGrid.css';
 
@@ -12,25 +14,46 @@ export default function BentoPhoneEntryScreen() {
  const [error, setError] = useState('');
  const [focused, setFocused] = useState(null);
 
- const handleSubmit = async () => {
- if (phone.length !== 10) return setError('Enter valid 10-digit number');
- setLoading(true);
- setError('');
- try {
- const res = await api.call('/auth/send-otp', {
- method: 'POST',
- body: JSON.stringify({ phone: `+91${phone}`, referralCode: referral })
- });
- if (res.alreadyUsedTrial) navigate('/returning-pay', { state: { phone: `+91${phone}` } });
- else navigate('/otp', { state: { phone: `+91${phone}`, sessionId: res.sessionId } });
- } catch (err) {
- navigate('/otp', { state: { phone: `+91${phone}`, sessionId: 'demo' } });
- } finally {
- setLoading(false);
- }
- };
+ 
+  const setupRecaptcha = () => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
+    }
+  };
 
- const isValid = phone.length === 10;
+  const handleSubmit = async () => {
+    if (phone.length !== 10) return setError('Enter valid 10-digit number');
+    setLoading(true);
+    setError('');
+    
+    // DEMO bypass
+    if (phone === '9999999999') {
+      window.confirmationResult = { confirm: () => ({ user: { uid: 'demo-user' }}) };
+      navigate('/otp', { state: { phone: `+91${phone}` } });
+      return;
+    }
+    
+    try {
+      setupRecaptcha();
+      const appVerifier = window.recaptchaVerifier;
+      const phoneNumber = `+91${phone}`;
+      
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
+      
+      navigate('/otp', { state: { phone: phoneNumber } });
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Failed to send OTP. Try again.');
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+const isValid = phone.length === 10;
 
  return (
  <div className="bento-kiosk" style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -120,6 +143,9 @@ export default function BentoPhoneEntryScreen() {
  <span>{error}</span>
  </div>
  )}
+
+ {/* reCAPTCHA Container */}
+ <div id="recaptcha-container" style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}></div>
 
  {/* Submit Button */}
  <MaterialButton
