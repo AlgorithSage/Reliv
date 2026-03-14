@@ -223,13 +223,50 @@ export default function CodeEntryScreen() {
  </div>
 
  {/* New User Button */}
- <MaterialButton
- variant="outlined"
- onClick={() => navigate('/phone')}
- style={{ width: '100%' }}
+ <button
+  onClick={() => navigate('/phone')}
+  style={{
+   width: '100%',
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'center',
+   background: '#EFECE9',
+   border: 'none',
+   borderRadius: 16,
+   padding: '16px',
+   fontSize: 17,
+   fontWeight: 700,
+   color: '#F06922',
+   cursor: 'pointer',
+   transition: 'all 0.3s ease',
+   boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)',
+   fontFamily: 'inherit',
+  }}
+  onMouseEnter={(e) => {
+   e.currentTarget.style.background = '#F06922';
+   e.currentTarget.style.color = '#fff';
+   e.currentTarget.style.transform = 'translateY(-2px)';
+   e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
+  }}
+  onMouseLeave={(e) => {
+   e.currentTarget.style.background = '#EFECE9';
+   e.currentTarget.style.color = '#F06922';
+   e.currentTarget.style.transform = 'translateY(0)';
+   e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)';
+  }}
+  onMouseDown={(e) => {
+   e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
+   e.currentTarget.style.transform = 'translateY(0) scale(0.97)';
+  }}
+  onMouseUp={(e) => {
+   e.currentTarget.style.background = '#F06922';
+   e.currentTarget.style.color = '#fff';
+   e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
+   e.currentTarget.style.transform = 'translateY(0)';
+  }}
  >
- Start Fresh with Phone Number
- </MaterialButton>
+  Start Fresh with Phone Number
+ </button>
  </div>
 
  {/* Help Text */}
