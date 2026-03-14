@@ -103,6 +103,11 @@ export default function CodeEntryScreen() {
  fontSize: 44,
  }}>
  
+  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 4px 8px rgba(240,105,34,0.3))' }}>
+   <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+   <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+   <path d="M12 15v2" />
+  </svg>
  </div>
 
  {/* Code Input Boxes */}
