@@ -81,7 +81,16 @@ export default function TodaysPlanScreen() {
  margin: '0 auto 20px', fontSize: 44,
  boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5)',
  animation: 'bounceIn 0.6s ease',
- }}></div>
+ }}>
+    <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 21h8"></path>
+      <path d="M12 17v4"></path>
+      <path d="M7 4h10"></path>
+      <path d="M17 4v8a5 5 0 0 1-10 0V4"></path>
+      <path d="M15 9h4a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1"></path>
+      <path d="M9 9H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"></path>
+    </svg>
+  </div>
  <h1 style={{ fontSize: 28, fontWeight: 800, color: '#111', marginBottom: 6 }}>Doing Great! <Icon name="fire" size={18} /></h1>
  <p style={{ fontSize: 15, color: '#666', lineHeight: 1.5 }}>Your compliance is above 80%. Keep it up!</p>
  </div>

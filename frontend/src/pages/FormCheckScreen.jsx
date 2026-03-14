@@ -92,7 +92,13 @@ export default function FormCheckScreen() {
  border: '2px solid rgba(240,105,34,0.15)',
  boxShadow: '8px 8px 20px rgba(0,0,0,0.15), -6px -6px 16px rgba(255,255,255,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
  animation: 'bounceIn 0.6s ease',
- }}></div>
+ }}>
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <circle cx="12" cy="12" r="6"></circle>
+      <circle cx="12" cy="12" r="2"></circle>
+    </svg>
+  </div>
 
  <h1 style={{ fontSize: 26, fontWeight: 800, color: '#111', marginBottom: 8 }}>Good Start! Keep Pushing!</h1>
  <p style={{ fontSize: 15, color: '#666', marginBottom: 6 }}>
