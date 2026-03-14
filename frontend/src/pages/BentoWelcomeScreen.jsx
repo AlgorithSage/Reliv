@@ -267,7 +267,7 @@ export default function BentoWelcomeScreen() {
 
    {/* Floating login button */}
    <button className="bento-fab-login" onClick={() => navigate("/code")}>
-    <Icon name="key" size={18} color="#F06922" />
+    <Icon name="key" size={20} color="currentColor" />
     <span>Login</span>
    </button>
   </div>
