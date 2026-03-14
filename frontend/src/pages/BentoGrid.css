@@ -719,22 +719,23 @@
 .bento-fab-login {
   position: fixed;
   top: 24px;
-  right: 32px;
+  right: 80px;
   z-index: 50;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: var(--md-sys-color-surface, #FAFAF8);
-  border: 2px solid rgba(240, 105, 34, 0.2);
+  border: 2px solid rgba(240, 105, 34, 0.3);
   border-radius: var(--md-sys-shape-corner-full, 9999px);
-  padding: 12px 24px;
-  font-size: 13px;
+  padding: 15px 32px;
+  font-size: 16px;
   font-weight: 700;
   color: #F06922;
   cursor: pointer;
-  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.08), -6px -6px 16px rgba(255, 255, 255, 0.6);
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.1), -6px -6px 16px rgba(255, 255, 255, 0.7);
   transition: all 0.3s var(--md-sys-motion-easing-standard);
   font-family: inherit;
+  letter-spacing: 0.3px;
 }
 
 .bento-fab-login:hover {
