@@ -59,6 +59,9 @@ export default function OTPScreen() {
             const result = await window.confirmationResult.confirm(code);
             console.log("OTP Verified! User:", result.user.uid);
             
+            // Clear confirmationResult so it can't be reused on failure
+            window.confirmationResult = null;
+            
             const user = result.user;
             const userDocRef = doc(db, 'users', user.uid);
             
