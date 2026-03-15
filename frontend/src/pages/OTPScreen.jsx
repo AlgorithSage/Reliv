@@ -2,6 +2,7 @@ import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth, db } from '../utils/firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
@@ -59,8 +60,7 @@ export default function OTPScreen() {
             const result = await window.confirmationResult.confirm(code);
             console.log("OTP Verified! User:", result.user.uid);
             
-            // Clear confirmationResult so it can't be reused on failure
-            window.confirmationResult = null;
+            // Don't null confirmationResult here — null it only after navigation
             
             const user = result.user;
             const userDocRef = doc(db, 'users', user.uid);
@@ -93,6 +93,9 @@ export default function OTPScreen() {
             localStorage.setItem('token', user.accessToken);
             localStorage.setItem('userId', user.uid);
             localStorage.setItem('accessCode', accessCode);
+            
+            // Now safe to clear confirmationResult
+            window.confirmationResult = null;
             
             setSuccess(true);
             setTimeout(() => navigate('/code-generated'), 800);
@@ -360,7 +363,40 @@ export default function OTPScreen() {
                             </span>
                         ) : (
                             <MaterialButton
-                                onClick={() => { setResendTimer(30); }}
+                                onClick={async () => {
+                                    setResendTimer(30);
+                                    setError('');
+                                    try {
+                                        // Clean up old reCAPTCHA
+                                        if (window.recaptchaVerifier) {
+                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+                                            window.recaptchaVerifier = null;
+                                        }
+                                        // Ensure recaptcha container exists for resend
+                                        let container = document.getElementById('recaptcha-container-otp');
+                                        if (container) container.remove();
+                                        container = document.createElement('div');
+                                        container.id = 'recaptcha-container-otp';
+                                        container.style.display = 'none';
+                                        document.body.appendChild(container);
+                                        
+                                        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-otp', {
+                                            size: 'invisible',
+                                        });
+                                        
+                                        const result = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+                                        window.confirmationResult = result;
+                                        setOtp(['', '', '', '', '', '']);
+                                        inputRefs.current[0]?.focus();
+                                    } catch (err) {
+                                        console.error('Resend OTP error:', err);
+                                        setError('Failed to resend OTP. Please go back and try again.');
+                                        if (window.recaptchaVerifier) {
+                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+                                            window.recaptchaVerifier = null;
+                                        }
+                                    }
+                                }}
                                 style={{
                                     background: 'none',
                                     border: 'none',

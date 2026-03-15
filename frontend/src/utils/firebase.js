@@ -4,12 +4,12 @@ import { getFirestore, enableNetwork } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD7I6HgtHg1Q7REYSJly_4xdTybXznJwmA",
-  authDomain: "reliv-2026.firebaseapp.com",
-  projectId: "reliv-2026",
-  storageBucket: "reliv-2026.firebasestorage.app",
-  messagingSenderId: "909024074928",
-  appId: "1:909024074928:web:e8e7773f4c1b3fe3a4af75"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

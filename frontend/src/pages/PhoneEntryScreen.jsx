@@ -16,24 +16,29 @@ export default function PhoneEntryScreen() {
  const [error, setError] = useState('');
  const [focused, setFocused] = useState(null);
 
- 
   const setupRecaptcha = () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
+    // Clear any existing verifier
+    if (window.recaptchaVerifier) {
+      try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+      window.recaptchaVerifier = null;
     }
+    // Create a fresh container on document.body (outside React's DOM tree)
+    let container = document.getElementById('recaptcha-container-phone');
+    if (container) container.remove();
+    container = document.createElement('div');
+    container.id = 'recaptcha-container-phone';
+    container.style.display = 'none';
+    document.body.appendChild(container);
+    
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
+      size: 'invisible',
+    });
   };
 
   const handleSubmit = async () => {
     if (phone.length !== 10) return setError('Enter valid 10-digit number');
     setLoading(true);
     setError('');
-    
-    // DEMO bypass
-    if (phone === '9999999999') {
-      window.confirmationResult = { confirm: () => ({ user: { uid: 'demo-user' }}) };
-      navigate('/otp', { state: { phone: `+91${phone}` } });
-      return;
-    }
     
     try {
       setupRecaptcha();
@@ -45,10 +50,17 @@ export default function PhoneEntryScreen() {
       
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
-      console.error(err);
-      setError(err.message || 'Failed to send OTP. Try again.');
+      console.error('Phone auth error:', err);
+      
+      let errorMessage = 'Failed to send OTP. Try again.';
+      if (err.code === 'auth/captcha-check-failed') errorMessage = 'reCAPTCHA verification failed. Please try again.';
+      if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
+      if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
+      if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
+      
+      setError(errorMessage);
       if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
+        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
         window.recaptchaVerifier = null;
       }
     } finally {
@@ -163,15 +175,15 @@ return (
  </span>
  </label>
  <MaterialTextField
- variant="outlined"
- label="Referral Code"
- value={referral}
- onChange={(val) => setReferral(val.toUpperCase())}
- maxLength={6}
- placeholder="Enter code for bonus"
- supportingText=""
- style={{ width: '100%', textTransform: 'uppercase', letterSpacing: '2px' }}
- />
+  variant="outlined"
+  label="Referral Code"
+  value={referral}
+  onChange={(val) => setReferral(val.toUpperCase())}
+  maxLength={6}
+  placeholder="Enter code for bonus"
+  supportingText=""
+  style={{ width: '100%', textTransform: 'uppercase', letterSpacing: '2px' }}
+  />
  <p style={{
  fontSize: 13,
  color: '#9CA3AF',
@@ -202,22 +214,19 @@ return (
  </div>
  )}
 
- {/* reCAPTCHA Container */}
- <div id="recaptcha-container" style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}></div>
-
  {/* Submit Button */}
  <MaterialButton
- variant="filled"
- disabled={loading || phone.length !== 10}
- onClick={handleSubmit}
- style={{
- width: '100%',
- '--md-filled-button-container-height': '56px',
- '--md-filled-button-label-text-size': '18px',
- }}
- >
- {loading ? 'Sending OTP...' : 'Send OTP →'}
- </MaterialButton>
+  variant="filled"
+  disabled={loading || phone.length !== 10}
+  onClick={handleSubmit}
+  style={{
+  width: '100%',
+  '--md-filled-button-container-height': '56px',
+  '--md-filled-button-label-text-size': '18px',
+  }}
+  >
+  {loading ? 'Sending OTP...' : 'Send OTP →'}
+  </MaterialButton>
  </div>
 
  {/* Security Note */}

@@ -16,22 +16,26 @@ export default function BentoPhoneEntryScreen() {
 
  
   const setupRecaptcha = () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {});
+    if (window.recaptchaVerifier) {
+      try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+      window.recaptchaVerifier = null;
     }
+    let container = document.getElementById('recaptcha-container-phone');
+    if (container) container.remove();
+    container = document.createElement('div');
+    container.id = 'recaptcha-container-phone';
+    container.style.display = 'none';
+    document.body.appendChild(container);
+    
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
+      size: 'invisible',
+    });
   };
 
   const handleSubmit = async () => {
     if (phone.length !== 10) return setError('Enter valid 10-digit number');
     setLoading(true);
     setError('');
-    
-    // DEMO bypass
-    if (phone === '9999999999') {
-      window.confirmationResult = { confirm: () => ({ user: { uid: 'demo-user' }}) };
-      navigate('/otp', { state: { phone: `+91${phone}` } });
-      return;
-    }
     
     try {
       setupRecaptcha();
@@ -43,10 +47,17 @@ export default function BentoPhoneEntryScreen() {
       
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
-      console.error(err);
-      setError(err.message || 'Failed to send OTP. Try again.');
+      console.error('Phone auth error:', err);
+      
+      let errorMessage = 'Failed to send OTP. Try again.';
+      if (err.code === 'auth/captcha-check-failed') errorMessage = 'reCAPTCHA verification failed. Please try again.';
+      if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
+      if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
+      if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
+      
+      setError(errorMessage);
       if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
+        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
         window.recaptchaVerifier = null;
       }
     } finally {
