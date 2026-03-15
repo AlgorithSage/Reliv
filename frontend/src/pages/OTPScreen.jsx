@@ -51,13 +51,30 @@ export default function OTPScreen() {
         console.log("Submitting code to Firebase:", code);
 
         try {
-            if (!window.confirmationResult) {
-                console.error("No window.confirmationResult found!");
-                throw new Error('Please go back and enter your phone number again.');
-            }
+            let result;
             
-            console.log("Calling confirmationResult.confirm...");
-            const result = await window.confirmationResult.confirm(code);
+            if (location.state?.isBypass) {
+                // DEV BYPASS: Skip Firebase confirm completely
+                if (code !== '111111') throw new Error('Invalid bypass OTP. Use 111111');
+                
+                result = {
+                    user: {
+                        uid: 'dev-bypass-user-12345',
+                        phoneNumber: phone || '+919999999999',
+                        accessToken: 'mock-token-123'
+                    }
+                };
+                console.log("Bypass OTP Verified! User:", result.user.uid);
+            } else {
+                if (!window.confirmationResult) {
+                    console.error("No window.confirmationResult found!");
+                    throw new Error('Please go back and enter your phone number again.');
+                }
+                
+                console.log("Calling confirmationResult.confirm...");
+                result = await window.confirmationResult.confirm(code);
+                console.log("OTP Verified! User:", result.user.uid);
+            }
             console.log("OTP Verified! User:", result.user.uid);
             
             // Don't null confirmationResult here — null it only after navigation

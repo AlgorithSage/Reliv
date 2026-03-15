@@ -41,6 +41,12 @@ export default function PhoneEntryScreen() {
     setError('');
 
     try {
+      if (phone === '9999999999' || phone === '1111111111') {
+        // DEV BYPASS: Skip Firebase completely for this specific number
+        navigate('/otp', { state: { phone: `+91${phone}`, isBypass: true } });
+        return;
+      }
+
       setupRecaptcha();
       const appVerifier = window.recaptchaVerifier;
       const phoneNumber = `+91${phone}`;
@@ -58,7 +64,7 @@ export default function PhoneEntryScreen() {
       if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
       if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
       if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
-      if (err.code === 'auth/invalid-app-credential') errorMessage = 'Invalid App Credential. Please ensure Brand Verification is complete.';
+      if (err.code === 'auth/invalid-app-credential') errorMessage = 'Invalid App Credential / Blocked by App Check.';
 
       setError(errorMessage);
       if (window.recaptchaVerifier) {
