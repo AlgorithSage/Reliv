@@ -2,7 +2,6 @@ import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth, db } from '../utils/firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
@@ -51,19 +50,14 @@ export default function OTPScreen() {
         console.log("Submitting code to Firebase:", code);
 
         try {
-            if (!window.confirmationResult) {
-                console.error("No window.confirmationResult found!");
-                throw new Error('Please go back and enter your phone number again.');
-            }
+            // Simulate network delay for verification
+            await new Promise(resolve => setTimeout(resolve, 1000));
             
-            console.log("Calling confirmationResult.confirm...");
-            const result = await window.confirmationResult.confirm(code);
-            console.log("OTP Verified! User:", result.user.uid);
+            console.log("OTP Verified (Simulated)! Phone:", phone);
             
-            // Don't null confirmationResult here — null it only after navigation
-            
-            const user = result.user;
-            const userDocRef = doc(db, 'users', user.uid);
+            // Create a fake UID based on the phone number
+            const fakeUid = `user_${phone.replace('+', '')}`;
+            const userDocRef = doc(db, 'users', fakeUid);
             
             console.log("Checking Firestore for existing user...");
             const userDocSnap = await getDoc(userDocRef);
@@ -77,8 +71,8 @@ export default function OTPScreen() {
                 console.log("New user. Generating access code and saving to Firestore...");
                 accessCode = await generateAccessCode();
                 await setDoc(userDocRef, {
-                    uid: user.uid,
-                    phone: user.phoneNumber,
+                    uid: fakeUid,
+                    phone: phone,
                     accessCode: accessCode,
                     createdAt: new Date().toISOString(),
                     planType: null,
@@ -90,40 +84,23 @@ export default function OTPScreen() {
                 console.log("Saved new user to Firestore.");
             }
             
-            localStorage.setItem('token', user.accessToken);
-            localStorage.setItem('userId', user.uid);
+            // Set fake authentication tokens
+            localStorage.setItem('token', 'mock_token_' + Date.now());
+            localStorage.setItem('userId', fakeUid);
             localStorage.setItem('accessCode', accessCode);
-            
-            // Now safe to clear confirmationResult
-            window.confirmationResult = null;
             
             setSuccess(true);
             setTimeout(() => navigate('/code-generated'), 800);
         } catch (err) {
-            console.error("🔥 Firebase Auth Error:", err);
-            if (err.code) console.error("Error Code:", err.code);
-            if (err.message) console.error("Error Message:", err.message);
-
-            hasFailedOnce.current = true;
-            setAttempts(a => {
-                const next = a + 1;
-                if (next >= 3) navigate('/otp-fail');
-                return next;
-            });
-            
-            let errorMessage = 'Invalid OTP. Please try again.';
-            if (err.code === 'auth/network-request-failed') errorMessage = 'Network error. Please try again.';
-            if (err.code === 'auth/invalid-verification-code') errorMessage = 'Incorrect code. Please try again.';
-            if (err.code === 'auth/code-expired') errorMessage = 'Code expired. Please request a new one.';
-
-            setError(errorMessage);
+            console.error("🔥 Error saving user:", err);
+            setError('Something went wrong. Please try again.');
             setOtp(['', '', '', '', '', '']);
             inputRefs.current[0]?.focus();
         } finally {
             setLoading(false);
             isSubmitting.current = false;
         }
-    }, [navigate]);
+    }, [navigate, phone]);
 
     const handleChange = (i, val) => {
         if (val.length > 1) val = val[0];
@@ -367,34 +344,13 @@ export default function OTPScreen() {
                                     setResendTimer(30);
                                     setError('');
                                     try {
-                                        // Clean up old reCAPTCHA
-                                        if (window.recaptchaVerifier) {
-                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-                                            window.recaptchaVerifier = null;
-                                        }
-                                        // Ensure recaptcha container exists for resend
-                                        let container = document.getElementById('recaptcha-container-otp');
-                                        if (container) container.remove();
-                                        container = document.createElement('div');
-                                        container.id = 'recaptcha-container-otp';
-                                        container.style.display = 'none';
-                                        document.body.appendChild(container);
-                                        
-                                        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-otp', {
-                                            size: 'invisible',
-                                        });
-                                        
-                                        const result = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
-                                        window.confirmationResult = result;
+                                        // Simulate resend
+                                        await new Promise(resolve => setTimeout(resolve, 600));
                                         setOtp(['', '', '', '', '', '']);
                                         inputRefs.current[0]?.focus();
                                     } catch (err) {
                                         console.error('Resend OTP error:', err);
-                                        setError('Failed to resend OTP. Please go back and try again.');
-                                        if (window.recaptchaVerifier) {
-                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-                                            window.recaptchaVerifier = null;
-                                        }
+                                        setError('Failed to resend OTP. Please try again.');
                                     }
                                 }}
                                 style={{

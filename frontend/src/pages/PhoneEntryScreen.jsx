@@ -16,53 +16,22 @@ export default function PhoneEntryScreen() {
  const [error, setError] = useState('');
  const [focused, setFocused] = useState(null);
 
-  const setupRecaptcha = () => {
-    // Clear any existing verifier
-    if (window.recaptchaVerifier) {
-      try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-      window.recaptchaVerifier = null;
-    }
-    // Create a fresh container on document.body (outside React's DOM tree)
-    let container = document.getElementById('recaptcha-container-phone');
-    if (container) container.remove();
-    container = document.createElement('div');
-    container.id = 'recaptcha-container-phone';
-    container.style.display = 'none';
-    document.body.appendChild(container);
-    
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
-      size: 'invisible',
-    });
-  };
-
   const handleSubmit = async () => {
     if (phone.length !== 10) return setError('Enter valid 10-digit number');
     setLoading(true);
     setError('');
     
     try {
-      setupRecaptcha();
-      const appVerifier = window.recaptchaVerifier;
+      // Simulate network request for OTP sending
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       const phoneNumber = `+91${phone}`;
       
-      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-      window.confirmationResult = confirmationResult;
-      
+      // Navigate to OTP screen directly without hitting Firebase
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
-      console.error('Phone auth error:', err);
-      
-      let errorMessage = 'Failed to send OTP. Try again.';
-      if (err.code === 'auth/captcha-check-failed') errorMessage = 'reCAPTCHA verification failed. Please try again.';
-      if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
-      if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
-      if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
-      
-      setError(errorMessage);
-      if (window.recaptchaVerifier) {
-        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-        window.recaptchaVerifier = null;
-      }
+      console.error('Phone flow error:', err);
+      setError('Something went wrong. Try again.');
     } finally {
       setLoading(false);
     }
