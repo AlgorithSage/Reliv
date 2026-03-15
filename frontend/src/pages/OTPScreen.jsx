@@ -66,7 +66,14 @@ export default function OTPScreen() {
             const userDocRef = doc(db, 'users', user.uid);
             
             console.log("Checking Firestore for existing user...");
-            const userDocSnap = await getDoc(userDocRef);
+            // Force fetch from server to avoid "offline" cache errors in dev
+            let userDocSnap;
+            try {
+                userDocSnap = await getDoc(userDocRef, { source: 'server' });
+            } catch (fsErr) {
+                console.warn("Server fetch failed, trying default getDoc:", fsErr);
+                userDocSnap = await getDoc(userDocRef);
+            }
             
             let accessCode;
             
@@ -111,10 +118,10 @@ export default function OTPScreen() {
                 return next;
             });
             
-            let errorMessage = 'Invalid OTP. Please try again.';
+            // Debugging: Show exact Firebase error on screen
+            let errorMessage = `Error: ${err.code || err.message || 'Unknown'}`;
             if (err.code === 'auth/network-request-failed') errorMessage = 'Network error. Please try again.';
             if (err.code === 'auth/invalid-verification-code') errorMessage = 'Incorrect code. Please try again.';
-            if (err.code === 'auth/code-expired') errorMessage = 'Code expired. Please request a new one.';
 
             setError(errorMessage);
             setOtp(['', '', '', '', '', '']);
