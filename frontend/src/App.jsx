@@ -93,8 +93,9 @@ import PlanConflictScreen from './pages/PlanConflictScreen.jsx';
 import PaymentFailedScreen from './pages/PaymentFailedScreen.jsx';
 import TrialUsedScreen from './pages/TrialUsedScreen.jsx';
 
-// ═══ SUPPORT ═══
+// ═══ SUPPORT / LEGAL ═══
 import HelpScreen from './pages/HelpScreen.jsx';
+import PrivacyPolicyScreen from './pages/PrivacyPolicyScreen.jsx';
 
 export default function App() {
 	return (
@@ -207,8 +208,9 @@ export default function App() {
 				<Route path="/payment-failed" element={<PaymentFailedScreen />} />
 				<Route path="/trial-used" element={<TrialUsedScreen />} />
 				
-				{/* ═══ SUPPORT ═══ */}
+				{/* ═══ SUPPORT / LEGAL ═══ */}
 				<Route path="/help" element={<HelpScreen />} />
+				<Route path="/privacy" element={<PrivacyPolicyScreen />} />
 				
 				{/* ═══ FALLBACK ═══ */}
 				<Route path="*" element={<Navigate to="/" replace />} />

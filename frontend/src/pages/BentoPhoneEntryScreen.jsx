@@ -15,22 +15,52 @@ export default function BentoPhoneEntryScreen() {
  const [focused, setFocused] = useState(null);
 
  
+  const setupRecaptcha = () => {
+    if (window.recaptchaVerifier) {
+      try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+      window.recaptchaVerifier = null;
+    }
+    let container = document.getElementById('recaptcha-container-phone');
+    if (container) container.remove();
+    container = document.createElement('div');
+    container.id = 'recaptcha-container-phone';
+    container.style.display = 'none';
+    document.body.appendChild(container);
+    
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
+      size: 'invisible',
+    });
+  };
+
   const handleSubmit = async () => {
     if (phone.length !== 10) return setError('Enter valid 10-digit number');
     setLoading(true);
     setError('');
     
     try {
-      // Simulate network request for OTP sending
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      setupRecaptcha();
+      const appVerifier = window.recaptchaVerifier;
       const phoneNumber = `+91${phone}`;
       
-      // Navigate to OTP screen directly without hitting Firebase
+      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+      window.confirmationResult = confirmationResult;
+      
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
-      console.error('Phone flow error:', err);
-      setError('Something went wrong. Try again.');
+      console.error('Phone auth error:', err);
+      
+      let errorMessage = 'Failed to send OTP. Try again.';
+      if (err.code === 'auth/captcha-check-failed') errorMessage = 'reCAPTCHA verification failed. Please try again.';
+      if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
+      if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
+      if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
+      if (err.code === 'auth/invalid-app-credential') errorMessage = 'Invalid App Credential. Please ensure Brand Verification is complete.';
+      
+      setError(errorMessage);
+      if (window.recaptchaVerifier) {
+        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+        window.recaptchaVerifier = null;
+      }
     } finally {
       setLoading(false);
     }
