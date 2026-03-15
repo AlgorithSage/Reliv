@@ -277,11 +277,19 @@ export default function BentoWelcomeScreen() {
     </div>
     </div>
 
-   {/* Floating login button */}
-   <MaterialButton className="bento-fab-login" onClick={() => navigate("/code")}>
-    <Icon name="key" size={20} color="currentColor" />
-    <span>Login</span>
-   </MaterialButton>
+   {/* Floating action buttons container */}
+   <div className="flex gap-4 absolute bottom-6 right-6 lg:fixed">
+    <button 
+     onClick={() => navigate("/privacy")}
+     className="text-white/60 hover:text-white/90 text-sm font-medium px-4 py-3 transition-colors bg-white/5 hover:bg-white/10 rounded-2xl backdrop-blur-md border border-white/5"
+    >
+     Privacy Policy
+    </button>
+    <MaterialButton className="!static !shadow-none" onClick={() => navigate("/code")}>
+     <Icon name="key" size={20} color="currentColor" />
+     <span>Login</span>
+    </MaterialButton>
+   </div>
   </div>
  );
 }
