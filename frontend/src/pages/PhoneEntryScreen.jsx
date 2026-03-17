@@ -7,6 +7,7 @@ import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
 import MaterialButton from '../components/material/MaterialButton';
 import MaterialTextField from '../components/material/MaterialTextField';
+import { clearOtpSession, storeOtpSession } from '../utils/otpSession';
 
 export default function PhoneEntryScreen() {
  const navigate = useNavigate();
@@ -16,23 +17,28 @@ export default function PhoneEntryScreen() {
  const [error, setError] = useState('');
  const [focused, setFocused] = useState(null);
 
-  const setupRecaptcha = () => {
-    // Clear any existing verifier
+  const teardownRecaptcha = () => {
     if (window.recaptchaVerifier) {
       try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
       window.recaptchaVerifier = null;
     }
-    // Create a fresh container on document.body (outside React's DOM tree)
-    let container = document.getElementById('recaptcha-container-phone');
-    if (container) container.remove();
-    container = document.createElement('div');
-    container.id = 'recaptcha-container-phone';
-    container.style.display = 'none';
-    document.body.appendChild(container);
+  };
 
+  const setupRecaptcha = async () => {
+    teardownRecaptcha();
+    const container = document.getElementById('recaptcha-container-phone');
+    if (!container) {
+      throw new Error('reCAPTCHA container not found');
+    }
     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
       size: 'invisible',
+      callback: () => {},
+      'expired-callback': () => {
+        teardownRecaptcha();
+      },
     });
+    await window.recaptchaVerifier.render();
+    return window.recaptchaVerifier;
   };
 
   const handleSubmit = async () => {
@@ -47,12 +53,18 @@ export default function PhoneEntryScreen() {
         return;
       }
 
-      setupRecaptcha();
-      const appVerifier = window.recaptchaVerifier;
+      clearOtpSession();
+      window.confirmationResult = null;
+      const appVerifier = await setupRecaptcha();
       const phoneNumber = `+91${phone}`;
 
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
       window.confirmationResult = confirmationResult;
+      storeOtpSession({
+        phone: phoneNumber,
+        verificationId: confirmationResult.verificationId,
+      });
+      localStorage.setItem('phone', phoneNumber);
 
       // Navigate to OTP screen
       navigate('/otp', { state: { phone: phoneNumber } });
@@ -64,13 +76,11 @@ export default function PhoneEntryScreen() {
       if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
       if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
       if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
-      if (err.code === 'auth/invalid-app-credential') errorMessage = 'Invalid App Credential / Blocked by App Check.';
+      if (err.code === 'auth/invalid-app-credential') errorMessage = 'App verification failed. Refresh the page and try again.';
 
       setError(errorMessage);
-      if (window.recaptchaVerifier) {
-        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-        window.recaptchaVerifier = null;
-      }
+      clearOtpSession();
+      teardownRecaptcha();
     } finally {
       setLoading(false);
     }
@@ -221,6 +231,19 @@ return (
  <p style={{ fontSize: 14, color: '#DC2626', fontWeight: 600, margin: 0 }}>{error}</p>
  </div>
  )}
+
+ {/* reCAPTCHA anchor: must exist in the DOM and must not use display:none */}
+ <div
+  id="recaptcha-container-phone"
+  style={{
+   position: 'absolute',
+   width: 1,
+   height: 1,
+   overflow: 'hidden',
+   opacity: 0.01,
+   pointerEvents: 'none',
+  }}
+ />
 
  {/* Submit Button */}
  <MaterialButton

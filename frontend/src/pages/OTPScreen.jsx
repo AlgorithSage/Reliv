@@ -2,11 +2,12 @@ import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth, db } from '../utils/firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { PhoneAuthProvider, RecaptchaVerifier, signInWithCredential, signInWithPhoneNumber } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import Layout from '../components/Layout';
 import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
+import { clearOtpSession, readOtpSession, storeOtpSession } from '../utils/otpSession';
 
 const generateAccessCode = async () => {
     return Math.floor(1000 + Math.random() * 9000).toString();
@@ -15,7 +16,9 @@ const generateAccessCode = async () => {
 export default function OTPScreen() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { phone, sessionId } = location.state || {};
+    const otpSession = readOtpSession();
+    const phone = location.state?.phone || otpSession.phone || localStorage.getItem('phone') || '';
+    const sessionId = location.state?.sessionId;
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -26,6 +29,31 @@ export default function OTPScreen() {
     const isSubmitting = useRef(false);
     const hasFailedOnce = useRef(false);
     const verifyBtnRef = useRef(null);
+
+    const teardownRecaptcha = useCallback(() => {
+        if (window.recaptchaVerifier) {
+            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
+            window.recaptchaVerifier = null;
+        }
+    }, []);
+
+    const setupRecaptcha = useCallback(async () => {
+        teardownRecaptcha();
+        const container = document.getElementById('recaptcha-container-otp');
+        if (!container) {
+            throw new Error('reCAPTCHA container not found');
+        }
+
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-otp', {
+            size: 'invisible',
+            callback: () => {},
+            'expired-callback': () => {
+                teardownRecaptcha();
+            },
+        });
+        await window.recaptchaVerifier.render();
+        return window.recaptchaVerifier;
+    }, [teardownRecaptcha]);
 
     useEffect(() => {
         if (!phone && !sessionId) navigate('/phone');
@@ -66,13 +94,15 @@ export default function OTPScreen() {
                 };
                 console.log("Bypass OTP Verified! User:", result.user.uid);
             } else {
-                if (!window.confirmationResult) {
-                    console.error("No window.confirmationResult found!");
-                    throw new Error('Please go back and enter your phone number again.');
+                const verificationId = window.confirmationResult?.verificationId || readOtpSession().verificationId;
+                if (!verificationId) {
+                    console.error("No verificationId found for OTP session.");
+                    throw new Error('OTP session expired. Please go back and request a new OTP.');
                 }
                 
-                console.log("Calling confirmationResult.confirm...");
-                result = await window.confirmationResult.confirm(code);
+                console.log("Signing in with verificationId...");
+                const credential = PhoneAuthProvider.credential(verificationId, code);
+                result = await signInWithCredential(auth, credential);
                 console.log("OTP Verified! User:", result.user.uid);
             }
             console.log("OTP Verified! User:", result.user.uid);
@@ -120,6 +150,7 @@ export default function OTPScreen() {
             
             // Now safe to clear confirmationResult
             window.confirmationResult = null;
+            clearOtpSession();
             
             setSuccess(true);
             setTimeout(() => navigate('/code-generated'), 800);
@@ -150,18 +181,52 @@ export default function OTPScreen() {
     }, [navigate, phone]);
 
     const handleChange = (i, val) => {
-        if (val.length > 1) val = val[0];
+        const digits = val.replace(/\D/g, '');
+        if (!digits) {
+            const clearedOtp = [...otp];
+            clearedOtp[i] = '';
+            setOtp(clearedOtp);
+            setError('');
+            return;
+        }
+
+        if (digits.length > 1) {
+            const newOtp = [...otp];
+            for (let offset = 0; offset < digits.length && i + offset < newOtp.length; offset += 1) {
+                newOtp[i + offset] = digits[offset];
+            }
+            setOtp(newOtp);
+            setError('');
+
+            const lastFilledIndex = Math.min(i + digits.length - 1, newOtp.length - 1);
+            if (newOtp.every(d => d !== '') && !hasFailedOnce.current) {
+                setTimeout(() => {
+                    if (verifyBtnRef.current) {
+                        verifyBtnRef.current.click();
+                    } else {
+                        doSubmit(newOtp.join(''));
+                    }
+                }, 250);
+            } else if (lastFilledIndex < newOtp.length - 1) {
+                inputRefs.current[lastFilledIndex + 1]?.focus();
+            } else {
+                inputRefs.current[lastFilledIndex]?.focus();
+            }
+            return;
+        }
+
+        const valToStore = digits[0];
         const newOtp = [...otp];
-        newOtp[i] = val;
+        newOtp[i] = valToStore;
         setOtp(newOtp);
         setError('');
 
-        if (val && i < 5) {
+        if (valToStore && i < 5) {
             inputRefs.current[i + 1]?.focus();
         }
 
         // Auto-click the verify button when all 6 digits are filled (first attempt only)
-        if (val && i === 5 && newOtp.every(d => d !== '') && !hasFailedOnce.current) {
+        if (valToStore && i === 5 && newOtp.every(d => d !== '') && !hasFailedOnce.current) {
             setTimeout(() => {
                 if (verifyBtnRef.current) {
                     verifyBtnRef.current.click();
@@ -391,34 +456,24 @@ export default function OTPScreen() {
                                     setResendTimer(30);
                                     setError('');
                                     try {
-                                        // Clean up old reCAPTCHA
-                                        if (window.recaptchaVerifier) {
-                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-                                            window.recaptchaVerifier = null;
-                                        }
-                                        // Ensure recaptcha container exists for resend
-                                        let container = document.getElementById('recaptcha-container-otp');
-                                        if (container) container.remove();
-                                        container = document.createElement('div');
-                                        container.id = 'recaptcha-container-otp';
-                                        container.style.display = 'none';
-                                        document.body.appendChild(container);
-
-                                        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-otp', {
-                                            size: 'invisible',
-                                        });
-
-                                        const result = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+                                        const appVerifier = await setupRecaptcha();
+                                        const result = await signInWithPhoneNumber(auth, phone, appVerifier);
                                         window.confirmationResult = result;
+                                        storeOtpSession({
+                                            phone,
+                                            verificationId: result.verificationId,
+                                        });
                                         setOtp(['', '', '', '', '', '']);
                                         inputRefs.current[0]?.focus();
                                     } catch (err) {
                                         console.error('Resend OTP error:', err);
-                                        setError('Failed to resend OTP. Please go back and try again.');
-                                        if (window.recaptchaVerifier) {
-                                            try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-                                            window.recaptchaVerifier = null;
-                                        }
+                                        let resendError = 'Failed to resend OTP. Please go back and try again.';
+                                        if (err.code === 'auth/captcha-check-failed') resendError = 'reCAPTCHA verification failed. Please try again.';
+                                        if (err.code === 'auth/too-many-requests') resendError = 'Too many attempts. Please wait a few minutes.';
+                                        if (err.code === 'auth/invalid-app-credential') resendError = 'App verification failed. Refresh the page and try again.';
+                                        setError(resendError);
+                                        clearOtpSession();
+                                        teardownRecaptcha();
                                     }
                                 }}
                                 style={{
@@ -438,6 +493,18 @@ export default function OTPScreen() {
                 </div>
 
                 {/* Phone Change Link */}
+                <div
+                    id="recaptcha-container-otp"
+                    style={{
+                        position: 'absolute',
+                        width: 1,
+                        height: 1,
+                        overflow: 'hidden',
+                        opacity: 0.01,
+                        pointerEvents: 'none',
+                    }}
+                />
+
                 <p style={{
                     textAlign: 'center',
                     marginTop: 24,

@@ -5,6 +5,7 @@ import { auth } from '../utils/firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { C, api } from '../utils/constants';
 import './BentoGrid.css';
+import { clearOtpSession, storeOtpSession } from '../utils/otpSession';
 
 export default function BentoPhoneEntryScreen() {
  const navigate = useNavigate();
@@ -15,21 +16,29 @@ export default function BentoPhoneEntryScreen() {
  const [focused, setFocused] = useState(null);
 
  
-  const setupRecaptcha = () => {
+  const teardownRecaptcha = () => {
     if (window.recaptchaVerifier) {
       try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
       window.recaptchaVerifier = null;
     }
-    let container = document.getElementById('recaptcha-container-phone');
-    if (container) container.remove();
-    container = document.createElement('div');
-    container.id = 'recaptcha-container-phone';
-    container.style.display = 'none';
-    document.body.appendChild(container);
-    
+  };
+
+  const setupRecaptcha = async () => {
+    teardownRecaptcha();
+    const container = document.getElementById('recaptcha-container-phone');
+    if (!container) {
+      throw new Error('reCAPTCHA container not found');
+    }
+
     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container-phone', {
       size: 'invisible',
+      callback: () => {},
+      'expired-callback': () => {
+        teardownRecaptcha();
+      },
     });
+    await window.recaptchaVerifier.render();
+    return window.recaptchaVerifier;
   };
 
   const handleSubmit = async () => {
@@ -44,12 +53,18 @@ export default function BentoPhoneEntryScreen() {
         return;
       }
       
-      setupRecaptcha();
-      const appVerifier = window.recaptchaVerifier;
+      clearOtpSession();
+      window.confirmationResult = null;
+      const appVerifier = await setupRecaptcha();
       const phoneNumber = `+91${phone}`;
       
       const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
       window.confirmationResult = confirmationResult;
+      storeOtpSession({
+        phone: phoneNumber,
+        verificationId: confirmationResult.verificationId,
+      });
+      localStorage.setItem('phone', phoneNumber);
       
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
@@ -60,13 +75,11 @@ export default function BentoPhoneEntryScreen() {
       if (err.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please wait a few minutes.';
       if (err.code === 'auth/invalid-phone-number') errorMessage = 'Invalid phone number format.';
       if (err.code === 'auth/quota-exceeded') errorMessage = 'SMS quota exceeded. Try again later.';
-      if (err.code === 'auth/invalid-app-credential') errorMessage = 'Invalid App Credential / Blocked by App Check.';
+      if (err.code === 'auth/invalid-app-credential') errorMessage = 'App verification failed. Refresh the page and try again.';
       
       setError(errorMessage);
-      if (window.recaptchaVerifier) {
-        try { window.recaptchaVerifier.clear(); } catch (e) { /* ignore */ }
-        window.recaptchaVerifier = null;
-      }
+      clearOtpSession();
+      teardownRecaptcha();
     } finally {
       setLoading(false);
     }
@@ -162,8 +175,18 @@ const isValid = phone.length === 10;
  </div>
  )}
 
- {/* reCAPTCHA Container */}
- <div id="recaptcha-container" style={{ marginBottom: 24, display: 'flex', justifyContent: 'center' }}></div>
+ {/* reCAPTCHA anchor: must exist in the DOM and must not use display:none */}
+ <div
+ id="recaptcha-container-phone"
+ style={{
+ position: 'absolute',
+ width: 1,
+ height: 1,
+ overflow: 'hidden',
+ opacity: 0.01,
+ pointerEvents: 'none',
+ }}
+ />
 
  {/* Submit Button */}
  <MaterialButton
