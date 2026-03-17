@@ -16,16 +16,25 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Enable App Check debug token in development
-if (import.meta.env.DEV) {
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-}
-
 // Initialize Firebase App Check with reCAPTCHA v3
-const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITE_KEY),
-  isTokenAutoRefreshEnabled: true
-});
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+if (recaptchaSiteKey) {
+  // Enable App Check debug token in development
+  if (import.meta.env.DEV) {
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  }
+
+  try {
+    const appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(recaptchaSiteKey),
+      isTokenAutoRefreshEnabled: true
+    });
+  } catch (err) {
+    console.error("Firebase App Check initialization failed:", err);
+  }
+} else {
+  console.warn("VITE_RECAPTCHA_SITE_KEY is not set. App Check is disabled.");
+}
 
 // Initialize Firebase Services
 export const auth = getAuth(app);
