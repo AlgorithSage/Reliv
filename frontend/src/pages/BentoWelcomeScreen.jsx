@@ -171,6 +171,7 @@ export default function BentoWelcomeScreen() {
         </div>
        ))}
       </div>
+
      </div>
 
      {/* Right — Big Reliv Logo */}
@@ -277,19 +278,39 @@ export default function BentoWelcomeScreen() {
     </div>
     </div>
 
-   {/* Floating action buttons container */}
-   <div className="flex gap-4 absolute bottom-6 right-6 lg:fixed">
-    <button 
-     onClick={() => navigate("/privacy")}
-     className="text-white/60 hover:text-white/90 text-sm font-medium px-4 py-3 transition-colors bg-white/5 hover:bg-white/10 rounded-2xl backdrop-blur-md border border-white/5"
-    >
-     Privacy Policy
-    </button>
-    <MaterialButton className="!static !shadow-none" onClick={() => navigate("/code")}>
-     <Icon name="key" size={20} color="currentColor" />
-     <span>Login</span>
-    </MaterialButton>
-   </div>
+    {/* Footer Links (Below Public Shoutout Board) */}
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', padding: '24px 0 40px', position: 'relative', zIndex: 10 }}>
+     <button 
+      onClick={() => navigate("/privacy")}
+      style={{
+       background: 'transparent',
+       border: 'none',
+       color: '#888',
+       fontSize: '14px',
+       fontWeight: 500,
+       cursor: 'pointer',
+       padding: 0
+      }}
+     >
+      Privacy Policy
+     </button>
+     
+     <button 
+      onClick={() => navigate("/terms")}
+      style={{
+       background: 'transparent',
+       border: 'none',
+       color: '#888',
+       fontSize: '14px',
+       fontWeight: 500,
+       cursor: 'pointer',
+       padding: 0
+      }}
+     >
+      Terms & Conditions
+     </button>
+    </div>
+
   </div>
  );
 }

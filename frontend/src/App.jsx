@@ -96,6 +96,7 @@ import TrialUsedScreen from './pages/TrialUsedScreen.jsx';
 // ═══ SUPPORT / LEGAL ═══
 import HelpScreen from './pages/HelpScreen.jsx';
 import PrivacyPolicyScreen from './pages/PrivacyPolicyScreen.jsx';
+import TermsAndConditionsScreen from './pages/TermsAndConditionsScreen.jsx';
 
 export default function App() {
 	return (
@@ -211,6 +212,7 @@ export default function App() {
 				{/* ═══ SUPPORT / LEGAL ═══ */}
 				<Route path="/help" element={<HelpScreen />} />
 				<Route path="/privacy" element={<PrivacyPolicyScreen />} />
+				<Route path="/terms" element={<TermsAndConditionsScreen />} />
 				
 				{/* ═══ FALLBACK ═══ */}
 				<Route path="*" element={<Navigate to="/" replace />} />
