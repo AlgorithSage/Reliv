@@ -30,7 +30,7 @@ export default function BotPairingScreen() {
  x: Math.random() * W, y: Math.random() * H, r: 1.5 + Math.random() * 2,
  dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3,
  opacity: 0.12 + Math.random() * 0.2,
- color: ['#F06922', '#22C55E', '#3B82F6', '#8B5CF6'][Math.floor(Math.random() * 4)],
+ color: ['#000000', '#22C55E', '#3B82F6', '#8B5CF6'][Math.floor(Math.random() * 4)],
  }));
  let id;
  const draw = () => {
@@ -48,25 +48,25 @@ export default function BotPairingScreen() {
  }, []);
 
  const steps = [
- { num: 1, icon: 'package', text: 'Take bot home (pick up at counter)', color: '#F06922' },
+ { num: 1, icon: 'package', text: 'Take bot home (pick up at counter)', color: '#000000' },
  { num: 2, icon: 'plug', text: 'Power on with USB cable', color: '#3B82F6' },
  { num: 3, icon: 'pager', text: 'Wait for "READY!" on OLED screen', color: '#8B5CF6' },
  { num: 4, icon: 'laptop', text: 'Open Serial Monitor (115200 baud)', color: '#EC4899' },
  { num: 5, icon: '⌨', text: `Type: PAIR ${pairingCode}`, color: '#22C55E' },
- { num: 6, icon: 'sparkle', text: 'Bot syncs in seconds — done!', color: '#F59E0B' },
+ { num: 6, icon: 'sparkle', text: 'Bot syncs in seconds — done!', color: '#000000' },
  ];
 
  return (
  <div style={{
  minHeight: '100vh',
- background: 'linear-gradient(180deg, #0F0F12 0%, #1A1A2E 40%, #16213E 100%)',
+ background: 'var(--md-sys-color-surface-container, #E4E0DC)',
  fontFamily: "'Inter', 'Outfit', sans-serif",
  position: 'relative', overflow: 'hidden',
  }}><canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }} />
 
  {/* Gradient orbs */}
  <div style={{ position: 'absolute', top: -80, right: -80, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%)', animation: 'floatOrb1 8s ease-in-out infinite', pointerEvents: 'none' }} />
- <div style={{ position: 'absolute', bottom: -60, left: -60, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(240,105,34,0.12) 0%, transparent 70%)', animation: 'floatOrb2 10s ease-in-out infinite', pointerEvents: 'none' }} />
+ <div style={{ position: 'absolute', bottom: -60, left: -60, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,0,0,0.08) 0%, transparent 70%)', animation: 'floatOrb2 10s ease-in-out infinite', pointerEvents: 'none' }} />
 
  <div style={{
  position: 'relative', zIndex: 1,
@@ -77,55 +77,53 @@ export default function BotPairingScreen() {
  }}>
  {/* Back */}
  <MaterialButton onClick={() => navigate(-1)} style={{
- background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
- borderRadius: 12, padding: '10px 18px', color: 'rgba(255,255,255,0.6)',
+ background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(0,0,0,0.05)',
+ borderRadius: 12, padding: '10px 18px', color: '#333333',
  fontSize: 14, fontWeight: 600, cursor: 'pointer', alignSelf: 'flex-start',
- backdropFilter: 'none',
+ boxShadow: '4px 4px 10px rgba(0,0,0,0.05)'
  }}>← Back</MaterialButton>
 
  {/* Success badge */}
  <div style={{ textAlign: 'center' }}>
  <div style={{
  width: 88, height: 88, margin: '0 auto 20px',
- background: 'linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))',
+ background: '#FAFAF8',
  borderRadius: 28, display: 'flex', alignItems: 'center', justifyContent: 'center',
  fontSize: 44, border: '2px solid rgba(34,197,94,0.3)',
- boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  animation: 'bounceIn 0.6s ease',
- }}></div>
+ }}><Icon name="check_circle" size={44} color="#22C55E" /></div>
  <h1 style={{
  fontSize: 26, fontWeight: 800, marginBottom: 6,
- background: 'linear-gradient(135deg, #22C55E, #4ADE80)',
- WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+ color: '#22C55E',
  }}>Bot Purchased!</h1>
- <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>Use this code to pair your bot at home</p>
+ <p style={{ fontSize: 14, color: '#666666' }}>Use this code to pair your bot at home</p>
  </div>
 
  {/* Pairing code card */}
  <div style={{
- background: 'rgba(255,255,255,0.04)',
- backdropFilter: 'none', WebkitbackdropFilter: 'none',
+ background: '#FAFAF8',
  borderRadius: 24, padding: '32px 24px',
- border: '1px solid rgba(240,105,34,0.2)',
- boxShadow: '0 16px 60px rgba(240,105,34,0.15)',
+ border: 'none',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  textAlign: 'center', position: 'relative', overflow: 'hidden',
  }}>
  {/* Decorative ring */}
- <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', border: '2px solid rgba(240,105,34,0.1)', pointerEvents: 'none' }} />
+ <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', border: '2px solid rgba(0,0,0,0.05)', pointerEvents: 'none' }} />
  
- <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 3, marginBottom: 16 }}>
+ <div style={{ fontSize: 12, fontWeight: 700, color: '#888888', textTransform: 'uppercase', letterSpacing: 3, marginBottom: 16 }}>
  Your Pairing Code
  </div>
  <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
  {pairingCode.split('').map((char, i) => (
  <div key={i} style={{
  width: 52, height: 64,
- background: 'rgba(255,255,255,0.06)',
+ background: '#FFFFFF',
  borderRadius: 14,
  display: 'flex', alignItems: 'center', justifyContent: 'center',
- fontSize: 28, fontWeight: 900, color: '#F06922',
- border: '1px solid rgba(240,105,34,0.25)',
- boxShadow: '6px 6px 16px rgba(0,0,0,0.1), -6px -6px 16px rgba(255,255,255,0.6)',
+ fontSize: 28, fontWeight: 900, color: '#000000',
+ border: '1px solid rgba(0,0,0,0.05)',
+ boxShadow: 'inset 4px 4px 8px rgba(0,0,0,0.04), inset -4px -4px 8px rgba(255,255,255,0.8)',
  fontFamily: "'Outfit', monospace",
  animation: `popIn 0.35s ease ${i * 0.08}s both`,
  }}>
@@ -133,38 +131,38 @@ export default function BotPairingScreen() {
  </div>
  ))}
  </div>
- <div style={{ marginTop: 16, fontSize: 12, color: 'rgba(255,255,255,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}> Code also sent to your WhatsApp
+ <div style={{ marginTop: 16, fontSize: 12, color: '#666666', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}> Code also sent to your WhatsApp
  </div>
  </div>
 
  {/* Setup Steps */}
  <div style={{
- background: 'rgba(255,255,255,0.04)',
- backdropFilter: 'none', WebkitbackdropFilter: 'none',
+ background: '#FAFAF8',
  borderRadius: 22, padding: '28px 24px',
- border: '1px solid rgba(255,255,255,0.06)',
- }}><h3 style={{ fontSize: 15, fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginBottom: 20 }}>
+ border: 'none',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
+ }}><h3 style={{ fontSize: 15, fontWeight: 800, color: '#333333', marginBottom: 20 }}>
  6-Step Setup Guide
  </h3>
  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
  {steps.map((s, i) => (
  <div key={s.num} style={{
  display: 'flex', gap: 14, alignItems: 'center',
- opacity: i <= activeStep ? 1 : 0.3,
+ opacity: i <= activeStep ? 1 : 0.4,
  transform: i <= activeStep ? 'translateX(0)' : 'translateX(-12px)',
  transition: `all 0.4s ease ${i * 0.1}s`,
  }}>
  <div style={{
  width: 44, height: 44,
- background: `${s.color}18`,
+ background: `${s.color}15`,
  borderRadius: 13, display: 'flex', alignItems: 'center', justifyContent: 'center',
  fontSize: 20, flexShrink: 0,
  border: `1px solid ${s.color}30`,
- boxShadow: `0 4px 16px ${s.color}15`,
- }}><Icon name={s.icon} size={20} /></div>
+ boxShadow: `0 4px 10px ${s.color}10`,
+ }}><Icon name={s.icon} size={20} color={s.color} /></div>
  <div>
- <span style={{ fontSize: 11, fontWeight: 700, color: s.color, textTransform: 'uppercase', letterSpacing: 1 }}>Step {s.num}</span>
- <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', fontWeight: 600 }}>{s.text}</div>
+ <span style={{ fontSize: 11, fontWeight: 800, color: s.color, textTransform: 'uppercase', letterSpacing: 1 }}>Step {s.num}</span>
+ <div style={{ fontSize: 13, color: '#444444', fontWeight: 600 }}>{s.text}</div>
  </div>
  </div>
  ))}
@@ -173,14 +171,15 @@ export default function BotPairingScreen() {
 
  {/* Tip */}
  <div style={{
- background: 'rgba(34,197,94,0.06)',
- border: '1px solid rgba(34,197,94,0.15)',
+ background: '#FAFAF8',
+ border: '1px solid rgba(34,197,94,0.2)',
  borderRadius: 16, padding: '16px 20px',
  display: 'flex', gap: 12, alignItems: 'center',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  }}>
- <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
- <strong style={{ color: 'rgba(255,255,255,0.8)' }}>Tip:</strong> Bot auto-connects to WiFi. If not, type{' '}
- <code style={{ background: 'rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 6, fontSize: 11, color: '#F06922' }}>WIFI yourSSID yourPassword</code> in Serial Monitor.
+ <p style={{ fontSize: 12, color: '#666666', lineHeight: 1.6 }}>
+ <strong style={{ color: '#22C55E' }}>Tip:</strong> Bot auto-connects to WiFi. If not, type{' '}
+ <code style={{ background: 'rgba(0,0,0,0.05)', padding: '2px 8px', borderRadius: 6, fontSize: 11, color: '#000000', fontWeight: 600 }}>WIFI yourSSID yourPassword</code> in Serial Monitor.
  </p>
  </div>
 
@@ -190,7 +189,7 @@ export default function BotPairingScreen() {
  style={{
  width: '100%', border: 'none', borderRadius: 16, padding: '18px',
  fontSize: 16, fontWeight: 700, color: '#FFF', cursor: 'pointer',
- background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
+ background: '#111111',
  boxShadow: '10px 10px 24px rgba(0,0,0,0.15), -8px -8px 20px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)',
  position: 'relative', overflow: 'hidden',
  }}

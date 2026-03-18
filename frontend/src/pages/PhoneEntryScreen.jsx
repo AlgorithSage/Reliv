@@ -47,7 +47,7 @@ export default function PhoneEntryScreen() {
     setError('');
 
     try {
-      if (phone === '9999999999' || phone === '1111111111') {
+      if (phone === '9999999999' || phone === '1234567890') {
         // DEV BYPASS: Skip Firebase completely for this specific number
         navigate('/otp', { state: { phone: `+91${phone}`, isBypass: true } });
         return;
@@ -166,6 +166,11 @@ return (
  boxShadow: focused === 'phone' ? '0 0 0 4px rgba(240, 105, 34, 0.1)' : 'none',
  }}
  />
+ </div>
+ <div style={{ marginBottom: 20 }}>
+ <p style={{ fontSize: 13, color: '#22C55E', fontWeight: 600, background: 'rgba(34, 197, 94, 0.1)', padding: '10px 14px', borderRadius: 10 }}>
+ 🛠️ <b>Testing Bypass:</b> Enter <code>9999999999</code> or <code>1234567890</code> to skip sending a real SMS.
+ </p>
  </div>
  </div>
 

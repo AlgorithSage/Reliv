@@ -92,7 +92,7 @@ export default function BotPurchaseScreen() {
  <div
  style={{
  minHeight: '100vh',
- background: 'linear-gradient(180deg, #0F0F12 0%, #1A1A2E 40%, #16213E 100%)',
+ background: 'var(--md-sys-color-surface-container, #E4E0DC)',
  fontFamily: "'Inter', 'Outfit', sans-serif", position: 'relative', overflow: 'hidden',
  }}
  onMouseMove={resetInactivity}
@@ -107,9 +107,10 @@ export default function BotPurchaseScreen() {
 
  <MaterialButton onClick={() => navigate('/bot-offer')} style={{
  position: 'fixed', top: 24, left: 24, zIndex: 50,
- background: 'rgba(255,255,255,0.08)', backdropFilter: 'none',
- border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '12px 20px',
- color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+ background: 'rgba(255,255,255,0.5)',
+ border: '1px solid rgba(0,0,0,0.05)', borderRadius: 14, padding: '12px 20px',
+ color: '#333333', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+ boxShadow: '4px 4px 10px rgba(0,0,0,0.05)'
  }}>← Back</MaterialButton>
 
  {/* Inactivity attract screen overlay */}
@@ -194,9 +195,9 @@ export default function BotPurchaseScreen() {
  }}>
  {step === 'info' && (<>
  <div style={{
- background: 'rgba(255,255,255,0.06)', backdropFilter: 'none', WebkitbackdropFilter: 'none',
- borderRadius: 28, padding: '32px', border: '1px solid rgba(255,255,255,0.08)',
- boxShadow: '0 24px 80px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+ background: '#FAFAF8',
+ borderRadius: 28, padding: '32px', border: 'none',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  display: 'flex', gap: 24, alignItems: 'center',
  }}>
  <div style={{
@@ -205,8 +206,8 @@ export default function BotPurchaseScreen() {
  boxShadow: '12px 12px 28px rgba(0,0,0,0.15), -10px -10px 24px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.15)', animation: 'botFloat 4s ease-in-out infinite',
  }}></div>
  <div style={{ flex: 1 }}>
- <h2 style={{ fontSize: 22, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>Reliv Pet Bot</h2>
- <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 10 }}>IoT Health Companion</p>
+ <h2 style={{ fontSize: 22, fontWeight: 800, color: '#111111', marginBottom: 6 }}>Reliv Pet Bot</h2>
+ <p style={{ fontSize: 13, color: '#666666', marginBottom: 10 }}>IoT Health Companion</p>
  <div style={{ fontSize: 36, fontWeight: 900 }}>
  <span style={{ background: 'linear-gradient(135deg, #F06922, #FF8A4C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>₹499</span>
  </div>
@@ -214,39 +215,41 @@ export default function BotPurchaseScreen() {
  </div>
 
  <div style={{
- background: 'rgba(255,255,255,0.04)', backdropFilter: 'none',
- borderRadius: 24, padding: '28px', border: '1px solid rgba(255,255,255,0.06)',
+ background: '#FAFAF8',
+ borderRadius: 24, padding: '28px', border: 'none',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  }}>
- <h3 style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 2, marginBottom: 20 }}>What's Included</h3>
+ <h3 style={{ fontSize: 12, fontWeight: 700, color: '#888888', textTransform: 'uppercase', letterSpacing: 2, marginBottom: 20 }}>What's Included</h3>
  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
  {included.map((item, i) => (
  <div key={i} style={{
  display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
- background: 'rgba(255,255,255,0.04)', borderRadius: 14,
- border: '1px solid rgba(255,255,255,0.04)',
+ background: 'rgba(0,0,0,0.03)', borderRadius: 14,
+ border: '1px solid rgba(0,0,0,0.05)',
  }}>
- <Icon name={item.icon} size={18} />
- <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>{item.text}</span>
+ <Icon name={item.icon} size={18} color="#F06922" />
+ <span style={{ fontSize: 12, color: '#444444', fontWeight: 600 }}>{item.text}</span>
  </div>
  ))}
  </div>
  </div>
 
  <div style={{
- background: 'rgba(255,255,255,0.04)', backdropFilter: 'none',
- borderRadius: 20, padding: '24px 28px', border: '1px solid rgba(255,255,255,0.06)',
+ background: '#FAFAF8',
+ borderRadius: 20, padding: '24px 28px', border: 'none',
+ boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)',
  }}>
  {[
- { l: 'Reliv Pet Bot × 1', r: '₹499', c: 'rgba(255,255,255,0.8)' },
+ { l: 'Reliv Pet Bot × 1', r: '₹499', c: '#333333' },
  { l: 'Delivery', r: 'Pickup at Kiosk', c: '#22C55E' },
  ].map((row, i) => (
  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
- <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.4)' }}>{row.l}</span>
+ <span style={{ fontSize: 14, color: '#666666' }}>{row.l}</span>
  <span style={{ fontSize: 14, fontWeight: 600, color: row.c }}>{row.r}</span>
  </div>
  ))}
- <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
- <span style={{ fontSize: 16, fontWeight: 700, color: '#FFFFFF' }}>Total</span>
+ <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: 14, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+ <span style={{ fontSize: 16, fontWeight: 700, color: '#111111' }}>Total</span>
  <span style={{ fontSize: 24, fontWeight: 900, background: 'linear-gradient(135deg, #F06922, #FF8A4C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>₹499</span>
  </div>
  </div>
@@ -261,25 +264,25 @@ export default function BotPurchaseScreen() {
  <div style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)', animation: 'btnShimmer 3s ease-in-out infinite' }} /><Icon name="credit_card" size={18} />
  <span style={{ position: 'relative', zIndex: 1 }}> Pay ₹499</span>
  </MaterialButton>
- <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', textAlign: 'center' }}> Secured by Razorpay • 100% safe</p>
+ <p style={{ fontSize: 12, color: '#888888', textAlign: 'center', fontWeight: 600 }}> Secured by Razorpay • 100% safe</p>
  </>)}
 
  {step === 'processing' && (
- <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'none', borderRadius: 32, padding: '80px 40px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.08)' }}>
+ <div style={{ background: '#FAFAF8', borderRadius: 32, padding: '80px 40px', textAlign: 'center', border: 'none', boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65)' }}>
  <div style={{ fontSize: 72, marginBottom: 28, animation: 'botFloat 1.5s ease-in-out infinite' }}></div>
- <h3 style={{ fontSize: 24, fontWeight: 800, color: '#FFFFFF', marginBottom: 10 }}>Processing Payment...</h3>
- <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)' }}>Please wait while we confirm</p>
- <div style={{ width: 200, height: 4, background: 'rgba(255,255,255,0.1)', borderRadius: 2, margin: '28px auto 0', overflow: 'hidden' }}>
+ <h3 style={{ fontSize: 24, fontWeight: 800, color: '#111111', marginBottom: 10 }}>Processing Payment...</h3>
+ <p style={{ fontSize: 15, color: '#666666' }}>Please wait while we confirm</p>
+ <div style={{ width: 200, height: 4, background: 'rgba(0,0,0,0.05)', borderRadius: 2, margin: '28px auto 0', overflow: 'hidden' }}>
  <div style={{ width: '100%', height: '100%', background: 'linear-gradient(90deg, #F06922, #FF8A4C)', borderRadius: 2, animation: 'loadSlide 1.5s ease-in-out infinite' }} />
  </div>
  </div>
  )}
 
  {step === 'success' && (
- <div style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'none', borderRadius: 32, padding: '80px 40px', textAlign: 'center', border: '1px solid rgba(34,197,94,0.15)', boxShadow: '0 0 80px rgba(34,197,94,0.1)' }}>
+ <div style={{ background: '#FAFAF8', borderRadius: 32, padding: '80px 40px', textAlign: 'center', border: '2px solid rgba(34,197,94,0.2)', boxShadow: '12px 12px 28px rgba(0,0,0,0.12), -12px -12px 28px rgba(255,255,255,0.65), 0 0 40px rgba(34,197,94,0.1)' }}>
  <div style={{ fontSize: 80, marginBottom: 28, animation: 'bounceIn 0.5s ease' }}></div>
  <h3 style={{ fontSize: 28, fontWeight: 800, color: '#22C55E', marginBottom: 10 }}>Payment Successful!</h3>
- <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.45)' }}>Generating your pairing code...</p>
+ <p style={{ fontSize: 15, color: '#666666' }}>Generating your pairing code...</p>
  </div>
  )}
  </div>

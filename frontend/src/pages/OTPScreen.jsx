@@ -83,7 +83,7 @@ export default function OTPScreen() {
             
             if (location.state?.isBypass) {
                 // DEV BYPASS: Skip Firebase confirm completely
-                if (code !== '111111') throw new Error('Invalid bypass OTP. Use 111111');
+                if (code !== '123456') throw new Error('Invalid bypass OTP. Use 123456');
                 
                 result = {
                     user: {
@@ -110,38 +110,44 @@ export default function OTPScreen() {
             // Don't null confirmationResult here — null it only after navigation
             
             const user = result.user;
-            const userDocRef = doc(db, 'users', user.uid);
-            
-            console.log("Checking Firestore for existing user...");
-            // Force fetch from server to avoid "offline" cache errors in dev
-            let userDocSnap;
-            try {
-                userDocSnap = await getDoc(userDocRef, { source: 'server' });
-            } catch (fsErr) {
-                console.warn("Server fetch failed, trying default getDoc:", fsErr);
-                userDocSnap = await getDoc(userDocRef);
-            }
             
             let accessCode;
             
-            if (userDocSnap.exists()) {
-                console.log("User exists in Firestore.");
-                accessCode = userDocSnap.data().accessCode;
+            if (location.state?.isBypass) {
+                console.log("Bypass enabled. Skipping Firestore...");
+                accessCode = '1234'; // Dummy access code for bypass
             } else {
-                console.log("New user. Generating access code and saving to Firestore...");
-                accessCode = await generateAccessCode();
-                await setDoc(userDocRef, {
-                    uid: user.uid,
-                    phone: user.phoneNumber,
-                    accessCode: accessCode,
-                    createdAt: new Date().toISOString(),
-                    planType: null,
-                    subscriptionStatus: 'inactive',
-                    hasBot: false,
-                    streak: 0,
-                    stars: 0
-                });
-                console.log("Saved new user to Firestore.");
+                const userDocRef = doc(db, 'users', user.uid);
+                
+                console.log("Checking Firestore for existing user...");
+                // Force fetch from server to avoid "offline" cache errors in dev
+                let userDocSnap;
+                try {
+                    userDocSnap = await getDoc(userDocRef, { source: 'server' });
+                } catch (fsErr) {
+                    console.warn("Server fetch failed, trying default getDoc:", fsErr);
+                    userDocSnap = await getDoc(userDocRef);
+                }
+                
+                if (userDocSnap.exists()) {
+                    console.log("User exists in Firestore.");
+                    accessCode = userDocSnap.data().accessCode;
+                } else {
+                    console.log("New user. Generating access code and saving to Firestore...");
+                    accessCode = await generateAccessCode();
+                    await setDoc(userDocRef, {
+                        uid: user.uid,
+                        phone: user.phoneNumber,
+                        accessCode: accessCode,
+                        createdAt: new Date().toISOString(),
+                        planType: null,
+                        subscriptionStatus: 'inactive',
+                        hasBot: false,
+                        streak: 0,
+                        stars: 0
+                    });
+                    console.log("Saved new user to Firestore.");
+                }
             }
             
             localStorage.setItem('token', user.accessToken);
