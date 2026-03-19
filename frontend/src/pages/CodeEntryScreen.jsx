@@ -91,6 +91,9 @@ export default function CodeEntryScreen() {
         setLoading(true);
         setError('');
 
+        // Immediately blur the active input to prevent further keyboard input
+        document.activeElement?.blur();
+
         try {
             // 1. Look up user by access code via backend
             const result = await loginWithCode(accessCode);
@@ -171,51 +174,72 @@ export default function CodeEntryScreen() {
                     </p>
 
                     {/* Code Input Boxes — 6 digits */}
-                    <div
-                        style={{
-                            display: 'flex',
-                            gap: 12,
-                            justifyContent: 'center',
-                            marginBottom: 28,
-                        }}
-                        onPaste={handlePaste}
-                    >
-                        {code.map((d, i) => (
-                            <input
-                                key={i}
-                                ref={(el) => inputRefs.current[i] = el}
-                                type="text"
-                                maxLength="1"
-                                value={d}
-                                onChange={(e) => handleChange(i, e.target.value)}
-                                onKeyDown={(e) => handleKeyDown(i, e)}
-                                style={{
-                                    width: 52,
-                                    height: 72,
-                                    background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
-                                    border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
-                                    borderRadius: 18,
-                                    fontSize: 30,
-                                    fontWeight: 800,
-                                    color: '#111111',
-                                    textAlign: 'center',
-                                    outline: 'none',
-                                    transition: 'all 0.3s ease',
-                                    boxShadow: d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none',
-                                    caretColor: '#F06922',
-                                }}
-                                onFocus={(e) => {
-                                    e.target.style.borderColor = '#F06922';
-                                    e.target.style.boxShadow = '0 0 0 4px rgba(240, 105, 34, 0.15)';
-                                    e.target.style.transform = 'scale(1.05)';
-                                }}
-                                onBlur={(e) => {
-                                    e.target.style.borderColor = d ? '#F06922' : '#E5E7EB';
-                                    e.target.style.boxShadow = d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none';
-                                    e.target.style.transform = 'scale(1)';
-                                }}
-                            />
-                        ))}
+                    <div style={{ position: 'relative' }}>
+                        {/* Blocking overlay while verifying */}
+                        {loading && (
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                zIndex: 10,
+                                cursor: 'not-allowed',
+                                borderRadius: 18,
+                            }} />
+                        )}
+                        <div
+                            style={{
+                                display: 'flex',
+                                gap: 12,
+                                justifyContent: 'center',
+                                marginBottom: 28,
+                                opacity: loading ? 0.5 : 1,
+                                transition: 'opacity 0.3s ease',
+                            }}
+                            onPaste={loading ? undefined : handlePaste}
+                        >
+                            {code.map((d, i) => (
+                                <input
+                                    key={i}
+                                    ref={(el) => inputRefs.current[i] = el}
+                                    type="text"
+                                    maxLength="1"
+                                    value={d}
+                                    readOnly={loading}
+                                    tabIndex={loading ? -1 : 0}
+                                    onChange={(e) => handleChange(i, e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (loading) { e.preventDefault(); return; }
+                                        handleKeyDown(i, e);
+                                    }}
+                                    style={{
+                                        width: 52,
+                                        height: 72,
+                                        background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
+                                        border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
+                                        borderRadius: 18,
+                                        fontSize: 30,
+                                        fontWeight: 800,
+                                        color: '#111111',
+                                        textAlign: 'center',
+                                        outline: 'none',
+                                        transition: 'all 0.3s ease',
+                                        boxShadow: d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none',
+                                        caretColor: '#F06922',
+                                        cursor: loading ? 'not-allowed' : 'text',
+                                    }}
+                                    onFocus={(e) => {
+                                        if (loading) { e.target.blur(); return; }
+                                        e.target.style.borderColor = '#F06922';
+                                        e.target.style.boxShadow = '0 0 0 4px rgba(240, 105, 34, 0.15)';
+                                        e.target.style.transform = 'scale(1.05)';
+                                    }}
+                                    onBlur={(e) => {
+                                        e.target.style.borderColor = d ? '#F06922' : '#E5E7EB';
+                                        e.target.style.boxShadow = d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none';
+                                        e.target.style.transform = 'scale(1)';
+                                    }}
+                                />
+                            ))}
+                        </div>
                     </div>
 
                     {/* Error Message */}

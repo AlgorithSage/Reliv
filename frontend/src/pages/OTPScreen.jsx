@@ -54,6 +54,9 @@ export default function OTPScreen() {
     setError('');
     setAuthStep('verifying');
 
+    // Immediately blur the active input to prevent further keyboard input
+    document.activeElement?.blur();
+
     try {
       // 1. Verify OTP via backend → Twilio
       const result = await verifyOtp(phoneDigits, code);
@@ -249,51 +252,73 @@ export default function OTPScreen() {
           </p>
 
           {/* OTP Input Boxes */}
-          <div
-            style={{
-              display: 'flex',
-              gap: 16,
-              justifyContent: 'center',
-              marginBottom: 32,
-            }}
-            onPaste={handlePaste}
-          >
-            {otpCode.map((d, i) => (
-              <input
-                key={i}
-                ref={(el) => (inputRefs.current[i] = el)}
-                type="tel"
-                maxLength="1"
-                value={d}
-                onChange={(e) => handleChange(i, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(i, e)}
-                style={{
-                  width: 50,
-                  height: 88,
-                  background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
-                  border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
-                  borderRadius: 20,
-                  fontSize: 36,
-                  fontWeight: 800,
-                  color: '#111111',
-                  textAlign: 'center',
-                  outline: 'none',
-                  transition: 'all 0.3s ease',
-                  boxShadow: d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none',
-                  caretColor: '#F06922',
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#F06922';
-                  e.target.style.boxShadow = '0 0 0 4px rgba(240, 105, 34, 0.15)';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = d ? '#F06922' : '#E5E7EB';
-                  e.target.style.boxShadow = d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none';
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-            ))}
+          <div style={{ position: 'relative' }}>
+            {/* Blocking overlay while verifying */}
+            {loading && (
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 10,
+                cursor: 'not-allowed',
+                borderRadius: 20,
+              }} />
+            )}
+            <div
+              style={{
+                display: 'flex',
+                gap: 16,
+                justifyContent: 'center',
+                marginBottom: 32,
+                opacity: loading ? 0.5 : 1,
+                transition: 'opacity 0.3s ease',
+              }}
+              onPaste={loading ? undefined : handlePaste}
+            >
+              {otpCode.map((d, i) => (
+                <input
+                  key={i}
+                  ref={(el) => (inputRefs.current[i] = el)}
+                  type="tel"
+                  inputMode="numeric"
+                  maxLength="1"
+                  value={d}
+                  readOnly={loading}
+                  tabIndex={loading ? -1 : 0}
+                  onChange={(e) => handleChange(i, e.target.value)}
+                  onKeyDown={(e) => {
+                    if (loading) { e.preventDefault(); return; }
+                    handleKeyDown(i, e);
+                  }}
+                  style={{
+                    width: 50,
+                    height: 88,
+                    background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
+                    border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
+                    borderRadius: 20,
+                    fontSize: 36,
+                    fontWeight: 800,
+                    color: '#111111',
+                    textAlign: 'center',
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    boxShadow: d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none',
+                    caretColor: '#F06922',
+                    cursor: loading ? 'not-allowed' : 'text',
+                  }}
+                  onFocus={(e) => {
+                    if (loading) { e.target.blur(); return; }
+                    e.target.style.borderColor = '#F06922';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(240, 105, 34, 0.15)';
+                    e.target.style.transform = 'scale(1.05)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = d ? '#F06922' : '#E5E7EB';
+                    e.target.style.boxShadow = d ? '0 8px 30px rgba(240, 105, 34, 0.15)' : 'none';
+                    e.target.style.transform = 'scale(1)';
+                  }}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Error Message */}
