@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const twilio = require('twilio');
 const admin = require('firebase-admin');
+const Groq = require('groq-sdk');
 
 // ═══════════════════════════════════════════════
 // Firebase Admin SDK initialization (from env vars)
@@ -343,6 +344,47 @@ app.post('/api/login-code', async (req, res) => {
     res.status(500).json({ error: 'Login failed. Please try again.' });
   }
 });
+
+// ═══════════════════════════════════════════════
+// NEW: AI Health Coach Endpoint (Groq)
+// ═══════════════════════════════════════════════
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+const COACH_SYSTEM_PROMPT = `You are the Reliv AI Health Coach. 
+You are a friendly, highly knowledgeable, and empathetic health and wellness expert.
+Your goal is to help users with their diet plans, workout routines, and daily health habits.
+Keep your responses concise, actionable, and encouraging. Use emojis where appropriate.
+You are talking to a user of the Reliv health app. Do not say you are an AI model created by Groq or anyone else, you are the Reliv AI Health Coach.`;
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { messages } = req.body;
+    
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ error: 'Messages array is required' });
+    }
+
+    // Prepend the system prompt to the conversation
+    const conversation = [
+      { role: 'system', content: COACH_SYSTEM_PROMPT },
+      ...messages
+    ];
+
+    const chatCompletion = await groq.chat.completions.create({
+      messages: conversation,
+      model: 'llama-3.3-70b-versatile',
+      temperature: 0.7,
+      max_tokens: 500,
+    });
+
+    const reply = chatCompletion.choices[0]?.message?.content;
+    res.json({ reply });
+  } catch (error) {
+    console.error('Groq AI error:', error.message || error);
+    res.status(500).json({ error: 'Failed to communicate with AI Coach.' });
+  }
+});
+
 
 // ═══════════════════════════════════════════════
 // Start server
