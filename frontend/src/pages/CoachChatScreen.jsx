@@ -273,19 +273,19 @@ export default function CoachChatScreen() {
                             color: '#1F2937',
                             fontSize: '16px',
                             resize: 'none',
-                            height: '36px',
+                            height: '44px',
                             maxHeight: '140px',
-                            padding: '14px 0',
+                            padding: '10px 0',
                             outline: 'none',
                             fontFamily: 'inherit',
-                            lineHeight: '1.5',
+                            lineHeight: '24px',
                         }}
                         rows={1}
                         // Auto-resize textarea
                         ref={(el) => {
                             if (el) {
-                                el.style.height = '36px';
-                                el.style.height = Math.min(el.scrollHeight - 28, 140) + 'px';
+                                el.style.height = '44px';
+                                el.style.height = Math.min(el.scrollHeight, 140) + 'px';
                             }
                         }}
                         onFocus={e => {
