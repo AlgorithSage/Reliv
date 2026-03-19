@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { auth, db } from '../utils/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
-import { C } from '../utils/constants';
+import { auth } from '../utils/firebase';
+import { signInWithCustomToken } from 'firebase/auth';
+import { loginWithCode } from '../utils/authApi';
 import Icon from '../utils/Icon';
 import MaterialButton from '../components/material/MaterialButton';
 
 export default function CodeEntryScreen() {
     const navigate = useNavigate();
-    const [code, setCode] = useState(['', '', '', '']);
+    const [code, setCode] = useState(['', '', '', '', '', '']);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const inputRefs = useRef([]);
@@ -21,23 +21,44 @@ export default function CodeEntryScreen() {
     }, []);
 
     const handleChange = (i, val) => {
-        if (val.length > 1) val = val[0];
+        const chars = val.toUpperCase();
+        if (!chars) {
+            const newCode = [...code];
+            newCode[i] = '';
+            setCode(newCode);
+            setError('');
+            return;
+        }
+
+        // Handle paste / multi-digit input
+        if (chars.length > 1) {
+            const newCode = [...code];
+            for (let offset = 0; offset < chars.length && i + offset < newCode.length; offset++) {
+                newCode[i + offset] = chars[offset];
+            }
+            setCode(newCode);
+            setError('');
+            const lastIdx = Math.min(i + chars.length - 1, newCode.length - 1);
+            if (newCode.every(d => d !== '') && !hasFailedOnce.current) {
+                setTimeout(() => continueBtnRef.current?.click(), 250);
+            } else if (lastIdx < newCode.length - 1) {
+                inputRefs.current[lastIdx + 1]?.focus();
+            }
+            return;
+        }
+
         const newCode = [...code];
-        newCode[i] = val;
+        newCode[i] = chars[0];
         setCode(newCode);
         setError('');
 
-        if (val && i < 3) {
+        if (chars[0] && i < 5) {
             inputRefs.current[i + 1]?.focus();
         }
 
-        // Auto-click Continue when all 4 digits are filled (first attempt only)
-        if (val && i === 3 && newCode.every(d => d !== '') && !hasFailedOnce.current) {
-            setTimeout(() => {
-                if (continueBtnRef.current) {
-                    continueBtnRef.current.click();
-                }
-            }, 250);
+        // Auto-submit when all 6 characters filled (first attempt only)
+        if (chars[0] && i === 5 && newCode.every(d => d !== '') && !hasFailedOnce.current) {
+            setTimeout(() => continueBtnRef.current?.click(), 250);
         }
     };
 
@@ -49,48 +70,57 @@ export default function CodeEntryScreen() {
 
     const handlePaste = (e) => {
         e.preventDefault();
-        const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4);
+        const pasted = e.clipboardData.getData('text').trim().toUpperCase().slice(0, 6);
         const newCode = [...code];
         for (let i = 0; i < pasted.length; i++) {
             newCode[i] = pasted[i];
         }
         setCode(newCode);
-        if (pasted.length === 4) {
-            inputRefs.current[3]?.focus();
-            // Auto-click Continue on full paste (first attempt only)
+        if (pasted.length === 6) {
+            inputRefs.current[5]?.focus();
             if (!hasFailedOnce.current) {
-                setTimeout(() => {
-                    if (continueBtnRef.current) {
-                        continueBtnRef.current.click();
-                    }
-                }, 250);
+                setTimeout(() => continueBtnRef.current?.click(), 250);
             }
         }
     };
 
     const handleSubmit = async () => {
         const accessCode = code.join('');
-        if (accessCode.length !== 4) return;
+        if (accessCode.length !== 6) return;
 
         setLoading(true);
         setError('');
 
-        // Demo codes for testing
-        const demoCodes = ['9876', '6241', '1234'];
+        try {
+            // 1. Look up user by access code via backend
+            const result = await loginWithCode(accessCode);
 
-        setTimeout(() => {
-            if (demoCodes.includes(accessCode)) {
-                localStorage.setItem('accessCode', accessCode);
-                localStorage.setItem('userType', 'returning');
-                // Randomly route to different return states for demo
-                const routes = ['/return-active', '/return-expired', '/return-daily-again'];
-                navigate(routes[Math.floor(Math.random() * routes.length)]);
+            // 2. Sign into Firebase with custom token
+            await signInWithCustomToken(auth, result.customToken);
+
+            // 3. Store auth data locally
+            const user = auth.currentUser;
+            localStorage.setItem('token', await user.getIdToken());
+            localStorage.setItem('userId', result.uid);
+            localStorage.setItem('accessCode', result.accessCode);
+            localStorage.setItem('phone', result.phone);
+            localStorage.setItem('userType', 'returning');
+
+            // 4. Navigate based on subscription status
+            const subStatus = result.userData?.subscriptionStatus;
+            if (subStatus === 'active') {
+                navigate('/return-active');
+            } else if (subStatus === 'expired') {
+                navigate('/return-expired');
             } else {
-                hasFailedOnce.current = true;
-                setError('Code not found');
-                setLoading(false);
+                navigate('/return-active');
             }
-        }, 800);
+        } catch (err) {
+            console.error('Code login error:', err);
+            hasFailedOnce.current = true;
+            setError(err.message || 'Code not found');
+            setLoading(false);
+        }
     };
 
     const isComplete = code.every(d => d);
@@ -98,7 +128,7 @@ export default function CodeEntryScreen() {
     return (
         <Layout
             title="Welcome Back!"
-            subtitle="Enter your 4-digit access code to continue"
+            subtitle="Enter your 6-digit access code to continue"
             showBack
         >
             <div style={{ maxWidth: 520, margin: '0 auto' }}>
@@ -124,7 +154,6 @@ export default function CodeEntryScreen() {
                         border: '1px solid rgba(240, 105, 34, 0.15)',
                         fontSize: 44,
                     }}>
-
                         <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 4px 8px rgba(240,105,34,0.3))' }}>
                             <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 9.9-1" />
@@ -132,11 +161,20 @@ export default function CodeEntryScreen() {
                         </svg>
                     </div>
 
-                    {/* Code Input Boxes */}
+                    {/* Info */}
+                    <p style={{
+                        fontSize: 13,
+                        color: '#9CA3AF',
+                        marginBottom: 28,
+                    }}>
+                        Enter the code you received on WhatsApp when you first registered
+                    </p>
+
+                    {/* Code Input Boxes — 6 digits */}
                     <div
                         style={{
                             display: 'flex',
-                            gap: 16,
+                            gap: 12,
                             justifyContent: 'center',
                             marginBottom: 28,
                         }}
@@ -146,18 +184,18 @@ export default function CodeEntryScreen() {
                             <input
                                 key={i}
                                 ref={(el) => inputRefs.current[i] = el}
-                                type="tel"
+                                type="text"
                                 maxLength="1"
                                 value={d}
                                 onChange={(e) => handleChange(i, e.target.value)}
                                 onKeyDown={(e) => handleKeyDown(i, e)}
                                 style={{
-                                    width: 72,
-                                    height: 88,
+                                    width: 52,
+                                    height: 72,
                                     background: d ? 'linear-gradient(135deg, #FFFAF7 0%, #FFF5F0 100%)' : '#FAFAFA',
                                     border: `3px solid ${d ? '#F06922' : error ? '#EF4444' : '#E5E7EB'}`,
-                                    borderRadius: 20,
-                                    fontSize: 36,
+                                    borderRadius: 18,
+                                    fontSize: 30,
                                     fontWeight: 800,
                                     color: '#111111',
                                     textAlign: 'center',
@@ -180,19 +218,6 @@ export default function CodeEntryScreen() {
                         ))}
                     </div>
 
-                    {/* Demo Hint */}
-                    <p style={{
-                        fontSize: 13,
-                        color: '#9CA3AF',
-                        marginBottom: 28,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 6,
-                    }}>
-                        Demo codes: <strong style={{ color: '#F06922' }}>9876</strong> or <strong style={{ color: '#F06922' }}>6241</strong>
-                    </p>
-
                     {/* Error Message */}
                     {error && (
                         <div style={{
@@ -210,7 +235,7 @@ export default function CodeEntryScreen() {
                             <div>
                                 <p style={{ fontSize: 14, color: '#DC2626', fontWeight: 600, margin: 0 }}>{error}</p>
                                 <p style={{ fontSize: 12, color: '#9CA3AF', margin: '4px 0 0' }}>
-                                    Check your code or try a new number
+                                    Check your WhatsApp for the code
                                 </p>
                             </div>
                         </div>
@@ -253,7 +278,7 @@ export default function CodeEntryScreen() {
                                     animation: 'spin 0.8s linear infinite',
                                     display: 'inline-block',
                                 }} />
-                                Checking...
+                                Logging in...
                             </>
                         ) : 'Continue'}
                     </button>
@@ -304,16 +329,6 @@ export default function CodeEntryScreen() {
                             e.currentTarget.style.transform = 'translateY(0)';
                             e.currentTarget.style.boxShadow = '4px 4px 10px rgba(0, 0, 0, 0.08), -4px -4px 10px rgba(255, 255, 255, 0.6)';
                         }}
-                        onMouseDown={(e) => {
-                            e.currentTarget.style.boxShadow = 'inset 3px 3px 8px rgba(0, 0, 0, 0.1), inset -3px -3px 8px rgba(255, 255, 255, 0.5)';
-                            e.currentTarget.style.transform = 'translateY(0) scale(0.97)';
-                        }}
-                        onMouseUp={(e) => {
-                            e.currentTarget.style.background = '#F06922';
-                            e.currentTarget.style.color = '#fff';
-                            e.currentTarget.style.boxShadow = '0 8px 24px rgba(240, 105, 34, 0.25)';
-                            e.currentTarget.style.transform = 'translateY(0)';
-                        }}
                     >
                         Start Fresh with Phone Number
                     </MaterialButton>
@@ -330,11 +345,10 @@ export default function CodeEntryScreen() {
                     justifyContent: 'center',
                     gap: 6,
                 }}>
-                    Your code is linked to your phone number
+                    Your code was sent to your WhatsApp when you registered
                 </p>
             </div>
 
-            {/* Animation Keyframes */}
             <style>{`
  @keyframes shake {
  0%, 100% { transform: translateX(0); }

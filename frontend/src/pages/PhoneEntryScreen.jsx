@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../utils/firebase';
-import { setupRecaptcha, teardownRecaptcha } from '../utils/recaptcha';
-import { sendOtp } from '../utils/phoneAuth';
+import { sendOtp } from '../utils/authApi';
 import Layout from '../components/Layout';
-import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
 import MaterialButton from '../components/material/MaterialButton';
 import MaterialTextField from '../components/material/MaterialTextField';
-import { clearOtpSession, storeOtpSession } from '../utils/otpSession';
+
+// Twilio Sandbox QR code — links to wa.me/14155238886
+const SANDBOX_QR_URL = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwa.me%2F14155238886%3Ftext%3Djoin%2520observe-ear';
 
 export default function PhoneEntryScreen() {
   const navigate = useNavigate();
@@ -17,14 +16,7 @@ export default function PhoneEntryScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [focused, setFocused] = useState(null);
-  const [confirmationResult, setConfirmationResult] = useState(null);
-
-  // Clean up reCAPTCHA on component unmount
-  useEffect(() => {
-    return () => {
-      teardownRecaptcha('recaptcha-container');
-    };
-  }, []);
+  const [showSetup, setShowSetup] = useState(false);
 
   const handleSubmit = async () => {
     if (phoneNumber.length !== 10) {
@@ -36,48 +28,17 @@ export default function PhoneEntryScreen() {
     setError('');
 
     try {
-      // Clear any previous OTP session
-      clearOtpSession();
-      setConfirmationResult(null);
-
-      // Initialize reCAPTCHA before sending OTP
-      const appVerifier = await setupRecaptcha(auth, 'recaptcha-container');
-
-      // Format phone number to E.164 and send OTP
+      await sendOtp(phoneNumber);
       const formattedPhone = `+91${phoneNumber}`;
-      const result = await sendOtp(auth, formattedPhone, appVerifier);
-
-      // Store confirmationResult in React state
-      setConfirmationResult(result);
-
-      // Persist verificationId for OTP screen (survives navigation)
-      storeOtpSession({
-        phone: formattedPhone,
-        verificationId: result.verificationId,
-      });
       localStorage.setItem('phone', formattedPhone);
-
-      // Navigate to OTP screen
       navigate('/otp', { state: { phone: formattedPhone } });
     } catch (err) {
       console.error('Phone auth error:', err);
-
-      let errorMessage = 'Failed to send OTP. Try again.';
-      if (err.code === 'auth/captcha-check-failed') {
-        errorMessage = 'reCAPTCHA verification failed. Please try again.';
-      } else if (err.code === 'auth/too-many-requests') {
-        errorMessage = 'Too many attempts. Please wait a few minutes.';
-      } else if (err.code === 'auth/invalid-phone-number') {
-        errorMessage = 'Invalid phone number format.';
-      } else if (err.code === 'auth/quota-exceeded') {
-        errorMessage = 'SMS quota exceeded. Try again later.';
-      } else if (err.code === 'auth/invalid-app-credential') {
-        errorMessage = 'App verification failed. Refresh the page and try again.';
+      // If WhatsApp not activated, auto-expand setup guide
+      if (err.message && err.message.includes('WhatsApp not activated')) {
+        setShowSetup(true);
       }
-
-      setError(errorMessage);
-      clearOtpSession();
-      teardownRecaptcha('recaptcha-container');
+      setError(err.message || 'Failed to send OTP. Try again.');
     } finally {
       setLoading(false);
     }
@@ -108,6 +69,133 @@ export default function PhoneEntryScreen() {
             fontSize: 40,
           }}><Icon name="phone" size={36} /></div>
 
+          {/* ═══ WhatsApp Setup Guide ═══ */}
+          <div style={{
+            background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
+            border: '1px solid #81C784',
+            borderRadius: 16,
+            marginBottom: 24,
+            overflow: 'hidden',
+          }}>
+            {/* Toggle Header */}
+            <div
+              onClick={() => setShowSetup(!showSetup)}
+              style={{
+                padding: '14px 18px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                cursor: 'pointer',
+                userSelect: 'none',
+              }}
+            >
+              <span style={{ fontSize: 22 }}>💬</span>
+              <div style={{ flex: 1 }}>
+                <span style={{ fontSize: 14, color: '#2E7D32', fontWeight: 700 }}>
+                  First time? Setup WhatsApp first
+                </span>
+                <span style={{ fontSize: 12, color: '#4CAF50', display: 'block', marginTop: 2 }}>
+                  Required one-time step to receive OTP
+                </span>
+              </div>
+              <span style={{
+                fontSize: 18,
+                color: '#2E7D32',
+                transition: 'transform 0.3s ease',
+                transform: showSetup ? 'rotate(180deg)' : 'rotate(0deg)',
+              }}>▼</span>
+            </div>
+
+            {/* Expandable Content */}
+            <div style={{
+              maxHeight: showSetup ? 600 : 0,
+              overflow: 'hidden',
+              transition: 'max-height 0.4s ease',
+            }}>
+              <div style={{
+                padding: '0 18px 20px',
+                borderTop: '1px solid rgba(129, 199, 132, 0.4)',
+              }}>
+                {/* Steps */}
+                <div style={{ marginTop: 16 }}>
+                  {[
+                    { num: '1', icon: '📱', text: 'Scan the QR code below with your phone camera' },
+                    { num: '2', icon: '💬', text: 'It will open WhatsApp — send the pre-filled message' },
+                    { num: '3', icon: '✅', text: 'You\'ll get a confirmation reply from Twilio' },
+                    { num: '4', icon: '🔙', text: 'Come back here and enter your number!' },
+                  ].map((step) => (
+                    <div key={step.num} style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 12,
+                      marginBottom: 12,
+                    }}>
+                      <div style={{
+                        minWidth: 28,
+                        height: 28,
+                        background: '#2E7D32',
+                        color: '#fff',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 13,
+                        fontWeight: 700,
+                      }}>{step.num}</div>
+                      <div style={{ fontSize: 13, color: '#1B5E20', lineHeight: 1.5, paddingTop: 4 }}>
+                        <span style={{ marginRight: 6 }}>{step.icon}</span>
+                        {step.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* QR Code */}
+                <div style={{
+                  textAlign: 'center',
+                  marginTop: 16,
+                  padding: 16,
+                  background: '#fff',
+                  borderRadius: 14,
+                  border: '1px solid #C8E6C9',
+                }}>
+                  <img
+                    src={SANDBOX_QR_URL}
+                    alt="Scan to join WhatsApp sandbox"
+                    style={{
+                      width: 180,
+                      height: 180,
+                      borderRadius: 8,
+                    }}
+                  />
+                  <p style={{ fontSize: 12, color: '#666', marginTop: 10, marginBottom: 8 }}>
+                    Scan with your phone camera
+                  </p>
+                  <a
+                    href="https://wa.me/14155238886?text=join%20observe-ear"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      background: '#25D366',
+                      color: '#fff',
+                      padding: '8px 18px',
+                      borderRadius: 24,
+                      fontSize: 13,
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <span style={{ fontSize: 16 }}>💬</span>
+                    Or tap here to open WhatsApp
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Phone Input Section */}
           <div style={{ marginBottom: 28 }}>
             <label style={{
@@ -125,7 +213,6 @@ export default function PhoneEntryScreen() {
               gap: 12,
               alignItems: 'stretch',
             }}>
-              {/* Country Code */}
               <div style={{
                 background: 'linear-gradient(135deg, #FFF5F0 0%, #FFEEDD 100%)',
                 border: '2px solid #FFD296',
@@ -141,7 +228,6 @@ export default function PhoneEntryScreen() {
                 +91
               </div>
 
-              {/* Phone Input */}
               <input
                 type="tel"
                 maxLength="10"
@@ -230,19 +316,6 @@ export default function PhoneEntryScreen() {
             </div>
           )}
 
-          {/* reCAPTCHA container — must exist in the DOM, must not use display:none */}
-          <div
-            id="recaptcha-container"
-            style={{
-              position: 'absolute',
-              width: 1,
-              height: 1,
-              overflow: 'hidden',
-              opacity: 0.01,
-              pointerEvents: 'none',
-            }}
-          />
-
           {/* Submit Button */}
           <MaterialButton
             variant="filled"
@@ -254,7 +327,7 @@ export default function PhoneEntryScreen() {
               '--md-filled-button-label-text-size': '18px',
             }}
           >
-            {loading ? 'Sending OTP...' : 'Send OTP →'}
+            {loading ? 'Sending OTP...' : 'Send OTP via WhatsApp →'}
           </MaterialButton>
         </div>
 
@@ -273,16 +346,11 @@ export default function PhoneEntryScreen() {
         </div>
       </div>
 
-      {/* Animation Keyframes */}
       <style>{`
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
           20%, 40%, 60%, 80% { transform: translateX(4px); }
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
         }
       `}</style>
     </Layout>

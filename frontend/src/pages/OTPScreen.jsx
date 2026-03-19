@@ -1,21 +1,17 @@
 import MaterialButton from '../components/material/MaterialButton';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { auth, db } from '../utils/firebase';
-import { signInWithPhoneNumber } from 'firebase/auth';
+import { auth } from '../utils/firebase';
+import { signInWithCustomToken } from 'firebase/auth';
 import Layout from '../components/Layout';
-import { C, api } from '../utils/constants';
 import Icon from '../utils/Icon';
-import { setupRecaptcha, teardownRecaptcha } from '../utils/recaptcha';
-import { verifyOtp, checkUserInFirestore, createUserInFirestore, generateAccessCode } from '../utils/phoneAuth';
-import { clearOtpSession, readOtpSession, storeOtpSession } from '../utils/otpSession';
+import { sendOtp, verifyOtp } from '../utils/authApi';
 
 export default function OTPScreen() {
   const navigate = useNavigate();
   const location = useLocation();
-  const otpSession = readOtpSession();
 
-  const phone = location.state?.phone || otpSession.phone || localStorage.getItem('phone') || '';
+  const phone = location.state?.phone || localStorage.getItem('phone') || '';
 
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
@@ -23,19 +19,19 @@ export default function OTPScreen() {
   const [attempts, setAttempts] = useState(0);
   const [resendTimer, setResendTimer] = useState(30);
   const [success, setSuccess] = useState(false);
-  const [authStep, setAuthStep] = useState('otp_input'); // 'otp_input' | 'verifying' | 'checking_user' | 'complete'
+  const [authStep, setAuthStep] = useState('otp_input'); // 'otp_input' | 'verifying' | 'signing_in' | 'complete'
 
   const inputRefs = useRef([]);
   const isSubmitting = useRef(false);
   const hasFailedOnce = useRef(false);
   const verifyBtnRef = useRef(null);
 
-  // Redirect if no phone number is available
+  // Redirect if no phone number
   useEffect(() => {
     if (!phone) navigate('/phone');
   }, [phone, navigate]);
 
-  // Resend countdown timer
+  // Resend countdown
   useEffect(() => {
     if (resendTimer > 0) {
       const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
@@ -43,17 +39,13 @@ export default function OTPScreen() {
     }
   }, [resendTimer]);
 
-  // Auto-focus first input on mount
+  // Auto-focus first input
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
 
-  // Clean up reCAPTCHA on component unmount
-  useEffect(() => {
-    return () => {
-      teardownRecaptcha('recaptcha-container-otp');
-    };
-  }, []);
+  // Extract 10-digit number from full phone
+  const phoneDigits = phone.replace(/^\+91/, '');
 
   const doSubmit = useCallback(async (code) => {
     if (code.length !== 6 || isSubmitting.current) return;
@@ -63,46 +55,25 @@ export default function OTPScreen() {
     setAuthStep('verifying');
 
     try {
-      // Get verificationId from session storage
-      const verificationId = readOtpSession().verificationId;
-      if (!verificationId) {
-        throw new Error('OTP session expired. Please go back and request a new OTP.');
-      }
+      // 1. Verify OTP via backend → Twilio
+      const result = await verifyOtp(phoneDigits, code);
 
-      // Verify OTP using modular helper
-      const result = await verifyOtp(auth, verificationId, code);
-      const user = result.user;
+      // 2. Sign into Firebase with custom token
+      setAuthStep('signing_in');
+      await signInWithCustomToken(auth, result.customToken);
 
-      // Post-auth: Check if user exists in Firestore
-      setAuthStep('checking_user');
-      const { exists, data: userData } = await checkUserInFirestore(db, user.uid);
+      // 3. Store auth data locally
+      const user = auth.currentUser;
+      localStorage.setItem('token', await user.getIdToken());
+      localStorage.setItem('userId', result.uid);
+      localStorage.setItem('accessCode', result.accessCode);
 
-      let accessCode;
-      if (exists) {
-        console.log('Existing user found in Firestore.');
-        accessCode = userData.accessCode;
-      } else {
-        console.log('New user. Creating Firestore document...');
-        accessCode = generateAccessCode();
-        await createUserInFirestore(db, user, accessCode);
-        console.log('New user saved to Firestore.');
-      }
-
-      // Store auth tokens locally
-      localStorage.setItem('token', user.accessToken);
-      localStorage.setItem('userId', user.uid);
-      localStorage.setItem('accessCode', accessCode);
-
-      // Cleanup OTP session
-      clearOtpSession();
-
+      // 4. Success!
       setSuccess(true);
       setAuthStep('complete');
       setTimeout(() => navigate('/code-generated'), 800);
     } catch (err) {
-      console.error('Firebase Auth Error:', err);
-      if (err.code) console.error('Error Code:', err.code);
-      if (err.message) console.error('Error Message:', err.message);
+      console.error('OTP verification error:', err);
 
       hasFailedOnce.current = true;
       setAuthStep('otp_input');
@@ -112,15 +83,11 @@ export default function OTPScreen() {
         return next;
       });
 
-      let errorMessage = `Error: ${err.code || err.message || 'Unknown'}`;
-      if (err.code === 'auth/network-request-failed') {
-        errorMessage = 'Network error. Please try again.';
-      } else if (err.code === 'auth/invalid-verification-code') {
-        errorMessage = 'Incorrect code. Please try again.';
-      } else if (err.code === 'auth/code-expired') {
-        errorMessage = 'OTP expired. Please request a new one.';
-      } else if (err.code === 'auth/session-expired') {
-        errorMessage = 'Session expired. Please go back and request a new OTP.';
+      let errorMessage = err.message || 'Verification failed';
+
+      // Show attempts remaining from backend if available
+      if (err.attemptsRemaining !== undefined) {
+        errorMessage = `Invalid OTP (${err.attemptsRemaining} attempts remaining)`;
       }
 
       setError(errorMessage);
@@ -130,7 +97,7 @@ export default function OTPScreen() {
       setLoading(false);
       isSubmitting.current = false;
     }
-  }, [navigate, phone]);
+  }, [navigate, phoneDigits]);
 
   const handleChange = (i, val) => {
     const digits = val.replace(/\D/g, '');
@@ -178,7 +145,7 @@ export default function OTPScreen() {
       inputRefs.current[i + 1]?.focus();
     }
 
-    // Auto-click verify when all 6 digits filled (first attempt only)
+    // Auto-submit on last digit (first attempt only)
     if (valToStore && i === 5 && newOtp.every((d) => d !== '') && !hasFailedOnce.current) {
       setTimeout(() => {
         if (verifyBtnRef.current) {
@@ -222,27 +189,13 @@ export default function OTPScreen() {
     setResendTimer(30);
     setError('');
     try {
-      const appVerifier = await setupRecaptcha(auth, 'recaptcha-container-otp');
-      const result = await signInWithPhoneNumber(auth, phone, appVerifier);
-      storeOtpSession({
-        phone,
-        verificationId: result.verificationId,
-      });
+      // Resend OTP via backend → Twilio WhatsApp
+      await sendOtp(phoneDigits);
       setOtpCode(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } catch (err) {
       console.error('Resend OTP error:', err);
-      let resendError = 'Failed to resend OTP. Please go back and try again.';
-      if (err.code === 'auth/captcha-check-failed') {
-        resendError = 'reCAPTCHA verification failed. Please try again.';
-      } else if (err.code === 'auth/too-many-requests') {
-        resendError = 'Too many attempts. Please wait a few minutes.';
-      } else if (err.code === 'auth/invalid-app-credential') {
-        resendError = 'App verification failed. Refresh the page and try again.';
-      }
-      setError(resendError);
-      clearOtpSession();
-      teardownRecaptcha('recaptcha-container-otp');
+      setError(err.message || 'Failed to resend OTP. Please go back and try again.');
     }
   };
 
@@ -251,7 +204,7 @@ export default function OTPScreen() {
   return (
     <Layout
       title="Verify Your Number"
-      subtitle={`We've sent a 6-digit code to ${phone || 'your phone'}`}
+      subtitle={`We've sent a 6-digit code via WhatsApp to ${phone || 'your phone'}`}
       showBack
     >
       <div style={{ maxWidth: 520, margin: '0 auto' }}>
@@ -292,7 +245,7 @@ export default function OTPScreen() {
             marginBottom: 32,
             lineHeight: 1.6,
           }}>
-            Check your SMS for the verification code
+            Check your <strong style={{ color: '#25D366' }}>WhatsApp</strong> for the verification code
           </p>
 
           {/* OTP Input Boxes */}
@@ -402,7 +355,7 @@ export default function OTPScreen() {
                   animation: 'spin 0.8s linear infinite',
                   display: 'inline-block',
                 }} />
-                {authStep === 'checking_user' ? 'Setting up account...' : 'Verifying...'}
+                {authStep === 'signing_in' ? 'Setting up account...' : 'Verifying...'}
               </>
             ) : success ? (
               <>
@@ -447,19 +400,6 @@ export default function OTPScreen() {
             )}
           </div>
         </div>
-
-        {/* reCAPTCHA container for resend */}
-        <div
-          id="recaptcha-container-otp"
-          style={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            overflow: 'hidden',
-            opacity: 0.01,
-            pointerEvents: 'none',
-          }}
-        />
 
         {/* Phone Change Link */}
         <p style={{

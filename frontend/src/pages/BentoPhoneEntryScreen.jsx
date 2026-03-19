@@ -1,12 +1,8 @@
 import MaterialButton from '../components/material/MaterialButton';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../utils/firebase';
-import { setupRecaptcha, teardownRecaptcha } from '../utils/recaptcha';
-import { sendOtp } from '../utils/phoneAuth';
-import { C, api } from '../utils/constants';
+import { sendOtp } from '../utils/authApi';
 import './BentoGrid.css';
-import { clearOtpSession, storeOtpSession } from '../utils/otpSession';
 
 export default function BentoPhoneEntryScreen() {
   const navigate = useNavigate();
@@ -16,57 +12,21 @@ export default function BentoPhoneEntryScreen() {
   const [error, setError] = useState('');
   const [focused, setFocused] = useState(null);
 
-  // Clean up reCAPTCHA on component unmount
-  useEffect(() => {
-    return () => {
-      teardownRecaptcha('recaptcha-container-phone');
-    };
-  }, []);
-
   const handleSubmit = async () => {
     if (phone.length !== 10) return setError('Enter valid 10-digit number');
     setLoading(true);
     setError('');
 
     try {
-      // Clear any previous OTP session
-      clearOtpSession();
+      // Send OTP via backend → Twilio WhatsApp
+      await sendOtp(phone);
 
-      // Initialize reCAPTCHA before sending OTP
-      const appVerifier = await setupRecaptcha(auth, 'recaptcha-container-phone');
-
-      // Format phone number to E.164 and send OTP
       const phoneNumber = `+91${phone}`;
-      const confirmationResult = await sendOtp(auth, phoneNumber, appVerifier);
-
-      // Persist verificationId for OTP screen (survives navigation)
-      storeOtpSession({
-        phone: phoneNumber,
-        verificationId: confirmationResult.verificationId,
-      });
       localStorage.setItem('phone', phoneNumber);
-
-      // Navigate to OTP screen
       navigate('/otp', { state: { phone: phoneNumber } });
     } catch (err) {
       console.error('Phone auth error:', err);
-
-      let errorMessage = 'Failed to send OTP. Try again.';
-      if (err.code === 'auth/captcha-check-failed') {
-        errorMessage = 'reCAPTCHA verification failed. Please try again.';
-      } else if (err.code === 'auth/too-many-requests') {
-        errorMessage = 'Too many attempts. Please wait a few minutes.';
-      } else if (err.code === 'auth/invalid-phone-number') {
-        errorMessage = 'Invalid phone number format.';
-      } else if (err.code === 'auth/quota-exceeded') {
-        errorMessage = 'SMS quota exceeded. Try again later.';
-      } else if (err.code === 'auth/invalid-app-credential') {
-        errorMessage = 'App verification failed. Refresh the page and try again.';
-      }
-
-      setError(errorMessage);
-      clearOtpSession();
-      teardownRecaptcha('recaptcha-container-phone');
+      setError(err.message || 'Failed to send OTP. Try again.');
     } finally {
       setLoading(false);
     }
@@ -84,7 +44,7 @@ export default function BentoPhoneEntryScreen() {
         <div className="bento-kiosk__orb bento-kiosk__orb--3" />
       </div>
 
-      {/* Back Button — Fixed top left */}
+      {/* Back Button */}
       <MaterialButton
         onClick={() => navigate('/')}
         className="bento-phone__back-btn"
@@ -108,6 +68,24 @@ export default function BentoPhoneEntryScreen() {
           </div>
           <h1 className="bento-phone__title">Let's Get Started</h1>
           <p className="bento-phone__subtitle">Enter your phone number to begin your health transformation</p>
+        </div>
+
+        {/* WhatsApp Notice */}
+        <div style={{
+          background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
+          border: '1px solid #81C784',
+          borderRadius: 12,
+          padding: '10px 14px',
+          marginBottom: 20,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          fontSize: 13,
+          color: '#2E7D32',
+          fontWeight: 600,
+        }}>
+          <span style={{ fontSize: 18 }}>💬</span>
+          OTP will be sent via WhatsApp
         </div>
 
         {/* Phone Input */}
@@ -163,19 +141,6 @@ export default function BentoPhoneEntryScreen() {
           </div>
         )}
 
-        {/* reCAPTCHA anchor: must exist in the DOM and must not use display:none */}
-        <div
-          id="recaptcha-container-phone"
-          style={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            overflow: 'hidden',
-            opacity: 0.01,
-            pointerEvents: 'none',
-          }}
-        />
-
         {/* Submit Button */}
         <MaterialButton
           onClick={handleSubmit}
@@ -189,7 +154,7 @@ export default function BentoPhoneEntryScreen() {
             </>
           ) : (
             <>
-              Send OTP
+              Send OTP via WhatsApp
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
