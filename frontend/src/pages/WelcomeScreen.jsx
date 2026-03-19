@@ -676,7 +676,10 @@ export default function WelcomeScreen() {
  marginBottom: 36,
  position: 'relative',
  zIndex: 1,
- }}>
+ cursor: 'pointer',
+ }}
+ onClick={() => navigate('/coach')}
+ >
  <div
  style={{
  position: 'relative',
