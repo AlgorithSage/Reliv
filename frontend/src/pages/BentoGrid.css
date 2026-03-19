@@ -137,11 +137,13 @@
 /* ── Tile label ── */
 .bento-tile__label {
   display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--md-sys-color-on-surface, #333);
-  letter-spacing: 1.2px;
-  margin: 0 0 20px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #F06922;
+  letter-spacing: 2px;
+  margin: 0 0 22px;
+  text-transform: uppercase;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* ═══ TILE PLACEMENTS ═══ */
@@ -415,9 +417,9 @@
 .bento-coach__bubble {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   background: var(--md-sys-color-surface-container-low, #EAE6E1);
-  padding: 12px 20px;
+  padding: 16px 28px;
   border-radius: var(--md-sys-shape-corner-full, 9999px);
   box-shadow:
     inset 2px 2px 5px rgba(0, 0, 0, 0.04),
@@ -425,17 +427,18 @@
 }
 
 .bento-coach__bubble-avatar {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: linear-gradient(135deg, #F06922, #FF8C4B);
   flex-shrink: 0;
 }
 
 .bento-coach__bubble-text {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--md-sys-color-on-surface, #333);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface, #222);
+  letter-spacing: -0.2px;
 }
 
 /* ═══ FEATURES TILE ═══ */
