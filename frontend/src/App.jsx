@@ -1,6 +1,7 @@
 import ProductShowcaseBoard from './pages/ProductShowcaseBoard.jsx';
 import CreateShoutoutScreen from './pages/CreateShoutoutScreen.jsx';
 import BentoWelcomeScreen from './pages/BentoWelcomeScreen.jsx';
+import CoachChatScreen from './pages/CoachChatScreen.jsx';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { NavigationProvider } from './contexts/NavigationStack';
@@ -177,8 +178,9 @@ export default function App() {
 				   <Route path="/bot-customize" element={<BotCustomizeScreen />} />
 				   <Route path="/bot-status" element={<BotStatusScreen />} />
 
-				   {/* ═══ PUBLIC BOARD ═══ */}
-				   <Route path="/ProductShowcaseBoard" element={<ProductShowcaseBoard />} />
+				{/* ═══ PUBLIC BOARD & AI COACH ═══ */}
+				<Route path="/ProductShowcaseBoard" element={<ProductShowcaseBoard />} />
+				<Route path="/coach" element={<CoachChatScreen />} />
 				<Route path="/create-shoutout" element={<CreateShoutoutScreen />} />
 				<Route path="/wa-preview" element={<WAPreviewScreen />} />
 				<Route path="/whatsapp-preview" element={<WhatsAppPreviewScreen />} />

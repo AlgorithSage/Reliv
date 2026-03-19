@@ -204,7 +204,11 @@ export default function BentoWelcomeScreen() {
     </div>
 
     {/* ── 2. AI COACH — Middle left ── */}
-    <div className="bento-tile bento-tile--coach bento-tile--delay-2">
+    <div 
+        className="bento-tile bento-tile--coach bento-tile--delay-2"
+        onClick={() => navigate("/coach")}
+        style={{ cursor: 'pointer' }}
+    >
      <span className="bento-tile__label">AI COACH</span>
      <div className="bento-coach__content">
       <div className="bento-coach__avatar-wrap">
