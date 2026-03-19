@@ -232,22 +232,27 @@ export default function CoachChatScreen() {
             <form 
                 onSubmit={handleSend}
                 style={{
-                    padding: '16px 20px',
+                    padding: '20px 24px',
+                    margin: '0 16px 16px',
                     background: '#FFF',
-                    borderTop: '1px solid #E5E7EB',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '28px',
                     display: 'flex',
-                    gap: '12px',
+                    gap: '14px',
                     alignItems: 'flex-end',
-                    paddingBottom: 'max(16px, env(safe-area-inset-bottom))'
+                    boxShadow: '0 -4px 24px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04)',
+                    paddingBottom: 'max(20px, env(safe-area-inset-bottom))'
                 }}
             >
                 <div style={{
                     flex: 1,
                     background: '#F3F4F6',
-                    borderRadius: '24px',
-                    padding: '4px 16px',
+                    borderRadius: '20px',
+                    padding: '6px 20px',
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    border: '1.5px solid #E5E7EB',
+                    transition: 'border-color 0.2s',
                 }}>
                     <textarea 
                         id="chat-input"
@@ -266,21 +271,28 @@ export default function CoachChatScreen() {
                             background: 'transparent',
                             border: 'none',
                             color: '#1F2937',
-                            fontSize: '15px',
+                            fontSize: '16px',
                             resize: 'none',
-                            height: '24px',
-                            maxHeight: '120px',
-                            padding: '12px 0',
+                            height: '36px',
+                            maxHeight: '140px',
+                            padding: '14px 0',
                             outline: 'none',
-                            fontFamily: 'inherit'
+                            fontFamily: 'inherit',
+                            lineHeight: '1.5',
                         }}
                         rows={1}
                         // Auto-resize textarea
                         ref={(el) => {
                             if (el) {
-                                el.style.height = '24px';
-                                el.style.height = Math.min(el.scrollHeight - 24, 120) + 'px';
+                                el.style.height = '36px';
+                                el.style.height = Math.min(el.scrollHeight - 28, 140) + 'px';
                             }
+                        }}
+                        onFocus={e => {
+                            e.target.parentElement.style.borderColor = '#F06922';
+                        }}
+                        onBlur={e => {
+                            e.target.parentElement.style.borderColor = '#E5E7EB';
                         }}
                     />
                 </div>
@@ -288,20 +300,28 @@ export default function CoachChatScreen() {
                     type="submit"
                     disabled={!input.trim() || loading}
                     style={{
-                        background: input.trim() && !loading ? '#F06922' : '#E5E7EB',
+                        background: input.trim() && !loading 
+                            ? 'linear-gradient(135deg, #F06922, #E85C25)' 
+                            : '#E5E7EB',
                         border: 'none',
-                        width: '48px',
-                        height: '48px',
-                        borderRadius: '24px',
+                        width: '54px',
+                        height: '54px',
+                        borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: input.trim() && !loading ? 'pointer' : 'default',
-                        transition: 'background 0.2s',
-                        flexShrink: 0
+                        transition: 'all 0.25s ease',
+                        flexShrink: 0,
+                        boxShadow: input.trim() && !loading 
+                            ? '0 4px 14px rgba(240, 105, 34, 0.3)' 
+                            : 'none',
                     }}
                 >
-                    <Icon name="send" size={20} color="#FFF" />
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
                 </button>
             </form>
             
