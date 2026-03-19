@@ -160,21 +160,6 @@ export default function Layout({ children, title, subtitle, showBack, onBack }) 
          gap: 8,
         }}>
          Reliv AI
-         <span style={{
-          fontSize: 10,
-          fontWeight: 700,
-          background: 'linear-gradient(135deg, #F06922 0%, #E85C25 100%)',
-          WebkitBackgroundClip: 'initial',
-          WebkitTextFillColor: 'initial',
-          color: '#FFFFFF',
-          padding: '4px 10px',
-          borderRadius: 20,
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px',
-          boxShadow: '2px 2px 6px rgba(240, 105, 34, 0.3), -2px -2px 6px rgba(255, 255, 255, 0.3)',
-         }}>
-          Beta
-         </span>
         </h1>
         <p style={{
          fontSize: 12,

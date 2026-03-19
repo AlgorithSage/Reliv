@@ -177,7 +177,29 @@ export default function BentoWelcomeScreen() {
      {/* Right — Big Reliv Logo */}
      <div className="bento-hero__right">
       <div className="bento-hero__logo-glow" />
-      <img src="/relivlogo.jpeg" alt="Reliv AI" className="bento-hero__logo-big" />
+      <div className="bento-hero__logo-big" style={{
+        fontSize: '84px',
+        fontWeight: '900',
+        fontFamily: "'Outfit', 'Inter', sans-serif",
+        letterSpacing: '-3px',
+        lineHeight: 1,
+        filter: 'drop-shadow(10px 10px 16px rgba(0,0,0,0.12)) drop-shadow(-8px -8px 20px rgba(255,255,255,0.8))',
+        userSelect: 'none'
+      }}>
+        <span style={{ color: '#F06922' }}>Re</span>
+        <span style={{ color: '#111' }}>l</span>
+        <span style={{ position: 'relative', display: 'inline-block' }}>
+          <span style={{ color: '#111' }}>i</span>
+          <span style={{
+            color: '#F06922',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            clipPath: 'polygon(0 0, 100% 0, 100% 35%, 0 35%)'
+          }}>i</span>
+        </span>
+        <span style={{ color: '#111' }}>v</span>
+      </div>
      </div>
     </div>
 
