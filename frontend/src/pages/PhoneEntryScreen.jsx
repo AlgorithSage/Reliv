@@ -71,8 +71,8 @@ export default function PhoneEntryScreen() {
 
           {/* ═══ WhatsApp Setup Guide ═══ */}
           <div style={{
-            background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
-            border: '1px solid #81C784',
+            background: 'var(--white)',
+            border: '1px solid var(--gray-200)',
             borderRadius: 16,
             marginBottom: 24,
             overflow: 'hidden',
@@ -81,26 +81,35 @@ export default function PhoneEntryScreen() {
             <div
               onClick={() => setShowSetup(!showSetup)}
               style={{
-                padding: '14px 18px',
+                padding: '16px 20px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 10,
+                gap: 12,
                 cursor: 'pointer',
                 userSelect: 'none',
+                background: showSetup ? 'var(--gray-50)' : 'var(--white)',
+                borderBottom: showSetup ? '1px solid var(--gray-200)' : 'none',
               }}
             >
-              <span style={{ fontSize: 22 }}>💬</span>
+              <div style={{
+                width: 36, height: 36, borderRadius: 10,
+                background: 'linear-gradient(135deg, var(--cream-200) 0%, var(--cream-300) 100%)',
+                color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 18, border: '1px solid rgba(240, 105, 34, 0.15)'
+              }}>
+                <Icon name="chat_bubble" size={20} />
+              </div>
               <div style={{ flex: 1 }}>
-                <span style={{ fontSize: 14, color: '#2E7D32', fontWeight: 700 }}>
+                <span style={{ fontSize: 15, color: 'var(--gray-900)', fontWeight: 700, display: 'block' }}>
                   First time? Setup WhatsApp first
                 </span>
-                <span style={{ fontSize: 12, color: '#4CAF50', display: 'block', marginTop: 2 }}>
+                <span style={{ fontSize: 13, color: 'var(--gray-500)', display: 'block', marginTop: 2 }}>
                   Required one-time step to receive OTP
                 </span>
               </div>
               <span style={{
-                fontSize: 18,
-                color: '#2E7D32',
+                fontSize: 16,
+                color: 'var(--gray-900)',
                 transition: 'transform 0.3s ease',
                 transform: showSetup ? 'rotate(180deg)' : 'rotate(0deg)',
               }}>▼</span>
@@ -112,12 +121,9 @@ export default function PhoneEntryScreen() {
               overflow: 'hidden',
               transition: 'max-height 0.4s ease',
             }}>
-              <div style={{
-                padding: '0 18px 20px',
-                borderTop: '1px solid rgba(129, 199, 132, 0.4)',
-              }}>
+              <div style={{ padding: '20px' }}>
                 {/* Steps */}
-                <div style={{ marginTop: 16 }}>
+                <div>
                   {[
                     { num: '1', icon: '📱', text: 'Scan the QR code below with your phone camera' },
                     { num: '2', icon: '💬', text: 'It will open WhatsApp — send the pre-filled message' },
@@ -127,14 +133,14 @@ export default function PhoneEntryScreen() {
                     <div key={step.num} style={{
                       display: 'flex',
                       alignItems: 'flex-start',
-                      gap: 12,
-                      marginBottom: 12,
+                      gap: 14,
+                      marginBottom: 16,
                     }}>
                       <div style={{
-                        minWidth: 28,
-                        height: 28,
-                        background: '#2E7D32',
-                        color: '#fff',
+                        minWidth: 26,
+                        height: 26,
+                        background: 'var(--gray-900)',
+                        color: 'var(--white)',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -142,8 +148,8 @@ export default function PhoneEntryScreen() {
                         fontSize: 13,
                         fontWeight: 700,
                       }}>{step.num}</div>
-                      <div style={{ fontSize: 13, color: '#1B5E20', lineHeight: 1.5, paddingTop: 4 }}>
-                        <span style={{ marginRight: 6 }}>{step.icon}</span>
+                      <div style={{ fontSize: 14, color: 'var(--gray-700)', lineHeight: 1.5, paddingTop: 3, fontWeight: 500 }}>
+                        <span style={{ marginRight: 8 }}>{step.icon}</span>
                         {step.text}
                       </div>
                     </div>
@@ -153,22 +159,23 @@ export default function PhoneEntryScreen() {
                 {/* QR Code */}
                 <div style={{
                   textAlign: 'center',
-                  marginTop: 16,
-                  padding: 16,
-                  background: '#fff',
-                  borderRadius: 14,
-                  border: '1px solid #C8E6C9',
+                  marginTop: 20,
+                  padding: 24,
+                  background: 'var(--gray-50)',
+                  borderRadius: 16,
+                  border: '1px solid var(--gray-200)',
                 }}>
                   <img
                     src={SANDBOX_QR_URL}
                     alt="Scan to join WhatsApp sandbox"
                     style={{
-                      width: 180,
-                      height: 180,
-                      borderRadius: 8,
+                      width: 160,
+                      height: 160,
+                      borderRadius: 12,
+                      border: '1px solid var(--gray-200)',
                     }}
                   />
-                  <p style={{ fontSize: 12, color: '#666', marginTop: 10, marginBottom: 8 }}>
+                  <p style={{ fontSize: 13, color: 'var(--gray-500)', marginTop: 14, marginBottom: 16, fontWeight: 500 }}>
                     Scan with your phone camera
                   </p>
                   <a
@@ -178,17 +185,19 @@ export default function PhoneEntryScreen() {
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: 6,
-                      background: '#25D366',
-                      color: '#fff',
-                      padding: '8px 18px',
+                      gap: 8,
+                      background: 'var(--whatsapp)',
+                      color: 'var(--white)',
+                      padding: '10px 20px',
                       borderRadius: 24,
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: 700,
                       textDecoration: 'none',
+                      transition: 'background 0.2s ease',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                     }}
                   >
-                    <span style={{ fontSize: 16 }}>💬</span>
+                    <Icon name="chat_bubble" size={18} color="var(--white)" />
                     Or tap here to open WhatsApp
                   </a>
                 </div>
