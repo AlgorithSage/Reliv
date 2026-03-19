@@ -174,14 +174,14 @@ export default function CoachChatScreen() {
                             </div>
                         )}
                         <div style={{
-                            background: m.role === 'user' ? 'linear-gradient(135deg, #F06922, #E85F18)' : '#FFF',
-                            color: m.role === 'user' ? '#FFF' : '#1F2937',
+                            background: m.role === 'user' ? 'linear-gradient(135deg, var(--primary), var(--primary-dark))' : 'var(--cream-200)',
+                            color: m.role === 'user' ? 'var(--cream-50)' : 'var(--gray-900)',
                             padding: '14px 18px',
                             borderRadius: m.role === 'user' ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                             fontSize: '15px',
                             lineHeight: '1.5',
-                            border: m.role === 'assistant' ? '1px solid #E5E7EB' : 'none',
+                            border: m.role === 'assistant' ? '1px solid var(--cream-300)' : 'none',
                             whiteSpace: 'pre-wrap',
                             wordBreak: 'break-word'
                         }}>
@@ -202,16 +202,17 @@ export default function CoachChatScreen() {
                             width: '32px',
                             height: '32px',
                             borderRadius: '50%',
-                            background: '#FFEEDD',
+                            background: 'var(--cream-300)',
                             flexShrink: 0,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
-                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                         </div>
                         <div style={{
-                            background: '#FFF',
+                            background: 'var(--cream-200)',
+                            border: '1px solid var(--cream-300)',
                             padding: '16px 20px',
                             borderRadius: '20px 20px 20px 4px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.05)',

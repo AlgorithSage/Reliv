@@ -72,8 +72,8 @@ export default function BentoPhoneEntryScreen() {
 
         {/* WhatsApp Notice */}
         <div style={{
-          background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
-          border: '1px solid #81C784',
+          background: 'var(--gray-50)',
+          border: '1px solid var(--gray-200)',
           borderRadius: 12,
           padding: '10px 14px',
           marginBottom: 20,
@@ -81,7 +81,7 @@ export default function BentoPhoneEntryScreen() {
           alignItems: 'center',
           gap: 8,
           fontSize: 13,
-          color: '#2E7D32',
+          color: 'var(--gray-900)',
           fontWeight: 600,
         }}>
           <span style={{ fontSize: 18 }}>💬</span>

@@ -128,7 +128,7 @@ export default function BentoWelcomeScreen() {
 
      {/* Left content */}
      <div className="bento-hero__left">
-      <span className="bento-tile__label">HERO</span>
+
 
       {/* AI badge */}
       <div className="bento-hero__badge">
