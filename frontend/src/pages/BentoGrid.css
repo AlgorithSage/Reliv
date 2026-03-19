@@ -402,10 +402,10 @@
 }
 
 .bento-coach__avatar-img {
-  width: 210px;
-  height: 210px;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.12));
   transition: transform 0.4s ease;
   animation: bentoFloat 5s ease-in-out infinite;
 }
