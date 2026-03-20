@@ -162,7 +162,7 @@ export default function BentoWelcomeScreen() {
        ].map((b, i) => (
         <div key={i} className="bento-hero__trust-item">
          <div className="bento-hero__trust-icon-wrap">
-          <Icon name={b.icon} size={20} color="#F06922" />
+          <Icon name={b.icon} size={24} color="#F06922" />
          </div>
          <div>
           <span className="bento-hero__trust-label">{b.label}</span>
