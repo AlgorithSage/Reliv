@@ -119,18 +119,18 @@ export default function CoachChatScreen() {
                     <Icon name="back" size={20} color="#374151" />
                 </button>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                     <div style={{
-                        width: '44px',
-                        height: '44px',
+                        width: '56px',
+                        height: '56px',
                         borderRadius: '50%',
                         background: 'linear-gradient(135deg, #F06922, #FF8C4B)',
                         overflow: 'hidden',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'flex-end',
-                        border: '2px solid #FFF',
-                        boxShadow: '0 4px 8px rgba(240, 105, 34, 0.2)'
+                        border: '3px solid #FFF',
+                        boxShadow: '0 4px 14px rgba(240, 105, 34, 0.25)'
                     }}>
                         <img 
                             src="/avatar-removebg-preview.png" 
