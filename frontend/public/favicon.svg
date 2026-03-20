@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 32">
-  <rect width="64" height="32" rx="6" fill="#1a1a1a"/>
-  <text x="32" y="24" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="24" letter-spacing="-1">
-    <tspan fill="#F37021">Re</tspan><tspan fill="#FFFFFF">liv</tspan>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#FFFFFF"/>
+  <text x="32" y="46" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="34" letter-spacing="-1">
+    <tspan fill="#F06922">Re</tspan><tspan fill="#111111">liv</tspan>
   </text>
 </svg>
