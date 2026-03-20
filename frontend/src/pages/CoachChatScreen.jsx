@@ -22,7 +22,26 @@ export default function CoachChatScreen() {
     ]);
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState(null);
     const messagesEndRef = useRef(null);
+    const fileInputRef = useRef(null);
+
+    // Handle file selection
+    const handleFileSelect = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // Validate file size (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            alert('File size must be under 10MB');
+            return;
+        }
+        setUploadedFile(file);
+        // Reset input so same file can be selected again
+        e.target.value = '';
+    };
+
+    const removeFile = () => setUploadedFile(null);
 
     // Auto-scroll to bottom when new messages arrive
     const scrollToBottom = () => {
@@ -35,13 +54,20 @@ export default function CoachChatScreen() {
 
     const handleSend = async (e) => {
         e.preventDefault();
-        if (!input.trim() || loading) return;
+        if ((!input.trim() && !uploadedFile) || loading) return;
 
         const userMessage = input.trim();
+        const file = uploadedFile;
         setInput('');
+        setUploadedFile(null);
+        
+        // Build message content
+        const messageContent = file 
+            ? `${userMessage}${userMessage ? '\n' : ''}📎 ${file.name}` 
+            : userMessage;
         
         // Add user message to UI
-        const newMessages = [...messages, { role: 'user', content: userMessage, timestamp: new Date() }];
+        const newMessages = [...messages, { role: 'user', content: messageContent, timestamp: new Date(), file: file?.name }];
         setMessages(newMessages);
         setLoading(true);
 
@@ -254,22 +280,106 @@ export default function CoachChatScreen() {
                 <div ref={messagesEndRef} />
             </div>
 
+            {/* ═══ File Preview ═══ */}
+            {uploadedFile && (
+                <div style={{
+                    margin: '0 32px',
+                    padding: '10px 16px',
+                    background: '#FFF7F0',
+                    border: '1px solid #FFE0C5',
+                    borderRadius: '16px 16px 0 0',
+                    borderBottom: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span style={{ flex: 1, fontSize: '13px', fontWeight: 600, color: '#333', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {uploadedFile.name}
+                    </span>
+                    <span style={{ fontSize: '11px', color: '#999', flexShrink: 0 }}>
+                        {(uploadedFile.size / 1024).toFixed(0)} KB
+                    </span>
+                    <button
+                        type="button"
+                        onClick={removeFile}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '2px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '#999',
+                            transition: 'color 0.2s',
+                        }}
+                        onMouseOver={e => e.currentTarget.style.color = '#E53E3E'}
+                        onMouseOut={e => e.currentTarget.style.color = '#999'}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+            )}
+
             {/* ═══ Input Area ═══ */}
             <form 
                 onSubmit={handleSend}
                 style={{
-                    padding: '20px 24px',
-                    margin: '0 16px 16px',
+                    padding: '16px 20px',
+                    margin: uploadedFile ? '0 16px 16px' : '0 16px 16px',
                     background: '#FFF',
                     border: '1px solid #E5E7EB',
-                    borderRadius: '28px',
+                    borderRadius: uploadedFile ? '0 0 28px 28px' : '28px',
                     display: 'flex',
-                    gap: '14px',
+                    gap: '12px',
                     alignItems: 'flex-end',
                     boxShadow: '0 -4px 24px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04)',
-                    paddingBottom: 'max(20px, env(safe-area-inset-bottom))'
+                    paddingBottom: 'max(16px, env(safe-area-inset-bottom))'
                 }}
             >
+                {/* Hidden file input */}
+                <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.heic,.webp"
+                    style={{ display: 'none' }}
+                    onChange={handleFileSelect}
+                />
+
+                {/* Upload button */}
+                <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={loading}
+                    style={{
+                        background: '#F3F4F6',
+                        border: '1.5px solid #E5E7EB',
+                        width: '46px',
+                        height: '46px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: loading ? 'default' : 'pointer',
+                        transition: 'all 0.2s ease',
+                        flexShrink: 0,
+                        opacity: loading ? 0.5 : 1,
+                    }}
+                    onMouseOver={e => { if (!loading) { e.currentTarget.style.background = '#FFF7F0'; e.currentTarget.style.borderColor = '#F06922'; }}}
+                    onMouseOut={e => { e.currentTarget.style.background = '#F3F4F6'; e.currentTarget.style.borderColor = '#E5E7EB'; }}
+                    title="Upload medical document"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                    </svg>
+                </button>
                 <div style={{
                     flex: 1,
                     background: '#F3F4F6',
