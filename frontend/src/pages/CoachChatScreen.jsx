@@ -2,12 +2,22 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../utils/Icon';
 
+// Format timestamp to readable time string
+function formatTime(date) {
+    return new Date(date).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+    });
+}
+
 export default function CoachChatScreen() {
     const navigate = useNavigate();
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
-            content: "Hi! I'm your Reliv AI Health Coach 👋\n\nI can help you build your diet plan, suggest workouts, or just answer any health questions you might have. How can I help you today?"
+            content: "Hi! I'm your Reliv AI Health Coach 👋\n\nI can help you build your diet plan, suggest workouts, or just answer any health questions you might have. How can I help you today?",
+            timestamp: new Date(),
         }
     ]);
     const [input, setInput] = useState('');
@@ -31,7 +41,7 @@ export default function CoachChatScreen() {
         setInput('');
         
         // Add user message to UI
-        const newMessages = [...messages, { role: 'user', content: userMessage }];
+        const newMessages = [...messages, { role: 'user', content: userMessage, timestamp: new Date() }];
         setMessages(newMessages);
         setLoading(true);
 
@@ -50,13 +60,14 @@ export default function CoachChatScreen() {
             if (!res.ok) throw new Error(data.error || 'Failed to get response');
 
             // Add coach response to UI
-            setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
+            setMessages(prev => [...prev, { role: 'assistant', content: data.reply, timestamp: new Date() }]);
             
         } catch (error) {
             console.error('Chat error:', error);
             setMessages(prev => [...prev, { 
                 role: 'assistant', 
-                content: "I'm having a little trouble connecting right now. Please try again in a moment! 🤒" 
+                content: "I'm having a little trouble connecting right now. Please try again in a moment! 🤒",
+                timestamp: new Date(),
             }]);
         } finally {
             setLoading(false);
@@ -173,19 +184,33 @@ export default function CoachChatScreen() {
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                             </div>
                         )}
-                        <div style={{
-                            background: m.role === 'user' ? 'linear-gradient(135deg, var(--primary), var(--primary-dark))' : 'var(--cream-200)',
-                            color: m.role === 'user' ? 'var(--cream-50)' : 'var(--gray-900)',
-                            padding: '14px 18px',
-                            borderRadius: m.role === 'user' ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                            fontSize: '15px',
-                            lineHeight: '1.5',
-                            border: m.role === 'assistant' ? '1px solid var(--cream-300)' : 'none',
-                            whiteSpace: 'pre-wrap',
-                            wordBreak: 'break-word'
-                        }}>
-                            {m.content}
+                        <div>
+                            <div style={{
+                                background: m.role === 'user' ? 'linear-gradient(135deg, var(--primary), var(--primary-dark))' : 'var(--cream-200)',
+                                color: m.role === 'user' ? 'var(--cream-50)' : 'var(--gray-900)',
+                                padding: '14px 18px',
+                                borderRadius: m.role === 'user' ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                                fontSize: '15px',
+                                lineHeight: '1.5',
+                                border: m.role === 'assistant' ? '1px solid var(--cream-300)' : 'none',
+                                whiteSpace: 'pre-wrap',
+                                wordBreak: 'break-word'
+                            }}>
+                                {m.content}
+                            </div>
+                            <div style={{
+                                fontSize: '11px',
+                                color: '#9CA3AF',
+                                marginTop: '6px',
+                                paddingLeft: m.role === 'assistant' ? '4px' : 0,
+                                paddingRight: m.role === 'user' ? '4px' : 0,
+                                textAlign: m.role === 'user' ? 'right' : 'left',
+                                fontWeight: 500,
+                                letterSpacing: '0.2px',
+                            }}>
+                                {m.timestamp ? formatTime(m.timestamp) : ''}
+                            </div>
                         </div>
                     </div>
                 ))}
