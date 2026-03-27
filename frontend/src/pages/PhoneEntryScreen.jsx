@@ -175,31 +175,9 @@ export default function PhoneEntryScreen() {
                       border: '1px solid var(--gray-200)',
                     }}
                   />
-                  <p style={{ fontSize: 13, color: 'var(--gray-500)', marginTop: 14, marginBottom: 16, fontWeight: 500 }}>
+                  <p style={{ fontSize: 13, color: 'var(--gray-500)', marginTop: 14, marginBottom: 0, fontWeight: 500 }}>
                     Scan with your phone camera
                   </p>
-                  <a
-                    href="https://wa.me/14155238886?text=join%20observe-ear"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: 8,
-                      background: 'var(--whatsapp)',
-                      color: 'var(--white)',
-                      padding: '10px 20px',
-                      borderRadius: 24,
-                      fontSize: 14,
-                      fontWeight: 700,
-                      textDecoration: 'none',
-                      transition: 'background 0.2s ease',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                    }}
-                  >
-                    <Icon name="chat_bubble" size={18} color="var(--white)" />
-                    Or tap here to open WhatsApp
-                  </a>
                 </div>
               </div>
             </div>
