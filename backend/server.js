@@ -134,8 +134,36 @@ app.post('/api/send-otp', async (req, res) => {
       to: `whatsapp:${phone}`,
     });
 
-    console.log(`OTP sent to ${phone} via WhatsApp. SID: ${message.sid}`);
+    console.log(`OTP message created for ${phone}. SID: ${message.sid}, Initial Status: ${message.status}`);
 
+    // ═══ VERIFY DELIVERY: Wait and check if message was actually delivered ═══
+    // Twilio sandbox silently drops messages to non-participants.
+    // Messages to activated users move to "sent"/"delivered" within 3-4 seconds.
+    // Messages to non-activated users stay "queued" and eventually fail.
+    await new Promise(resolve => setTimeout(resolve, 4000));
+
+    const updatedMessage = await twilioClient.messages(message.sid).fetch();
+    console.log(`Message status after 4s for ${phone}: ${updatedMessage.status}`);
+
+    if (updatedMessage.status === 'failed' || updatedMessage.status === 'undelivered') {
+      // User definitely hasn't joined the sandbox — clean up OTP
+      otpStore.delete(phone);
+      return res.status(400).json({
+        error: 'WhatsApp setup not completed. Please scan the QR code and complete the WhatsApp setup first.',
+        whatsappNotSetup: true,
+      });
+    }
+
+    if (updatedMessage.status === 'queued') {
+      // Message is still queued after 4 seconds — very likely user hasn't joined sandbox
+      otpStore.delete(phone);
+      return res.status(400).json({
+        error: 'WhatsApp setup not completed. Please scan the QR code and complete the WhatsApp setup first.',
+        whatsappNotSetup: true,
+      });
+    }
+
+    // Status is "sent" or "delivered" — user is activated, OTP sent successfully
     res.json({ success: true, message: 'OTP sent via WhatsApp' });
   } catch (err) {
     console.error('Send OTP error:', err);
@@ -143,7 +171,8 @@ app.post('/api/send-otp', async (req, res) => {
     // Handle specific Twilio errors
     if (err.code === 21608) {
       return res.status(400).json({
-        error: 'WhatsApp not activated. Please send "join <sandbox-keyword>" to +14155238886 on WhatsApp first.',
+        error: 'WhatsApp not activated. Please scan the QR code and complete the WhatsApp setup first.',
+        whatsappNotSetup: true,
       });
     }
 

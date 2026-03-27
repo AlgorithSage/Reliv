@@ -19,23 +19,13 @@ export default function PhoneEntryScreen() {
   const [showSetup, setShowSetup] = useState(false);
   const [whatsappError, setWhatsappError] = useState(false);
   const [hasConfirmedSetup, setHasConfirmedSetup] = useState(false);
+  const [hasViewedSetup, setHasViewedSetup] = useState(false);
+  const [setupMessage, setSetupMessage] = useState('');
   const setupRef = useRef(null);
 
   const handleSubmit = async () => {
     if (phoneNumber.length !== 10) {
       setError('Enter valid 10-digit number');
-      return;
-    }
-
-    // Frontend gate: user MUST confirm WhatsApp setup before sending OTP
-    if (!hasConfirmedSetup) {
-      setWhatsappError(true);
-      setShowSetup(true);
-      setError('');
-      // Auto-scroll to the setup guide
-      setTimeout(() => {
-        setupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300);
       return;
     }
 
@@ -50,12 +40,13 @@ export default function PhoneEntryScreen() {
       navigate('/otp', { state: { phone: formattedPhone } });
     } catch (err) {
       console.error('Phone auth error:', err);
-      // Fallback: If backend also catches WhatsApp not activated
-      if (err.message && (err.message.includes('WhatsApp not activated') || err.message.includes('not activated'))) {
+      // Backend returns whatsappNotSetup when message delivery verification fails
+      if (err.message && (err.message.includes('WhatsApp setup not completed') || err.message.includes('WhatsApp not activated') || err.message.includes('not activated'))) {
         setWhatsappError(true);
         setHasConfirmedSetup(false);
+        setHasViewedSetup(false);
+        setSetupMessage('⚠️ WhatsApp setup was not completed. Please scan the QR code above, send the join message, then try again.');
         setShowSetup(true);
-        setError('');
         setTimeout(() => {
           setupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 300);
@@ -388,16 +379,40 @@ export default function PhoneEntryScreen() {
             </div>
           )}
 
+
           {/* WhatsApp Setup Confirmation Checkbox */}
-          <label
+          <div
+            onClick={() => {
+              // If user hasn't opened/viewed the setup guide yet, block the tick
+              if (!hasViewedSetup) {
+                setSetupMessage('⚠️ Please complete the WhatsApp setup first! Scan the QR code above and send the join message.');
+                setShowSetup(true);
+                setHasViewedSetup(true);
+                setTimeout(() => {
+                  setupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200);
+                return;
+              }
+              // If user has viewed setup, allow toggling
+              const newVal = !hasConfirmedSetup;
+              setHasConfirmedSetup(newVal);
+              if (newVal) {
+                setWhatsappError(false);
+                setSetupMessage('');
+              }
+            }}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 14,
               padding: '16px 20px',
-              marginBottom: 20,
-              background: hasConfirmedSetup ? '#F0FFF4' : '#FAFAF8',
-              border: hasConfirmedSetup ? '2px solid #22C55E' : '2px solid #E5E7EB',
+              marginBottom: setupMessage ? 8 : 20,
+              background: hasConfirmedSetup
+                ? '#F0FFF4'
+                : (setupMessage ? '#FFF7F0' : '#FAFAF8'),
+              border: hasConfirmedSetup
+                ? '2px solid #22C55E'
+                : (setupMessage ? '2px solid #F06922' : '2px solid #E5E7EB'),
               borderRadius: 16,
               cursor: 'pointer',
               transition: 'all 0.3s ease',
@@ -423,29 +438,82 @@ export default function PhoneEntryScreen() {
                 </svg>
               )}
             </div>
-            <input
-              type="checkbox"
-              checked={hasConfirmedSetup}
-              onChange={(e) => {
-                setHasConfirmedSetup(e.target.checked);
-                if (e.target.checked) setWhatsappError(false);
-              }}
-              style={{ display: 'none' }}
-            />
             <span style={{
               fontSize: 15,
               fontWeight: 600,
-              color: hasConfirmedSetup ? '#166534' : '#555',
+              color: hasConfirmedSetup ? '#166534' : (setupMessage ? '#B84500' : '#555'),
               lineHeight: 1.4,
             }}>
               I have scanned the QR code above and completed WhatsApp setup
             </span>
-          </label>
+          </div>
+
+          {/* Setup warning message */}
+          {setupMessage && (
+            <div style={{
+              background: 'linear-gradient(135deg, #FFF7F0 0%, #FFEEDD 100%)',
+              border: '2px solid #F06922',
+              borderRadius: 18,
+              padding: '24px',
+              marginBottom: 20,
+              animation: 'shake 0.5s ease',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 12,
+                  background: 'linear-gradient(135deg, #F06922, #FF8C4B)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <p style={{ fontSize: 17, color: '#B84500', fontWeight: 800, margin: 0, letterSpacing: '-0.3px' }}>
+                  WhatsApp Setup Required!
+                </p>
+              </div>
+              <p style={{ fontSize: 15, color: '#8B4513', margin: '0 0 16px', lineHeight: 1.6, fontWeight: 500 }}>
+                You need to first activate WhatsApp by scanning the QR code above and sending the pre-filled message. Only then you can receive the OTP.
+              </p>
+              <button
+                onClick={() => {
+                  setShowSetup(true);
+                  setTimeout(() => {
+                    setupRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }, 200);
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #F06922, #E85C25)',
+                  color: '#FFF',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: 12,
+                  fontSize: 15,
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(240, 105, 34, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"></line>
+                  <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+                Go to WhatsApp Setup ↑
+              </button>
+            </div>
+          )}
 
           {/* Submit Button */}
           <MaterialButton
             variant="filled"
-            disabled={loading || phoneNumber.length !== 10}
+            disabled={loading || phoneNumber.length !== 10 || !hasConfirmedSetup}
             onClick={handleSubmit}
             style={{
               width: '100%',
