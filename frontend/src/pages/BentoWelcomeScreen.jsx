@@ -157,8 +157,8 @@ export default function BentoWelcomeScreen() {
        {[
         { icon: "shield", label: "Bank-Grade", sub: "Security" },
         { icon: "check_circle", label: "Endorsed", sub: "By Experts" },
-        { icon: "verified", label: "100% HIPAA", sub: "Compliant" },
-        { icon: "group", label: "50,000+", sub: "Happy Users" },
+         { icon: "check_circle", label: "100% HIPAA", sub: "Compliant" },
+         { icon: "check_circle", label: "50,000+", sub: "Happy Users" },
        ].map((b, i) => (
         <div key={i} className="bento-hero__trust-item">
          <div className="bento-hero__trust-icon-wrap">
