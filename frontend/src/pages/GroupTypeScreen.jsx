@@ -196,10 +196,12 @@ export default function GroupTypeScreen() {
  {p.title}
  </h3>
  <p style={{
- fontSize: 14,
- color: '#666',
- marginBottom: 20,
- lineHeight: 1.5,
+ fontSize: 17,
+ color: '#555',
+ marginBottom: 24,
+ lineHeight: 1.6,
+ fontWeight: 500,
+ letterSpacing: '-0.2px',
  }}>
  {p.desc}
  </p>
@@ -219,9 +221,10 @@ export default function GroupTypeScreen() {
  {p.price}
  </span>
  <span style={{
- fontSize: 14,
- color: '#9CA3AF',
+ fontSize: 16,
+ color: '#888',
  fontWeight: 500,
+ letterSpacing: '-0.2px',
  }}>
  {p.period}
  </span>
@@ -236,28 +239,31 @@ export default function GroupTypeScreen() {
  marginBottom: 20,
  }}>
  <span style={{
- fontSize: 13,
+ fontSize: 15,
  fontWeight: 600,
  color: p.color,
+ letterSpacing: '-0.2px',
  }}>
- <svg width="13" height="13" viewBox="0 0 24 24" fill={p.color} stroke="none" style={{ marginRight: 4 }}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L10 14v1c0 1.1.9 2 2 2v3.93zM17.9 17.39c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" /></svg> {p.dailyPrice}
+ <svg width="15" height="15" viewBox="0 0 24 24" fill={p.color} stroke="none" style={{ marginRight: 6, transform: 'translateY(2px)' }}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L10 14v1c0 1.1.9 2 2 2v3.93zM17.9 17.39c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" /></svg> {p.dailyPrice}
  </span>
  </div>
 
  {/* Features */}
- <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+ <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
  {p.features.map((f, i) => (
  <div
  key={i}
  style={{
  display: 'flex',
  alignItems: 'center',
- gap: 10,
- fontSize: 13,
- color: '#555',
+ gap: 12,
+ fontSize: 16,
+ color: '#444',
+ fontWeight: 500,
+ letterSpacing: '-0.1px',
  }}
  >
- <svg width="16" height="16" viewBox="0 0 24 24" fill={p.color}>
+ <svg width="20" height="20" viewBox="0 0 24 24" fill={p.color}>
  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
  </svg>
  {f}

@@ -450,18 +450,21 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
-  place-items: center;
+  align-items: stretch;
+  justify-items: center;
   height: 100%;
 }
 
 .bento-feature__item {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 72px 48px auto;
   align-items: center;
+  justify-items: center;
   text-align: center;
-  gap: 14px;
+  gap: 6px;
   padding: 16px;
   transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .bento-feature__item:hover {
@@ -491,6 +494,7 @@
   color: var(--md-sys-color-on-surface, #111);
   margin: 0;
   letter-spacing: -0.3px;
+  align-self: start;
 }
 
 .bento-feature__desc {
@@ -500,6 +504,7 @@
   line-height: 1.5;
   max-width: 160px;
   font-weight: 500;
+  align-self: start;
 }
 
 /* ═══ STATS TILE ═══ */
