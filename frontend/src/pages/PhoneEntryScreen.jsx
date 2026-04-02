@@ -139,10 +139,10 @@ export default function PhoneEntryScreen() {
                 {/* Steps */}
                 <div>
                   {[
-                    { num: '1', icon: '📱', text: 'Scan the QR code below with your phone camera' },
-                    { num: '2', icon: '💬', text: 'It will open WhatsApp — send the pre-filled message' },
-                    { num: '3', icon: '✅', text: 'You\'ll get a confirmation reply from Twilio' },
-                    { num: '4', icon: '🔙', text: 'Come back here and enter your number!' },
+                    { num: '1', icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><line x1="8" y1="18" x2="16" y2="18"/><line x1="12" y1="18" x2="12" y2="22"/></svg>), text: 'Scan the QR code below with your phone camera' },
+                    { num: '2', icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>), text: 'It will open WhatsApp — send the pre-filled message' },
+                    { num: '3', icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>), text: 'You\'ll get a confirmation reply from Twilio' },
+                    { num: '4', icon: (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F06922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>), text: 'Come back here and enter your number!' },
                   ].map((step) => (
                     <div key={step.num} style={{
                       display: 'flex',
@@ -162,8 +162,8 @@ export default function PhoneEntryScreen() {
                         fontSize: 13,
                         fontWeight: 700,
                       }}>{step.num}</div>
-                      <div style={{ fontSize: 14, color: 'var(--gray-700)', lineHeight: 1.5, paddingTop: 3, fontWeight: 500 }}>
-                        <span style={{ marginRight: 8 }}>{step.icon}</span>
+                      <div style={{ fontSize: 14, color: 'var(--gray-700)', lineHeight: 1.5, paddingTop: 3, fontWeight: 500, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                        <span style={{ flexShrink: 0, marginTop: 2 }}>{step.icon}</span>
                         {step.text}
                       </div>
                     </div>
