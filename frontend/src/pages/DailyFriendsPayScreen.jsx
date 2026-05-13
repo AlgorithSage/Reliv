@@ -9,7 +9,7 @@ export default function DailyFriendsPayScreen() {
  const [loading, setLoading] = useState(false);
 
  const friendCount = parseInt(localStorage.getItem('friendCount') || '3');
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebInfo = {
  virat: { name: 'Virat Kohli', emoji: 'cricket_bat', basePrice: 15, color: '#1E40AF' },
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', basePrice: 12, color: '#DB2777' },

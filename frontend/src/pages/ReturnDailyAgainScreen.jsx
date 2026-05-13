@@ -7,7 +7,7 @@ export default function ReturnDailyAgainScreen() {
  const navigate = useNavigate();
  const [show, setShow] = useState(false);
 
- const lastCeleb = localStorage.getItem('celebrity') || 'virat';
+ const lastCeleb = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebEmojis = {
  virat: '', alia: '', salman: '',
  deepika: '', hrithik: '', priyanka: ''

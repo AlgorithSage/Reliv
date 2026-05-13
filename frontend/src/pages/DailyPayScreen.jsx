@@ -8,12 +8,28 @@ export default function DailyPayScreen() {
  const navigate = useNavigate();
  const [loading, setLoading] = useState(false);
 
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
 
  const celebInfo = {
- virat: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 15, color: '#1E40AF' },
+ // Cricket
+ dhoni: { name: 'MS Dhoni', emoji: 'cricket_bat', price: 10, color: '#1E40AF' },
+ kohli: { name: 'Virat Kohli', emoji: 'muscle', price: 12, color: '#F06922' },
+ virat: { name: 'Virat Kohli', emoji: 'muscle', price: 12, color: '#F06922' },
+ rohit: { name: 'Rohit Sharma', emoji: 'target', price: 9, color: '#0EA5E9' },
+ // Football
+ ronaldo: { name: 'Cristiano Ronaldo', emoji: 'football', price: 15, color: '#DC2626' },
+ messi: { name: 'Lionel Messi', emoji: 'goat_messi', price: 15, color: '#3B82F6' },
+ neymar: { name: 'Neymar Jr', emoji: 'star_glow', price: 12, color: '#F59E0B' },
+ // Singers
+ arijit: { name: 'Arijit Singh', emoji: 'microphone', price: 8, color: '#7C3AED' },
+ badshah: { name: 'Badshah', emoji: 'music_note', price: 11, color: '#E11D48' },
+ honeysingh: { name: 'Yo Yo Honey Singh', emoji: 'fire', price: 10, color: '#EA580C' },
+ // Bollywood
+ srk: { name: 'Shah Rukh Khan', emoji: 'crown', price: 14, color: '#B45309' },
+ salman: { name: 'Salman Khan', emoji: 'muscle', price: 12, color: '#16A34A' },
+ akshay: { name: 'Akshay Kumar', emoji: 'clapperboard', price: 10, color: '#0D9488' },
+ // Legacy entries
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', price: 12, color: '#DB2777' },
- salman: { name: 'Salman Khan', emoji: 'muscle', price: 15, color: '#16A34A' },
  deepika: { name: 'Deepika Padukone', emoji: 'sparkle', price: 12, color: '#9333EA' },
  hrithik: { name: 'Hrithik Roshan', emoji: 'fire', price: 15, color: '#DC2626' },
  priyanka: { name: 'Priyanka Chopra', emoji: 'star_glow', price: 12, color: '#F59E0B' },

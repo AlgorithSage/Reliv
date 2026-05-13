@@ -11,7 +11,7 @@ export default function FanQuizScreen() {
  const [showResult, setShowResult] = useState(false);
  const [showQ, setShowQ] = useState(false);
 
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebInfo = {
  virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#1E40AF' },
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#DB2777' },

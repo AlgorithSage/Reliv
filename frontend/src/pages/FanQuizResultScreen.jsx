@@ -12,7 +12,7 @@ export default function FanQuizResultScreen() {
  const totalQuestions = 3;
  const percentage = Math.round((score / totalQuestions) * 100);
 
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebInfo = {
  virat: { name: 'Virat Kohli', emoji: 'cricket_bat', color: '#F06922' },
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', color: '#F06922' },

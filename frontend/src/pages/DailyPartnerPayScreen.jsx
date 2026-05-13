@@ -8,7 +8,7 @@ export default function DailyPartnerPayScreen() {
  const navigate = useNavigate();
  const [loading, setLoading] = useState(false);
 
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebInfo = {
  virat: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 26, color: '#1E40AF' },
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman', price: 22, color: '#DB2777' },

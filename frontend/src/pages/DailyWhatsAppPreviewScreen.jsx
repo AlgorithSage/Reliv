@@ -8,7 +8,7 @@ export default function DailyWhatsAppPreviewScreen() {
  const [show, setShow] = useState(false);
  const [messageIndex, setMessageIndex] = useState(0);
 
- const celebrity = localStorage.getItem('celebrity') || 'virat';
+ const celebrity = localStorage.getItem('selectedCelebrity') || 'virat';
  const celebInfo = {
  virat: { name: 'Virat Kohli', emoji: 'cricket_bat' },
  alia: { name: 'Alia Bhatt', emoji: 'yoga_woman' },
