@@ -185,15 +185,15 @@ export default function Icon({ name, size = 20, color, className, style }) {
     if (name === 'cricket_bat') {
         const c = color || '#F06922';
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill={c} className={className} style={{ display: 'inline-flex', verticalAlign: 'middle', ...style }}>
+            <svg width={size} height={size} viewBox="0 0 20 20" fill={c} className={className} style={{ display: 'inline-flex', verticalAlign: 'middle', ...style }}>
                 {/* Cricket bat handle */}
-                <rect x="3" y="1" width="3.5" height="9" rx="1.5" transform="rotate(-5 4.75 5.5)" fill={c} opacity="0.85"/>
+                <rect x="2" y="0.5" width="3.5" height="8" rx="1.5" transform="rotate(-10 3.75 4.5)" fill={c} opacity="0.85"/>
                 {/* Bat blade */}
-                <rect x="2.5" y="9" width="5" height="11" rx="2" transform="rotate(-5 5 14.5)" fill={c}/>
+                <rect x="1" y="7.5" width="6.5" height="12" rx="2" transform="rotate(-10 4.25 13.5)" fill={c}/>
                 {/* Cricket ball */}
-                <circle cx="18" cy="6" r="3.5" fill={c} opacity="0.7"/>
-                <path d="M15.5 4.5C16.5 5.5 17 7 18.5 7.5" stroke="white" strokeWidth="0.8" strokeLinecap="round" fill="none"/>
-                <path d="M16.5 3.5C17.5 5 18.5 6 20 6.5" stroke="white" strokeWidth="0.8" strokeLinecap="round" fill="none"/>
+                <circle cx="15.5" cy="7.5" r="4.5" fill={c} opacity="0.7"/>
+                <path d="M12 6 C 13.5 7.5, 14.5 9.5, 16.5 10.5" stroke="white" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+                <path d="M13.5 4.5 C 15 6, 16 8, 18 9" stroke="white" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
             </svg>
         );
     }

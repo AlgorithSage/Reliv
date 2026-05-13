@@ -214,7 +214,7 @@ export default function CategoryScreen() {
  justifyContent: 'center',
  margin: '0 auto 16px',
  fontSize: c.isHeroTraining ? 40 : 34,
- }}><Icon name={c.icon} size={20} /></div>
+ }}><Icon name={c.icon} size={c.isHeroTraining ? 36 : 28} color={c.color} /></div>
 
  {/* Title */}
  <h3 style={{
