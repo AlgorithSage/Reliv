@@ -316,23 +316,24 @@ export default function FanCricketScreen() {
  </MaterialButton>
 
  {/* Decline Button */}
- <MaterialButton
+ <button
  onClick={handleDeclineChallenge}
  style={{
  width: '100%',
  background: '#F3F4F6',
- border: 'none',
+ border: '2px solid #D1D5DB',
  borderRadius: 16,
  padding: '18px',
  fontSize: 15,
  fontWeight: 600,
- color: '#666',
+ color: '#333',
  cursor: 'pointer',
  transition: 'all 0.3s ease',
+ fontFamily: 'inherit',
  }}
  >
  No thanks, I'll go with regular plans
- </MaterialButton>
+ </button>
 
  {/* Price Tag */}
  <div style={{
