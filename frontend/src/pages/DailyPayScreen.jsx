@@ -13,9 +13,9 @@ export default function DailyPayScreen() {
  const celebInfo = {
  // Cricket
  dhoni: { name: 'MS Dhoni', emoji: 'cricket_bat', price: 10, color: '#1E40AF' },
- kohli: { name: 'Virat Kohli', emoji: 'muscle', price: 12, color: '#F06922' },
- virat: { name: 'Virat Kohli', emoji: 'muscle', price: 12, color: '#F06922' },
- rohit: { name: 'Rohit Sharma', emoji: 'target', price: 9, color: '#0EA5E9' },
+ kohli: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 12, color: '#F06922' },
+ virat: { name: 'Virat Kohli', emoji: 'cricket_bat', price: 12, color: '#F06922' },
+ rohit: { name: 'Rohit Sharma', emoji: 'cricket_bat', price: 9, color: '#0EA5E9' },
  // Football
  ronaldo: { name: 'Cristiano Ronaldo', emoji: 'football', price: 15, color: '#DC2626' },
  messi: { name: 'Lionel Messi', emoji: 'goat_messi', price: 15, color: '#3B82F6' },
