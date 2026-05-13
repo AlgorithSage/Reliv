@@ -18,8 +18,8 @@ export default function DailyPayScreen() {
  rohit: { name: 'Rohit Sharma', emoji: 'cricket_bat', price: 9, color: '#0EA5E9' },
  // Football
  ronaldo: { name: 'Cristiano Ronaldo', emoji: 'football', price: 15, color: '#DC2626' },
- messi: { name: 'Lionel Messi', emoji: 'goat_messi', price: 15, color: '#3B82F6' },
- neymar: { name: 'Neymar Jr', emoji: 'star_glow', price: 12, color: '#F59E0B' },
+ messi: { name: 'Lionel Messi', emoji: 'football', price: 15, color: '#3B82F6' },
+ neymar: { name: 'Neymar Jr', emoji: 'football', price: 12, color: '#F59E0B' },
  // Singers
  arijit: { name: 'Arijit Singh', emoji: 'microphone', price: 8, color: '#7C3AED' },
  badshah: { name: 'Badshah', emoji: 'music_note', price: 11, color: '#E11D48' },
