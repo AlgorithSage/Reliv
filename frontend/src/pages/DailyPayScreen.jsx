@@ -65,7 +65,7 @@ export default function DailyPayScreen() {
  justifyContent: 'center',
  fontSize: 40,
  }}>
- {info.emoji}
+ <Icon name={info.emoji} size={36} color={info.color} />
  </div>
  <div style={{ flex: 1 }}><h2 style={{ fontSize: 22, fontWeight: 800, color: '#111', marginBottom: 4 }}>
  {info.name} Style

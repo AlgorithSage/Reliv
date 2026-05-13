@@ -181,6 +181,23 @@ const defaultWeights = {
 };
 
 export default function Icon({ name, size = 20, color, className, style }) {
+    // Custom SVG icons not available in Phosphor
+    if (name === 'cricket_bat') {
+        const c = color || '#F06922';
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill={c} className={className} style={{ display: 'inline-flex', verticalAlign: 'middle', ...style }}>
+                {/* Cricket bat handle */}
+                <rect x="3" y="1" width="3.5" height="9" rx="1.5" transform="rotate(-5 4.75 5.5)" fill={c} opacity="0.85"/>
+                {/* Bat blade */}
+                <rect x="2.5" y="9" width="5" height="11" rx="2" transform="rotate(-5 5 14.5)" fill={c}/>
+                {/* Cricket ball */}
+                <circle cx="18" cy="6" r="3.5" fill={c} opacity="0.7"/>
+                <path d="M15.5 4.5C16.5 5.5 17 7 18.5 7.5" stroke="white" strokeWidth="0.8" strokeLinecap="round" fill="none"/>
+                <path d="M16.5 3.5C17.5 5 18.5 6 20 6.5" stroke="white" strokeWidth="0.8" strokeLinecap="round" fill="none"/>
+            </svg>
+        );
+    }
+
     const Component = iconComponents[name];
     if (!Component) return null;
     const weight = defaultWeights[name] || 'fill';
