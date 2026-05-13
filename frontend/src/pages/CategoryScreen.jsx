@@ -18,11 +18,11 @@ export default function CategoryScreen() {
  // Get hero-specific data
  const heroData = {
  'ronaldo': { icon: 'football', color: '#16A34A', desc: 'CR7 Performance Routine - Speed & Stamina' },
- 'messi': { icon: 'goat_messi', color: '#3B82F6', desc: 'The Magician\'s Routine - Agility & Mind' },
- 'neymar': { icon: 'star_glow', color: '#8B5CF6', desc: 'Skill Master Routine - Flexibility' },
+ 'messi': { icon: 'football', color: '#3B82F6', desc: 'The Magician\'s Routine - Agility & Mind' },
+ 'neymar': { icon: 'football', color: '#8B5CF6', desc: 'Skill Master Routine - Flexibility' },
  'dhoni': { icon: 'cricket_bat', color: '#1E40AF', desc: 'Captain Cool Routine - Leadership & Focus' },
- 'kohli': { icon: 'muscle', color: '#DC2626', desc: 'King Kohli Routine - Fitness & Intensity' },
- 'rohit': { icon: 'target', color: '#0891B2', desc: 'Hitman Routine - Balance & Power' },
+ 'kohli': { icon: 'cricket_bat', color: '#DC2626', desc: 'King Kohli Routine - Fitness & Intensity' },
+ 'rohit': { icon: 'cricket_bat', color: '#0891B2', desc: 'Hitman Routine - Balance & Power' },
  'srk': { icon: 'crown', color: '#F59E0B', desc: 'King Khan Transformation - Discipline' },
  'salman': { icon: 'muscle', color: '#EF4444', desc: 'Bhai Workout - Muscle Building' },
  'akshay': { icon: 'martial_arts', color: '#F97316', desc: 'Khiladi Routine - Martial Arts' },

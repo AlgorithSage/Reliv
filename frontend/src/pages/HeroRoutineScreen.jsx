@@ -155,7 +155,7 @@ export default function HeroRoutineScreen() {
  neymar: {
  name: 'Neymar Jr',
  subtitle: 'Skill Master Routine',
- emoji: 'star_glow',
+ emoji: 'football',
  color: '#8B5CF6',
  strength: 'Flexibility & Skills',
  schedule: [
