@@ -31,8 +31,8 @@ export default function FanCricketScreen() {
  color: '#F06922',
  players: [
  { id: 'ronaldo', name: 'Cristiano Ronaldo', subtitle: 'CR7', price: 15, emoji: 'football', strength: 'Speed & Stamina' },
- { id: 'messi', name: 'Lionel Messi', subtitle: 'The GOAT', price: 15, emoji: 'goat_messi', strength: 'Sharp Mind & Agility' },
- { id: 'neymar', name: 'Neymar Jr', subtitle: 'Skill Master', price: 12, emoji: 'star_glow', strength: 'Flexibility & Skills' },
+ { id: 'messi', name: 'Lionel Messi', subtitle: 'The GOAT', price: 15, emoji: 'football', strength: 'Sharp Mind & Agility' },
+ { id: 'neymar', name: 'Neymar Jr', subtitle: 'Skill Master', price: 12, emoji: 'football', strength: 'Flexibility & Skills' },
  ],
  },
  '/fan-singer': {

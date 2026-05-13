@@ -46,7 +46,7 @@ export default function HeroRoutineScreen() {
  messi: {
  name: 'Lionel Messi',
  subtitle: 'The Magician\'s Routine',
- emoji: 'goat_messi',
+ emoji: 'football',
  color: '#3B82F6',
  strength: 'Sharp Mind & Agility',
  schedule: [
@@ -307,7 +307,7 @@ export default function HeroRoutineScreen() {
  margin: '0 auto 20px',
  boxShadow: `0 12px 40px ${athlete.color}30`,
  }}>
- {athlete.emoji}
+ <Icon name={athlete.emoji} size={48} color={athlete.color} />
  </div>
  <h2 style={{ fontSize: 28, fontWeight: 800, color: '#111', marginBottom: 8 }}>
  {athlete.name}
