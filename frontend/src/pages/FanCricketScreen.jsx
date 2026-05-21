@@ -22,8 +22,8 @@ export default function FanCricketScreen() {
  color: '#F06922',
  players: [
  { id: 'dhoni', name: 'MS Dhoni', subtitle: 'Captain Cool', price: 10, emoji: 'cricket_bat', strength: 'Sharp Mind & Leadership' },
- { id: 'kohli', name: 'Virat Kohli', subtitle: 'King Kohli', price: 12, emoji: 'muscle', strength: 'Speed & Stamina' },
- { id: 'rohit', name: 'Rohit Sharma', subtitle: 'Hitman', price: 9, emoji: 'target', strength: 'Lean Muscle & Balance' },
+ { id: 'kohli', name: 'Virat Kohli', subtitle: 'King Kohli', price: 12, emoji: 'cricket_bat', strength: 'Speed & Stamina' },
+ { id: 'rohit', name: 'Rohit Sharma', subtitle: 'Hitman', price: 9, emoji: 'cricket_bat', strength: 'Lean Muscle & Balance' },
  ],
  },
  '/fan-football': {
