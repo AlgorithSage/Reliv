@@ -550,10 +550,10 @@ export default function HeroRoutineScreen() {
  <div style={{
  marginTop: 28,
  padding: '20px',
- background: '#FEF3C7',
+ background: `${athlete.color}10`,
  borderRadius: 14,
- border: '1px solid #FCD34D',
- }}><h4 style={{ fontSize: 15, fontWeight: 700, color: '#92400E', marginBottom: 12 }}>
+ border: `1px solid ${athlete.color}30`,
+ }}><h4 style={{ fontSize: 15, fontWeight: 700, color: athlete.color, marginBottom: 12 }}>
  Common Pattern (All Elite Athletes)
  </h4>
  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
@@ -566,8 +566,8 @@ export default function HeroRoutineScreen() {
  { label: 'Recovery', value: 'Ice, massage, stretch' },
  ].map((item, i) => (
  <div key={i} style={{ textAlign: 'center' }}>
- <p style={{ fontSize: 12, color: '#92400E', fontWeight: 600 }}>{item.label}</p>
- <p style={{ fontSize: 11, color: '#B45309' }}>{item.value}</p>
+ <p style={{ fontSize: 12, color: athlete.color, fontWeight: 600 }}>{item.label}</p>
+ <p style={{ fontSize: 11, color: '#666' }}>{item.value}</p>
  </div>
  ))}
  </div>
