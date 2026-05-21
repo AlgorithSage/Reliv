@@ -335,9 +335,11 @@ export default function HeroRoutineScreen() {
  padding: 6,
  }}>
  {tabs.map(tab => (
- <MaterialButton
+ <button
  key={tab.id}
  onClick={() => setActiveTab(tab.id)}
+ onMouseEnter={(e) => { if (activeTab !== tab.id) { e.currentTarget.style.background = `${athlete.color}15`; e.currentTarget.style.color = athlete.color; } }}
+ onMouseLeave={(e) => { if (activeTab !== tab.id) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#666'; } }}
  style={{
  flex: 1,
  background: activeTab === tab.id ? '#FFFFFF' : 'transparent',
@@ -350,10 +352,15 @@ export default function HeroRoutineScreen() {
  cursor: 'pointer',
  transition: 'all 0.3s ease',
  boxShadow: activeTab === tab.id ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
+ fontFamily: 'inherit',
+ display: 'flex',
+ alignItems: 'center',
+ justifyContent: 'center',
+ gap: 8,
  }}
  >
- <Icon name={tab.icon} size={18} /> {tab.label}
- </MaterialButton>
+ <Icon name={tab.icon} size={18} color={activeTab === tab.id ? athlete.color : undefined} /> {tab.label}
+ </button>
  ))}
  </div>
 
